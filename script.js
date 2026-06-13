@@ -424,6 +424,273 @@ const PYQS = [
 ];
 
 /* ─────────────────────────────────────────
+   PHYSICS CHATBOT WITH GOOGLE GEMINI AI
+───────────────────────────────────────── */
+
+// API Configuration - See CHATBOT_API_SETUP.md for instructions
+const GEMINI_API_KEY = ''; // Set your API key here or in environment variable
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+const USE_DEMO_MODE = true; // Set to false when API key is properly configured
+
+// Demo Physics Responses
+const DEMO_RESPONSES = {
+  'newton|law|motion': `Newton's Laws of Motion are fundamental principles of classical mechanics:\n\n**First Law (Law of Inertia):**\nAn object at rest stays at rest, and an object in motion stays in motion unless acted upon by a net external force. Mathematically: ΣF = 0 → a = 0\n\n**Second Law (Law of Acceleration):**\nThe net force on an object is equal to the mass times its acceleration: F = ma\n\n**Third Law (Action-Reaction):**\nFor every action, there's an equal and opposite reaction: F₁₂ = -F₂₁\n\nThese laws form the foundation of classical mechanics and are essential for understanding particle motion, orbital mechanics, and many engineering applications.`,
+  
+  'momentum': `**Momentum** is a fundamental quantity in physics that measures the quantity of motion of an object.\n\n**Definition:** p = mv\nWhere m is mass and v is velocity\n\n**Key Properties:**\n- Vector quantity (has direction)\n- SI Unit: kg⋅m/s\n- Conserved in isolated systems (Law of Conservation of Momentum)\n\n**Impulse-Momentum Theorem:**\nJ = FΔt = Δp = m(v_f - v_i)\n\n**Applications:**\n- Collisions and explosions\n- Rocket propulsion\n- Sports physics\n- Orbital mechanics\n\nMomentum conservation is crucial for analyzing collisions and understanding how forces change the motion of objects over time.`,
+  
+  'energy': `**Energy** is the capacity of a system to do work. It's one of the most fundamental concepts in physics.\n\n**Forms of Energy:**\n- Kinetic Energy: KE = ½mv²\n- Potential Energy: PE = mgh (gravitational)\n- Elastic Energy: PE = ½kx²\n- Thermal, Chemical, Nuclear, Electromagnetic energy\n\n**Law of Conservation of Energy:**\nTotal energy in an isolated system remains constant. Energy can transform from one form to another but is never created or destroyed.\n\nE_total = KE + PE = constant\n\n**Power:**\nRate of energy transfer: P = W/t = dE/dt (Watts)\n\n**Key Applications:**\n- Thermal dynamics\n- Oscillations and waves\n- Quantum mechanics\n- Astrophysics\n\nUnderstanding energy conservation and transformation is essential for all areas of physics.`,
+  
+  'ferromagnetism|magnetic': `**Ferromagnetism** is the phenomenon where certain materials become strongly attracted to magnets and can remain magnetized.\n\n**Characteristics:**\n- Permanent magnetic dipole moments\n- Unpaired electron spins aligned in the same direction\n- Magnetic susceptibility χ >> 1\n- Examples: Iron (Fe), Cobalt (Co), Nickel (Ni)\n\n**Physical Basis:**\n- Exchange interaction keeps spins aligned\n- Weiss domains: regions of aligned spins\n- Curie temperature: above this, ferromagnetic materials lose permanent magnetism\n\n**Applications:**\n- Electric motors and generators\n- Transformers\n- Magnetic recording media\n- MRI machines\n- Permanent magnets\n\n**Temperature Dependence:**\nAbove Curie temperature (T_c), ferromagnetic materials become paramagnetic due to thermal agitation overcoming exchange interaction.\n\nFerromagnetism is critical for modern technology and electromagnetic applications.`,
+  
+  'quantum|schrödinger': `**Quantum Mechanics** is the branch of physics dealing with particles at atomic and subatomic scales.\n\n**Schrödinger Equation:**\niℏ(∂Ψ/∂t) = ĤΨ (Time-dependent)\n\nĤΨ = EΨ (Time-independent)\n\nWhere Ψ is the wave function, Ĥ is the Hamiltonian, E is energy\n\n**Key Principles:**\n- **Wave-Particle Duality:** Particles exhibit both wave and particle properties\n- **Superposition:** Systems can exist in multiple states simultaneously\n- **Uncertainty Principle:** ΔxΔp ≥ ℏ/2\n- **Quantization:** Energy, angular momentum are quantized\n\n**Applications:**\n- Atomic structure\n- Molecular bonding\n- Semiconductors\n- Laser physics\n- Quantum computing\n\nThe Schrödinger equation is fundamental to understanding atomic and molecular phenomena.`
+};
+
+function getDemoResponse(question) {
+  const q = question.toLowerCase();
+  
+  for (const [keyword, response] of Object.entries(DEMO_RESPONSES)) {
+    const keywords = keyword.split('|');
+    if (keywords.some(kw => q.includes(kw))) {
+      return response;
+    }
+  }
+  
+  return `I'd be happy to help explain that topic! However, my AI connection seems to be having issues right now.\n\nYou can try asking about:\n- Newton's Laws of Motion\n- Momentum and Collisions\n- Energy and Conservation\n- Ferromagnetism\n- Quantum Mechanics and Schrödinger equation\n\nOr explore the website's Formulae Bank, Resources, or Study Tips for more information!\n\n*Note: The chatbot AI is currently in demo mode. For full AI responses, please ensure your API key is properly configured.`;
+}
+
+const PHYSICS_SYSTEM_PROMPT = `You are an expert Physics tutor and guide for the JeetPhysics website (https://jeetphysics.com). Your role is to:
+
+1. **Answer Physics Questions**: Explain all physics concepts, laws, formulae, interpretations, and terminologies comprehensively and accurately.
+2. **Provide Formulae**: When asked for formulae, provide clear mathematical expressions with their meanings.
+3. **Guide About Website**: Help students navigate the website, find resources, access study materials, and understand the curriculum structure.
+4. **Study Assistance**: Offer problem-solving strategies, study tips, and learning advice for BSc Physics Honours students.
+5. **Clear Explanations**: Break down complex concepts into understandable parts with analogies when helpful.
+
+Website Content Overview:
+- **12 Core Subjects**: Classical Mechanics, QM, EM, Waves & Optics, Thermal Physics, Statistical Mechanics, etc.
+- **Formulae Bank**: Over 200+ key formulae across all subjects with LaTeX support
+- **Resources**: NPTEL, MIT OCW, LibreTexts, WolframAlpha, PhET Simulations
+- **PYQ's**: Previous Year Questions from JEE, CSIR-NET, State Exams
+- **6-Semester Curriculum**: Structured learning path for BSc Physics Honours
+
+Always:
+- Be encouraging and supportive
+- Provide accurate, physics-based answers
+- Suggest relevant website resources when applicable
+- Use clear formatting and equations when necessary
+- Maintain professional but friendly tone`;
+
+let chatHistory = [];
+
+async function initPhysicsChatbot() {
+  const toggle = document.getElementById('chatbotToggle');
+  const container = document.getElementById('chatbotContainer');
+  const closeBtn = document.getElementById('chatbotClose');
+  const input = document.getElementById('chatbotInput');
+  const sendBtn = document.getElementById('chatbotSend');
+  const messagesDiv = document.getElementById('chatbotMessages');
+
+  // Toggle chatbot
+  toggle.addEventListener('click', () => {
+    container.classList.toggle('open');
+    if (container.classList.contains('open')) {
+      input.focus();
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    container.classList.remove('open');
+  });
+
+  // Send message
+  const sendMessage = async () => {
+    const message = input.value.trim();
+    if (!message) return;
+
+    // Add user message to UI
+    addMessage(message, 'user');
+    
+    // Add user message to history
+    chatHistory.push({
+      role: 'user',
+      parts: [{ text: message }]
+    });
+    
+    input.value = '';
+
+    // Show typing indicator
+    const typingId = showTypingIndicator();
+
+    try {
+      // Get AI response
+      const response = await getChatbotResponse(message);
+      
+      // Remove typing indicator
+      removeTypingIndicator(typingId);
+      
+      // Add bot response
+      addMessage(response, 'bot');
+    } catch (error) {
+      removeTypingIndicator(typingId);
+      addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+      console.error('Chatbot error:', error);
+    }
+  };
+
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  function addMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chatbot-message ${sender}-message`;
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    
+    // Parse and format content
+    if (sender === 'bot') {
+      contentDiv.innerHTML = parseMarkdown(text);
+    } else {
+      contentDiv.textContent = text;
+    }
+    
+    msgDiv.appendChild(contentDiv);
+    messagesDiv.appendChild(msgDiv);
+    
+    // Scroll to bottom
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chatbot-message bot-message';
+    msgDiv.id = 'typing-indicator';
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content chatbot-typing';
+    contentDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    
+    msgDiv.appendChild(contentDiv);
+    messagesDiv.appendChild(msgDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+    return msgDiv.id;
+  }
+
+  function removeTypingIndicator(id) {
+    const indicator = document.getElementById(id);
+    if (indicator) indicator.remove();
+  }
+}
+
+async function getChatbotResponse(userMessage) {
+  try {
+    // Use demo mode if enabled
+    if (USE_DEMO_MODE) {
+      const demoResponse = getDemoResponse(userMessage);
+      
+      // Add to chat history
+      chatHistory.push({
+        role: 'model',
+        parts: [{ text: demoResponse }]
+      });
+      
+      if (chatHistory.length > 20) {
+        chatHistory = chatHistory.slice(-20);
+      }
+      
+      return demoResponse;
+    }
+
+    // Try to use Gemini API
+    let requestContents = [];
+    
+    if (chatHistory.length === 1) {
+      // First message - include system prompt
+      requestContents.push({
+        role: 'user',
+        parts: [{ 
+          text: `You are an expert Physics tutor for JeetPhysics website. ${PHYSICS_SYSTEM_PROMPT}\n\nUser's question: ${userMessage}`
+        }]
+      });
+    } else {
+      // Subsequent messages - use history as is
+      requestContents = chatHistory;
+    }
+
+    const requestBody = {
+      contents: requestContents,
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024
+      }
+    };
+
+    console.log('Sending request to Gemini API...');
+    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    const data = await response.json();
+    console.log('API Response:', data);
+
+    if (!response.ok) {
+      console.error('API Error Details:', data);
+      if (data.error) {
+        throw new Error(`API error: ${data.error.message || data.error.code}`);
+      }
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+      throw new Error('Invalid API response structure');
+    }
+
+    const botMessage = data.candidates[0].content.parts[0].text;
+
+    // Add bot response to history
+    chatHistory.push({
+      role: 'model',
+      parts: [{ text: botMessage }]
+    });
+
+    // Keep chat history manageable (last 20 messages)
+    if (chatHistory.length > 20) {
+      chatHistory = chatHistory.slice(-20);
+    }
+
+    return botMessage;
+  } catch (error) {
+    console.error('Error calling Gemini API:', error);
+    throw error;
+  }
+}
+
+function parseMarkdown(text) {
+  // Convert markdown-like formatting to HTML
+  let html = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\`(.*?)\`/g, '<code>$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  
+  // Handle lists
+  html = html.replace(/^• (.*?)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  
+  return '<p>' + html + '</p>';
+}
+
+/* ─────────────────────────────────────────
    STARFIELD ANIMATION
 ───────────────────────────────────────── */
 
@@ -946,8 +1213,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.05 });
 
-  ['subjectsGrid', 'formulasGrid', 'resourcesGrid', 'tipsGrid'].forEach(id => {
+  ['subjectsGrid', 'formulaeGrid', 'resourcesGrid', 'tipsGrid'].forEach(id => {
     const el = document.getElementById(id);
     if (el) revealObs.observe(el);
   });
+
+  // Initialize Physics Chatbot
+  initPhysicsChatbot();
 });
