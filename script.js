@@ -408,6 +408,21 @@ const TIPS = [
   { title: 'Review Regularly', desc: 'Spaced repetition beats last-minute cramming. Review your Semester I material in Semester III. Physics builds on itself mercilessly.' }
 ];
 
+const PYQS = [
+  { exam: 'jee', year: 2023, subject: 'Classical Mechanics', title: 'Rigid Body Rotation - Angular Momentum', difficulty: 'hard', desc: 'A uniform rod of length L rotates about its center. Find the moment of inertia.' },
+  { exam: 'jee', year: 2022, subject: 'Electromagnetism', title: 'Magnetic Field in Solenoid', difficulty: 'medium', desc: 'Calculate the magnetic field inside a long solenoid with n turns per unit length.' },
+  { exam: 'csir', year: 2023, subject: 'Quantum Mechanics', title: 'Schrödinger Equation - Particle in a Box', difficulty: 'medium', desc: 'Solve the time-independent Schrödinger equation for a particle confined in a 1D box.' },
+  { exam: 'csir', year: 2022, subject: 'Statistical Mechanics', title: 'Maxwell-Boltzmann Distribution', difficulty: 'hard', desc: 'Derive the Maxwell-Boltzmann velocity distribution from first principles.' },
+  { exam: 'state', year: 2023, subject: 'Thermodynamics', title: 'First Law of Thermodynamics', difficulty: 'easy', desc: 'State and explain the first law of thermodynamics with practical examples.' },
+  { exam: 'state', year: 2022, subject: 'Optics', title: 'Youngs Double Slit Experiment', difficulty: 'medium', desc: 'Derive the condition for constructive and destructive interference in YDSE.' },
+  { exam: 'university', year: 2023, subject: 'Relativity', title: 'Special Relativity - Time Dilation', difficulty: 'medium', desc: 'Explain time dilation and derive the time dilation formula from Lorentz transformation.' },
+  { exam: 'university', year: 2022, subject: 'Nuclear Physics', title: 'Radioactive Decay Law', difficulty: 'easy', desc: 'Derive and explain the radioactive decay constant and half-life formula.' },
+  { exam: 'jee', year: 2021, subject: 'Waves & Oscillations', title: 'Simple Harmonic Motion', difficulty: 'medium', desc: 'Find the period and frequency of SHM for a mass-spring system.' },
+  { exam: 'csir', year: 2021, subject: 'Solid State Physics', title: 'Band Theory in Solids', difficulty: 'hard', desc: 'Explain the formation of energy bands in crystalline solids using band theory.' },
+  { exam: 'state', year: 2021, subject: 'Modern Physics', title: 'Photoelectric Effect', difficulty: 'easy', desc: 'Explain Einstein\'s photoelectric equation and describe experimental observations.' },
+  { exam: 'university', year: 2021, subject: 'Atomic Physics', title: 'Bohr Model of Hydrogen', difficulty: 'medium', desc: 'Derive the energy levels and radius of Bohr\'s model of hydrogen atom.' }
+];
+
 /* ─────────────────────────────────────────
    STARFIELD ANIMATION
 ───────────────────────────────────────── */
@@ -798,6 +813,43 @@ function renderTips() {
   `).join('');
 }
 
+function renderPYQ(exam = 'all') {
+  const grid = document.getElementById('pyqGrid');
+  const filtered = exam === 'all' ? PYQS : PYQS.filter(p => p.exam === exam);
+  
+  grid.innerHTML = filtered.map(p => `
+    <div class="pyq-card">
+      <div class="pyq-exam-badge">
+        <i class="ph ph-book"></i> ${p.exam.toUpperCase()}
+      </div>
+      <div class="pyq-year">Year: ${p.year}</div>
+      <div class="pyq-title">${p.title}</div>
+      <div class="pyq-subject">
+        <i class="ph ph-flask"></i> ${p.subject}
+      </div>
+      <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:14px; line-height:1.5;">${p.desc}</p>
+      <div class="pyq-footer">
+        <span class="pyq-difficulty ${p.difficulty}">${p.difficulty.charAt(0).toUpperCase() + p.difficulty.slice(1)}</span>
+        <button class="pyq-view-btn">
+          View Solution <i class="ph ph-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function initPYQFilters() {
+  const buttons = document.querySelectorAll('.pyq-filter-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const exam = btn.getAttribute('data-exam');
+      renderPYQ(exam);
+    });
+  });
+}
+
 /* ─────────────────────────────────────────
    COUNTER ANIMATION
 ───────────────────────────────────────── */
@@ -857,6 +909,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderResources();
   renderTimeline();
   renderTips();
+  renderPYQ();
+  initPYQFilters();
   initScrollReveal();
   initProgressBars();
   initCounters();
