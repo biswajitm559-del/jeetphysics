@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JeetPhysics — B.Sc Honours Study Portal</title>
+  <meta name="description" content="A comprehensive study portal for B.Sc Physics Honours students. Explore all subjects, formula sheets, textbooks, and resources — from Classical Mechanics to Quantum Physics." />
+  <meta name="keywords" content="physics, BSc honours, quantum mechanics, classical mechanics, electromagnetism, study portal" />
+  <meta property="og:title" content="JeetPhysics — B.Sc Honours Study Portal" />
+  <meta property="og:description" content="Your complete physics study companion for B.Sc Honours." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left:'$$', right:'$$', display:true},
+        {left:'$', right:'$', display:false}
+      ]
+    })"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ STARFIELD CANVAS ═══ -->
+<canvas id="starfield"></canvas>
+
+<!-- ═══ ANNOUNCEMENT BANNER ═══ -->
+<div class="banner" id="banner">
+  <span class="banner-badge">New</span>
+  <span>Quantum Mechanics formula sheets &amp; Irodov solutions are now available! 🚀</span>
+  <button class="banner-close" id="bannerClose" aria-label="Close banner">✕</button>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="nav-logo-icon">⚛️</div>
+    <span class="nav-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#formulas">Formulas</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#syllabus">Syllabus</a></li>
+    <li><a href="#tips">Study Tips</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <i class="ph ph-list"></i>
+  </button>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-bg-glow hero-glow-1"></div>
+  <div class="hero-bg-glow hero-glow-2"></div>
+  <div class="hero-bg-glow hero-glow-3"></div>
+
+  <div class="hero-orbit orbit-1" aria-hidden="true">
+    <div class="orbit-dot"></div>
+  </div>
+  <div class="hero-orbit orbit-2" aria-hidden="true">
+    <div class="orbit-dot" style="background:var(--gold-400);box-shadow:0 0 10px var(--gold-400);"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:3;">
+    <h1 class="hero-title">
+      Master the<br/>
+      <span class="gradient-text">Universe</span>
+      of Physics
+    </h1>
+
+    <p class="hero-subtitle">
+      Your all-in-one study companion — covering all 12 core subjects,
+      formula banks, textbook references, and structured learning paths for B.Sc Honours Physics.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#subjects" class="btn-primary" id="hero-explore-btn">
+        <i class="ph ph-rocket-launch"></i> Explore Subjects
+      </a>
+      <a href="#formulas" class="btn-secondary" id="hero-formulas-btn">
+        <i class="ph ph-function"></i> Formula Bank
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number" id="counter-subjects">12</div>
+        <div class="stat-label">Core Subjects</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number" id="counter-formulas">200+</div>
+        <div class="stat-label">Key Formulas</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number" id="counter-semesters">6</div>
+        <div class="stat-label">Semesters</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number" id="counter-books">40+</div>
+        <div class="stat-label">Reference Books</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SUBJECTS ═══ -->
+<section class="subjects" id="subjects">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Core Curriculum</div>
+      <h2 class="section-title gradient-text-blue">All 12 Subjects</h2>
+      <p class="section-subtitle">
+        Browse by semester — click any subject card to explore topics, textbooks, and key formulas.
+      </p>
+    </div>
+
+    <div class="semester-tabs reveal" id="semTabs">
+      <button class="tab-btn active" data-sem="all">All Semesters</button>
+      <button class="tab-btn" data-sem="1">Semester I</button>
+      <button class="tab-btn" data-sem="2">Semester II</button>
+      <button class="tab-btn" data-sem="3">Semester III</button>
+      <button class="tab-btn" data-sem="4">Semester IV</button>
+      <button class="tab-btn" data-sem="5">Semester V</button>
+      <button class="tab-btn" data-sem="6">Semester VI</button>
+    </div>
+
+    <div class="subjects-grid" id="subjectsGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FORMULAS ═══ -->
+<section class="formulas" id="formulas">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Quick Reference</div>
+      <h2 class="section-title">Formula <span class="gradient-text">Bank</span></h2>
+      <p class="section-subtitle">
+        Search and browse essential physics formulas across all subjects. Click the copy icon to copy LaTeX.
+      </p>
+    </div>
+
+    <div class="formula-search-wrapper reveal">
+      <span class="search-icon"><i class="ph ph-magnifying-glass"></i></span>
+      <input type="text" class="formula-search" id="formulaSearch" placeholder="Search formulas (e.g. Schrödinger, Maxwell, Lagrangian...)" />
+    </div>
+
+    <div class="formula-categories reveal" id="formulaCats">
+      <button class="formula-cat-btn active" data-cat="all">All</button>
+      <button class="formula-cat-btn" data-cat="mechanics">Mechanics</button>
+      <button class="formula-cat-btn" data-cat="em">Electromagnetism</button>
+      <button class="formula-cat-btn" data-cat="quantum">Quantum</button>
+      <button class="formula-cat-btn" data-cat="thermal">Thermal</button>
+      <button class="formula-cat-btn" data-cat="waves">Waves & Optics</button>
+      <button class="formula-cat-btn" data-cat="nuclear">Nuclear</button>
+      <button class="formula-cat-btn" data-cat="math">Math Physics</button>
+    </div>
+
+    <div class="formulas-grid reveal" id="formulasGrid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESOURCES ═══ -->
+<section class="resources" id="resources">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Learning Materials</div>
+      <h2 class="section-title">Study <span class="gradient-text">Resources</span></h2>
+      <p class="section-subtitle">
+        Curated textbooks, video lectures, question banks, and online simulators for every subject.
+      </p>
+    </div>
+
+    <div class="resources-grid reveal" id="resourcesGrid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SYLLABUS TIMELINE ═══ -->
+<section class="syllabus-timeline" id="syllabus">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Programme Structure</div>
+      <h2 class="section-title">Semester-wise <span class="gradient-text">Syllabus</span></h2>
+      <p class="section-subtitle">
+        A structured 6-semester roadmap covering classical to modern physics.
+      </p>
+    </div>
+
+    <div class="timeline-wrapper reveal" id="timelineWrapper">
+      <div class="timeline-line"></div>
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STUDY TIPS ═══ -->
+<section class="study-tips" id="tips">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Pro Strategies</div>
+      <h2 class="section-title">Study <span class="gradient-text">Tips</span></h2>
+      <p class="section-subtitle">
+        Evidence-based strategies used by top physics students worldwide.
+      </p>
+    </div>
+
+    <div class="tips-grid reveal" id="tipsGrid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-brand" style="margin-bottom:4px; display:inline-flex;">
+          <div class="nav-logo-icon">⚛️</div>
+          <span class="nav-logo-text" style="font-size:1.3rem;"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
+        </a>
+        <p>A dedicated study portal for B.Sc Physics Honours students. Built with passion for physics education, covering the complete 3-year curriculum.</p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Subjects</div>
+        <ul class="footer-links">
+          <li><a href="#subjects">Classical Mechanics</a></li>
+          <li><a href="#subjects">Quantum Mechanics</a></li>
+          <li><a href="#subjects">Electromagnetism</a></li>
+          <li><a href="#subjects">Thermodynamics</a></li>
+          <li><a href="#subjects">Nuclear Physics</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <ul class="footer-links">
+          <li><a href="#formulas">Formula Bank</a></li>
+          <li><a href="#resources">Textbooks</a></li>
+          <li><a href="#resources">Video Lectures</a></li>
+          <li><a href="#syllabus">Syllabus</a></li>
+          <li><a href="#tips">Study Tips</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="https://nptel.ac.in/" target="_blank" rel="noopener">NPTEL Courses</a></li>
+          <li><a href="https://ocw.mit.edu/courses/physics/" target="_blank" rel="noopener">MIT OpenCourseWare</a></li>
+          <li><a href="https://www.khanacademy.org/science/physics" target="_blank" rel="noopener">Khan Academy</a></li>
+          <li><a href="https://phys.libretexts.org/" target="_blank" rel="noopener">LibreTexts Physics</a></li>
+          <li><a href="https://www.wolframalpha.com/" target="_blank" rel="noopener">WolframAlpha</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 <span class="brand-jeet" style="font-family:'Playfair Display',serif;font-style:italic;">Jeet</span><span style="color:var(--gold-400);font-weight:700;">Physics</span> — B.Sc Physics Honours Study Portal. Made with ❤️ for physics students.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social-btn" aria-label="GitHub" title="GitHub">
+          <i class="ph ph-github-logo"></i>
+        </a>
+        <a href="#" class="footer-social-btn" aria-label="YouTube" title="YouTube">
+          <i class="ph ph-youtube-logo"></i>
+        </a>
+        <a href="#" class="footer-social-btn" aria-label="Email" title="Email">
+          <i class="ph ph-envelope"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ SUBJECT MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-icon" id="modalIcon"></div>
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-semester" id="modalSemester"></div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ═══ BACK TO TOP ═══ -->
+<button id="backToTop" aria-label="Back to top" title="Back to top">
+  <i class="ph ph-arrow-up"></i>
+</button>
+
+<script src="script.js"></script>
+</body>
+</html>
