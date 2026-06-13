@@ -324,6 +324,33 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   transform: translateY(-3px);
 }
 
+/* Syllabus Certificate Button */
+.syllabus-certificate-link {
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px 0 30px 0;
+}
+
+.btn-secondary-cert {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.1));
+  color: var(--gold-300); text-decoration: none;
+  padding: 14px 32px; border-radius: var(--radius-md);
+  font-weight: 600; font-size: 0.95rem;
+  border: 2px solid var(--gold-400);
+  cursor: pointer; transition: var(--transition);
+}
+
+.btn-secondary-cert:hover {
+  background: linear-gradient(135deg, rgba(245,158,11,0.25), rgba(251,191,36,0.2));
+  border-color: var(--gold-300);
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(245,158,11,0.3);
+}
+
+.btn-secondary-cert i {
+  font-size: 1.1rem;
+}
+
 /* Hero Stats */
 .hero-stats {
   display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
