@@ -546,14 +546,14 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   transform: rotate(45deg);
 }
 
-/* ─── Formulas Section ─── */
-.formulas { background: linear-gradient(180deg, transparent, rgba(10,32,68,0.3) 50%, transparent); }
+/* ─── Formulae Section ─── */
+.formulae { background: linear-gradient(180deg, transparent, rgba(10,32,68,0.3) 50%, transparent); }
 
-.formula-search-wrapper {
+.formulae-search-wrapper {
   position: relative; max-width: 540px; margin-bottom: 40px;
 }
 
-.formula-search {
+.formulae-search {
   width: 100%;
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--border);
@@ -563,23 +563,23 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   font-family: var(--font-body); font-size: 0.95rem;
   transition: var(--transition); outline: none;
 }
-.formula-search:focus {
+.formulae-search:focus {
   border-color: var(--blue-400);
   background: rgba(255,255,255,0.08);
   box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
-.formula-search::placeholder { color: var(--text-muted); }
+.formulae-search::placeholder { color: var(--text-muted); }
 
 .search-icon {
   position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
   color: var(--text-muted); font-size: 1rem;
 }
 
-.formula-categories {
+.formulae-categories {
   display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px;
 }
 
-.formula-cat-btn {
+.formulae-cat-btn {
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
   color: var(--text-secondary);
@@ -587,19 +587,19 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   font-size: 0.82rem; font-weight: 500;
   cursor: pointer; transition: var(--transition);
 }
-.formula-cat-btn.active, .formula-cat-btn:hover {
+.formulae-cat-btn.active, .formulae-cat-btn:hover {
   background: rgba(59,130,246,0.15);
   border-color: rgba(59,130,246,0.4);
   color: var(--blue-300);
 }
 
-.formulas-grid {
+.formulae-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
-.formula-card {
+.formulae-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -608,33 +608,33 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   transition: var(--transition);
 }
 
-.formula-card:hover {
+.formulae-card:hover {
   border-color: var(--border-glow);
   transform: translateY(-3px);
   box-shadow: var(--shadow-card);
 }
 
-.formula-card-header {
+.formulae-card-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 14px;
 }
-.formula-subject {
+.formulae-subject {
   font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--blue-300);
 }
-.formula-copy-btn {
+.formulae-copy-btn {
   background: none; border: none; cursor: pointer;
   color: var(--text-muted); font-size: 0.85rem; transition: var(--transition);
   padding: 4px 8px; border-radius: 6px;
 }
-.formula-copy-btn:hover { color: var(--blue-300); background: rgba(59,130,246,0.1); }
+.formulae-copy-btn:hover { color: var(--blue-300); background: rgba(59,130,246,0.1); }
 
-.formula-name {
+.formulae-name {
   font-family: var(--font-head); font-size: 0.95rem; font-weight: 600;
   margin-bottom: 12px;
 }
 
-.formula-math {
+.formulae-math {
   background: rgba(0,0,0,0.35);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: var(--radius-sm);
@@ -647,7 +647,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   overflow-x: auto;
 }
 
-.formula-desc { font-size: 0.8rem; color: var(--text-muted); }
+.formulae-desc { font-size: 0.8rem; color: var(--text-muted); }
 
 /* ─── Resources ─── */
 .resources { }
@@ -1014,7 +1014,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
 .modal-textbook-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
 .modal-textbook-author { font-size: 0.78rem; color: var(--text-muted); }
 
-.modal-key-formulas { display: flex; flex-direction: column; gap: 10px; }
+.modal-key-formulae { display: flex; flex-direction: column; gap: 10px; }
 .modal-formula-item {
   background: rgba(0,0,0,0.3);
   border: 1px solid rgba(255,255,255,0.07);

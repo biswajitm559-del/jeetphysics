@@ -32,7 +32,7 @@ const SUBJECTS = [
         { title: 'Classical Dynamics', author: 'J. B. Marion & S. T. Thornton' },
         { title: 'An Introduction to Mechanics', author: 'D. Kleppner & R. Kolenkow' }
       ],
-      formulas: ['L = T - V', 'd/dt(∂L/∂q̇) - ∂L/∂q = 0', 'H = Σ(pq̇) - L', '{q_i, p_j} = δ_ij']
+      formulae: ['L = T - V', 'd/dt(∂L/∂q̇) - ∂L/∂q = 0', 'H = Σ(pq̇) - L', '{q_i, p_j} = δ_ij']
     }
   },
   {
@@ -56,7 +56,7 @@ const SUBJECTS = [
         { title: 'Mathematical Physics', author: 'B. S. Rajput' },
         { title: 'Methods of Theoretical Physics', author: 'Morse & Feshbach' }
       ],
-      formulas: ['∇²φ = 0 (Laplace)', '∮ f(z)dz = 2πi Σ Res', 'f(x) = Σ(aₙcos(nπx/L) + bₙsin(nπx/L))']
+      formulae: ['∇²φ = 0 (Laplace)', '∮ f(z)dz = 2πi Σ Res', 'f(x) = Σ(aₙcos(nπx/L) + bₙsin(nπx/L))']
     }
   },
   {
@@ -80,7 +80,7 @@ const SUBJECTS = [
         { title: 'Classical Electrodynamics', author: 'J. D. Jackson' },
         { title: 'Electricity & Magnetism', author: 'Purcell & Morin' }
       ],
-      formulas: ['∇·E = ρ/ε₀', '∇×B = μ₀J + μ₀ε₀∂E/∂t', '∇×E = -∂B/∂t', '∇·B = 0']
+      formulae: ['∇·E = ρ/ε₀', '∇×B = μ₀J + μ₀ε₀∂E/∂t', '∇×E = -∂B/∂t', '∇·B = 0']
     }
   },
   {
@@ -104,7 +104,7 @@ const SUBJECTS = [
         { title: 'Waves & Oscillations', author: 'N. K. Bajaj' },
         { title: 'Introduction to Optics', author: 'Pedrotti & Pedrotti' }
       ],
-      formulas: ['v = fλ', 'I = I₀cos²(θ) [Malus]', 'dsinθ = mλ [Grating]', 'I = 4I₀cos²(δ/2)']
+      formulae: ['v = fλ', 'I = I₀cos²(θ) [Malus]', 'dsinθ = mλ [Grating]', 'I = 4I₀cos²(δ/2)']
     }
   },
   {
@@ -129,7 +129,7 @@ const SUBJECTS = [
         { title: 'Principles of Quantum Mechanics', author: 'P. A. M. Dirac' },
         { title: 'Quantum Mechanics', author: 'J. J. Sakurai & J. Napolitano' }
       ],
-      formulas: ['Ĥψ = Eψ', 'ΔxΔp ≥ ℏ/2', 'E_n = ℏω(n+½)', 'E_n = -13.6/n² eV']
+      formulae: ['Ĥψ = Eψ', 'ΔxΔp ≥ ℏ/2', 'E_n = ℏω(n+½)', 'E_n = -13.6/n² eV']
     }
   },
   {
@@ -153,7 +153,7 @@ const SUBJECTS = [
         { title: 'Heat & Thermodynamics', author: 'Zemansky & Dittman' },
         { title: 'Thermodynamics & Statistical Mechanics', author: 'E. Fermi' }
       ],
-      formulas: ['dU = δQ - δW', 'S = k_B ln Ω', 'η_Carnot = 1 - T_c/T_h', 'dG = -SdT + VdP']
+      formulae: ['dU = δQ - δW', 'S = k_B ln Ω', 'η_Carnot = 1 - T_c/T_h', 'dG = -SdT + VdP']
     }
   },
   {
@@ -177,7 +177,7 @@ const SUBJECTS = [
         { title: 'Statistical Physics', author: 'L. D. Landau & E. M. Lifshitz' },
         { title: 'An Introduction to Statistical Mechanics', author: 'Huang' }
       ],
-      formulas: ['Z = Σ_i e^(-βE_i)', 'F = -k_BT ln Z', 'n̄ = 1/(e^(β(ε-μ)) ± 1)']
+      formulae: ['Z = Σ_i e^(-βE_i)', 'F = -k_BT ln Z', 'n̄ = 1/(e^(β(ε-μ)) ± 1)']
     }
   },
   {
@@ -201,7 +201,7 @@ const SUBJECTS = [
         { title: 'Fundamentals of Physics', author: 'Halliday, Resnick & Walker' },
         { title: 'Digital Fundamentals', author: 'T. L. Floyd' }
       ],
-      formulas: ['I = I₀(e^(V/V_T) - 1)', 'A_v = -g_m R_D', 'V_out/V_in = -R_f/R_in [Inverting]']
+      formulae: ['I = I₀(e^(V/V_T) - 1)', 'A_v = -g_m R_D', 'V_out/V_in = -R_f/R_in [Inverting]']
     }
   },
   {
@@ -225,7 +225,7 @@ const SUBJECTS = [
         { title: 'Introduction to Nuclear Physics', author: 'Krane' },
         { title: 'Introduction to Particle Physics', author: 'Griffiths' }
       ],
-      formulas: ['BE = [Zm_p + Nm_n - M]c²', 'N(t) = N₀e^(-λt)', 't½ = ln2/λ', 'Q = (m_i - m_f)c²']
+      formulae: ['BE = [Zm_p + Nm_n - M]c²', 'N(t) = N₀e^(-λt)', 't½ = ln2/λ', 'Q = (m_i - m_f)c²']
     }
   },
   {
@@ -249,7 +249,7 @@ const SUBJECTS = [
         { title: 'Solid State Physics', author: 'A. J. Dekker' },
         { title: 'Solid State Physics', author: 'S. O. Pillai' }
       ],
-      formulas: ['2d sinθ = nλ [Bragg]', 'ω² = 4C/M · sin²(ka/2)', 'E_F = (ℏ²/2m)(3π²n)^(2/3)']
+      formulae: ['2d sinθ = nλ [Bragg]', 'ω² = 4C/M · sin²(ka/2)', 'E_F = (ℏ²/2m)(3π²n)^(2/3)']
     }
   },
   {
@@ -273,7 +273,7 @@ const SUBJECTS = [
         { title: 'Molecular Quantum Mechanics', author: 'Atkins & Friedman' },
         { title: 'Introduction to Atomic Spectra', author: 'Harvey E. White' }
       ],
-      formulas: ['E_n = E_n⁰ + ⟨n|H\'|n⟩', 'ΔE = m_J g_J μ_B B [Zeeman]', 'Δ̃ν = ±2B(J+1) [Rotational]']
+      formulae: ['E_n = E_n⁰ + ⟨n|H\'|n⟩', 'ΔE = m_J g_J μ_B B [Zeeman]', 'Δ̃ν = ±2B(J+1) [Rotational]']
     }
   },
   {
@@ -297,12 +297,12 @@ const SUBJECTS = [
         { title: 'Numerical Recipes in C', author: 'Press, Teukolsky et al.' },
         { title: 'Computational Physics', author: 'M. Newman' }
       ],
-      formulas: ['y_{n+1} = y_n + hf(x_n,y_n) [Euler]', 'I ≈ (h/3)[f₀ + 4f₁ + f₂] [Simpson]']
+      formulae: ['y_{n+1} = y_n + hf(x_n,y_n) [Euler]', 'I ≈ (h/3)[f₀ + 4f₁ + f₂] [Simpson]']
     }
   }
 ];
 
-const FORMULAS = [
+const FORMULAE = [
   // Mechanics
   { cat: 'mechanics', name: 'Newton\'s Second Law', latex: 'F = ma = \\frac{dp}{dt}', desc: 'Force equals rate of change of momentum', subject: 'Mechanics' },
   { cat: 'mechanics', name: 'Euler-Lagrange Equation', latex: '\\frac{d}{dt}\\frac{\\partial L}{\\partial \\dot{q}} - \\frac{\\partial L}{\\partial q} = 0', desc: 'Equation of motion from Lagrangian', subject: 'Mechanics' },
@@ -399,7 +399,7 @@ const TIMELINE = [
 
 const TIPS = [
   { title: 'Master the Fundamentals First', desc: 'Physics is cumulative. Before jumping to Quantum Mechanics, ensure your Classical Mechanics and Math Physics foundation is rock solid.' },
-  { title: 'Derive Every Equation', desc: 'Never just memorise formulas. Derive them from first principles. This builds intuition and helps you reconstruct them under exam pressure.' },
+  { title: 'Derive Every Equation', desc: 'Never just memorise formulae. Derive them from first principles. This builds intuition and helps you reconstruct them under exam pressure.' },
   { title: 'Solve Irodov Problems', desc: 'Irodov\'s "Problems in General Physics" is the gold standard. Start with mechanics and work your way through — solving one problem is worth reading 10 pages.' },
   { title: 'Learn LaTeX Early', desc: 'Write your notes and assignments in LaTeX from Day 1. It forces clarity of thought, looks professional, and is essential for research.' },
   { title: 'Connect Concepts Across Subjects', desc: 'The same mathematics appears everywhere: Fourier transforms in QM, EM, and Solid State. Recognising patterns across subjects is a superpower.' },
@@ -656,9 +656,9 @@ function openModal(id) {
       `).join('')}
     </div>
 
-    <div class="modal-section-title">Key Formulas</div>
-    <div class="modal-key-formulas">
-      ${s.detail.formulas.map(f => `<div class="modal-formula-item">${f}</div>`).join('')}
+    <div class="modal-section-title">Key Formulae</div>
+    <div class="modal-key-formulae">
+      ${s.detail.formulae.map(f => `<div class="modal-formula-item">${f}</div>`).join('')}
     </div>
   `;
 
@@ -683,32 +683,32 @@ function initModal() {
    RENDER FORMULAS
 ───────────────────────────────────────── */
 
-let currentFormulaCat = 'all';
-let formulaQuery = '';
+let currentFormulaeCat = 'all';
+let formulaeQuery = '';
 
-function renderFormulas() {
-  const grid = document.getElementById('formulasGrid');
-  const filtered = FORMULAS.filter(f => {
-    const matchCat = currentFormulaCat === 'all' || f.cat === currentFormulaCat;
-    const q = formulaQuery.toLowerCase();
+function renderFormulae() {
+  const grid = document.getElementById('formulaeGrid');
+  const filtered = FORMULAE.filter(f => {
+    const matchCat = currentFormulaeCat === 'all' || f.cat === currentFormulaeCat;
+    const q = formulaeQuery.toLowerCase();
     const matchQ = !q || f.name.toLowerCase().includes(q) || f.subject.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
     return matchCat && matchQ;
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<div style="color:var(--text-muted);font-size:0.9rem;padding:32px 0;">No formulas match your search.</div>`;
+    grid.innerHTML = `<div style="color:var(--text-muted);font-size:0.9rem;padding:32px 0;">No formulae match your search.</div>`;
     return;
   }
 
   grid.innerHTML = filtered.map((f, i) => `
-    <div class="formula-card" data-latex="${encodeURIComponent(f.latex)}">
-      <div class="formula-card-header">
-        <span class="formula-subject">${f.subject}</span>
-        <button class="formula-copy-btn" title="Copy LaTeX" data-latex="${encodeURIComponent(f.latex)}">📋 Copy</button>
+    <div class="formulae-card" data-latex="${encodeURIComponent(f.latex)}">
+      <div class="formulae-card-header">
+        <span class="formulae-subject">${f.subject}</span>
+        <button class="formulae-copy-btn" title="Copy LaTeX" data-latex="${encodeURIComponent(f.latex)}">📋 Copy</button>
       </div>
-      <div class="formula-name">${f.name}</div>
-      <div class="formula-math" id="formula-math-${i}">$${f.latex}$</div>
-      <div class="formula-desc">${f.desc}</div>
+      <div class="formulae-name">${f.name}</div>
+      <div class="formulae-math" id="formulae-math-${i}">$${f.latex}$</div>
+      <div class="formulae-desc">${f.desc}</div>
     </div>
   `).join('');
 
@@ -724,7 +724,7 @@ function renderFormulas() {
   }
 
   // Copy buttons
-  grid.querySelectorAll('.formula-copy-btn').forEach(btn => {
+  grid.querySelectorAll('.formulae-copy-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const latex = decodeURIComponent(btn.dataset.latex);
@@ -739,21 +739,21 @@ function renderFormulas() {
   });
 }
 
-function initFormulas() {
-  const searchInput = document.getElementById('formulaSearch');
-  const catBtns = document.getElementById('formulaCats');
+function initFormulae() {
+  const searchInput = document.getElementById('formulaeSearch');
+  const catBtns = document.getElementById('formulaeCats');
 
   searchInput.addEventListener('input', () => {
-    formulaQuery = searchInput.value;
-    renderFormulas();
+    formulaeQuery = searchInput.value;
+    renderFormulae();
   });
 
-  catBtns.querySelectorAll('.formula-cat-btn').forEach(btn => {
+  catBtns.querySelectorAll('.formulae-cat-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      catBtns.querySelectorAll('.formula-cat-btn').forEach(b => b.classList.remove('active'));
+      catBtns.querySelectorAll('.formulae-cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      currentFormulaCat = btn.dataset.cat;
-      renderFormulas();
+      currentFormulaeCat = btn.dataset.cat;
+      renderFormulae();
     });
   });
 }
@@ -904,8 +904,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSubjects();
   initSemesterTabs();
   initModal();
-  renderFormulas();
-  initFormulas();
+  renderFormulae();
+  initFormulae();
   renderResources();
   renderTimeline();
   renderTips();
