@@ -909,8 +909,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderResources();
   renderTimeline();
   renderTips();
-  renderPYQ();
-  initPYQFilters();
+  // PYQ section now links to Google Drive, so no rendering needed
+  // renderPYQ();
+  // initPYQFilters();
   initScrollReveal();
   initProgressBars();
   initCounters();

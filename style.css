@@ -823,6 +823,33 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
 }
 .pyq-view-btn:hover { color: var(--blue-400); gap: 8px; }
 
+/* ─── PYQ Access Container ─── */
+.pyq-access-container {
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 24px;
+  min-height: 200px;
+}
+
+.btn-primary-large {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, var(--blue-500), #1e40af);
+  color: #fff; text-decoration: none;
+  padding: 18px 48px; border-radius: var(--radius-md);
+  font-weight: 700; font-size: 1.1rem;
+  border: none; cursor: pointer;
+  box-shadow: 0 0 40px rgba(59,130,246,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: var(--transition);
+}
+
+.btn-primary-large:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 60px rgba(59,130,246,0.7), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+.btn-primary-large i {
+  font-size: 1.3rem;
+}
+
 /* ─── Timeline ─── */
 .syllabus-timeline { }
 .timeline-wrapper { position: relative; }
