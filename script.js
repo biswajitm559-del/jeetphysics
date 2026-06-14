@@ -423,6 +423,185 @@ const PYQS = [
   { exam: 'university', year: 2021, subject: 'Atomic Physics', title: 'Bohr Model of Hydrogen', difficulty: 'medium', desc: 'Derive the energy levels and radius of Bohr\'s model of hydrogen atom.' }
 ];
 
+const NUMERICALS = [
+  // ── Mechanics ──
+  {
+    cat: 'mechanics', branch: 'Mechanics', difficulty: 'easy',
+    question: 'A 2 kg block slides down a frictionless inclined plane of height 5 m. Find its speed at the bottom.',
+    given: '<strong>Given:</strong> m = 2 kg, h = 5 m, g = 9.8 m/s²',
+    steps: ['Using conservation of energy: mgh = ½mv²', 'v² = 2gh = 2 × 9.8 × 5 = 98', 'v = √98 = 9.9 m/s'],
+    answer: 'v = 9.9 m/s'
+  },
+  {
+    cat: 'mechanics', branch: 'Mechanics', difficulty: 'easy',
+    question: 'A body of mass 5 kg is moving with a velocity of 10 m/s. Find its kinetic energy.',
+    given: '<strong>Given:</strong> m = 5 kg, v = 10 m/s',
+    steps: ['Kinetic energy: KE = ½mv²', 'KE = ½ × 5 × (10)²', 'KE = ½ × 5 × 100 = 250 J'],
+    answer: 'KE = 250 J'
+  },
+  {
+    cat: 'mechanics', branch: 'Mechanics', difficulty: 'medium',
+    question: 'Find the moment of inertia of a uniform solid sphere of mass 3 kg and radius 0.2 m about an axis through its centre.',
+    given: '<strong>Given:</strong> m = 3 kg, R = 0.2 m, I = (2/5)mR² for solid sphere',
+    steps: ['I = (2/5) × m × R²', 'I = (2/5) × 3 × (0.2)²', 'I = 0.4 × 3 × 0.04 = 0.048 kg·m²'],
+    answer: 'I = 0.048 kg·m²'
+  },
+  // ── Electromagnetism ──
+  {
+    cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
+    question: 'Find the electric field at a distance of 0.3 m from a point charge of 5 μC in vacuum.',
+    given: '<strong>Given:</strong> q = 5 × 10⁻⁶ C, r = 0.3 m, k = 9 × 10⁹ N·m²/C²',
+    steps: ['E = kq/r²', 'E = (9 × 10⁹ × 5 × 10⁻⁶) / (0.3)²', 'E = 45000 / 0.09 = 5 × 10⁵ N/C'],
+    answer: 'E = 5 × 10⁵ N/C'
+  },
+  {
+    cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
+    question: 'A straight wire of length 0.5 m carries a current of 3 A in a magnetic field of 0.4 T. Find the force if the wire is perpendicular to B.',
+    given: '<strong>Given:</strong> L = 0.5 m, I = 3 A, B = 0.4 T, θ = 90°',
+    steps: ['Force on current-carrying wire: F = BIL sin θ', 'F = 0.4 × 3 × 0.5 × sin 90°', 'F = 0.4 × 3 × 0.5 × 1 = 0.6 N'],
+    answer: 'F = 0.6 N'
+  },
+  {
+    cat: 'em', branch: 'Electromagnetism', difficulty: 'medium',
+    question: 'A parallel plate capacitor has plate area 200 cm² and separation 2 mm. Find its capacitance in vacuum.',
+    given: '<strong>Given:</strong> A = 200 cm² = 0.02 m², d = 2 mm = 0.002 m, ε₀ = 8.85 × 10⁻¹² F/m',
+    steps: ['C = ε₀A/d', 'C = (8.85 × 10⁻¹² × 0.02) / 0.002', 'C = 1.77 × 10⁻¹³ / 0.002 = 8.85 × 10⁻¹¹ F'],
+    answer: 'C = 88.5 pF'
+  },
+  // ── Waves & Optics ──
+  {
+    cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
+    question: 'In Young\'s double slit experiment, the slit separation is 0.5 mm and the screen is 1 m away. Find the fringe width for light of wavelength 600 nm.',
+    given: '<strong>Given:</strong> d = 0.5 mm = 5 × 10⁻⁴ m, D = 1 m, λ = 600 nm = 6 × 10⁻⁷ m',
+    steps: ['Fringe width: β = λD/d', 'β = (6 × 10⁻⁷ × 1) / (5 × 10⁻⁴)', 'β = 6 × 10⁻⁷ / 5 × 10⁻⁴ = 1.2 × 10⁻³ m'],
+    answer: 'β = 1.2 mm'
+  },
+  {
+    cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
+    question: 'Light passes from air into glass (n = 1.5). If the angle of incidence is 60°, find the angle of refraction.',
+    given: '<strong>Given:</strong> n₁ = 1 (air), n₂ = 1.5, θ₁ = 60°',
+    steps: ['Snell\'s law: n₁ sin θ₁ = n₂ sin θ₂', 'sin θ₂ = n₁ sin θ₁ / n₂ = sin 60° / 1.5', 'sin θ₂ = 0.866 / 1.5 = 0.577 → θ₂ = 35.3°'],
+    answer: 'θ₂ ≈ 35.3°'
+  },
+  {
+    cat: 'waves', branch: 'Waves & Optics', difficulty: 'medium',
+    question: 'A diffraction grating has 5000 lines/cm. Find the angular position of the first-order maximum for light of wavelength 500 nm.',
+    given: '<strong>Given:</strong> N = 5000 lines/cm, λ = 500 nm = 5 × 10⁻⁷ m, m = 1',
+    steps: ['Grating spacing: d = 1/N = 1/(5 × 10⁵) = 2 × 10⁻⁶ m', 'd sin θ = mλ', 'sin θ = mλ/d = (1 × 5 × 10⁻⁷) / (2 × 10⁻⁶) = 0.25 → θ = 14.48°'],
+    answer: 'θ ≈ 14.5°'
+  },
+  // ── Quantum Mechanics ──
+  {
+    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
+    question: 'Find the de Broglie wavelength of an electron accelerated through a potential difference of 100 V.',
+    given: '<strong>Given:</strong> V = 100 V, m = 9.1 × 10⁻³¹ kg, e = 1.6 × 10⁻¹⁹ C, h = 6.63 × 10⁻³⁴ J·s',
+    steps: ['KE = eV = 1.6 × 10⁻¹⁹ × 100 = 1.6 × 10⁻¹⁷ J', 'p = √(2mKE) = √(2 × 9.1 × 10⁻³¹ × 1.6 × 10⁻¹⁷)', 'p = 5.4 × 10⁻²⁴ kg·m/s → λ = h/p = 1.23 × 10⁻¹⁰ m'],
+    answer: 'λ ≈ 1.23 Å (0.123 nm)'
+  },
+  {
+    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
+    question: 'Find the energy of a photon of wavelength 500 nm in electron volts.',
+    given: '<strong>Given:</strong> λ = 500 nm = 5 × 10⁻⁷ m, h = 6.63 × 10⁻³⁴ J·s, c = 3 × 10⁸ m/s',
+    steps: ['E = hc/λ = (6.63 × 10⁻³⁴ × 3 × 10⁸) / (5 × 10⁻⁷)', 'E = 3.98 × 10⁻¹⁹ J', 'E = 3.98 × 10⁻¹⁹ / 1.6 × 10⁻¹⁹ = 2.49 eV'],
+    answer: 'E ≈ 2.49 eV'
+  },
+  {
+    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'medium',
+    question: 'An electron is confined in a 1D box of width 1 Å. Calculate the energy of the ground state.',
+    given: '<strong>Given:</strong> L = 1 Å = 10⁻¹⁰ m, m = 9.1 × 10⁻³¹ kg, ℏ = 1.055 × 10⁻³⁴ J·s, n = 1',
+    steps: ['Eₙ = n²π²ℏ² / (2mL²)', 'E₁ = π² × (1.055 × 10⁻³⁴)² / (2 × 9.1 × 10⁻³¹ × (10⁻¹⁰)²)', 'E₁ = 6.03 × 10⁻¹⁸ J = 37.7 eV'],
+    answer: 'E₁ ≈ 37.7 eV'
+  },
+  // ── Thermal Physics ──
+  {
+    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
+    question: 'A Carnot engine operates between reservoirs at 500 K and 300 K. Find its efficiency.',
+    given: '<strong>Given:</strong> T_H = 500 K, T_C = 300 K',
+    steps: ['Carnot efficiency: η = 1 - T_C/T_H', 'η = 1 - 300/500 = 1 - 0.6', 'η = 0.4 = 40%'],
+    answer: 'η = 40%'
+  },
+  {
+    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
+    question: 'Find the rms speed of nitrogen molecules at 27°C. (M = 28 g/mol)',
+    given: '<strong>Given:</strong> T = 27°C = 300 K, M = 28 × 10⁻³ kg/mol, R = 8.314 J/(mol·K)',
+    steps: ['v_rms = √(3RT/M)', 'v_rms = √(3 × 8.314 × 300 / 0.028)', 'v_rms = √(267,214) = 517 m/s'],
+    answer: 'v_rms ≈ 517 m/s'
+  },
+  {
+    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'medium',
+    question: 'Calculate the change in entropy when 2 kg of water at 100°C is converted to steam at the same temperature. (L = 2260 kJ/kg)',
+    given: '<strong>Given:</strong> m = 2 kg, T = 373 K, L = 2260 kJ/kg',
+    steps: ['ΔS = Q/T = mL/T', 'Q = 2 × 2260 × 10³ = 4.52 × 10⁶ J', 'ΔS = 4.52 × 10⁶ / 373 = 12,118 J/K'],
+    answer: 'ΔS ≈ 12,118 J/K ≈ 12.1 kJ/K'
+  },
+  // ── Nuclear Physics ──
+  {
+    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
+    question: 'The half-life of ⁶⁰Co is 5.27 years. Find the decay constant λ.',
+    given: '<strong>Given:</strong> t₁/₂ = 5.27 years',
+    steps: ['λ = ln(2) / t₁/₂', 'λ = 0.693 / 5.27', 'λ = 0.1315 per year = 4.17 × 10⁻⁹ s⁻¹'],
+    answer: 'λ ≈ 0.1315 year⁻¹'
+  },
+  {
+    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
+    question: 'Calculate the binding energy per nucleon of ⁴He. Given: mass of ⁴He = 4.0026 u, mp = 1.00783 u, mn = 1.00867 u.',
+    given: '<strong>Given:</strong> M(⁴He) = 4.0026 u, Z = 2, N = 2, 1 u = 931.5 MeV/c²',
+    steps: ['Mass defect Δm = (Zmp + Nmn) − M', 'Δm = (2 × 1.00783 + 2 × 1.00867) − 4.0026 = 0.0304 u', 'BE = Δm × 931.5 = 28.3 MeV → BE/A = 28.3/4 = 7.07 MeV'],
+    answer: 'BE/A ≈ 7.07 MeV/nucleon'
+  },
+  {
+    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'medium',
+    question: 'A radioactive sample has an activity of 8000 Bq. What will the activity be after 3 half-lives?',
+    given: '<strong>Given:</strong> A₀ = 8000 Bq, n = 3 half-lives',
+    steps: ['After n half-lives: A = A₀ / 2ⁿ', 'A = 8000 / 2³ = 8000 / 8', 'A = 1000 Bq'],
+    answer: 'A = 1000 Bq'
+  },
+  // ── Solid State Physics ──
+  {
+    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
+    question: 'For a simple cubic lattice with lattice constant a = 3 Å, find the interplanar spacing for (100) planes.',
+    given: '<strong>Given:</strong> a = 3 Å, (hkl) = (100)',
+    steps: ['d_hkl = a / √(h² + k² + l²)', 'd_100 = 3 / √(1 + 0 + 0)', 'd_100 = 3 Å'],
+    answer: 'd₁₀₀ = 3 Å'
+  },
+  {
+    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'medium',
+    question: 'X-rays of wavelength 1.54 Å are diffracted by (111) planes of an FCC crystal. First-order diffraction occurs at 2θ = 38.2°. Find the lattice constant.',
+    given: '<strong>Given:</strong> λ = 1.54 Å, 2θ = 38.2° → θ = 19.1°, n = 1, (111) planes',
+    steps: ['Bragg\'s law: 2d sinθ = nλ → d = λ/(2 sinθ)', 'd = 1.54 / (2 × sin 19.1°) = 1.54 / (2 × 0.327) = 2.35 Å', 'For (111): d = a/√3 → a = d√3 = 2.35 × 1.732 = 4.07 Å'],
+    answer: 'a ≈ 4.07 Å'
+  },
+  {
+    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
+    question: 'Calculate the Fermi energy of copper at 0 K. Given: n = 8.5 × 10²⁸ electrons/m³.',
+    given: '<strong>Given:</strong> n = 8.5 × 10²⁸ m⁻³, m = 9.1 × 10⁻³¹ kg, ℏ = 1.055 × 10⁻³⁴ J·s',
+    steps: ['E_F = (ℏ²/2m)(3π²n)^(2/3)', 'E_F = (1.055 × 10⁻³⁴)² / (2 × 9.1 × 10⁻³¹) × (3π² × 8.5 × 10²⁸)^(2/3)', 'E_F ≈ 1.13 × 10⁻¹⁸ J = 7.04 eV'],
+    answer: 'E_F ≈ 7.04 eV'
+  },
+  // ── Electronics ──
+  {
+    cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
+    question: 'An inverting amplifier uses an op-amp with R_in = 10 kΩ and R_f = 100 kΩ. Find the voltage gain.',
+    given: '<strong>Given:</strong> R_in = 10 kΩ, R_f = 100 kΩ',
+    steps: ['Gain of inverting amplifier: A_v = -R_f / R_in', 'A_v = -100 / 10', 'A_v = -10 (inverted output)'],
+    answer: 'A_v = −10'
+  },
+  {
+    cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
+    question: 'A silicon diode has a forward voltage drop of 0.7 V. If a 5 V battery is connected in series with a 1 kΩ resistor and the diode, find the current.',
+    given: '<strong>Given:</strong> V = 5 V, V_d = 0.7 V, R = 1 kΩ',
+    steps: ['Voltage across resistor: V_R = V - V_d = 5 - 0.7 = 4.3 V', 'I = V_R / R = 4.3 / 1000', 'I = 4.3 mA'],
+    answer: 'I = 4.3 mA'
+  },
+  {
+    cat: 'electronics', branch: 'Electronics', difficulty: 'medium',
+    question: 'In a common-emitter transistor circuit, β = 100, I_B = 20 μA. Find I_C and I_E.',
+    given: '<strong>Given:</strong> β = 100, I_B = 20 μA = 20 × 10⁻⁶ A',
+    steps: ['I_C = β × I_B = 100 × 20 × 10⁻⁶ = 2 × 10⁻³ A = 2 mA', 'I_E = I_C + I_B = 2 + 0.02 = 2.02 mA', 'Alternatively: I_E = (β + 1) × I_B = 101 × 0.02 = 2.02 mA'],
+    answer: 'I_C = 2 mA, I_E = 2.02 mA'
+  }
+];
+
 /* ─────────────────────────────────────────
    PHYSICS CHATBOT WITH GOOGLE GEMINI AI
 ───────────────────────────────────────── */
@@ -1162,6 +1341,72 @@ function initCounters() {
 }
 
 /* ─────────────────────────────────────────
+   RENDER NUMERICALS
+───────────────────────────────────────── */
+
+let currentNumCat = 'all';
+
+function renderNumericals() {
+  const grid = document.getElementById('numericalsGrid');
+  const filtered = currentNumCat === 'all' ? NUMERICALS : NUMERICALS.filter(n => n.cat === currentNumCat);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="numericals-empty">No numericals found for this category.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((n, i) => `
+    <div class="numerical-card">
+      <div class="numerical-card-body">
+        <div class="numerical-card-header">
+          <span class="numerical-branch" data-branch="${n.cat}">${n.branch}</span>
+          <span class="numerical-difficulty ${n.difficulty}">${n.difficulty === 'easy' ? '⬤ Easy' : '⬤ Medium'}</span>
+        </div>
+        <div class="numerical-question">${n.question}</div>
+        <div class="numerical-given">${n.given}</div>
+        <button class="numerical-toggle" data-idx="${i}" aria-expanded="false">
+          <i class="ph ph-caret-down"></i> Show Solution
+        </button>
+      </div>
+      <div class="numerical-solution" id="numSol-${i}">
+        <div class="solution-label">Step-by-Step Solution</div>
+        <ul class="solution-steps">
+          ${n.steps.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+        <div class="solution-answer">✅ ${n.answer}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Toggle solution visibility
+  grid.querySelectorAll('.numerical-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.dataset.idx;
+      const sol = document.getElementById(`numSol-${idx}`);
+      const isOpen = sol.classList.contains('open');
+      sol.classList.toggle('open');
+      btn.classList.toggle('open');
+      btn.innerHTML = isOpen
+        ? '<i class="ph ph-caret-down"></i> Show Solution'
+        : '<i class="ph ph-caret-up"></i> Hide Solution';
+      btn.setAttribute('aria-expanded', !isOpen);
+    });
+  });
+}
+
+function initNumericals() {
+  const catBtns = document.getElementById('numCats');
+  catBtns.querySelectorAll('.num-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.querySelectorAll('.num-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentNumCat = btn.dataset.cat;
+      renderNumericals();
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
 
@@ -1174,6 +1419,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFormulae();
   initFormulae();
   renderResources();
+  renderNumericals();
+  initNumericals();
   renderTimeline();
   renderTips();
   // PYQ section now links to Google Drive, so no rendering needed
@@ -1198,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        const cards = e.target.querySelectorAll('.subject-card, .formula-card, .resource-card, .tip-card');
+        const cards = e.target.querySelectorAll('.subject-card, .formula-card, .resource-card, .numerical-card, .tip-card');
         cards.forEach((card, idx) => {
           card.style.opacity = '0';
           card.style.transform = 'translateY(24px)';
@@ -1213,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.05 });
 
-  ['subjectsGrid', 'formulaeGrid', 'resourcesGrid', 'tipsGrid'].forEach(id => {
+  ['subjectsGrid', 'formulaeGrid', 'resourcesGrid', 'numericalsGrid', 'tipsGrid'].forEach(id => {
     const el = document.getElementById(id);
     if (el) revealObs.observe(el);
   });
