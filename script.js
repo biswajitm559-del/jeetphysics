@@ -966,6 +966,16 @@ function initNavbar() {
       banner.style.display = 'none';
     });
   }
+
+  // Dropdown toggle for mobile
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        trigger.closest('.nav-dropdown').classList.toggle('open');
+      }
+    });
+  });
 }
 
 /* ─────────────────────────────────────────

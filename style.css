@@ -211,6 +211,75 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
   background: rgba(59, 130, 246, 0.12);
 }
 
+/* ─── Navbar Dropdown ─── */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex; align-items: center; cursor: pointer;
+}
+
+.nav-dropdown-menu {
+  position: absolute; top: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  min-width: 220px;
+  background: rgba(5, 18, 41, 0.96);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.15);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.85rem !important;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--text-primary) !important;
+  transform: translateX(3px);
+}
+
+.dropdown-icon {
+  font-size: 1rem; display: inline-flex; width: 22px; justify-content: center;
+}
+
+/* Mobile dropdown */
+@media (max-width: 768px) {
+  .nav-dropdown-menu {
+    position: static; transform: none;
+    opacity: 1; visibility: visible;
+    background: rgba(5, 18, 41, 0.6);
+    border: 1px solid var(--border);
+    box-shadow: none;
+    margin-top: 4px; margin-bottom: 4px;
+    display: none;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-links.open .nav-dropdown-menu {
+    display: block;
+  }
+  .nav-dropdown-trigger { justify-content: space-between; width: 100%; }
+}
+
 .nav-cta {
   background: linear-gradient(135deg, var(--blue-500), var(--blue-600)) !important;
   color: #fff !important;
