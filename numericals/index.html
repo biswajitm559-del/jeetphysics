@@ -25,11 +25,11 @@
 
 <!-- ═══ TOP NAV ═══ -->
 <nav class="exam-nav" id="examNav">
-  <a href="../index.html" class="exam-nav-back">
+  <a href="../index.html" class="exam-nav__back">
     <i class="ph ph-arrow-left"></i>
-    <span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span>
+    <span class="exam-nav__brand">JeetPhysics</span>
   </a>
-  <div class="exam-nav-links" id="examNavLinks">
+  <div class="exam-nav__links" id="examNavLinks">
     <a href="?exam=jee-main" class="exam-nav-link" data-exam="jee-main">JEE Main</a>
     <a href="?exam=jee-advanced" class="exam-nav-link" data-exam="jee-advanced">JEE Advanced</a>
     <a href="?exam=neet" class="exam-nav-link" data-exam="neet">NEET</a>
@@ -39,85 +39,53 @@
     <a href="?exam=gate-physics" class="exam-nav-link" data-exam="gate-physics">GATE Physics</a>
     <a href="?exam=cuet-science" class="exam-nav-link" data-exam="cuet-science">CUET Science</a>
   </div>
-  <button class="exam-nav-hamburger" id="examHamburger" aria-label="Toggle menu">
-    <i class="ph ph-list"></i>
-  </button>
 </nav>
 
 <!-- ═══ EXAM HEADER ═══ -->
-<header class="exam-header" id="examHeader">
+<header class="exam-header" id="exam-header">
   <!-- Rendered by JS -->
 </header>
 
 <!-- ═══ MAIN CONTENT ═══ -->
-<div class="exam-layout">
+<div class="exam-page" id="exam-content">
   <!-- Main Column -->
   <main class="exam-main">
-    <!-- Search & Filters -->
-    <div class="exam-filters" id="examFilters">
-      <div class="exam-search-wrapper">
-        <i class="ph ph-magnifying-glass search-icon"></i>
-        <input type="text" class="exam-search" id="examSearch" placeholder="Search questions by topic, keyword..." />
+    
+    <!-- Search Bar -->
+    <div class="exam-controls">
+      <div class="exam-search">
+        <i class="ph ph-magnifying-glass exam-search__icon"></i>
+        <input type="text" class="exam-search__input" id="search-input" placeholder="Search questions by topic, keyword..." />
       </div>
 
-      <div class="filter-row">
-        <div class="filter-group">
-          <span class="filter-label">Chapter:</span>
-          <div class="filter-pills" id="chapterFilters">
-            <!-- Rendered by JS -->
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Difficulty:</span>
-          <div class="filter-pills" id="difficultyFilters">
-            <button class="filter-pill active" data-difficulty="all">All</button>
-            <button class="filter-pill pill-easy" data-difficulty="easy">Easy</button>
-            <button class="filter-pill pill-moderate" data-difficulty="moderate">Moderate</button>
-            <button class="filter-pill pill-advanced" data-difficulty="advanced">Advanced</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="results-count" id="resultsCount">
+      <!-- Filters (Injected by JS) -->
+      <div class="exam-filters" id="filters-container">
         <!-- Rendered by JS -->
       </div>
     </div>
 
     <!-- Problems List -->
-    <div class="problems-list" id="problemsList">
+    <div class="problem-list" id="problems-container">
       <!-- Rendered by JS -->
     </div>
 
     <!-- Pagination -->
-    <div class="pagination" id="pagination">
+    <div class="pagination" id="pagination-controls">
       <!-- Rendered by JS -->
     </div>
+
   </main>
 
   <!-- Sidebar -->
-  <aside class="exam-sidebar" id="examSidebar">
+  <aside class="exam-sidebar" id="exam-sidebar">
     <!-- Rendered by JS -->
   </aside>
 </div>
 
 <!-- ═══ FOOTER ═══ -->
-<footer class="exam-footer">
-  <div class="exam-footer-inner">
-    <p>© 2026 <span style="font-family:'Playfair Display',serif;font-style:italic;color:#bfdbff;">Jeet</span><span style="color:#fbbf24;font-weight:700;">Physics</span> — Numerical Solutions Portal</p>
-    <div class="exam-footer-links">
-      <a href="../index.html">Home</a>
-      <a href="../index.html#subjects">Subjects</a>
-      <a href="../index.html#formulae">Formulae</a>
-      <a href="../index.html#resources">Resources</a>
-    </div>
-  </div>
+<footer class="exam-footer" style="padding: 40px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 60px;">
+  <p>© 2026 <span style="font-family:'Playfair Display',serif;font-style:italic;color:#bfdbff;">Jeet</span><span style="color:#fbbf24;font-weight:700;">Physics</span> — Numerical Solutions Portal</p>
 </footer>
-
-<!-- ═══ BACK TO TOP ═══ -->
-<button class="exam-back-top" id="examBackTop" aria-label="Back to top">
-  <i class="ph ph-arrow-up"></i>
-</button>
 
 <script src="exam-data.js"></script>
 </body>
