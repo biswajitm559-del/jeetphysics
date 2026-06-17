@@ -837,7 +837,8 @@ img {
 }
 
 /* Formula box */
-.problem-card__formula {
+.problem-card__formula,
+.formula-block {
   background: rgba(139, 92, 246, 0.06);
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: var(--radius-sm);
@@ -847,8 +848,9 @@ img {
   overflow: hidden;
 }
 
-.problem-card__formula::before {
-  content: 'Formula';
+.problem-card__formula::before,
+.formula-block::before {
+  content: '📐 Formula';
   position: absolute;
   top: -9px;
   left: 16px;
@@ -861,7 +863,8 @@ img {
   color: var(--purple-400);
 }
 
-.problem-card__formula::after {
+.problem-card__formula::after,
+.formula-block::after {
   content: '';
   position: absolute;
   top: 0;
@@ -873,10 +876,25 @@ img {
 }
 
 .problem-card__formula .katex,
-.problem-card__formula code {
+.formula-block .katex,
+.formula-content .katex,
+.problem-card__formula code,
+.formula-block code,
+.formula-content code {
   font-family: var(--font-mono);
   font-size: 15px;
   color: var(--text-primary);
+}
+
+/* formula-block inner content */
+.formula-content {
+  text-align: center;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.formula-block h4 {
+  display: none; /* The ::before pseudo-element handles the label */
 }
 
 /* Solution toggle button */
@@ -1907,7 +1925,9 @@ img {
   color: #fff;
 }
 
-.problem-card__formula .katex-display {
+.problem-card__formula .katex-display,
+.formula-block .katex-display,
+.formula-content .katex-display {
   margin: 4px 0;
 }
 
