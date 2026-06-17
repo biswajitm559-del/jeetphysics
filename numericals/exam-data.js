@@ -236,8 +236,8 @@ const EXAM_PROBLEMS = {
         }
     ],
 
-    // ===== JEE ADVANCED â€” 5 Problems ========================================
-            'jee-advanced': [
+    // ===== JEE ADVANCED — 5 Problems ========================================
+    'jee-advanced': [
         // --- Rotational Dynamics (10) ---
         { id: 1, exam: 'jee-advanced', chapter: 'Rotational Dynamics', topic: 'Rolling Without Slipping', difficulty: 'moderate', year: '2022', question: 'A solid cylinder of mass m and radius R rolls without slipping down an inclined plane of height h = 5 m. Find velocity at bottom.', given: 'h = 5m, I = ½mR²', required: 'v', formula: 'v = \\sqrt{\\frac{4gh}{3}}', steps: ['Energy conservation: mgh = ½mv² + ½Iω²', 'ω = v/R, I = ½mR²', 'mgh = ¾mv² -> v = √(4gh/3)'], answer: 'v = 8.08 m/s', notes: 'Standard rolling conservation.' },
         { id: 2, exam: 'jee-advanced', chapter: 'Rotational Dynamics', topic: 'Angular Momentum', difficulty: 'advanced', year: '2020', question: 'A particle of mass m is projected with velocity v at angle θ. Find angular momentum about projection point at max height.', given: 'm, v, θ', required: 'L', formula: 'L = m v_x H_{max}', steps: ['v_x = v cos θ', 'H_max = (v² sin² θ) / 2g', 'L = m(v cos θ)(v² sin² θ)/2g'], answer: 'L = mv³ sin²θ cosθ / 2g', notes: 'Cross product r × p where r is vertical height and p is horizontal momentum.' },
@@ -333,10 +333,9 @@ const EXAM_PROBLEMS = {
         { id: 78, exam: 'jee-advanced', chapter: 'Thermodynamics', topic: 'Wien Displacement', difficulty: 'moderate', year: '2022', question: 'Star A has max emission at 400nm, Star B at 800nm. Ratio of emissive powers E_A / E_B?', given: 'λ_A = 400nm, λ_B = 800nm', required: 'E_A / E_B', formula: '\\lambda_{max} T = b, \\quad E \\propto T^4', steps: ['T_A / T_B = λ_B / λ_A = 800 / 400 = 2', 'E_A / E_B = (T_A / T_B)⁴ = 2⁴ = 16'], answer: '16:1', notes: 'Power output scales highly with peak frequency.' },
         { id: 79, exam: 'jee-advanced', chapter: 'Thermodynamics', topic: 'Kinetic Theory', difficulty: 'easy', year: '2014', question: 'Find ratio of rms speed to average speed for ideal gas.', given: 'Maxwell-Boltzmann distribution', required: 'v_rms / v_avg', formula: 'v_{rms} = \\sqrt{3RT/M}, \\quad v_{avg} = \\sqrt{8RT/\\pi M}', steps: ['Ratio = √(3) / √(8/π) = √(3π/8)'], answer: '√(3π/8) ≈ 1.085', notes: 'RMS speed is always slightly higher than average speed.' },
         { id: 80, exam: 'jee-advanced', chapter: 'Thermodynamics', topic: 'Mixture of Gases', difficulty: 'advanced', year: '2023', question: '2 moles of He (γ=5/3) mixed with 1 mole of H2 (γ=7/5). Find γ of mixture.', given: 'n1=2, Cv1=3R/2. n2=1, Cv2=5R/2', required: 'γ_mix', formula: 'C_{v,mix} = \\frac{n_1 C_{v1} + n_2 C_{v2}}{n_1 + n_2}', steps: ['Cv_mix = (2*1.5R + 1*2.5R) / 3 = 5.5R / 3 = 11R/6', 'Cp_mix = Cv_mix + R = 17R/6', 'γ_mix = Cp_mix / Cv_mix = 17/11'], answer: 'γ = 17/11 ≈ 1.54', notes: 'Always average the heat capacities (energies), not the γ values.' }
-    ]
+    ],
 
-
-    // ===== NEET â€” 5 Problems =================================================
+    // ===== NEET — 5 Problems =================================================
     'neet': [
         {
             id: 1,
