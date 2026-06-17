@@ -67,20 +67,6 @@ const EXAM_CONFIG = {
         ]
     },
 
-    'jam-chemistry': {
-        title: 'IIT JAM Chemistry',
-        subtitle: 'Physical Chemistry Numericals',
-        icon: '⚗️',
-        color: '#f472b6',
-        description: 'Physical Chemistry numerical problems from IIT JAM Chemistry. Covers thermodynamics, kinetics, quantum chemistry, electrochemistry and more with step-by-step mathematical solutions.',
-        stats: { problems: 240, topics: 20, years: 12 },
-        chapters: [
-            'Chemical Thermodynamics', 'Chemical Kinetics', 'Quantum Chemistry',
-            'Electrochemistry', 'Surface Chemistry', 'Spectroscopy',
-            'Solid State', 'Solutions'
-        ]
-    },
-
     'csir-net': {
         title: 'CSIR-UGC NET Physics',
         subtitle: 'Numerical Solutions',
@@ -550,113 +536,6 @@ const EXAM_PROBLEMS = {
             ],
             answer: 'k_eff ≈ 66.7 N/m',
             notes: 'Springs in series are softer (lower k) than either individual spring, similar to resistors in parallel. Springs in parallel add directly: k_eff = k₁ + k₂. This analogy with electrical circuits is useful to remember.'
-        }
-    ],
-
-    // ===== IIT JAM CHEMISTRY — 5 Problems ====================================
-    'jam-chemistry': [
-        {
-            id: 1,
-            exam: 'jam-chemistry',
-            chapter: 'Chemical Thermodynamics',
-            topic: 'Gibbs Free Energy',
-            difficulty: 'easy',
-            year: null,
-            question: 'For the combustion of hydrogen: H₂(g) + ½O₂(g) → H₂O(l), ΔH = −285.8 kJ/mol and ΔS = −0.163 kJ/(mol·K) at 298 K. Calculate the Gibbs free energy change ΔG.',
-            given: 'Given: ΔH = −285.8 kJ/mol, ΔS = −0.163 kJ/(mol·K), T = 298 K',
-            required: 'Find: ΔG for the reaction',
-            formula: '$$\\Delta G = \\Delta H - T\\Delta S$$',
-            steps: [
-                'Step 1: Apply the Gibbs–Helmholtz equation: ΔG = ΔH − TΔS',
-                'Step 2: ΔG = −285.8 − (298)(−0.163)',
-                'Step 3: ΔG = −285.8 + 48.57',
-                'Step 4: ΔG = −237.2 kJ/mol'
-            ],
-            answer: 'ΔG = −237.2 kJ/mol',
-            notes: 'A negative ΔG indicates a spontaneous reaction. Despite the decrease in entropy (ΔS < 0, as gas → liquid), the large exothermic enthalpy drives the reaction spontaneously at 298 K. This is the standard free energy of formation of liquid water.'
-        },
-        {
-            id: 2,
-            exam: 'jam-chemistry',
-            chapter: 'Chemical Kinetics',
-            topic: 'First Order Half-Life',
-            difficulty: 'moderate',
-            year: null,
-            question: 'A first-order reaction has a rate constant k = 0.0693 min⁻¹. Calculate the half-life of the reaction and the time required for 75% completion.',
-            given: 'Given: Rate constant k = 0.0693 min⁻¹, first-order reaction',
-            required: 'Find: Half-life t₁/₂ and time for 75% completion',
-            formula: '$$t_{1/2} = \\frac{0.693}{k}, \\quad t = \\frac{2.303}{k}\\log\\frac{[A]_0}{[A]}$$',
-            steps: [
-                'Step 1: Half-life: t₁/₂ = 0.693/k = 0.693/0.0693 = 10 min',
-                'Step 2: For 75% completion, 25% remains: [A] = 0.25[A]₀',
-                'Step 3: t = (2.303/k) × log([A]₀/[A]) = (2.303/0.0693) × log(1/0.25)',
-                'Step 4: t = 33.24 × log(4) = 33.24 × 0.602 = 20 min',
-                'Step 5: Alternatively, 75% completion = 2 half-lives: t = 2 × 10 = 20 min ✓'
-            ],
-            answer: 't₁/₂ = 10 min; time for 75% completion = 20 min',
-            notes: 'For a first-order reaction, the half-life is independent of initial concentration. 75% completion equals exactly 2 half-lives, 87.5% = 3 half-lives, and so on. Each half-life halves the remaining amount.'
-        },
-        {
-            id: 3,
-            exam: 'jam-chemistry',
-            chapter: 'Quantum Chemistry',
-            topic: 'Particle in a Box – Transition Wavelength',
-            difficulty: 'moderate',
-            year: null,
-            question: 'An electron is confined in a one-dimensional box of length L = 1 nm. Calculate the wavelength of the photon emitted when the electron transitions from n = 2 to n = 1.',
-            given: 'Given: L = 1 nm = 10⁻⁹ m, m_e = 9.109 × 10⁻³¹ kg, h = 6.626 × 10⁻³⁴ J·s, c = 3 × 10⁸ m/s',
-            required: 'Find: Wavelength λ of emitted photon',
-            formula: '$$\\Delta E = \\frac{3h^2}{8mL^2}, \\quad \\lambda = \\frac{hc}{\\Delta E}$$',
-            steps: [
-                'Step 1: Energy of level n: Eₙ = n²h²/(8mL²)',
-                'Step 2: ΔE = E₂ − E₁ = (4−1)h²/(8mL²) = 3h²/(8mL²)',
-                'Step 3: ΔE = 3 × (6.626×10⁻³⁴)² / (8 × 9.109×10⁻³¹ × (10⁻⁹)²)',
-                'Step 4: ΔE = 3 × 4.39×10⁻⁶⁷ / (7.287×10⁻⁴⁸) = 1.81 × 10⁻¹⁹ J = 1.13 eV',
-                'Step 5: λ = hc/ΔE = (6.626×10⁻³⁴ × 3×10⁸) / 1.81×10⁻¹⁹ = 1.098 × 10⁻⁶ m ≈ 1098 nm (near-IR)'
-            ],
-            answer: 'λ ≈ 1098 nm (near-infrared)',
-            notes: 'This photon falls in the near-infrared region. The particle-in-a-box model, while simple, provides useful qualitative insights into conjugated molecules and quantum dots where confinement effects are significant.'
-        },
-        {
-            id: 4,
-            exam: 'jam-chemistry',
-            chapter: 'Electrochemistry',
-            topic: 'Standard Free Energy from Cell Potential',
-            difficulty: 'easy',
-            year: null,
-            question: 'A galvanic cell has a standard cell potential E°_cell = 1.1 V and the cell reaction involves the transfer of 2 electrons. Calculate the standard Gibbs free energy change ΔG°.',
-            given: 'Given: E°_cell = 1.1 V, n = 2 (electrons transferred), F = 96485 C/mol',
-            required: 'Find: ΔG° for the cell reaction',
-            formula: '$$\\Delta G^\\circ = -nFE^\\circ_{cell}$$',
-            steps: [
-                'Step 1: Apply the relation ΔG° = −nFE°',
-                'Step 2: ΔG° = −2 × 96485 × 1.1',
-                'Step 3: ΔG° = −2 × 106133.5',
-                'Step 4: ΔG° = −212267 J = −212.3 kJ/mol'
-            ],
-            answer: 'ΔG° = −212.3 kJ/mol',
-            notes: 'The negative ΔG° confirms that the galvanic cell reaction is spontaneous under standard conditions. This is the Daniell cell (Zn-Cu) standard potential. The equilibrium constant can be found from: ln K = nFE°/(RT).'
-        },
-        {
-            id: 5,
-            exam: 'jam-chemistry',
-            chapter: 'Solutions',
-            topic: 'Molality and Boiling Point Elevation',
-            difficulty: 'easy',
-            year: null,
-            question: '18 g of glucose (C₆H₁₂O₆, M = 180 g/mol) is dissolved in 1 kg of water. Find the molality of the solution and the elevation in boiling point. (Kb for water = 0.512 °C/m)',
-            given: 'Given: Mass of glucose = 18 g, Molar mass M = 180 g/mol, Mass of solvent = 1 kg, Kb = 0.512 °C·kg/mol',
-            required: 'Find: Molality m and boiling point elevation ΔTb',
-            formula: '$$m = \\frac{\\text{moles of solute}}{\\text{mass of solvent (kg)}}, \\quad \\Delta T_b = K_b \\cdot m$$',
-            steps: [
-                'Step 1: Moles of glucose = mass/molar mass = 18/180 = 0.1 mol',
-                'Step 2: Molality m = moles/kg of solvent = 0.1/1 = 0.1 mol/kg',
-                'Step 3: Boiling point elevation: ΔTb = Kb × m = 0.512 × 0.1',
-                'Step 4: ΔTb = 0.0512 °C',
-                'Step 5: New boiling point = 100 + 0.0512 = 100.0512 °C'
-            ],
-            answer: 'Molality = 0.1 m; ΔTb = 0.0512 °C',
-            notes: 'Glucose is a non-electrolyte, so the van\'t Hoff factor i = 1. For electrolytes like NaCl, ΔTb = i·Kb·m where i ≈ 2 (accounting for dissociation into Na⁺ and Cl⁻ ions).'
         }
     ],
 
