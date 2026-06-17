@@ -1185,7 +1185,7 @@ function renderProblems(problems) {
 
                 <div class="formula-block">
                     <h4>📐 Formula</h4>
-                    <div class="formula-content">${p.formula}</div>
+                    <div class="formula-content">${p.formula.includes('$$') ? p.formula : '$$' + p.formula + '$$'}</div>
                 </div>
 
                 <button class="btn-toggle-solution" onclick="toggleSolution(${p.id})">
