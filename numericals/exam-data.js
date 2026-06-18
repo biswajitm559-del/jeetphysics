@@ -173,12 +173,12 @@ const EXAM_PROBLEMS = {
         {
             id: 10, exam: 'jam-physics', chapter: 'Classical Mechanics', topic: 'Poisson Brackets', difficulty: 'moderate', year: '2023',
             question: 'Evaluate the Poisson bracket {L_x, L_y} where L is angular momentum. Use qᵢ, pᵢ as canonical coordinates.',
-            given: 'Given: L_x = yp_z − zp_y, L_y = zp_x − xp_z',
-            required: 'Find: {L_x, L_y}',
+            given: 'Given: L<sub>x</sub> = yp<sub>z</sub> − zp<sub>y</sub>, L<sub>y</sub> = zp<sub>x</sub> − xp<sub>z</sub>',
+            required: 'Find: {L<sub>x</sub>, L<sub>y</sub>}',
             formula: '$\\{L_x, L_y\\} = L_z$',
             steps: ['Step 1: {L_x, L_y} = ∑ᵢ (∂L_x/∂qᵢ · ∂L_y/∂pᵢ − ∂L_x/∂pᵢ · ∂L_y/∂qᵢ)', 'Step 2: ∂L_x/∂y = p_z, ∂L_y/∂p_z = −x → contribution: p_z(−x)', 'Step 3: ∂L_x/∂z = −p_y, ∂L_y/∂p_y = 0; ∂L_x/∂p_y = −z, ∂L_y/∂y = 0', 'Step 4: ∂L_x/∂p_z = y, ∂L_y/∂z = p_x → contribution: y·p_x', 'Step 5: Collecting: {L_x,L_y} = xp_y − yp_x = L_z'],
-            answer: '{L_x, L_y} = L_z; similarly {L_y,L_z} = L_x and {L_z,L_x} = L_y',
-            notes: 'These are the fundamental commutation relations of angular momentum in classical mechanics, mirroring the quantum mechanical commutators [L_x,L_y] = iℏL_z.'
+            answer: '{L<sub>x</sub>, L<sub>y</sub>} = L<sub>z</sub>; similarly {L<sub>y</sub>,L<sub>z</sub>} = L<sub>x</sub> and {L<sub>z</sub>,L<sub>x</sub>} = L<sub>y</sub>',
+            notes: 'These are the fundamental commutation relations of angular momentum in classical mechanics, mirroring the quantum mechanical commutators [L<sub>x</sub>,L<sub>y</sub>] = iℏL<sub>z</sub>.'
         },
 
         // --- Quantum Mechanics (10) ---
@@ -298,10 +298,10 @@ const EXAM_PROBLEMS = {
             id: 22, exam: 'jam-physics', chapter: 'EM Theory', topic: 'Multipole Expansion', difficulty: 'advanced', year: '2021',
             question: 'Find the monopole and dipole contributions to the potential of a charge distribution consisting of +q at z = d and −q at z = 0.',
             given: 'Given: +q at z = d, −q at z = 0, observation point r >> d',
-            required: 'Find: V_monopole and V_dipole',
+            required: 'Find: V<sub>monopole</sub> and V<sub>dipole</sub>',
             formula: '$V_{dip} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{p\\cos\\theta}{r^2}$',
             steps: ['Step 1: Total charge = +q − q = 0. Monopole term V_mono = 0', 'Step 2: Dipole moment p = qd (pointing from −q to +q, in +z direction)', 'Step 3: V_dip = p cosθ/(4πε₀r²) = qd cosθ/(4πε₀r²)', 'Step 4: This is the leading term since monopole vanishes', 'Step 5: Next correction is quadrupole ∝ 1/r³'],
-            answer: 'V_mono = 0; V_dip = qd cosθ/(4πε₀r²)',
+            answer: 'V<sub>mono</sub> = 0; V<sub>dip</sub> = qd cosθ/(4πε₀r²)',
             notes: 'This is the electric dipole potential. The 1/r² dependence (vs 1/r for monopole) means the field falls off faster. Dipole antennas and molecular electric dipoles are described by this formula.'
         },
         {
@@ -357,12 +357,12 @@ const EXAM_PROBLEMS = {
         {
             id: 28, exam: 'jam-physics', chapter: 'EM Theory', topic: 'Dielectrics', difficulty: 'moderate', year: '2020',
             question: 'A parallel plate capacitor is filled with a dielectric of permittivity ε = 4ε₀. Find the ratio of the capacitance with to without the dielectric, and the bound surface charge density if free charge density is σ_f.',
-            given: 'Given: ε_r = 4, free charge density σ_f on plates',
-            required: 'Find: C/C₀ and σ_b',
+            given: 'Given: ε<sub>r</sub> = 4, free charge density σ<sub>f</sub> on plates',
+            required: 'Find: C/C₀ and σ<sub>b</sub>',
             formula: '$C = \\varepsilon_r C_0, \\quad \\sigma_b = \\sigma_f(1 - 1/\\varepsilon_r)$',
             steps: ['Step 1: C = εA/d = ε_r ε₀A/d = ε_r C₀', 'Step 2: C/C₀ = ε_r = 4', 'Step 3: D = ε₀E + P. Boundary condition: D_n continuous gives D = σ_f', 'Step 4: P = ε₀(ε_r − 1)E. Bound charge σ_b = P·n̂ = P = ε₀(ε_r−1)E = (1 − 1/ε_r)σ_f', 'Step 5: σ_b = (1 − 1/4)σ_f = (3/4)σ_f'],
-            answer: 'C = 4C₀; σ_b = (3/4)σ_f (opposing σ_f)',
-            notes: 'The bound charge partially cancels the free charge, reducing the internal E field by factor ε_r. This is why dielectrics increase capacitance — they reduce E, requiring more charge for the same V.'
+            answer: 'C = 4C₀; σ<sub>b</sub> = (3/4)σ<sub>f</sub> (opposing σ<sub>f</sub>)',
+            notes: 'The bound charge partially cancels the free charge, reducing the internal E field by factor ε<sub>r</sub>. This is why dielectrics increase capacitance — they reduce E, requiring more charge for the same V.'
         },
         {
             id: 29, exam: 'jam-physics', chapter: 'EM Theory', topic: 'Poynting Vector', difficulty: 'moderate', year: '2021',
@@ -390,20 +390,20 @@ const EXAM_PROBLEMS = {
             id: 31, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Maxwell Speed Distribution', difficulty: 'moderate', year: '2023',
             question: 'From the Maxwell speed distribution, find the most probable speed v_p, mean speed v̄, and rms speed v_rms for an ideal gas of molecular mass M at temperature T.',
             given: 'Given: f(v) = 4π(m/2πkT)^(3/2) v² exp(−mv²/2kT), molecular mass m = M/Nₐ',
-            required: 'Find: v_p, v̄, v_rms',
+            required: 'Find: v<sub>p</sub>, v̄, v<sub>rms</sub>',
             formula: '$v_p = \\sqrt{\\frac{2k_BT}{m}}, \\quad \\bar{v} = \\sqrt{\\frac{8k_BT}{\\pi m}}, \\quad v_{rms} = \\sqrt{\\frac{3k_BT}{m}}$',
             steps: ['Step 1: Most probable: df/dv = 0 → v_p = √(2kT/m)', 'Step 2: Mean speed: v̄ = ∫₀^∞ v f(v) dv = √(8kT/πm)', 'Step 3: Mean square speed: ⟨v²⟩ = ∫v²f(v)dv = 3kT/m', 'Step 4: v_rms = √(3kT/m)', 'Step 5: Ratio v_p : v̄ : v_rms = 1 : 1.128 : 1.225'],
-            answer: 'v_p = √(2RT/M); v̄ = √(8RT/πM); v_rms = √(3RT/M) [using R = NAk]',
-            notes: 'For N₂ at 300K (M=0.028 kg/mol): v_p = 422, v̄ = 476, v_rms = 517 m/s. Hydrogen is ~√14 times faster, which is why it escapes from Earth\'s atmosphere.'
+            answer: 'v<sub>p</sub> = √(2RT/M); v̄ = √(8RT/πM); v<sub>rms</sub> = √(3RT/M) [using R = NAk]',
+            notes: 'For N₂ at 300K (M=0.028 kg/mol): v<sub>p</sub> = 422, v̄ = 476, v<sub>rms</sub> = 517 m/s. Hydrogen is ~√14 times faster, which is why it escapes from Earth\'s atmosphere.'
         },
         {
             id: 32, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Partition Function', difficulty: 'advanced', year: '2021',
             question: 'Find the partition function Z for a two-level system with energies 0 and ε. Calculate the mean energy ⟨E⟩ and specific heat C_v.',
             given: 'Given: Two levels: E₁ = 0, E₂ = ε, temperature T, β = 1/kT',
-            required: 'Find: Z, ⟨E⟩, C_v',
+            required: 'Find: Z, ⟨E⟩, C<sub>v</sub>',
             formula: '$Z = 1 + e^{-\\beta\\varepsilon}, \\quad \\langle E \\rangle = -\\frac{\\partial \\ln Z}{\\partial \\beta}$',
             steps: ['Step 1: Z = e^(0) + e^(−βε) = 1 + e^(−βε)', 'Step 2: ⟨E⟩ = −∂lnZ/∂β = εe^(−βε)/(1 + e^(−βε))', 'Step 3: ⟨E⟩ = ε/(e^(βε) + 1) — Fermi-Dirac form!', 'Step 4: C_v = d⟨E⟩/dT = kβ²ε²e^(βε)/(e^(βε)+1)²', 'Step 5: C_v peaks at kT ≈ 0.42ε (Schottky anomaly)'],
-            answer: 'Z = 1 + e^(−ε/kT); ⟨E⟩ = ε/(e^(ε/kT)+1); Schottky peak in C_v',
+            answer: 'Z = 1 + e^(−ε/kT); ⟨E⟩ = ε/(e^(ε/kT)+1); Schottky peak in C<sub>v</sub>',
             notes: 'The Schottky heat capacity anomaly is observed in systems with two-level energy splitting (e.g., spin-1/2 in magnetic field). The characteristic hump occurs when kT ≈ ε.'
         },
         {
@@ -420,11 +420,11 @@ const EXAM_PROBLEMS = {
             id: 34, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Fermi-Dirac Statistics', difficulty: 'advanced', year: '2022',
             question: 'Find the Fermi energy E_F at T = 0 for free electrons in a metal with electron density n = 8.5 × 10²⁸ m⁻³ (copper).',
             given: 'Given: n = 8.5×10²⁸ m⁻³, mₑ = 9.109×10⁻³¹ kg, ℏ = 1.055×10⁻³⁴ J·s',
-            required: 'Find: Fermi energy E_F',
+            required: 'Find: Fermi energy E<sub>F</sub>',
             formula: '$E_F = \\frac{\\hbar^2}{2m}(3\\pi^2 n)^{2/3}$',
             steps: ['Step 1: All states filled up to E_F at T = 0', 'Step 2: n = (1/3π²)(2mE_F/ℏ²)^(3/2)', 'Step 3: E_F = (ℏ²/2m)(3π²n)^(2/3)', 'Step 4: 3π²n = 3π² × 8.5×10²⁸ = 2.52×10³⁰', 'Step 5: E_F = (1.055×10⁻³⁴)²/(2×9.109×10⁻³¹) × (2.52×10³⁰)^(2/3) = 1.126×10⁻¹⁸ J ≈ 7.04 eV'],
-            answer: 'E_F ≈ 7.04 eV for copper',
-            notes: 'The Fermi temperature T_F = E_F/k ≈ 81,700 K >> room temperature. This is why electron gas in metals behaves quantum mechanically even at room temperature. Only electrons near E_F participate in conduction.'
+            answer: 'E<sub>F</sub> ≈ 7.04 eV for copper',
+            notes: 'The Fermi temperature T<sub>F</sub> = E<sub>F</sub>/k ≈ 81,700 K >> room temperature. This is why electron gas in metals behaves quantum mechanically even at room temperature. Only electrons near E<sub>F</sub> participate in conduction.'
         },
         {
             id: 35, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Entropy and Second Law', difficulty: 'moderate', year: '2019',
@@ -434,12 +434,12 @@ const EXAM_PROBLEMS = {
             formula: '$W = nRT\\ln(V_2/V_1), \\quad \\Delta S = nR\\ln(V_2/V_1)$',
             steps: ['Step 1: Isothermal → T = const → ΔU = nCvΔT = 0', 'Step 2: W = nRT ln(V₂/V₁) = 1 × 8.314 × 300 × ln(2) = 1729 J', 'Step 3: First law: Q = ΔU + W = 0 + 1729 = 1729 J', 'Step 4: ΔS = Q/T = 1729/300 = 5.76 J/K', 'Step 5: Or: ΔS = nR ln(V₂/V₁) = 8.314 × 0.693 = 5.76 J/K ✓'],
             answer: 'W = Q = 1729 J; ΔU = 0; ΔS = 5.76 J/K',
-            notes: 'For isothermal reversible process, all heat input converts to work. The entropy increases as expected for expansion. If process is irreversible, W_actual < W_rev and ΔS_universe > 0.'
+            notes: 'For isothermal reversible process, all heat input converts to work. The entropy increases as expected for expansion. If process is irreversible, W<sub>actual</sub> < W<sub>rev</sub> and ΔS<sub>universe</sub> > 0.'
         },
         {
             id: 36, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Phase Transitions', difficulty: 'moderate', year: '2018',
             question: 'Using the Clausius-Clapeyron equation, estimate how the boiling point of water changes with altitude (pressure decreases from 1 atm to 0.9 atm). L_vap = 40.7 kJ/mol.',
-            given: 'Given: L = 40700 J/mol, T₁ = 373 K at P₁ = 101325 Pa, P₂ = 0.9P₁, ΔV_vap ≈ RT/P (ideal gas)',
+            given: 'Given: L = 40700 J/mol, T₁ = 373 K at P₁ = 101325 Pa, P₂ = 0.9P₁, ΔV<sub>vap</sub> ≈ RT/P (ideal gas)',
             required: 'Find: Change in boiling point ΔT',
             formula: '$\\frac{dP}{dT} = \\frac{L}{T\\Delta V} \\approx \\frac{LP}{RT^2}$',
             steps: ['Step 1: Clausius-Clapeyron: dP/dT = LP/(RT²)', 'Step 2: dT/dP = RT²/LP', 'Step 3: ΔT/ΔP ≈ RT²/(LP)', 'Step 4: ΔP = 0.9P − P = −0.1P', 'Step 5: ΔT = −0.1RT²/L = −0.1 × 8.314 × 373²/40700 = −2.84 K'],
@@ -473,18 +473,18 @@ const EXAM_PROBLEMS = {
             required: 'Find: rms displacement and P(x = 0)',
             formula: '$x_{rms} = l\\sqrt{N}, \\quad P(0) \\approx \\sqrt{\\frac{2}{\\pi N}}$',
             steps: ['Step 1: ⟨x⟩ = 0 (equal probability both ways)', 'Step 2: ⟨x²⟩ = Nl² (each step contributes l² independently)', 'Step 3: x_rms = l√N = 1×√1000 = 31.6 nm', 'Step 4: P(0) = C(N, N/2)/2^N ≈ √(2/πN) = √(2/1000π) = 0.0252', 'Step 5: Approximately 2.5% chance to return to origin after 1000 steps'],
-            answer: 'x_rms = √1000 nm ≈ 31.6 nm; P(origin) ≈ 2.52%',
-            notes: 'Diffusion coefficient D = l²/2τ where τ is time per step. x_rms = √(2Dt). This underlies Brownian motion, diffusion, and polymer physics. Einstein derived D = kT/6πηr for spherical particles.'
+            answer: 'x<sub>rms</sub> = √1000 nm ≈ 31.6 nm; P(origin) ≈ 2.52%',
+            notes: 'Diffusion coefficient D = l²/2τ where τ is time per step. x<sub>rms</sub> = √(2Dt). This underlies Brownian motion, diffusion, and polymer physics. Einstein derived D = kT/6πηr for spherical particles.'
         },
         {
             id: 40, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Debye Model', difficulty: 'advanced', year: '2016',
             question: 'State the Debye model for heat capacity of a solid and find C_v in the low-T limit (T << Θ_D).',
-            given: 'Given: Debye temperature Θ_D, phonons with density of states g(ω) ∝ ω² up to ω_D',
-            required: 'Find: C_v for T << Θ_D',
+            given: 'Given: Debye temperature Θ<sub>D</sub>, phonons with density of states g(ω) ∝ ω² up to ω<sub>D</sub>',
+            required: 'Find: C<sub>v</sub> for T << Θ<sub>D</sub>',
             formula: '$C_v = \\frac{12\\pi^4}{5}Nk_B\\left(\\frac{T}{\\Theta_D}\\right)^3$',
             steps: ['Step 1: Debye approximation: g(ω) = 9N/ω_D³ × ω² for ω ≤ ω_D', 'Step 2: Total energy U = ∫ ℏω n̄(ω) g(ω) dω where n̄ = 1/(e^(ℏω/kT)−1)', 'Step 3: Low T limit: upper limit → ∞. U = 9NkT(T/Θ_D)³∫₀^∞ x³/(eˣ−1)dx', 'Step 4: Integral = π⁴/15', 'Step 5: C_v = dU/dT = (12π⁴/5)Nk(T/Θ_D)³'],
-            answer: 'C_v = (12π⁴/5)Nk(T/Θ_D)³ — Debye T³ law',
-            notes: 'The Debye T³ law is well-confirmed experimentally for insulators at low T. Metals also have an electronic contribution C_el = γT (linear term) from electrons near the Fermi surface.'
+            answer: 'C<sub>v</sub> = (12π⁴/5)Nk(T/Θ<sub>D</sub>)³ — Debye T³ law',
+            notes: 'The Debye T³ law is well-confirmed experimentally for insulators at low T. Metals also have an electronic contribution C<sub>el</sub> = γT (linear term) from electrons near the Fermi surface.'
         },
 
         // --- Oscillations & Waves (10) ---
@@ -525,27 +525,27 @@ const EXAM_PROBLEMS = {
             required: 'Find: Fourier series representation',
             formula: '$f(t) = \\sum_{n \\text{ odd}} \\frac{4}{n\\pi}\\sin(nt)$',
             steps: ['Step 1: Since f(t) is odd, aₙ = 0', 'Step 2: bₙ = (1/π)∫₋π^π f(t)sin(nt)dt = (2/π)∫₀^π sin(nt)dt', 'Step 3: = (2/π)[−cos(nt)/n]₀^π = (2/nπ)(1 − cos(nπ))', 'Step 4: cos(nπ) = 1 for even n, −1 for odd n. So bₙ = 4/nπ for odd n, 0 for even n', 'Step 5: f(t) = (4/π)[sin t + sin(3t)/3 + sin(5t)/5 + ...]'],
-            answer: 'f(t) = (4/π)∑_{n=1,3,5,...} sin(nt)/n',
+            answer: 'f(t) = (4/π)∑<sub>n=1,3,5,...</sub> sin(nt)/n',
             notes: 'The series converges to the square wave except at discontinuities where it converges to the average (0). The Gibbs phenomenon causes ~9% overshoot near discontinuities regardless of how many terms are included.'
         },
         {
             id: 45, exam: 'jam-physics', chapter: 'Oscillations & Waves', topic: 'Group vs Phase Velocity', difficulty: 'moderate', year: '2022',
             question: 'Waves in deep water have dispersion relation ω = √(gk). Find the phase velocity and group velocity.',
             given: 'Given: ω = √(gk), g = 9.8 m/s²',
-            required: 'Find: Phase velocity v_p = ω/k and group velocity v_g = dω/dk',
+            required: 'Find: Phase velocity v<sub>p</sub> = ω/k and group velocity v<sub>g</sub> = dω/dk',
             formula: '$v_p = \\sqrt{g/k}, \\quad v_g = \\frac{1}{2}\\sqrt{g/k} = \\frac{v_p}{2}$',
             steps: ['Step 1: Phase velocity: v_p = ω/k = √(gk)/k = √(g/k)', 'Step 2: Group velocity: v_g = dω/dk = d(√(gk))/dk', 'Step 3: = √g × (1/2) × k^(−1/2) = √(g/k)/2 = v_p/2', 'Step 4: v_g = v_p/2 for deep water gravity waves', 'Step 5: Energy propagates at group velocity, not phase velocity'],
-            answer: 'v_p = √(g/k); v_g = v_p/2 = (1/2)√(g/k)',
+            answer: 'v<sub>p</sub> = √(g/k); v<sub>g</sub> = v<sub>p</sub>/2 = (1/2)√(g/k)',
             notes: 'For deep water waves, the group velocity is half the phase velocity. This is why a wave packet (group) moves slower than individual crests. Observable at ocean beaches: wave crests appear to move through the group envelope.'
         },
         {
             id: 46, exam: 'jam-physics', chapter: 'Oscillations & Waves', topic: 'Acoustic Waves', difficulty: 'moderate', year: '2019',
             question: 'Derive the speed of sound in an ideal gas using adiabatic bulk modulus. Find the speed in air at 300 K (γ = 1.4, M = 0.029 kg/mol).',
             given: 'Given: Adiabatic process PVᵞ = const, ρ = PM/RT, γ = 1.4, T = 300 K',
-            required: 'Find: Speed of sound c_s = √(γP/ρ)',
+            required: 'Find: Speed of sound c<sub>s</sub> = √(γP/ρ)',
             formula: '$c_s = \\sqrt{\\frac{\\gamma P}{\\rho}} = \\sqrt{\\frac{\\gamma RT}{M}}$',
             steps: ['Step 1: Adiabatic bulk modulus: B_ad = −V(dP/dV)_S = γP', 'Step 2: Speed of sound: c_s = √(B/ρ) = √(γP/ρ)', 'Step 3: Ideal gas: P/ρ = RT/M', 'Step 4: c_s = √(γRT/M) = √(1.4 × 8.314 × 300/0.029)', 'Step 5: c_s = √(120180) ≈ 347 m/s'],
-            answer: 'c_s = √(γRT/M) ≈ 347 m/s in air at 300 K',
+            answer: 'c<sub>s</sub> = √(γRT/M) ≈ 347 m/s in air at 300 K',
             notes: 'Newton originally used isothermal modulus (γ=1), giving 280 m/s, 20% too low. Laplace corrected this to adiabatic (sound compression is too fast for heat exchange). Speed scales as √T: hotter air → faster sound.'
         },
         {
@@ -562,10 +562,10 @@ const EXAM_PROBLEMS = {
             id: 48, exam: 'jam-physics', chapter: 'Oscillations & Waves', topic: 'Coupled Oscillators', difficulty: 'advanced', year: '2018',
             question: 'Two identical pendulums of length l are coupled by a weak spring (k << mg/l). Find the beat frequency when one pendulum is initially displaced.',
             given: 'Given: ω₀ = √(g/l), spring constant k, mass m, weak coupling',
-            required: 'Find: Beat frequency ω_beat',
+            required: 'Find: Beat frequency ω<sub>beat</sub>',
             formula: '$\\omega_{beat} = \\omega_+ - \\omega_- \\approx \\frac{k}{m\\omega_0}$',
             steps: ['Step 1: Normal mode frequencies: ω₋² = g/l (symmetric), ω₊² = g/l + 2k/m (antisymmetric)', 'Step 2: ω₊ − ω₋ = √(ω₀² + 2k/m) − ω₀ ≈ k/(mω₀) for k << mω₀²', 'Step 3: Beat period T_beat = 2π/ω_beat = 2πmω₀/k', 'Step 4: Energy oscillates between pendulums with period T_beat', 'Step 5: At t = T_beat/2, all energy has transferred to other pendulum'],
-            answer: 'ω_beat ≈ k/(mω₀) = k√(l/g)/m; energy exchanges periodically',
+            answer: 'ω<sub>beat</sub> ≈ k/(mω₀) = k√(l/g)/m; energy exchanges periodically',
             notes: 'Coupled pendulums demonstrate normal modes, beats, and energy exchange. This is directly analogous to quantum mechanical resonance tunneling and neutrino oscillations!'
         },
         {
@@ -582,10 +582,10 @@ const EXAM_PROBLEMS = {
             id: 50, exam: 'jam-physics', chapter: 'Oscillations & Waves', topic: 'Elastic Waves', difficulty: 'moderate', year: '2020',
             question: 'Find the speed of longitudinal and transverse elastic waves in a solid with Young\'s modulus E = 200 GPa, shear modulus G = 80 GPa, and density ρ = 7800 kg/m³.',
             given: 'Given: E = 200 GPa, G = 80 GPa, ρ = 7800 kg/m³',
-            required: 'Find: v_L and v_T',
+            required: 'Find: v<sub>L</sub> and v<sub>T</sub>',
             formula: '$v_L = \\sqrt{E/\\rho}, \\quad v_T = \\sqrt{G/\\rho}$',
             steps: ['Step 1: Longitudinal (P-wave): v_L = √(E/ρ) for thin rod', 'Step 2: v_L = √(200×10⁹/7800) = √(2.564×10⁷) = 5064 m/s', 'Step 3: Transverse (S-wave): v_T = √(G/ρ)', 'Step 4: v_T = √(80×10⁹/7800) = √(1.026×10⁷) = 3203 m/s', 'Step 5: v_L/v_T = √(E/G) ≈ 1.58'],
-            answer: 'v_L ≈ 5064 m/s (P-wave); v_T ≈ 3203 m/s (S-wave)',
+            answer: 'v<sub>L</sub> ≈ 5064 m/s (P-wave); v<sub>T</sub> ≈ 3203 m/s (S-wave)',
             notes: 'P-waves (longitudinal) travel faster than S-waves (shear) in solids. Seismometers detect P-waves first. S-waves cannot travel through liquids (no shear modulus) — this proves Earth\'s outer core is liquid!'
         },
 
@@ -634,10 +634,10 @@ const EXAM_PROBLEMS = {
             id: 55, exam: 'jam-physics', chapter: 'Optics', topic: 'Optical Fiber', difficulty: 'moderate', year: '2020',
             question: 'An optical fiber has core index n₁ = 1.5 and cladding index n₂ = 1.45. Find the numerical aperture NA and the maximum acceptance angle θ_max.',
             given: 'Given: n₁ = 1.5 (core), n₂ = 1.45 (cladding), n₀ = 1 (air)',
-            required: 'Find: NA and θ_max',
+            required: 'Find: NA and θ<sub>max</sub>',
             formula: '$NA = \\sqrt{n_1^2 - n_2^2}, \\quad \\theta_{max} = \\arcsin(NA)$',
             steps: ['Step 1: Critical angle: sinθ_c = n₂/n₁ = 1.45/1.5 = 0.9667', 'Step 2: For total internal reflection to work at core-cladding interface', 'Step 3: NA = √(n₁² − n₂²) = √(1.5² − 1.45²) = √(2.25 − 2.1025) = √0.1475', 'Step 4: NA = 0.384', 'Step 5: θ_max = arcsin(NA/n₀) = arcsin(0.384) = 22.6°'],
-            answer: 'NA = 0.384; θ_max = 22.6°',
+            answer: 'NA = 0.384; θ<sub>max</sub> = 22.6°',
             notes: 'Larger NA → wider acceptance cone → more light captured → brighter signal, but more modal dispersion (bandwidth limit). Single-mode fibers have tiny core (8μm) limiting NA but allowing very high bandwidth for long-distance telecommunications.'
         },
         {
@@ -674,11 +674,11 @@ const EXAM_PROBLEMS = {
             id: 59, exam: 'jam-physics', chapter: 'Optics', topic: 'Coherence', difficulty: 'advanced', year: '2017',
             question: 'Define the coherence length and temporal coherence time of a light source. A Sodium lamp has linewidth Δν = 5×10¹¹ Hz. Find the coherence length.',
             given: 'Given: Δν = 5×10¹¹ Hz, c = 3×10⁸ m/s',
-            required: 'Find: Coherence time τ_c and coherence length l_c',
+            required: 'Find: Coherence time τ<sub>c</sub> and coherence length l<sub>c</sub>',
             formula: '$\\tau_c = 1/\\Delta\\nu, \\quad l_c = c\\tau_c = c/\\Delta\\nu$',
             steps: ['Step 1: Coherence time: τ_c ≈ 1/Δν = 1/(5×10¹¹) = 2×10⁻¹² s = 2 ps', 'Step 2: Coherence length: l_c = cτ_c = 3×10⁸ × 2×10⁻¹² = 6×10⁻⁴ m = 0.6 mm', 'Step 3: For comparison: HeNe laser Δν ≈ 1 MHz → l_c = 300 m', 'Step 4: For LIGO: Nd:YAG laser Δν ≈ 1 Hz → l_c = 3×10⁸ m!', 'Step 5: Interference only observable for path difference < l_c'],
-            answer: 'τ_c = 2 ps; l_c = 0.6 mm',
-            notes: 'Coherence length limits the maximum path difference for interference. White light: l_c ≈ 1 μm. Na lamp: 0.6 mm. Laser: meters to hundreds of meters. LIGO needs extraordinary coherence to detect gravitational waves.'
+            answer: 'τ<sub>c</sub> = 2 ps; l<sub>c</sub> = 0.6 mm',
+            notes: 'Coherence length limits the maximum path difference for interference. White light: l<sub>c</sub> ≈ 1 μm. Na lamp: 0.6 mm. Laser: meters to hundreds of meters. LIGO needs extraordinary coherence to detect gravitational waves.'
         },
         {
             id: 60, exam: 'jam-physics', chapter: 'Optics', topic: 'Nonlinear Optics', difficulty: 'advanced', year: '2016',
@@ -688,39 +688,39 @@ const EXAM_PROBLEMS = {
             formula: '$\\Delta k = k_{2\\omega} - 2k_\\omega = 0 \\Rightarrow n_{2\\omega} = n_\\omega$',
             steps: ['Step 1: Nonlinear polarization P⁽²⁾ = ε₀χ⁽²⁾E²(ω) creates source at 2ω', 'Step 2: SHG power ∝ sinc²(ΔkL/2) where Δk = k(2ω) − 2k(ω)', 'Step 3: Maximum when Δk = 0 (phase matching)', 'Step 4: Δk = 0 requires n(2ω) = n(ω) — impossible in isotropic dispersive media', 'Step 5: Solution: use birefringent crystals where ordinary/extraordinary indices differ'],
             answer: 'Phase matching: Δk = n(2ω)·2ω/c − 2·n(ω)·ω/c = 0 → n(2ω) = n(ω)',
-            notes: 'Without phase matching, SHG amplitude oscillates with coherence length l_c = π/Δk (typically μm). With phase matching in birefringent crystals (e.g., BBO, KDP), conversion efficiency > 50% is achievable. Used in green laser pointers (1064nm → 532nm).'
+            notes: 'Without phase matching, SHG amplitude oscillates with coherence length l<sub>c</sub> = π/Δk (typically μm). With phase matching in birefringent crystals (e.g., BBO, KDP), conversion efficiency > 50% is achievable. Used in green laser pointers (1064nm → 532nm).'
         },
 
         // --- Electronics (10) ---
         {
             id: 61, exam: 'jam-physics', chapter: 'Electronics', topic: 'p-n Junction', difficulty: 'moderate', year: '2022',
             question: 'Derive the ideal diode equation I = I₀(e^(V/V_T) − 1) and explain each term. Find I for V = 0.6 V, I₀ = 10 nA, T = 300 K.',
-            given: 'Given: I₀ = 10⁻⁸ A, V = 0.6 V, T = 300 K, V_T = kT/e = 26 mV',
+            given: 'Given: I₀ = 10⁻⁸ A, V = 0.6 V, T = 300 K, V<sub>T</sub> = kT/e = 26 mV',
             required: 'Find: Current I',
             formula: '$I = I_0\\left(e^{V/V_T} - 1\\right)$',
             steps: ['Step 1: Thermal voltage V_T = kT/e = (1.38×10⁻²³×300)/(1.6×10⁻¹⁹) = 0.0259 V ≈ 26 mV', 'Step 2: Exponent: V/V_T = 0.6/0.026 = 23.1', 'Step 3: e^(23.1) = 1.07×10¹⁰', 'Step 4: I = 10×10⁻⁹ × (1.07×10¹⁰ − 1) ≈ 10⁻⁸ × 10¹⁰ = 100 mA', 'Step 5: The −1 term is negligible for forward bias > 0.1V'],
             answer: 'I ≈ 107 mA',
-            notes: 'The exponential I-V characteristic makes diodes excellent rectifiers. The 0.7V knee voltage for Si diodes corresponds to V/V_T ≈ 27. LEDs, solar cells, and photodiodes all follow this equation with modifications.'
+            notes: 'The exponential I-V characteristic makes diodes excellent rectifiers. The 0.7V knee voltage for Si diodes corresponds to V/V<sub>T</sub> ≈ 27. LEDs, solar cells, and photodiodes all follow this equation with modifications.'
         },
         {
             id: 62, exam: 'jam-physics', chapter: 'Electronics', topic: 'Transistor Amplifier', difficulty: 'moderate', year: '2021',
             question: 'A BJT in common-emitter configuration has β = 100, Rc = 5 kΩ, and V_CC = 12 V. Find the voltage gain and the Q-point current if V_BE = 0.7 V and R_B = 470 kΩ.',
-            given: 'Given: β = 100, Rc = 5000 Ω, V_CC = 12 V, R_B = 470 kΩ, V_BE = 0.7 V',
-            required: 'Find: I_B, I_C, V_CE, voltage gain A_v',
+            given: 'Given: β = 100, Rc = 5000 Ω, V<sub>CC</sub> = 12 V, R<sub>B</sub> = 470 kΩ, V<sub>BE</sub> = 0.7 V',
+            required: 'Find: I<sub>B</sub>, I<sub>C</sub>, V<sub>CE</sub>, voltage gain A<sub>v</sub>',
             formula: '$A_v = -\\beta R_C / r_e, \\quad r_e = V_T/I_C$',
             steps: ['Step 1: I_B = (V_CC − V_BE)/R_B = (12−0.7)/(470×10³) = 24 μA', 'Step 2: I_C = β I_B = 100 × 24×10⁻⁶ = 2.4 mA', 'Step 3: V_CE = V_CC − I_C Rc = 12 − 2.4×10⁻³×5000 = 12 − 12 = 0 V (saturated!)', 'Step 4: For proper Q-point, reduce R_C to 2.5 kΩ → I_C = 2.4 mA, V_CE = 6 V', 'Step 5: r_e = V_T/I_C = 26 mV/2.4 mA = 10.8 Ω, A_v = −βRc/r_e = −100×2500/10.8 = −23,150'],
-            answer: 'I_C = 2.4 mA; at reduced Rc: A_v ≈ −230 (with Rc = 2.5kΩ)',
+            answer: 'I<sub>C</sub> = 2.4 mA; at reduced Rc: A<sub>v</sub> ≈ −230 (with Rc = 2.5kΩ)',
             notes: 'The CE amplifier inverts the signal (−sign). Voltage gain can be very high but the transistor must be biased in active region (not saturation). Q-point choice is critical for linear amplification.'
         },
         {
             id: 63, exam: 'jam-physics', chapter: 'Electronics', topic: 'Op-Amp Circuits', difficulty: 'easy', year: '2023',
             question: 'An inverting op-amp circuit has R₁ = 1 kΩ and R_f = 100 kΩ. Find the closed-loop voltage gain and the output for V_in = 0.05 V.',
-            given: 'Given: R₁ = 1 kΩ, R_f = 100 kΩ, V_in = 0.05 V, ideal op-amp',
-            required: 'Find: A_v and V_out',
+            given: 'Given: R₁ = 1 kΩ, R<sub>f</sub> = 100 kΩ, V<sub>in</sub> = 0.05 V, ideal op-amp',
+            required: 'Find: A<sub>v</sub> and V<sub>out</sub>',
             formula: '$A_v = -\\frac{R_f}{R_1}$',
             steps: ['Step 1: Virtual ground at inverting input (ideal op-amp)', 'Step 2: Current through R₁: i = V_in/R₁ = 0.05/1000 = 50 μA', 'Step 3: Same current flows through R_f (no current into op-amp input)', 'Step 4: V_out = −i × R_f = −50×10⁻⁶ × 100×10³ = −5 V', 'Step 5: A_v = −R_f/R₁ = −100'],
-            answer: 'A_v = −100; V_out = −5 V',
-            notes: 'The inverting amplifier: simple, precise gain determined by passive resistors (not transistor β). Gain bandwidth product limits: if GBW = 1 MHz, then for A_v = 100, bandwidth = 10 kHz. Used in audio amplifiers, filters, and instrumentation.'
+            answer: 'A<sub>v</sub> = −100; V<sub>out</sub> = −5 V',
+            notes: 'The inverting amplifier: simple, precise gain determined by passive resistors (not transistor β). Gain bandwidth product limits: if GBW = 1 MHz, then for A<sub>v</sub> = 100, bandwidth = 10 kHz. Used in audio amplifiers, filters, and instrumentation.'
         },
         {
             id: 64, exam: 'jam-physics', chapter: 'Electronics', topic: 'Digital Logic', difficulty: 'easy', year: '2022',
@@ -745,12 +745,12 @@ const EXAM_PROBLEMS = {
         {
             id: 66, exam: 'jam-physics', chapter: 'Electronics', topic: 'Modulation', difficulty: 'moderate', year: '2019',
             question: 'An AM signal has carrier frequency f_c = 1 MHz, carrier amplitude A_c = 10 V, and modulating signal m(t) = 5 cos(2π×1000t). Find the modulation index, sideband frequencies, and total power in sidebands if carrier power is P_c.',
-            given: 'Given: f_c = 1 MHz, A_c = 10 V, A_m = 5 V, f_m = 1 kHz',
-            required: 'Find: m, sidebands, P_sidebands',
+            given: 'Given: f<sub>c</sub> = 1 MHz, A<sub>c</sub> = 10 V, A<sub>m</sub> = 5 V, f<sub>m</sub> = 1 kHz',
+            required: 'Find: m, sidebands, P<sub>sidebands</sub>',
             formula: '$m = A_m/A_c, \\quad P_{tot} = P_c(1 + m^2/2)$',
             steps: ['Step 1: Modulation index m = A_m/A_c = 5/10 = 0.5', 'Step 2: AM signal: s(t) = A_c(1 + m cos2πf_mt)cos(2πf_ct)', 'Step 3: Sidebands at: f_c ± f_m = 1000 ± 1 kHz = 999 kHz and 1001 kHz', 'Step 4: P_c = A_c²/2, P_sidebands = P_c × m²/2 = P_c × 0.25/2 = P_c/8', 'Step 5: Total power P_tot = P_c(1 + 0.5²/2) = 1.125 P_c'],
-            answer: 'm = 0.5; Sidebands at 999 kHz, 1001 kHz; P_sidebands = P_c/8 (12.5% of carrier power)',
-            notes: 'For 100% modulation (m=1), sideband power = P_c/2 = 50% of carrier. AM is inefficient as the carrier (containing no information) uses most power. FM and SSB use bandwidth and power more efficiently.'
+            answer: 'm = 0.5; Sidebands at 999 kHz, 1001 kHz; P<sub>sidebands</sub> = P<sub>c</sub>/8 (12.5% of carrier power)',
+            notes: 'For 100% modulation (m=1), sideband power = P<sub>c</sub>/2 = 50% of carrier. AM is inefficient as the carrier (containing no information) uses most power. FM and SSB use bandwidth and power more efficiently.'
         },
         {
             id: 67, exam: 'jam-physics', chapter: 'Electronics', topic: 'Filters', difficulty: 'moderate', year: '2021',
@@ -765,8 +765,8 @@ const EXAM_PROBLEMS = {
         {
             id: 68, exam: 'jam-physics', chapter: 'Electronics', topic: 'ADC/DAC', difficulty: 'moderate', year: '2018',
             question: 'A 12-bit ADC has input range 0 to 5 V. Find the resolution (LSB voltage), the number of output levels, and the signal if digital output is 2048.',
-            given: 'Given: 12-bit ADC, V_ref = 5 V',
-            required: 'Find: Resolution, levels, V_out for code 2048',
+            given: 'Given: 12-bit ADC, V<sub>ref</sub> = 5 V',
+            required: 'Find: Resolution, levels, V<sub>out</sub> for code 2048',
             formula: '$V_{LSB} = \\frac{V_{ref}}{2^N}, \\quad V_{out} = \\text{code} \\times V_{LSB}$',
             steps: ['Step 1: Number of levels = 2^12 = 4096', 'Step 2: Resolution (1 LSB) = V_ref/2^N = 5/4096 = 1.22 mV', 'Step 3: V_out for code 2048 = 2048 × 1.22 mV = 2.5 V', 'Step 4: Code 2048 = exactly half of full scale (2^11)', 'Step 5: SNR for ideal N-bit ADC ≈ 6.02N + 1.76 dB = 74 dB for 12-bit'],
             answer: '4096 levels; 1 LSB = 1.22 mV; Code 2048 → 2.5 V; SNR = 74 dB',
@@ -775,7 +775,7 @@ const EXAM_PROBLEMS = {
         {
             id: 69, exam: 'jam-physics', chapter: 'Electronics', topic: 'Semiconductor Physics', difficulty: 'advanced', year: '2017',
             question: 'Find the intrinsic carrier concentration nᵢ for silicon at 300 K. Given: E_g = 1.12 eV, effective masses m*_e = 0.28mₑ, m*_h = 0.81mₑ.',
-            given: 'Given: E_g = 1.12 eV, m*_e = 0.28mₑ, m*_h = 0.81mₑ, T = 300 K, kT = 0.0259 eV',
+            given: 'Given: E<sub>g</sub> = 1.12 eV, m*<sub>e</sub> = 0.28mₑ, m*<sub>h</sub> = 0.81mₑ, T = 300 K, kT = 0.0259 eV',
             required: 'Find: nᵢ',
             formula: '$n_i = \\sqrt{N_c N_v}\\, e^{-E_g/2kT}$',
             steps: ['Step 1: N_c = 2(2πm*_e kT/h²)^(3/2) = 2.82×10²⁵ × (m*_e/mₑ)^(3/2) m⁻³', 'Step 2: N_c = 2.82×10²⁵ × (0.28)^(3/2) = 2.82×10²⁵ × 0.148 = 4.18×10²⁴ m⁻³', 'Step 3: N_v = 2.82×10²⁵ × (0.81)^(3/2) = 2.82×10²⁵ × 0.729 = 2.056×10²⁵ m⁻³', 'Step 4: √(N_c N_v) = √(4.18×10²⁴ × 2.056×10²⁵) = √(8.59×10⁴⁹) = 9.28×10²⁴ m⁻³', 'Step 5: nᵢ = 9.28×10²⁴ × e^(−1.12/0.0518) = 9.28×10²⁴ × e^(−21.6) = 9.28×10²⁴ × 4.3×10⁻¹⁰ = 3.98×10¹⁵ m⁻³'],
@@ -785,12 +785,12 @@ const EXAM_PROBLEMS = {
         {
             id: 70, exam: 'jam-physics', chapter: 'Electronics', topic: 'Microwave Electronics', difficulty: 'advanced', year: '2016',
             question: 'A transmission line of characteristic impedance Z₀ = 50 Ω is terminated by Z_L = 100 Ω. Find the reflection coefficient Γ, standing wave ratio SWR, and fraction of power reflected.',
-            given: 'Given: Z₀ = 50 Ω, Z_L = 100 Ω',
-            required: 'Find: Γ, SWR, P_reflected/P_incident',
+            given: 'Given: Z₀ = 50 Ω, Z<sub>L</sub> = 100 Ω',
+            required: 'Find: Γ, SWR, P<sub>reflected</sub>/P<sub>incident</sub>',
             formula: '$\\Gamma = \\frac{Z_L - Z_0}{Z_L + Z_0}, \\quad SWR = \\frac{1+|\\Gamma|}{1-|\\Gamma|}$',
             steps: ['Step 1: Γ = (Z_L − Z₀)/(Z_L + Z₀) = (100−50)/(100+50) = 50/150 = 1/3 ≈ 0.333', 'Step 2: SWR = (1 + |Γ|)/(1 − |Γ|) = (1 + 1/3)/(1 − 1/3) = (4/3)/(2/3) = 2', 'Step 3: Power reflection: |Γ|² = (1/3)² = 1/9 ≈ 11.1%', 'Step 4: Power transmitted to load: 1 − |Γ|² = 8/9 ≈ 88.9%', 'Step 5: For Z_L = Z₀: Γ = 0, SWR = 1, 100% power transferred (matched)'],
             answer: 'Γ = 1/3; SWR = 2; 11.1% reflected, 88.9% transmitted',
-            notes: 'Impedance matching is critical at RF/microwave frequencies. Mismatches cause reflections, standing waves, and power loss. Quarter-wave transformers with Z_t = √(Z₀Z_L) can match any real impedance.'
+            notes: 'Impedance matching is critical at RF/microwave frequencies. Mismatches cause reflections, standing waves, and power loss. Quarter-wave transformers with Z<sub>t</sub> = √(Z₀Z<sub>L</sub>) can match any real impedance.'
         },
 
         // --- Mathematical Physics (10) ---
@@ -818,7 +818,7 @@ const EXAM_PROBLEMS = {
             id: 73, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Fourier Transform', difficulty: 'moderate', year: '2022',
             question: 'Find the Fourier transform of a Gaussian f(x) = e^(−αx²) and interpret the result in terms of the uncertainty principle.',
             given: 'Given: f(x) = e^(−αx²), α > 0',
-            required: 'Find: F̃(k) = ∫_{-∞}^{∞} e^(−αx²) e^(−ikx) dx',
+            required: 'Find: F̃(k) = ∫<sub>-∞</sub><sup>∞</sup> e^(−αx²) e^(−ikx) dx',
             formula: '$\\tilde{F}(k) = \\sqrt{\\frac{\\pi}{\\alpha}} e^{-k^2/4\\alpha}$',
             steps: ['Step 1: Complete the square in exponent: −αx² − ikx = −α(x + ik/2α)² − k²/4α', 'Step 2: F̃(k) = e^(−k²/4α) ∫e^(−α(x+ik/2α)²) dx', 'Step 3: Gaussian integral: ∫e^(−αu²) du = √(π/α)', 'Step 4: F̃(k) = √(π/α) × e^(−k²/4α)', 'Step 5: Width in x: Δx ~ 1/√α; Width in k: Δk ~ √α → Δx × Δk ~ 1'],
             answer: 'F̃(k) = √(π/α) e^(−k²/4α) — also a Gaussian with width 1/√(4α)',
@@ -832,7 +832,7 @@ const EXAM_PROBLEMS = {
             formula: '$P_0 = 1, P_1 = x, P_2 = \\frac{1}{2}(3x^2-1)$',
             steps: ['Step 1: P₀ = (1/1) × d⁰/dx⁰(x²−1)⁰ = 1', 'Step 2: P₁ = (1/2) × d/dx(x²−1) = (1/2)(2x) = x', 'Step 3: P₂ = (1/8) × d²/dx²(x²−1)² = (1/8) d²/dx²(x⁴−2x²+1) = (1/8)(12x²−4) = (3x²−1)/2', 'Step 4: Orthogonality: ∫₋₁¹ P₀P₁ dx = ∫₋₁¹ x dx = 0 ✓', 'Step 5: ∫₋₁¹ Pₙ² dx = 2/(2n+1)'],
             answer: 'P₀=1, P₁=x, P₂=(3x²−1)/2; ∫₋₁¹PₘPₙdx = (2/(2n+1))δₘₙ',
-            notes: 'Legendre polynomials appear naturally in spherical problems (separation of variables in Laplace equation). The spherical harmonics Y_l^m are built from associated Legendre polynomials.'
+            notes: 'Legendre polynomials appear naturally in spherical problems (separation of variables in Laplace equation). The spherical harmonics Y<sub>l</sub>^m are built from associated Legendre polynomials.'
         },
         {
             id: 75, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Differential Equations', difficulty: 'moderate', year: '2022',
@@ -847,7 +847,7 @@ const EXAM_PROBLEMS = {
         {
             id: 76, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Tensors', difficulty: 'advanced', year: '2019',
             question: 'Write the electromagnetic field tensor F^μν in terms of E and B fields. Show that F^μν F_μν is a Lorentz invariant.',
-            given: 'Given: E = (E_x, E_y, E_z), B = (B_x, B_y, B_z), c = 1 units',
+            given: 'Given: E = (E<sub>x</sub>, E<sub>y</sub>, E<sub>z</sub>), B = (B<sub>x</sub>, B<sub>y</sub>, B<sub>z</sub>), c = 1 units',
             required: 'Find: F^μν and the scalar invariant',
             formula: '$F^{\\mu\\nu} = \\begin{pmatrix} 0 & -E_x & -E_y & -E_z \\\\ E_x & 0 & -B_z & B_y \\\\ E_y & B_z & 0 & -B_x \\\\ E_z & -B_y & B_x & 0 \\end{pmatrix}$',
             steps: ['Step 1: F^μν is antisymmetric: F^μν = −F^νμ (6 independent components)', 'Step 2: F^0i = −E^i (electric field in time-space components)', 'Step 3: F^ij = −ε^ijk B_k (magnetic field in space-space components)', 'Step 4: F^μν F_μν = F^μν g_μα g_νβ F^αβ', 'Step 5: = 2(B² − E²/c²) in SI. This is Lorentz invariant!'],
@@ -907,13 +907,13 @@ const EXAM_PROBLEMS = {
             year: null,
             question: 'Evaluate the contour integral ∮ dz/(z² + 1) around the circle |z| = 2 in the complex plane, traversed counterclockwise.',
             given: 'Given: f(z) = 1/(z² + 1), contour C: |z| = 2 (counterclockwise)',
-            required: 'Find: ∮_C dz/(z² + 1)',
+            required: 'Find: ∮<sub>C</sub> dz/(z² + 1)',
             formula: '$$\\oint_C \\frac{dz}{z^2+1} = 2\\pi i \\sum \\text{Res}(f, z_k)$$',
             steps: [
                 'Step 1: Factor the denominator: z² + 1 = (z − i)(z + i)',
                 'Step 2: Singularities at z = i and z = −i. Both lie inside |z| = 2.',
-                'Step 3: Residue at z = i: Res(f, i) = lim_{z→i} (z−i)·1/((z−i)(z+i)) = 1/(2i)',
-                'Step 4: Residue at z = −i: Res(f, −i) = lim_{z→−i} (z+i)·1/((z−i)(z+i)) = 1/(−2i) = −1/(2i)',
+                'Step 3: Residue at z = i: Res(f, i) = lim<sub>z→i</sub> (z−i)·1/((z−i)(z+i)) = 1/(2i)',
+                'Step 4: Residue at z = −i: Res(f, −i) = lim<sub>z→−i</sub> (z+i)·1/((z−i)(z+i)) = 1/(−2i) = −1/(2i)',
                 'Step 5: Sum of residues = 1/(2i) + (−1/(2i)) = 0',
                 'Step 6: ∮ dz/(z²+1) = 2πi × 0 = 0'
             ],
@@ -949,18 +949,18 @@ const EXAM_PROBLEMS = {
             difficulty: 'moderate',
             year: null,
             question: 'A system has two non-degenerate energy levels with energies E = 0 and E = ε. Find the partition function Z and the mean energy ⟨E⟩ at temperature T.',
-            given: 'Given: Two levels with energies 0 and ε, temperature T, Boltzmann constant k_B',
+            given: 'Given: Two levels with energies 0 and ε, temperature T, Boltzmann constant k<sub>B</sub>',
             required: 'Find: Partition function Z and mean energy ⟨E⟩',
             formula: '$$Z = \\sum_i e^{-\\beta E_i}, \\quad \\langle E \\rangle = -\\frac{\\partial \\ln Z}{\\partial \\beta}$$',
             steps: [
-                'Step 1: Partition function: Z = e^{−β·0} + e^{−βε} = 1 + e^{−βε}, where β = 1/(k_BT)',
-                'Step 2: Mean energy: ⟨E⟩ = (1/Z) Σ Eᵢ e^{−βEᵢ} = (0·1 + ε·e^{−βε}) / (1 + e^{−βε})',
-                'Step 3: ⟨E⟩ = ε·e^{−βε} / (1 + e^{−βε}) = ε / (e^{βε} + 1)',
-                'Step 4: At low T (βε ≫ 1): ⟨E⟩ → ε·e^{−ε/k_BT} ≈ 0 (system in ground state)',
+                'Step 1: Partition function: Z = e<sup>−β·0</sup> + e<sup>−βε</sup> = 1 + e<sup>−βε</sup>, where β = 1/(k<sub>BT</sub>)',
+                'Step 2: Mean energy: ⟨E⟩ = (1/Z) Σ Eᵢ e<sup>−βEᵢ</sup> = (0·1 + ε·e<sup>−βε</sup>) / (1 + e<sup>−βε</sup>)',
+                'Step 3: ⟨E⟩ = ε·e<sup>−βε</sup> / (1 + e<sup>−βε</sup>) = ε / (e<sup>βε</sup> + 1)',
+                'Step 4: At low T (βε ≫ 1): ⟨E⟩ → ε·e<sup>−ε/k<sub>BT</sub></sup> ≈ 0 (system in ground state)',
                 'Step 5: At high T (βε ≪ 1): ⟨E⟩ → ε/2 (equal population of both levels)'
             ],
-            answer: 'Z = 1 + e^{−ε/k_BT}; ⟨E⟩ = ε/(e^{ε/k_BT} + 1)',
-            notes: 'The two-level system is the simplest non-trivial statistical mechanics model. The mean energy expression has the form of the Fermi–Dirac distribution. The heat capacity of this system exhibits the famous Schottky anomaly — a peak at k_BT ≈ 0.42ε.'
+            answer: 'Z = 1 + e<sup>−ε/k<sub>BT</sub></sup>; ⟨E⟩ = ε/(e<sup>ε/k<sub>BT</sub></sup> + 1)',
+            notes: 'The two-level system is the simplest non-trivial statistical mechanics model. The mean energy expression has the form of the Fermi–Dirac distribution. The heat capacity of this system exhibits the famous Schottky anomaly — a peak at k<sub>BT</sub> ≈ 0.42ε.'
         },
         {
             id: 4,
@@ -990,18 +990,18 @@ const EXAM_PROBLEMS = {
             difficulty: 'moderate',
             year: null,
             question: 'Calculate the Fermi energy of sodium metal using the free electron model. The number density of conduction electrons in sodium is n = 2.65 × 10²⁸ m⁻³.',
-            given: 'Given: n = 2.65 × 10²⁸ m⁻³, ℏ = 1.055 × 10⁻³⁴ J·s, m_e = 9.109 × 10⁻³¹ kg',
-            required: 'Find: Fermi energy E_F',
+            given: 'Given: n = 2.65 × 10²⁸ m⁻³, ℏ = 1.055 × 10⁻³⁴ J·s, m<sub>e</sub> = 9.109 × 10⁻³¹ kg',
+            required: 'Find: Fermi energy E<sub>F</sub>',
             formula: '$$E_F = \\frac{\\hbar^2}{2m_e}(3\\pi^2 n)^{2/3}$$',
             steps: [
                 'Step 1: Calculate 3π²n = 3 × (3.1416)² × 2.65 × 10²⁸ = 3 × 9.87 × 2.65 × 10²⁸ = 7.846 × 10²⁹ m⁻³',
-                'Step 2: (3π²n)^{2/3} = (7.846 × 10²⁹)^{2/3}',
-                'Step 3: (7.846)^{2/3} ≈ 3.93 and (10²⁹)^{2/3} = 10^{19.33} ≈ 8.48 × 10¹⁹',
-                'Step 4: ℏ²/(2m_e) = (1.055 × 10⁻³⁴)² / (2 × 9.109 × 10⁻³¹) = 1.113 × 10⁻⁶⁸ / 1.822 × 10⁻³⁰ = 6.11 × 10⁻³⁹ J·m²',
-                'Step 5: E_F = 6.11 × 10⁻³⁹ × 3.93 × 8.48 × 10¹⁹ = 5.19 × 10⁻¹⁹ J ≈ 3.24 eV'
+                'Step 2: (3π²n)<sup>2/3</sup> = (7.846 × 10²⁹)<sup>2/3</sup>',
+                'Step 3: (7.846)<sup>2/3</sup> ≈ 3.93 and (10²⁹)<sup>2/3</sup> = 10<sup>19.33</sup> ≈ 8.48 × 10¹⁹',
+                'Step 4: ℏ²/(2m<sub>e</sub>) = (1.055 × 10⁻³⁴)² / (2 × 9.109 × 10⁻³¹) = 1.113 × 10⁻⁶⁸ / 1.822 × 10⁻³⁰ = 6.11 × 10⁻³⁹ J·m²',
+                'Step 5: E<sub>F</sub> = 6.11 × 10⁻³⁹ × 3.93 × 8.48 × 10¹⁹ = 5.19 × 10⁻¹⁹ J ≈ 3.24 eV'
             ],
-            answer: 'E_F ≈ 3.24 eV',
-            notes: 'Sodium is a nearly free electron metal (one 3s electron per atom). The Fermi temperature T_F = E_F/k_B ≈ 37,600 K, far above room temperature, justifying the degenerate electron gas approximation. The Fermi velocity v_F = √(2E_F/m) ≈ 1.07 × 10⁶ m/s.'
+            answer: 'E<sub>F</sub> ≈ 3.24 eV',
+            notes: 'Sodium is a nearly free electron metal (one 3s electron per atom). The Fermi temperature T<sub>F</sub> = E<sub>F</sub>/k<sub>B</sub> ≈ 37,600 K, far above room temperature, justifying the degenerate electron gas approximation. The Fermi velocity v<sub>F</sub> = √(2E<sub>F</sub>/m) ≈ 1.07 × 10⁶ m/s.'
         }
     ],
 
@@ -1036,14 +1036,14 @@ const EXAM_PROBLEMS = {
             difficulty: 'moderate',
             year: '2023',
             question: 'For the ground state (1s) of the hydrogen atom, calculate the probability of finding the electron within one Bohr radius a₀ from the nucleus.',
-            given: 'Given: Ground state wavefunction ψ₁ₛ = (1/√π)(1/a₀)^{3/2} e^{−r/a₀}, Bohr radius a₀',
-            required: 'Find: P(r ≤ a₀) = ∫₀^{a₀} |ψ|² 4πr² dr',
+            given: 'Given: Ground state wavefunction ψ₁ₛ = (1/√π)(1/a₀)<sup>3/2</sup> e<sup>−r/a₀</sup>, Bohr radius a₀',
+            required: 'Find: P(r ≤ a₀) = ∫₀<sup>a₀</sup> |ψ|² 4πr² dr',
             formula: '$$P = \\frac{4}{a_0^3} \\int_0^{a_0} r^2 e^{-2r/a_0} dr$$',
             steps: [
-                'Step 1: Radial probability density: P(r)dr = |ψ|² · 4πr² dr = (4/a₀³) r² e^{−2r/a₀} dr',
+                'Step 1: Radial probability density: P(r)dr = |ψ|² · 4πr² dr = (4/a₀³) r² e<sup>−2r/a₀</sup> dr',
                 'Step 2: Let x = 2r/a₀, then r = a₀x/2, dr = a₀dx/2. When r = a₀, x = 2.',
-                'Step 3: P = (4/a₀³) × (a₀/2)³ ∫₀² x² e^{−x} (a₀/2) dx... Simplifying: P = ½ ∫₀² x² e^{−x} dx',
-                'Step 4: ∫₀² x²e^{−x}dx = [−x²e^{−x}]₀² + 2∫₀² xe^{−x}dx = −4e⁻² + 2[−xe^{−x} + ∫e^{−x}dx]₀² = −4e⁻² + 2[−2e⁻² − e⁻² + 1] = −4e⁻² + 2(1 − 3e⁻²) = 2 − 10e⁻²',
+                'Step 3: P = (4/a₀³) × (a₀/2)³ ∫₀² x² e<sup>−x</sup> (a₀/2) dx... Simplifying: P = ½ ∫₀² x² e<sup>−x</sup> dx',
+                'Step 4: ∫₀² x²e<sup>−x</sup>dx = [−x²e<sup>−x</sup>]₀² + 2∫₀² xe<sup>−x</sup>dx = −4e⁻² + 2[−xe<sup>−x</sup> + ∫e<sup>−x</sup>dx]₀² = −4e⁻² + 2[−2e⁻² − e⁻² + 1] = −4e⁻² + 2(1 − 3e⁻²) = 2 − 10e⁻²',
                 'Step 5: P = ½(2 − 10e⁻²) = 1 − 5e⁻² = 1 − 5(0.1353) = 1 − 0.677 = 0.323'
             ],
             answer: 'P(r ≤ a₀) ≈ 0.323 or 32.3%',
@@ -1068,7 +1068,7 @@ const EXAM_PROBLEMS = {
                 'Step 5: ΔS = 8.314 × 0.693 = 5.76 J/K'
             ],
             answer: 'ΔS = nR ln 2 ≈ 5.76 J/K',
-            notes: 'Free expansion is irreversible, so ΔS_total > 0. Since no heat is exchanged with surroundings, ΔS_surroundings = 0, and the entire entropy increase is in the gas. This is a classic example of the second law of thermodynamics.'
+            notes: 'Free expansion is irreversible, so ΔS<sub>total</sub> > 0. Since no heat is exchanged with surroundings, ΔS<sub>surroundings</sub> = 0, and the entire entropy increase is in the gas. This is a classic example of the second law of thermodynamics.'
         },
         {
             id: 4,
@@ -1102,13 +1102,13 @@ const EXAM_PROBLEMS = {
             required: 'Find: Nuclear radius R',
             formula: '$$R = R_0 A^{1/3}$$',
             steps: [
-                'Step 1: Apply the empirical formula: R = R₀ × A^{1/3}',
-                'Step 2: A^{1/3} = 56^{1/3} = (56)^{0.333}',
-                'Step 3: 56^{1/3} ≈ 3.826 (since 3.826³ ≈ 56)',
+                'Step 1: Apply the empirical formula: R = R₀ × A<sup>1/3</sup>',
+                'Step 2: A<sup>1/3</sup> = 56<sup>1/3</sup> = (56)<sup>0.333</sup>',
+                'Step 3: 56<sup>1/3</sup> ≈ 3.826 (since 3.826³ ≈ 56)',
                 'Step 4: R = 1.2 × 3.826 = 4.59 fm'
             ],
             answer: 'R ≈ 4.59 fm (4.59 × 10⁻¹⁵ m)',
-            notes: 'The nuclear radius scales as A^{1/3}, implying constant nuclear density ρ = 3m_p/(4πR₀³) ≈ 2.3 × 10¹⁷ kg/m³ across all nuclei. This extraordinary density is comparable to neutron star matter. ⁵⁶Fe has the highest binding energy per nucleon among all nuclides.'
+            notes: 'The nuclear radius scales as A<sup>1/3</sup>, implying constant nuclear density ρ = 3m<sub>p</sub>/(4πR₀³) ≈ 2.3 × 10¹⁷ kg/m³ across all nuclei. This extraordinary density is comparable to neutron star matter. ⁵⁶Fe has the highest binding energy per nucleon among all nuclides.'
         }
     ],
 
@@ -1207,10 +1207,10 @@ const EXAM_PROBLEMS = {
             steps: [
                 'Step 1: Energy of incident photon: E = hc/λ',
                 'Step 2: Using hc = 1240 eV·nm: E = 1240/200 = 6.2 eV',
-                'Step 3: Maximum KE: KE_max = E − φ = 6.2 − 4.2 = 2.0 eV',
-                'Step 4: Stopping potential: eV₀ = KE_max, so V₀ = 2.0 eV / e = 2.0 V'
+                'Step 3: Maximum KE: KE<sub>max</sub> = E − φ = 6.2 − 4.2 = 2.0 eV',
+                'Step 4: Stopping potential: eV₀ = KE<sub>max</sub>, so V₀ = 2.0 eV / e = 2.0 V'
             ],
-            answer: 'KE_max = 2.0 eV; Stopping potential V₀ = 2.0 V',
+            answer: 'KE<sub>max</sub> = 2.0 eV; Stopping potential V₀ = 2.0 V',
             notes: 'The stopping potential is numerically equal to the maximum KE in electron-volts. The shortcut hc = 1240 eV·nm is extremely useful for quick calculations. Photoemission occurs only when E > φ, i.e., λ < hc/φ = 1240/4.2 = 295 nm (UV threshold).'
         }
     ]
@@ -1743,3 +1743,4 @@ function getSearchQuery() {
 document.addEventListener('DOMContentLoaded', function () {
     initExamPage();
 });
+
