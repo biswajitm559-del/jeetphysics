@@ -516,16 +516,16 @@ const NUMERICALS = [
   {
     cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
     question: 'A Carnot engine operates between reservoirs at 500 K and 300 K. Find its efficiency.',
-    given: '<strong>Given:</strong> T_H = 500 K, T_C = 300 K',
-    steps: ['Carnot efficiency: η = 1 - T_C/T_H', 'η = 1 - 300/500 = 1 - 0.6', 'η = 0.4 = 40%'],
+    given: '<strong>Given:</strong> T<sub>H</sub> = 500 K, T<sub>C</sub> = 300 K',
+    steps: ['Carnot efficiency: &eta; = 1 - T<sub>C</sub>/T<sub>H</sub>', '&eta; = 1 - 300/500 = 1 - 0.6', '&eta; = 0.4 = 40%'],
     answer: 'η = 40%'
   },
   {
     cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
     question: 'Find the rms speed of nitrogen molecules at 27°C. (M = 28 g/mol)',
     given: '<strong>Given:</strong> T = 27°C = 300 K, M = 28 × 10⁻³ kg/mol, R = 8.314 J/(mol·K)',
-    steps: ['v_rms = √(3RT/M)', 'v_rms = √(3 × 8.314 × 300 / 0.028)', 'v_rms = √(267,214) = 517 m/s'],
-    answer: 'v_rms ≈ 517 m/s'
+    steps: ['v<sub>rms</sub> = &radic;(3RT/M)', 'v<sub>rms</sub> = &radic;(3 &times; 8.314 &times; 300 / 0.028)', 'v<sub>rms</sub> = &radic;(267,214) = 517 m/s'],
+    answer: 'v<sub>rms</sub> &asymp; 517 m/s'
   },
   {
     cat: 'thermal', branch: 'Thermal Physics', difficulty: 'medium',
@@ -561,8 +561,8 @@ const NUMERICALS = [
     cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
     question: 'For a simple cubic lattice with lattice constant a = 3 Å, find the interplanar spacing for (100) planes.',
     given: '<strong>Given:</strong> a = 3 Å, (hkl) = (100)',
-    steps: ['d_hkl = a / √(h² + k² + l²)', 'd_100 = 3 / √(1 + 0 + 0)', 'd_100 = 3 Å'],
-    answer: 'd₁₀₀ = 3 Å'
+    steps: ['d<sub>hkl</sub> = a / &radic;(h<sup>2</sup> + k<sup>2</sup> + l<sup>2</sup>)', 'd<sub>100</sub> = 3 / &radic;(1 + 0 + 0)', 'd<sub>100</sub> = 3 &Aring;'],
+    answer: 'd<sub>100</sub> = 3 &Aring;'
   },
   {
     cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'medium',
@@ -581,16 +581,16 @@ const NUMERICALS = [
   // ── Electronics ──
   {
     cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
-    question: 'An inverting amplifier uses an op-amp with R_in = 10 kΩ and R_f = 100 kΩ. Find the voltage gain.',
-    given: '<strong>Given:</strong> R_in = 10 kΩ, R_f = 100 kΩ',
-    steps: ['Gain of inverting amplifier: A_v = -R_f / R_in', 'A_v = -100 / 10', 'A_v = -10 (inverted output)'],
-    answer: 'A_v = −10'
+    question: 'An inverting amplifier uses an op-amp with R<sub>in</sub> = 10 k&Omega; and R<sub>f</sub> = 100 k&Omega;. Find the voltage gain.',
+    given: '<strong>Given:</strong> R<sub>in</sub> = 10 k&Omega;, R<sub>f</sub> = 100 k&Omega;',
+    steps: ['Gain of inverting amplifier: A<sub>v</sub> = -R<sub>f</sub> / R<sub>in</sub>', 'A<sub>v</sub> = -100 / 10', 'A<sub>v</sub> = -10 (inverted output)'],
+    answer: 'A<sub>v</sub> = &minus;10'
   },
   {
     cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
     question: 'A silicon diode has a forward voltage drop of 0.7 V. If a 5 V battery is connected in series with a 1 kΩ resistor and the diode, find the current.',
-    given: '<strong>Given:</strong> V = 5 V, V_d = 0.7 V, R = 1 kΩ',
-    steps: ['Voltage across resistor: V_R = V - V_d = 5 - 0.7 = 4.3 V', 'I = V_R / R = 4.3 / 1000', 'I = 4.3 mA'],
+    given: '<strong>Given:</strong> V = 5 V, V<sub>d</sub> = 0.7 V, R = 1 k&Omega;',
+    steps: ['Voltage across resistor: V<sub>R</sub> = V - V<sub>d</sub> = 5 - 0.7 = 4.3 V', 'I = V<sub>R</sub> / R = 4.3 / 1000', 'I = 4.3 mA'],
     answer: 'I = 4.3 mA'
   },
   {
