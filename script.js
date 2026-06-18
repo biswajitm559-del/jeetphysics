@@ -450,9 +450,9 @@ const NUMERICALS = [
   {
     cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
     question: 'Find the electric field at a distance of 0.3 m from a point charge of 5 μC in vacuum.',
-    given: '<strong>Given:</strong> q = 5 × 10⁻⁶ C, r = 0.3 m, k = 9 × 10⁹ N·m²/C²',
-    steps: ['E = kq/r²', 'E = (9 × 10⁹ × 5 × 10⁻⁶) / (0.3)²', 'E = 45000 / 0.09 = 5 × 10⁵ N/C'],
-    answer: 'E = 5 × 10⁵ N/C'
+    given: '<strong>Given:</strong> q = 5 &times; 10<sup>&minus;6</sup> C, r = 0.3 m, k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>',
+    steps: ['E = kq/r<sup>2</sup>', 'E = (9 &times; 10<sup>9</sup> &times; 5 &times; 10<sup>&minus;6</sup>) / (0.3)<sup>2</sup>', 'E = 45000 / 0.09 = 5 &times; 10<sup>5</sup> N/C'],
+    answer: 'E = 5 &times; 10<sup>5</sup> N/C'
   },
   {
     cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
@@ -464,17 +464,17 @@ const NUMERICALS = [
   {
     cat: 'em', branch: 'Electromagnetism', difficulty: 'medium',
     question: 'A parallel plate capacitor has plate area 200 cm² and separation 2 mm. Find its capacitance in vacuum.',
-    given: '<strong>Given:</strong> A = 200 cm² = 0.02 m², d = 2 mm = 0.002 m, ε₀ = 8.85 × 10⁻¹² F/m',
-    steps: ['C = ε₀A/d', 'C = (8.85 × 10⁻¹² × 0.02) / 0.002', 'C = 1.77 × 10⁻¹³ / 0.002 = 8.85 × 10⁻¹¹ F'],
+    given: '<strong>Given:</strong> A = 200 cm<sup>2</sup> = 0.02 m<sup>2</sup>, d = 2 mm = 0.002 m, &epsilon;<sub>0</sub> = 8.85 &times; 10<sup>&minus;12</sup> F/m',
+    steps: ['C = &epsilon;<sub>0</sub>A/d', 'C = (8.85 &times; 10<sup>&minus;12</sup> &times; 0.02) / 0.002', 'C = 1.77 &times; 10<sup>&minus;13</sup> / 0.002 = 8.85 &times; 10<sup>&minus;11</sup> F'],
     answer: 'C = 88.5 pF'
   },
   // ── Waves & Optics ──
   {
     cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
     question: 'In Young\'s double slit experiment, the slit separation is 0.5 mm and the screen is 1 m away. Find the fringe width for light of wavelength 600 nm.',
-    given: '<strong>Given:</strong> d = 0.5 mm = 5 × 10⁻⁴ m, D = 1 m, λ = 600 nm = 6 × 10⁻⁷ m',
-    steps: ['Fringe width: β = λD/d', 'β = (6 × 10⁻⁷ × 1) / (5 × 10⁻⁴)', 'β = 6 × 10⁻⁷ / 5 × 10⁻⁴ = 1.2 × 10⁻³ m'],
-    answer: 'β = 1.2 mm'
+    given: '<strong>Given:</strong> d = 0.5 mm = 5 &times; 10<sup>&minus;4</sup> m, D = 1 m, &lambda; = 600 nm = 6 &times; 10<sup>&minus;7</sup> m',
+    steps: ['Fringe width: &beta; = &lambda;D/d', '&beta; = (6 &times; 10<sup>&minus;7</sup> &times; 1) / (5 &times; 10<sup>&minus;4</sup>)', '&beta; = 6 &times; 10<sup>&minus;7</sup> / 5 &times; 10<sup>&minus;4</sup> = 1.2 &times; 10<sup>&minus;3</sup> m'],
+    answer: '&beta; = 1.2 mm'
   },
   {
     cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
@@ -486,31 +486,31 @@ const NUMERICALS = [
   {
     cat: 'waves', branch: 'Waves & Optics', difficulty: 'medium',
     question: 'A diffraction grating has 5000 lines/cm. Find the angular position of the first-order maximum for light of wavelength 500 nm.',
-    given: '<strong>Given:</strong> N = 5000 lines/cm, λ = 500 nm = 5 × 10⁻⁷ m, m = 1',
-    steps: ['Grating spacing: d = 1/N = 1/(5 × 10⁵) = 2 × 10⁻⁶ m', 'd sin θ = mλ', 'sin θ = mλ/d = (1 × 5 × 10⁻⁷) / (2 × 10⁻⁶) = 0.25 → θ = 14.48°'],
-    answer: 'θ ≈ 14.5°'
+    given: '<strong>Given:</strong> N = 5000 lines/cm, &lambda; = 500 nm = 5 &times; 10<sup>&minus;7</sup> m, m = 1',
+    steps: ['Grating spacing: d = 1/N = 1/(5 &times; 10<sup>5</sup>) = 2 &times; 10<sup>&minus;6</sup> m', 'd sin &theta; = m&lambda;', 'sin &theta; = m&lambda;/d = (1 &times; 5 &times; 10<sup>&minus;7</sup>) / (2 &times; 10<sup>&minus;6</sup>) = 0.25 &rarr; &theta; = 14.48&deg;'],
+    answer: '&theta; &asymp; 14.5&deg;'
   },
   // ── Quantum Mechanics ──
   {
     cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
     question: 'Find the de Broglie wavelength of an electron accelerated through a potential difference of 100 V.',
-    given: '<strong>Given:</strong> V = 100 V, m = 9.1 × 10⁻³¹ kg, e = 1.6 × 10⁻¹⁹ C, h = 6.63 × 10⁻³⁴ J·s',
-    steps: ['KE = eV = 1.6 × 10⁻¹⁹ × 100 = 1.6 × 10⁻¹⁷ J', 'p = √(2mKE) = √(2 × 9.1 × 10⁻³¹ × 1.6 × 10⁻¹⁷)', 'p = 5.4 × 10⁻²⁴ kg·m/s → λ = h/p = 1.23 × 10⁻¹⁰ m'],
-    answer: 'λ ≈ 1.23 Å (0.123 nm)'
+    given: '<strong>Given:</strong> V = 100 V, m = 9.1 &times; 10<sup>&minus;31</sup> kg, e = 1.6 &times; 10<sup>&minus;19</sup> C, h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s',
+    steps: ['KE = eV = 1.6 &times; 10<sup>&minus;19</sup> &times; 100 = 1.6 &times; 10<sup>&minus;17</sup> J', 'p = &radic;(2mKE) = &radic;(2 &times; 9.1 &times; 10<sup>&minus;31</sup> &times; 1.6 &times; 10<sup>&minus;17</sup>)', 'p = 5.4 &times; 10<sup>&minus;24</sup> kg&middot;m/s &rarr; &lambda; = h/p = 1.23 &times; 10<sup>&minus;10</sup> m'],
+    answer: '&lambda; &asymp; 1.23 &Aring; (0.123 nm)'
   },
   {
     cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
     question: 'Find the energy of a photon of wavelength 500 nm in electron volts.',
-    given: '<strong>Given:</strong> λ = 500 nm = 5 × 10⁻⁷ m, h = 6.63 × 10⁻³⁴ J·s, c = 3 × 10⁸ m/s',
-    steps: ['E = hc/λ = (6.63 × 10⁻³⁴ × 3 × 10⁸) / (5 × 10⁻⁷)', 'E = 3.98 × 10⁻¹⁹ J', 'E = 3.98 × 10⁻¹⁹ / 1.6 × 10⁻¹⁹ = 2.49 eV'],
-    answer: 'E ≈ 2.49 eV'
+    given: '<strong>Given:</strong> &lambda; = 500 nm = 5 &times; 10<sup>&minus;7</sup> m, h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s, c = 3 &times; 10<sup>8</sup> m/s',
+    steps: ['E = hc/&lambda; = (6.63 &times; 10<sup>&minus;34</sup> &times; 3 &times; 10<sup>8</sup>) / (5 &times; 10<sup>&minus;7</sup>)', 'E = 3.98 &times; 10<sup>&minus;19</sup> J', 'E = 3.98 &times; 10<sup>&minus;19</sup> / 1.6 &times; 10<sup>&minus;19</sup> = 2.49 eV'],
+    answer: 'E &asymp; 2.49 eV'
   },
   {
     cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'medium',
     question: 'An electron is confined in a 1D box of width 1 Å. Calculate the energy of the ground state.',
-    given: '<strong>Given:</strong> L = 1 Å = 10⁻¹⁰ m, m = 9.1 × 10⁻³¹ kg, ℏ = 1.055 × 10⁻³⁴ J·s, n = 1',
-    steps: ['Eₙ = n²π²ℏ² / (2mL²)', 'E₁ = π² × (1.055 × 10⁻³⁴)² / (2 × 9.1 × 10⁻³¹ × (10⁻¹⁰)²)', 'E₁ = 6.03 × 10⁻¹⁸ J = 37.7 eV'],
-    answer: 'E₁ ≈ 37.7 eV'
+    given: '<strong>Given:</strong> L = 1 &Aring; = 10<sup>&minus;10</sup> m, m = 9.1 &times; 10<sup>&minus;31</sup> kg, &hbar; = 1.055 &times; 10<sup>&minus;34</sup> J&middot;s, n = 1',
+    steps: ['E<sub>n</sub> = n<sup>2</sup>&pi;<sup>2</sup>&hbar;<sup>2</sup> / (2mL<sup>2</sup>)', 'E<sub>1</sub> = &pi;<sup>2</sup> &times; (1.055 &times; 10<sup>&minus;34</sup>)<sup>2</sup> / (2 &times; 9.1 &times; 10<sup>&minus;31</sup> &times; (10<sup>&minus;10</sup>)<sup>2</sup>)', 'E<sub>1</sub> = 6.03 &times; 10<sup>&minus;18</sup> J = 37.7 eV'],
+    answer: 'E<sub>1</sub> &asymp; 37.7 eV'
   },
   // ── Thermal Physics ──
   {
@@ -539,8 +539,8 @@ const NUMERICALS = [
     cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
     question: 'The half-life of ⁶⁰Co is 5.27 years. Find the decay constant λ.',
     given: '<strong>Given:</strong> t₁/₂ = 5.27 years',
-    steps: ['λ = ln(2) / t₁/₂', 'λ = 0.693 / 5.27', 'λ = 0.1315 per year = 4.17 × 10⁻⁹ s⁻¹'],
-    answer: 'λ ≈ 0.1315 year⁻¹'
+    steps: ['&lambda; = ln(2) / t<sub>1/2</sub>', '&lambda; = 0.693 / 5.27', '&lambda; = 0.1315 per year = 4.17 &times; 10<sup>&minus;9</sup> s<sup>&minus;1</sup>'],
+    answer: '&lambda; &asymp; 0.1315 year<sup>&minus;1</sup>'
   },
   {
     cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
@@ -574,9 +574,9 @@ const NUMERICALS = [
   {
     cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
     question: 'Calculate the Fermi energy of copper at 0 K. Given: n = 8.5 × 10²⁸ electrons/m³.',
-    given: '<strong>Given:</strong> n = 8.5 × 10²⁸ m⁻³, m = 9.1 × 10⁻³¹ kg, ℏ = 1.055 × 10⁻³⁴ J·s',
-    steps: ['E_F = (ℏ²/2m)(3π²n)^(2/3)', 'E_F = (1.055 × 10⁻³⁴)² / (2 × 9.1 × 10⁻³¹) × (3π² × 8.5 × 10²⁸)^(2/3)', 'E_F ≈ 1.13 × 10⁻¹⁸ J = 7.04 eV'],
-    answer: 'E_F ≈ 7.04 eV'
+    given: '<strong>Given:</strong> n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, m = 9.1 &times; 10<sup>&minus;31</sup> kg, &hbar; = 1.055 &times; 10<sup>&minus;34</sup> J&middot;s',
+    steps: ['E<sub>F</sub> = (&hbar;<sup>2</sup>/2m)(3&pi;<sup>2</sup>n)<sup>2/3</sup>', 'E<sub>F</sub> = (1.055 &times; 10<sup>&minus;34</sup>)<sup>2</sup> / (2 &times; 9.1 &times; 10<sup>&minus;31</sup>) &times; (3&pi;<sup>2</sup> &times; 8.5 &times; 10<sup>28</sup>)<sup>2/3</sup>', 'E<sub>F</sub> &asymp; 1.13 &times; 10<sup>&minus;18</sup> J = 7.04 eV'],
+    answer: 'E<sub>F</sub> &asymp; 7.04 eV'
   },
   // ── Electronics ──
   {
@@ -596,9 +596,9 @@ const NUMERICALS = [
   {
     cat: 'electronics', branch: 'Electronics', difficulty: 'medium',
     question: 'In a common-emitter transistor circuit, β = 100, I_B = 20 μA. Find I_C and I_E.',
-    given: '<strong>Given:</strong> β = 100, I_B = 20 μA = 20 × 10⁻⁶ A',
-    steps: ['I_C = β × I_B = 100 × 20 × 10⁻⁶ = 2 × 10⁻³ A = 2 mA', 'I_E = I_C + I_B = 2 + 0.02 = 2.02 mA', 'Alternatively: I_E = (β + 1) × I_B = 101 × 0.02 = 2.02 mA'],
-    answer: 'I_C = 2 mA, I_E = 2.02 mA'
+    given: '<strong>Given:</strong> &beta; = 100, I<sub>B</sub> = 20 &mu;A = 20 &times; 10<sup>&minus;6</sup> A',
+    steps: ['I<sub>C</sub> = &beta; &times; I<sub>B</sub> = 100 &times; 20 &times; 10<sup>&minus;6</sup> = 2 &times; 10<sup>&minus;3</sup> A = 2 mA', 'I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub> = 2 + 0.02 = 2.02 mA', 'Alternatively: I<sub>E</sub> = (&beta; + 1) &times; I<sub>B</sub> = 101 &times; 0.02 = 2.02 mA'],
+    answer: 'I<sub>C</sub> = 2 mA, I<sub>E</sub> = 2.02 mA'
   }
 ];
 
