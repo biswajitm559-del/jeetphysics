@@ -1381,7 +1381,7 @@ function renderNumericals() {
       <div class="numerical-solution" id="numSol-${i}">
         <div class="solution-label">Step-by-Step Solution</div>
         <ul class="solution-steps">
-          ${n.steps.map(s => `<li>${s}</li>`).join('')}
+          ${n.steps.map(s => `<li><span>${s}</span></li>`).join('')}
         </ul>
         <div class="solution-answer">✅ ${n.answer}</div>
       </div>
