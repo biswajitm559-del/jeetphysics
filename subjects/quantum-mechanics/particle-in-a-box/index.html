@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Particle in a 1D Box: Derivation & Numericals | JeetPhysics</title>
+  <meta name="description" content="Complete guide to the Particle in a 1D Box (Infinite Potential Well). Understand the boundary conditions, energy quantization derivation, and solve GATE & JAM PYQs." />
+  <link rel="canonical" href="https://jeetphysics.in/subjects/quantum-mechanics/particle-in-a-box/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left:'$$', right:'$$', display:true}, {left:'$', right:'$', display:false}]})"></script>
+
+  <!-- Icons & Styles -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <link rel="stylesheet" href="../../subject-styles.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" style="background: rgba(2, 8, 24, 0.95);">
+  <a href="../../../../index.html" class="nav-brand">
+    <div class="nav-logo-icon">⚛️</div>
+    <span class="nav-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
+  </a>
+</nav>
+
+<div class="subject-container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a> &gt; 
+    <a href="#">Quantum Mechanics</a> &gt; 
+    <span>Particle in a 1D Box</span>
+  </div>
+
+  <h1 class="subject-title">Particle in a 1D Box (Infinite Potential Well)</h1>
+
+  <div class="subject-section">
+    <h2>1. Theory & Concept</h2>
+    <p>The "Particle in a 1D Box" is the simplest quantum mechanical system, illustrating how confinement leads to <strong>energy quantization</strong>. We consider a particle of mass $m$ free to move along the x-axis between $x=0$ and $x=L$, bounded by impenetrable walls.</p>
+    <p>The potential energy is defined as:</p>
+    $$
+    V(x) = \begin{cases} 
+    0 & \text{for } 0 < x < L \\ 
+    \infty & \text{for } x \le 0 \text{ and } x \ge L 
+    \end{cases}
+    $$
+    <p>Because the potential is infinite outside the box, the probability of finding the particle there is zero. Thus, the wavefunction must be zero at the boundaries: $\psi(0) = 0$ and $\psi(L) = 0$.</p>
+  </div>
+
+  <div class="subject-section">
+    <h2>2. Derivation of Energy Levels</h2>
+    
+    <div class="derivation-box">
+      <h3>Solving the TISE</h3>
+      <p>Inside the box ($V=0$), the Time-Independent Schrödinger Equation is:</p>
+      $$ -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} = E\psi \implies \frac{d^2\psi}{dx^2} + k^2\psi = 0 $$
+      <p>where $k = \frac{\sqrt{2mE}}{\hbar}$. The general solution to this differential equation is:</p>
+      $$ \psi(x) = A\sin(kx) + B\cos(kx) $$
+      
+      <h3>Applying Boundary Conditions</h3>
+      <p><strong>1. At $x = 0$, $\psi(0) = 0$:</strong></p>
+      $$ A\sin(0) + B\cos(0) = 0 \implies B = 0 $$
+      <p>So, $\psi(x) = A\sin(kx)$.</p>
+      
+      <p><strong>2. At $x = L$, $\psi(L) = 0$:</strong></p>
+      $$ A\sin(kL) = 0 $$
+      <p>Since $A=0$ gives a trivial solution (no particle), we must have $\sin(kL) = 0$. This implies:</p>
+      $$ kL = n\pi \implies k = \frac{n\pi}{L} $$
+      <p>where $n = 1, 2, 3, \dots$ (Notice $n=0$ is not allowed because it would mean $\psi(x)=0$ everywhere).</p>
+
+      <h3>Energy Quantization</h3>
+      <p>Substituting $k$ back into the definition of $E$:</p>
+      $$ E = \frac{\hbar^2 k^2}{2m} = \frac{\hbar^2}{2m}\left(\frac{n\pi}{L}\right)^2 = \frac{n^2 \pi^2 \hbar^2}{2mL^2} $$
+      <p>Or in terms of $h$ ($\hbar = h/2\pi$):</p>
+      $$ E_n = \frac{n^2 h^2}{8mL^2} $$
+    </div>
+
+    <div class="derivation-box">
+      <h3>Normalization</h3>
+      <p>To find the constant $A$, we normalize the wavefunction over the box:</p>
+      $$ \int_0^L |\psi(x)|^2 dx = 1 \implies A^2 \int_0^L \sin^2\left(\frac{n\pi x}{L}\right) dx = 1 $$
+      <p>Using $\sin^2(\theta) = \frac{1-\cos(2\theta)}{2}$, the integral evaluates to $L/2$. Therefore:</p>
+      $$ A^2 \left(\frac{L}{2}\right) = 1 \implies A = \sqrt{\frac{2}{L}} $$
+      <p>The normalized wavefunctions are: $\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right)$.</p>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>3. Key Formulae</h2>
+    <div class="formula-box">
+      <strong>Normalized Wavefunction:</strong><br>
+      $$ \psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right) $$
+    </div>
+    <div class="formula-box">
+      <strong>Energy Levels:</strong><br>
+      $$ E_n = n^2 E_1 \quad \text{where} \quad E_1 = \frac{\pi^2 \hbar^2}{2mL^2} $$
+    </div>
+    <div class="formula-box">
+      <strong>Momentum:</strong><br>
+      $$ p_n = \pm \frac{n\pi\hbar}{L} = \pm \frac{nh}{2L} $$
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>4. Solved Numericals</h2>
+    
+    <div class="numerical-card">
+      <div class="numerical-question">Q1. An electron is confined to a 1D box of width 1 nm. Calculate the energy difference between the ground state and the first excited state in eV.</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p>Given: $L = 1 \text{ nm} = 10^{-9} \text{ m}$, $m_e = 9.11 \times 10^{-31} \text{ kg}$, $h = 6.626 \times 10^{-34} \text{ J}\cdot\text{s}$.</p>
+        <p>Ground state ($n=1$): $E_1 = \frac{h^2}{8mL^2}$</p>
+        <p>First excited state ($n=2$): $E_2 = \frac{4h^2}{8mL^2} = 4E_1$</p>
+        <p>Energy difference: $\Delta E = E_2 - E_1 = 3E_1 = 3 \times \frac{(6.626 \times 10^{-34})^2}{8(9.11 \times 10^{-31})(10^{-9})^2}$</p>
+        <p>$\Delta E = 3 \times \frac{43.9 \times 10^{-68}}{72.88 \times 10^{-49}} = 3 \times 6.02 \times 10^{-20} \text{ J} = 1.806 \times 10^{-19} \text{ J}$</p>
+        <p>Convert to eV (divide by $1.6 \times 10^{-19}$):</p>
+        $$ \Delta E = \frac{1.806 \times 10^{-19}}{1.6 \times 10^{-19}} = 1.13 \text{ eV} $$
+      </div>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>5. Previous Year Questions (PYQs)</h2>
+    
+    <div class="numerical-card">
+      <span class="pyq-badge">GATE 2021</span>
+      <div class="numerical-question">A particle is in the ground state of an infinite potential well extending from $x = -L/2$ to $x = L/2$. What is the probability of finding the particle in the region $0 \le x \le L/4$?</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p>For a box centered at the origin, the ground state is an even function: $\psi_1(x) = \sqrt{\frac{2}{L}} \cos\left(\frac{\pi x}{L}\right)$.</p>
+        <p>Probability $P = \int_0^{L/4} |\psi_1|^2 dx = \frac{2}{L} \int_0^{L/4} \cos^2\left(\frac{\pi x}{L}\right) dx$</p>
+        <p>Using $\cos^2(\theta) = \frac{1+\cos(2\theta)}{2}$:</p>
+        <p>$P = \frac{1}{L} \int_0^{L/4} \left(1 + \cos\left(\frac{2\pi x}{L}\right)\right) dx = \frac{1}{L} \left[ x + \frac{L}{2\pi}\sin\left(\frac{2\pi x}{L}\right) \right]_0^{L/4}$</p>
+        <p>$P = \frac{1}{L} \left( \frac{L}{4} + \frac{L}{2\pi}\sin\left(\frac{\pi}{2}\right) \right) = \frac{1}{4} + \frac{1}{2\pi}$</p>
+        <p>$P \approx 0.25 + 0.159 = 0.409$ or $40.9\%$</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

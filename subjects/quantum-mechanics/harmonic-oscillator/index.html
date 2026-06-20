@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Harmonic Oscillator: Power Series Derivation & PYQs | JeetPhysics</title>
+  <meta name="description" content="Detailed guide on the Quantum Harmonic Oscillator. Features the full power series (Frobenius) method derivation, Hermite polynomials, and solved NET/GATE PYQs." />
+  <link rel="canonical" href="https://jeetphysics.in/subjects/quantum-mechanics/harmonic-oscillator/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left:'$$', right:'$$', display:true}, {left:'$', right:'$', display:false}]})"></script>
+
+  <!-- Icons & Styles -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <link rel="stylesheet" href="../../subject-styles.css" />
+</head>
+<body>
+
+<nav class="navbar" style="background: rgba(2, 8, 24, 0.95);">
+  <a href="../../../../index.html" class="nav-brand">
+    <div class="nav-logo-icon">⚛️</div>
+    <span class="nav-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
+  </a>
+</nav>
+
+<div class="subject-container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a> &gt; 
+    <a href="#">Quantum Mechanics</a> &gt; 
+    <span>Harmonic Oscillator</span>
+  </div>
+
+  <h1 class="subject-title">Quantum Harmonic Oscillator</h1>
+
+  <div class="subject-section">
+    <h2>1. Theory & Concept</h2>
+    <p>The harmonic oscillator is one of the most important models in quantum mechanics because any smooth potential $V(x)$ can be approximated as a harmonic oscillator near its stable equilibrium point (minimum). It describes atomic vibrations in molecules, phonons in solid state lattices, and even electromagnetic fields in quantum optics.</p>
+    <p>The classical potential for a harmonic oscillator is $V(x) = \frac{1}{2}m\omega^2 x^2$. In quantum mechanics, we solve the Schrödinger equation with this potential to find the quantized energy levels and wavefunctions.</p>
+  </div>
+
+  <div class="subject-section">
+    <h2>2. Derivation (Power Series Method)</h2>
+    
+    <div class="derivation-box">
+      <h3>Setting up the Equation</h3>
+      <p>The Time-Independent Schrödinger Equation (TISE) is:</p>
+      $$ -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} + \frac{1}{2}m\omega^2 x^2 \psi = E\psi $$
+      <p>We introduce dimensionless variables to simplify. Let $\xi = \alpha x$ where $\alpha = \sqrt{\frac{m\omega}{\hbar}}$, and let $K = \frac{2E}{\hbar\omega}$. The equation becomes:</p>
+      $$ \frac{d^2\psi}{d\xi^2} + (K - \xi^2)\psi = 0 $$
+
+      <h3>Asymptotic Behavior</h3>
+      <p>For large $\xi$ ($\xi^2 \gg K$), the equation is approximately $\psi'' - \xi^2 \psi \approx 0$. The normalizable solution behaves as $e^{-\xi^2/2}$. Thus, we look for a solution of the form:</p>
+      $$ \psi(\xi) = h(\xi)e^{-\xi^2/2} $$
+      <p>Substituting this back yields the Hermite differential equation for $h(\xi)$:</p>
+      $$ \frac{d^2h}{d\xi^2} - 2\xi\frac{dh}{d\xi} + (K - 1)h = 0 $$
+
+      <h3>Frobenius Power Series</h3>
+      <p>We assume a power series solution $h(\xi) = \sum_{j=0}^{\infty} a_j \xi^j$. Substituting this into the Hermite equation yields a recursion relation for the coefficients:</p>
+      $$ a_{j+2} = \frac{2j - (K - 1)}{(j+1)(j+2)} a_j $$
+      <p>For the wavefunction to be physically acceptable (normalizable), the series must terminate after a finite number of terms. If the series does not terminate, it behaves like $e^{\xi^2}$ at infinity, destroying normalizability.</p>
+      
+      <h3>Energy Quantization</h3>
+      <p>To force the series to terminate at some highest power $n$, the numerator of the recursion relation must be zero for $j=n$. Therefore:</p>
+      $$ 2n - (K - 1) = 0 \implies K = 2n + 1 $$
+      <p>Since $K = \frac{2E}{\hbar\omega}$, we find the quantized energy levels:</p>
+      $$ \frac{2E_n}{\hbar\omega} = 2n + 1 \implies E_n = \left(n + \frac{1}{2}\right)\hbar\omega \quad \text{for } n = 0, 1, 2, \dots $$
+      <p>The resulting polynomial solutions $h(\xi)$ are the Hermite polynomials $H_n(\xi)$.</p>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>3. Key Formulae</h2>
+    <div class="formula-box">
+      <strong>Energy Levels:</strong><br>
+      $$ E_n = \left(n + \frac{1}{2}\right)\hbar\omega $$
+    </div>
+    <div class="formula-box">
+      <strong>Zero-Point Energy (Ground State):</strong><br>
+      $$ E_0 = \frac{1}{2}\hbar\omega $$
+    </div>
+    <div class="formula-box">
+      <strong>Wavefunctions:</strong><br>
+      $$ \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right) e^{-m\omega x^2 / 2\hbar} $$
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>4. Solved Numericals</h2>
+    
+    <div class="numerical-card">
+      <div class="numerical-question">Q1. A particle of mass $m$ is in the state $\psi = c_1\psi_0 + c_2\psi_1$, where $\psi_0, \psi_1$ are the ground and first excited states. If the expectation value of energy is $\frac{3}{4}\hbar\omega$, find the ratio $|c_1|^2 / |c_2|^2$.</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p>The expectation value of energy is $\langle E \rangle = P_0 E_0 + P_1 E_1$.</p>
+        <p>We know $E_0 = \frac{1}{2}\hbar\omega$ and $E_1 = \frac{3}{2}\hbar\omega$. Also, probability $P_0 = |c_1|^2$ and $P_1 = |c_2|^2$.</p>
+        <p>Normalization requires $|c_1|^2 + |c_2|^2 = 1 \implies |c_2|^2 = 1 - |c_1|^2$.</p>
+        $$ \langle E \rangle = |c_1|^2 \left(\frac{1}{2}\hbar\omega\right) + (1 - |c_1|^2)\left(\frac{3}{2}\hbar\omega\right) = \frac{3}{4}\hbar\omega $$
+        $$ \frac{1}{2}|c_1|^2 + \frac{3}{2} - \frac{3}{2}|c_1|^2 = \frac{3}{4} $$
+        $$ -|c_1|^2 = \frac{3}{4} - \frac{3}{2} = -\frac{3}{4} \implies |c_1|^2 = \frac{3}{4} $$
+        <p>Thus, $|c_2|^2 = 1 - \frac{3}{4} = \frac{1}{4}$.</p>
+        <p>The ratio is $|c_1|^2 / |c_2|^2 = (3/4) / (1/4) = 3$.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>5. Previous Year Questions (PYQs)</h2>
+    
+    <div class="numerical-card">
+      <span class="pyq-badge">CSIR NET 2020</span>
+      <div class="numerical-question">The perturbation $H' = \lambda x^4$ is applied to a 1D harmonic oscillator. The first-order correction to the ground state energy is:</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p>First order correction is $E_0^{(1)} = \langle \psi_0 | H' | \psi_0 \rangle = \lambda \langle 0 | x^4 | 0 \rangle$.</p>
+        <p>Using ladder operators, $x = \sqrt{\frac{\hbar}{2m\omega}}(a + a^\dagger)$.</p>
+        <p>For $x^4$, we need terms in $(a+a^\dagger)^4$ that return to the $|0\rangle$ state, which are the terms with an equal number of $a$ and $a^\dagger$ operators. Specifically, we need terms that act on $|0\rangle$ without annihilating it.</p>
+        <p>Alternatively, using standard expectation values for the harmonic oscillator: $\langle 0 | x^4 | 0 \rangle = \frac{3}{4}\left(\frac{\hbar}{m\omega}\right)^2$.</p>
+        <p>Therefore, $E_0^{(1)} = \frac{3\lambda\hbar^2}{4m^2\omega^2}$.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

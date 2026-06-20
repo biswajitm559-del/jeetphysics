@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gauss's Law in Electromagnetism: Proof & Applications | JeetPhysics</title>
+  <meta name="description" content="Master Gauss's Law for electric fields. Learn the derivation, integral and differential forms, and see solved examples for spheres, cylinders, and sheets." />
+  <link rel="canonical" href="https://jeetphysics.in/subjects/electromagnetism/gauss-law/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left:'$$', right:'$$', display:true}, {left:'$', right:'$', display:false}]})"></script>
+
+  <!-- Icons & Styles -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <link rel="stylesheet" href="../../subject-styles.css" />
+</head>
+<body>
+
+<nav class="navbar" style="background: rgba(2, 8, 24, 0.95);">
+  <a href="../../../../index.html" class="nav-brand">
+    <div class="nav-logo-icon">⚛️</div>
+    <span class="nav-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
+  </a>
+</nav>
+
+<div class="subject-container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a> &gt; 
+    <a href="#">Electromagnetism</a> &gt; 
+    <span>Gauss's Law</span>
+  </div>
+
+  <h1 class="subject-title">Gauss's Law</h1>
+
+  <div class="subject-section">
+    <h2>1. Theory & Concept</h2>
+    <p>Gauss's law is a cornerstone of electromagnetism and one of Maxwell's equations. It relates the distribution of electric charge to the resulting electric field. The law states that the net outward normal electric flux through any closed surface is proportional to the total electric charge enclosed within that surface.</p>
+    <p>This closed surface is often called a <strong>Gaussian surface</strong>. Gauss's law is incredibly powerful for calculating electric fields of highly symmetric charge distributions (spherical, cylindrical, or planar) where Coulomb's law would require complex integration.</p>
+  </div>
+
+  <div class="subject-section">
+    <h2>2. Derivation (from Coulomb's Law)</h2>
+    
+    <div class="derivation-box">
+      <h3>Electric Flux</h3>
+      <p>Consider a point charge $q$ located at the origin. The electric field at a distance $r$ is:</p>
+      $$ \mathbf{E} = \frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\hat{r} $$
+      <p>Let's calculate the electric flux $\Phi_E$ through a spherical surface of radius $r$ centered on the charge. The area element $d\mathbf{a}$ points radially outward, so $d\mathbf{a} = r^2 \sin\theta d\theta d\phi \hat{r}$.</p>
+      $$ \Phi_E = \oint \mathbf{E} \cdot d\mathbf{a} = \oint \left(\frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\hat{r}\right) \cdot (r^2 \sin\theta d\theta d\phi \hat{r}) $$
+      <p>Since $\hat{r} \cdot \hat{r} = 1$, the $r^2$ terms cancel out:</p>
+      $$ \Phi_E = \frac{q}{4\pi\varepsilon_0} \int_0^{2\pi} d\phi \int_0^\pi \sin\theta d\theta = \frac{q}{4\pi\varepsilon_0} (2\pi)(2) = \frac{q}{\varepsilon_0} $$
+      <p>By the principle of superposition, this result holds for any arrangement of enclosed charges, leading to the integral form of Gauss's Law.</p>
+
+      <h3>Differential Form (Using Divergence Theorem)</h3>
+      <p>The total enclosed charge can be expressed as a volume integral of charge density $\rho$: $Q_{enc} = \int_V \rho d\tau$.</p>
+      <p>Applying the Divergence theorem to the left side: $\oint_S \mathbf{E} \cdot d\mathbf{a} = \int_V (\nabla \cdot \mathbf{E}) d\tau$.</p>
+      <p>Equating the two volume integrals:</p>
+      $$ \int_V (\nabla \cdot \mathbf{E}) d\tau = \int_V \frac{\rho}{\varepsilon_0} d\tau $$
+      <p>Since this must hold for any arbitrary volume $V$, the integrands must be equal. This gives the differential form of Gauss's Law.</p>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>3. Key Formulae</h2>
+    <div class="formula-box">
+      <strong>Integral Form:</strong><br>
+      $$ \oint_S \mathbf{E} \cdot d\mathbf{a} = \frac{Q_{enc}}{\varepsilon_0} $$
+    </div>
+    <div class="formula-box">
+      <strong>Differential Form:</strong><br>
+      $$ \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0} $$
+    </div>
+    <div class="formula-box">
+      <strong>Electric Field of an Infinite Line Charge (linear density $\lambda$):</strong><br>
+      $$ E = \frac{\lambda}{2\pi\varepsilon_0 r} $$
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>4. Solved Numericals</h2>
+    
+    <div class="numerical-card">
+      <div class="numerical-question">Q1. A solid non-conducting sphere of radius $R$ carries a uniform volume charge density $\rho$. Find the electric field inside ($r < R$) and outside ($r > R$) the sphere.</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p><strong>Outside ($r > R$):</strong> Construct a spherical Gaussian surface of radius $r$. By symmetry, $\mathbf{E}$ is radial and constant over the surface.</p>
+        $$ \oint \mathbf{E} \cdot d\mathbf{a} = E(4\pi r^2) $$
+        <p>The total enclosed charge is $Q_{enc} = \rho \left(\frac{4}{3}\pi R^3\right)$. Using Gauss's law:</p>
+        $$ E(4\pi r^2) = \frac{\rho \frac{4}{3}\pi R^3}{\varepsilon_0} \implies E = \frac{\rho R^3}{3\varepsilon_0 r^2} $$
+        
+        <p><strong>Inside ($r < R$):</strong> Construct a spherical Gaussian surface of radius $r$. The enclosed charge is only the charge within radius $r$.</p>
+        $$ Q_{enc} = \rho \left(\frac{4}{3}\pi r^3\right) $$
+        $$ E(4\pi r^2) = \frac{\rho \frac{4}{3}\pi r^3}{\varepsilon_0} \implies E = \frac{\rho r}{3\varepsilon_0} $$
+        <p>Inside, the field increases linearly with $r$. Outside, it falls off as $1/r^2$.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subject-section">
+    <h2>5. Previous Year Questions (PYQs)</h2>
+    
+    <div class="numerical-card">
+      <span class="pyq-badge">GATE 2019</span>
+      <div class="numerical-question">An electric field is given by $\mathbf{E} = k r^3 \hat{r}$ in spherical coordinates. Find the volume charge density $\rho(r)$.</div>
+      <div class="numerical-solution">
+        <strong>Solution:</strong>
+        <p>Use the differential form of Gauss's Law: $\nabla \cdot \mathbf{E} = \rho/\varepsilon_0$.</p>
+        <p>The divergence in spherical coordinates for a purely radial field is:</p>
+        $$ \nabla \cdot \mathbf{E} = \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 E_r) $$
+        <p>Given $E_r = k r^3$:</p>
+        $$ \nabla \cdot \mathbf{E} = \frac{1}{r^2}\frac{\partial}{\partial r}(r^2 \cdot k r^3) = \frac{1}{r^2}\frac{\partial}{\partial r}(k r^5) = \frac{1}{r^2} (5k r^4) = 5k r^2 $$
+        <p>Therefore, $\rho(r) = \varepsilon_0 \nabla \cdot \mathbf{E} = 5\varepsilon_0 k r^2$.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
