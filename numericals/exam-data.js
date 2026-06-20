@@ -1255,17 +1255,44 @@ function initExamPage() {
     if (document.getElementById('meta-og-title')) document.getElementById('meta-og-title').content = fullTitle;
     if (document.getElementById('meta-og-description')) document.getElementById('meta-og-description').content = description;
 
-    // Inject Course Structured Data
+    // Inject Structured Data (Course and BreadcrumbList)
     const schema = {
         "@context": "https://schema.org",
-        "@type": "Course",
-        "name": exam.title,
-        "description": description,
-        "provider": {
-            "@type": "EducationalOrganization",
-            "name": "JeetPhysics",
-            "sameAs": "https://jeetphysics.in/"
-        }
+        "@graph": [
+            {
+                "@type": "Course",
+                "name": exam.title,
+                "description": description,
+                "provider": {
+                    "@type": "EducationalOrganization",
+                    "name": "JeetPhysics",
+                    "sameAs": "https://jeetphysics.in/"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://jeetphysics.in/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Numericals",
+                        "item": "https://jeetphysics.in/numericals/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": exam.title,
+                        "item": url
+                    }
+                ]
+            }
+        ]
     };
     let schemaScript = document.getElementById('dynamic-schema');
     if (!schemaScript) {
