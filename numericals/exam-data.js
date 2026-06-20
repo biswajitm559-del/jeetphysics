@@ -1242,7 +1242,39 @@ function initExamPage() {
     }
 
     // Set page title
-    document.title = `${exam.title} — ${exam.subtitle || 'Numerical Solutions'} | JeetPhysics`;
+    const fullTitle = `${exam.title} — ${exam.subtitle || 'Numerical Solutions'} | JeetPhysics`;
+    document.title = fullTitle;
+
+    // Update Meta Tags dynamically for SEO
+    const description = exam.description || `Solved numerical problems with step-by-step solutions for ${exam.title}.`;
+    const url = `https://jeetphysics.in/numericals/?exam=${currentExamKey}`;
+    
+    if (document.getElementById('meta-description')) document.getElementById('meta-description').content = description;
+    if (document.getElementById('meta-canonical')) document.getElementById('meta-canonical').href = url;
+    if (document.getElementById('meta-og-url')) document.getElementById('meta-og-url').content = url;
+    if (document.getElementById('meta-og-title')) document.getElementById('meta-og-title').content = fullTitle;
+    if (document.getElementById('meta-og-description')) document.getElementById('meta-og-description').content = description;
+
+    // Inject Course Structured Data
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": exam.title,
+        "description": description,
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "JeetPhysics",
+            "sameAs": "https://jeetphysics.in/"
+        }
+    };
+    let schemaScript = document.getElementById('dynamic-schema');
+    if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.id = 'dynamic-schema';
+        schemaScript.type = 'application/ld+json';
+        document.head.appendChild(schemaScript);
+    }
+    schemaScript.textContent = JSON.stringify(schema);
 
     // Load problems for this exam
     filteredProblems = EXAM_PROBLEMS[currentExamKey] || [];
