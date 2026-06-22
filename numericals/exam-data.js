@@ -172,7 +172,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 10, exam: 'jam-physics', chapter: 'Classical Mechanics', topic: 'Poisson Brackets', difficulty: 'moderate', year: '2023',
-            question: 'Evaluate the Poisson bracket {L_x, L_y} where L is angular momentum. Use qᵢ, pᵢ as canonical coordinates.',
+            question: 'Evaluate the Poisson bracket {L<sub>x</sub>, L<sub>y</sub>} where L is angular momentum. Use qᵢ, pᵢ as canonical coordinates.',
             given: 'Given: L<sub>x</sub> = yp<sub>z</sub> − zp<sub>y</sub>, L<sub>y</sub> = zp<sub>x</sub> − xp<sub>z</sub>',
             required: 'Find: {L<sub>x</sub>, L<sub>y</sub>}',
             formula: '$\\{L_x, L_y\\} = L_z$',
@@ -239,7 +239,7 @@ const EXAM_PROBLEMS = {
             required: 'Find: Transmission coefficient T',
             formula: '$T \\approx e^{-2\\kappa a}$',
             steps: ['Step 1: Inside barrier: ψ = Ae^(κx) + Be^(−κx), κ = √(2m(V₀−E))/ℏ', 'Step 2: Apply boundary conditions at x=0 and x=a (continuity of ψ and ψ\')', 'Step 3: For κa >> 1 (thick barrier), the growing exponential dominates', 'Step 4: T = |t|² ≈ 16E(V₀−E)/V₀² × e^(−2κa)', 'Step 5: Dominant factor: T ≈ e^(−2κa)'],
-            answer: 'T ≈ e^(−2κa) where κ = √(2m(V₀−E))/ℏ',
+            answer: 'T ≈ e<sup>−2κa</sup> where κ = √(2m(V₀−E))/ℏ',
             notes: 'Tunneling is purely quantum. Applications: alpha decay, scanning tunneling microscope, tunnel diodes. In alpha decay, T ≈ 10⁻³⁸ → 10⁻²⁰, giving half-lives of 10⁻⁷ s to 10¹⁰ years!'
         },
         {
@@ -259,7 +259,7 @@ const EXAM_PROBLEMS = {
             required: 'Find: Energy levels Eₙ',
             formula: '$\\oint p\\, dq = \\left(n + \\frac{3}{4}\\right) h$',
             steps: ['Step 1: WKB condition: ∫₀^{x₀} √(2m(E−mgx)) dx = (n + 3/4)πℏ (one rigid wall + one turning point)', 'Step 2: Let u = E − mgx, x₀ = E/mg', 'Step 3: ∫₀^{E/mg} √(2m(E−mgx)) dx = (2/3)√(2m) × (E/mg)^(3/2) × (mg)^(−1)... = (2/3mg)√(2m) × E^(3/2)', 'Step 4: Setting equal to (n + 3/4)πℏ and solving for E', 'Step 5: Eₙ = [3πmgℏ(n + 3/4)/2 × 1/√(2m)]^(2/3)'],
-            answer: 'Eₙ = (ℏ²(mg)²/2m)^(1/3) × [3π/2(n+3/4)]^(2/3)',
+            answer: 'Eₙ = (ℏ²(mg)²/2m)<sup>1/3</sup> × [3π/2(n+3/4)]<sup>2/3</sup>',
             notes: 'The factor 3/4 in the WKB condition comes from 1/4 from hard wall + 1/2 from soft turning point. The exact quantum treatment of linear potential gives Airy function solutions.'
         },
         {
@@ -269,7 +269,7 @@ const EXAM_PROBLEMS = {
             required: 'Find: |ψ(t)⟩ and P₂(t)',
             formula: '$|\\psi(t)\\rangle = \\frac{1}{\\sqrt{2}}(|1\\rangle + e^{-i\\omega t}|2\\rangle)$',
             steps: ['Step 1: Time evolution: each eigenstate evolves as e^(−iEt/ℏ)', 'Step 2: |ψ(t)⟩ = (1/√2)(e^(0)|1⟩ + e^(−iℏωt/ℏ)|2⟩)', 'Step 3: |ψ(t)⟩ = (1/√2)(|1⟩ + e^(−iωt)|2⟩)', 'Step 4: P₂(t) = |⟨2|ψ(t)⟩|² = |e^(−iωt)/√2|² = 1/2', 'Step 5: The probability is constant because |2⟩ is an energy eigenstate'],
-            answer: '|ψ(t)⟩ = (|1⟩ + e^(−iωt)|2⟩)/√2; P₂(t) = 1/2 (constant)',
+            answer: '|ψ(t)⟩ = (|1⟩ + e<sup>−iωt</sup>|2⟩)/√2; P₂(t) = 1/2 (constant)',
             notes: 'Probabilities are constant when expanding in energy eigenstates — only phases change. Observable oscillations occur for superpositions of eigenstates of the measured observable.'
         },
         {
@@ -356,7 +356,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 28, exam: 'jam-physics', chapter: 'EM Theory', topic: 'Dielectrics', difficulty: 'moderate', year: '2020',
-            question: 'A parallel plate capacitor is filled with a dielectric of permittivity ε = 4ε₀. Find the ratio of the capacitance with to without the dielectric, and the bound surface charge density if free charge density is σ_f.',
+            question: 'A parallel plate capacitor is filled with a dielectric of permittivity ε = 4ε₀. Find the ratio of the capacitance with to without the dielectric, and the bound surface charge density if free charge density is σ<sub>f</sub>.',
             given: 'Given: ε<sub>r</sub> = 4, free charge density σ<sub>f</sub> on plates',
             required: 'Find: C/C₀ and σ<sub>b</sub>',
             formula: '$C = \\varepsilon_r C_0, \\quad \\sigma_b = \\sigma_f(1 - 1/\\varepsilon_r)$',
@@ -381,15 +381,15 @@ const EXAM_PROBLEMS = {
             required: 'Find: E\' and B\' in moving frame',
             formula: '$E\'_\\perp = \\gamma E_\\perp, \\quad B\'_\\perp = -\\gamma \\mathbf{v} \\times \\mathbf{E}/c^2$',
             steps: ['Step 1: In rest frame: E = E_x x̂ + E_y ŷ + E_z ẑ, B = 0', 'Step 2: Parallel component: E\'_x = E_x (unchanged)', 'Step 3: Perpendicular components: E\'_y = γE_y, E\'_z = γE_z', 'Step 4: B\' = γ(v×E)/c² = γv E_perp/c² × (ẑ × ŷ terms)', 'Step 5: A moving charge creates both E and B fields — magnetism is relativistic electricity!'],
-            answer: 'E\'_∥ = E_∥; E\'_⊥ = γE_⊥; B\' = γ(v×E)/c² (non-zero magnetic field appears)',
+            answer: 'E\'<sub>�</sub>� = E<sub>�</sub>�; E\'<sub>�</sub>� = γE<sub>�</sub>�; B\' = γ(v×E)/c² (non-zero magnetic field appears)',
             notes: 'This demonstrates that electric and magnetic fields are components of a single tensor. What appears as purely electric in one frame appears with a magnetic component in another — magnetism is a relativistic effect of electricity.'
         },
 
         // --- Thermodynamics & Statistical Mechanics (10) ---
         {
             id: 31, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Maxwell Speed Distribution', difficulty: 'moderate', year: '2023',
-            question: 'From the Maxwell speed distribution, find the most probable speed v_p, mean speed v̄, and rms speed v_rms for an ideal gas of molecular mass M at temperature T.',
-            given: 'Given: f(v) = 4π(m/2πkT)^(3/2) v² exp(−mv²/2kT), molecular mass m = M/Nₐ',
+            question: 'From the Maxwell speed distribution, find the most probable speed v<sub>p</sub>, mean speed v̄, and rms speed v<sub>rms</sub> for an ideal gas of molecular mass M at temperature T.',
+            given: 'Given: f(v) = 4π(m/2πkT)<sup>3/2</sup> v² exp(−mv²/2kT), molecular mass m = M/Nₐ',
             required: 'Find: v<sub>p</sub>, v̄, v<sub>rms</sub>',
             formula: '$v_p = \\sqrt{\\frac{2k_BT}{m}}, \\quad \\bar{v} = \\sqrt{\\frac{8k_BT}{\\pi m}}, \\quad v_{rms} = \\sqrt{\\frac{3k_BT}{m}}$',
             steps: ['Step 1: Most probable: df/dv = 0 → v_p = √(2kT/m)', 'Step 2: Mean speed: v̄ = ∫₀^∞ v f(v) dv = √(8kT/πm)', 'Step 3: Mean square speed: ⟨v²⟩ = ∫v²f(v)dv = 3kT/m', 'Step 4: v_rms = √(3kT/m)', 'Step 5: Ratio v_p : v̄ : v_rms = 1 : 1.128 : 1.225'],
@@ -398,27 +398,27 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 32, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Partition Function', difficulty: 'advanced', year: '2021',
-            question: 'Find the partition function Z for a two-level system with energies 0 and ε. Calculate the mean energy ⟨E⟩ and specific heat C_v.',
+            question: 'Find the partition function Z for a two-level system with energies 0 and ε. Calculate the mean energy ⟨E⟩ and specific heat C<sub>v</sub>.',
             given: 'Given: Two levels: E₁ = 0, E₂ = ε, temperature T, β = 1/kT',
             required: 'Find: Z, ⟨E⟩, C<sub>v</sub>',
             formula: '$Z = 1 + e^{-\\beta\\varepsilon}, \\quad \\langle E \\rangle = -\\frac{\\partial \\ln Z}{\\partial \\beta}$',
             steps: ['Step 1: Z = e^(0) + e^(−βε) = 1 + e^(−βε)', 'Step 2: ⟨E⟩ = −∂lnZ/∂β = εe^(−βε)/(1 + e^(−βε))', 'Step 3: ⟨E⟩ = ε/(e^(βε) + 1) — Fermi-Dirac form!', 'Step 4: C_v = d⟨E⟩/dT = kβ²ε²e^(βε)/(e^(βε)+1)²', 'Step 5: C_v peaks at kT ≈ 0.42ε (Schottky anomaly)'],
-            answer: 'Z = 1 + e^(−ε/kT); ⟨E⟩ = ε/(e^(ε/kT)+1); Schottky peak in C<sub>v</sub>',
+            answer: 'Z = 1 + e<sup>−ε/kT</sup>; ⟨E⟩ = ε/(e<sup>ε/kT</sup>+1); Schottky peak in C<sub>v</sub>',
             notes: 'The Schottky heat capacity anomaly is observed in systems with two-level energy splitting (e.g., spin-1/2 in magnetic field). The characteristic hump occurs when kT ≈ ε.'
         },
         {
             id: 33, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Bose-Einstein Distribution', difficulty: 'advanced', year: '2020',
             question: 'Write the Bose-Einstein distribution and calculate the Planck blackbody energy density u(ω) at frequency ω.',
-            given: 'Given: BE distribution n̄ = 1/(e^(ℏω/kT) − 1), density of states g(ω) = ω²/π²c³ per unit volume',
+            given: 'Given: BE distribution n̄ = 1/(e<sup>ℏω/kT</sup> − 1), density of states g(ω) = ω²/π²c³ per unit volume',
             required: 'Find: Spectral energy density u(ω)',
             formula: '$u(\\omega) = \\frac{\\hbar\\omega^3}{\\pi^2 c^3}\\frac{1}{e^{\\hbar\\omega/kT}-1}$',
             steps: ['Step 1: BE distribution: n̄(ω) = 1/(e^(ℏω/kT) − 1)', 'Step 2: Density of states: g(ω) = ω²/π²c³ (2 polarizations)', 'Step 3: Energy density: u(ω) = ℏω × n̄(ω) × g(ω)', 'Step 4: u(ω) = ℏω³/(π²c³) × 1/(e^(ℏω/kT) − 1)', 'Step 5: Total energy: ∫u(ω)dω = (π²/15)(kT)⁴/(ℏc)³ → Stefan-Boltzmann law'],
-            answer: 'u(ω) = ℏω³/(π²c³) × 1/(e^(ℏω/kT) − 1)',
-            notes: 'This is Planck\'s radiation law. High-ω limit: u → ∝ ω³e^(−ℏω/kT) (Wien law). Low-ω limit: u → ω²kT/π²c³ (Rayleigh-Jeans). Planck\'s formula resolves the "ultraviolet catastrophe".'
+            answer: 'u(ω) = ℏω³/(π²c³) × 1/(e<sup>ℏω/kT</sup> − 1)',
+            notes: 'This is Planck\'s radiation law. High-ω limit: u → ∝ ω³e<sup>−ℏω/kT</sup> (Wien law). Low-ω limit: u → ω²kT/π²c³ (Rayleigh-Jeans). Planck\'s formula resolves the "ultraviolet catastrophe".'
         },
         {
             id: 34, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Fermi-Dirac Statistics', difficulty: 'advanced', year: '2022',
-            question: 'Find the Fermi energy E_F at T = 0 for free electrons in a metal with electron density n = 8.5 × 10²⁸ m⁻³ (copper).',
+            question: 'Find the Fermi energy E<sub>F</sub> at T = 0 for free electrons in a metal with electron density n = 8.5 × 10²⁸ m⁻³ (copper).',
             given: 'Given: n = 8.5×10²⁸ m⁻³, mₑ = 9.109×10⁻³¹ kg, ℏ = 1.055×10⁻³⁴ J·s',
             required: 'Find: Fermi energy E<sub>F</sub>',
             formula: '$E_F = \\frac{\\hbar^2}{2m}(3\\pi^2 n)^{2/3}$',
@@ -438,7 +438,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 36, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Phase Transitions', difficulty: 'moderate', year: '2018',
-            question: 'Using the Clausius-Clapeyron equation, estimate how the boiling point of water changes with altitude (pressure decreases from 1 atm to 0.9 atm). L_vap = 40.7 kJ/mol.',
+            question: 'Using the Clausius-Clapeyron equation, estimate how the boiling point of water changes with altitude (pressure decreases from 1 atm to 0.9 atm). L<sub>vap</sub> = 40.7 kJ/mol.',
             given: 'Given: L = 40700 J/mol, T₁ = 373 K at P₁ = 101325 Pa, P₂ = 0.9P₁, ΔV<sub>vap</sub> ≈ RT/P (ideal gas)',
             required: 'Find: Change in boiling point ΔT',
             formula: '$\\frac{dP}{dT} = \\frac{L}{T\\Delta V} \\approx \\frac{LP}{RT^2}$',
@@ -463,7 +463,7 @@ const EXAM_PROBLEMS = {
             required: 'Find: Grand partition function Ξ and ⟨N⟩',
             formula: '$\\Xi = \\prod_i(1 + e^{\\beta(\\mu - \\varepsilon_i)}), \\quad \\langle N\\rangle = \\sum_i \\frac{1}{e^{\\beta(\\varepsilon_i - \\mu)}+1}$',
             steps: ['Step 1: Each state can have 0 or 1 fermion', 'Step 2: Partition function for state i: ζᵢ = 1 + e^(β(μ−εᵢ))', 'Step 3: Total: Ξ = ∏ᵢ ζᵢ = ∏ᵢ (1 + e^(β(μ−εᵢ)))', 'Step 4: ⟨nᵢ⟩ = (1/β) ∂ln ζᵢ/∂μ = e^(β(μ−εᵢ))/(1 + e^(β(μ−εᵢ)))', 'Step 5: ⟨nᵢ⟩ = 1/(e^(β(εᵢ−μ))+1) — Fermi-Dirac distribution'],
-            answer: 'Ξ = ∏ᵢ(1 + e^(β(μ−εᵢ))); ⟨nᵢ⟩ = 1/(e^(β(εᵢ−μ))+1)',
+            answer: 'Ξ = ∏ᵢ(1 + e<sup>β(μ−εᵢ</sup>)); ⟨nᵢ⟩ = 1/(e<sup>β(εᵢ−μ</sup>)+1)',
             notes: 'The grand canonical ensemble naturally gives the Fermi-Dirac distribution for fermions and Bose-Einstein for bosons. The chemical potential μ is the energy cost to add one particle.'
         },
         {
@@ -478,7 +478,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 40, exam: 'jam-physics', chapter: 'Thermodynamics & Statistics', topic: 'Debye Model', difficulty: 'advanced', year: '2016',
-            question: 'State the Debye model for heat capacity of a solid and find C_v in the low-T limit (T << Θ_D).',
+            question: 'State the Debye model for heat capacity of a solid and find C<sub>v</sub> in the low-T limit (T << Θ<sub>D</sub>).',
             given: 'Given: Debye temperature Θ<sub>D</sub>, phonons with density of states g(ω) ∝ ω² up to ω<sub>D</sub>',
             required: 'Find: C<sub>v</sub> for T << Θ<sub>D</sub>',
             formula: '$C_v = \\frac{12\\pi^4}{5}Nk_B\\left(\\frac{T}{\\Theta_D}\\right)^3$',
@@ -495,7 +495,7 @@ const EXAM_PROBLEMS = {
             required: 'Find: Critical damping condition and x(t)',
             formula: '$x(t) = (A + Bt)e^{-\\beta t} \\quad \\text{(critical damping)}$',
             steps: ['Step 1: Characteristic equation: r² + 2βr + ω₀² = 0', 'Step 2: Solutions: r = −β ± √(β² − ω₀²)', 'Step 3: Critical damping: β = ω₀, repeated root r = −β', 'Step 4: General solution (repeated root): x(t) = (A + Bt)e^(−βt)', 'Step 5: System returns to equilibrium fastest without oscillating'],
-            answer: 'Critical: β = ω₀ → γ = 2√(km). x(t) = (A+Bt)e^(−βt)',
+            answer: 'Critical: β = ω₀ → γ = 2√(km). x(t) = (A+Bt)e<sup>−βt</sup>',
             notes: 'Critical damping gives fastest non-oscillatory return to equilibrium. Used in door closers, galvanometers, and shock absorbers. Underdamped (β < ω₀) oscillates; overdamped (β > ω₀) returns too slowly.'
         },
         {
@@ -632,7 +632,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 55, exam: 'jam-physics', chapter: 'Optics', topic: 'Optical Fiber', difficulty: 'moderate', year: '2020',
-            question: 'An optical fiber has core index n₁ = 1.5 and cladding index n₂ = 1.45. Find the numerical aperture NA and the maximum acceptance angle θ_max.',
+            question: 'An optical fiber has core index n₁ = 1.5 and cladding index n₂ = 1.45. Find the numerical aperture NA and the maximum acceptance angle θ<sub>max</sub>.',
             given: 'Given: n₁ = 1.5 (core), n₂ = 1.45 (cladding), n₀ = 1 (air)',
             required: 'Find: NA and θ<sub>max</sub>',
             formula: '$NA = \\sqrt{n_1^2 - n_2^2}, \\quad \\theta_{max} = \\arcsin(NA)$',
@@ -694,7 +694,7 @@ const EXAM_PROBLEMS = {
         // --- Electronics (10) ---
         {
             id: 61, exam: 'jam-physics', chapter: 'Electronics', topic: 'p-n Junction', difficulty: 'moderate', year: '2022',
-            question: 'Derive the ideal diode equation I = I₀(e^(V/V_T) − 1) and explain each term. Find I for V = 0.6 V, I₀ = 10 nA, T = 300 K.',
+            question: 'Derive the ideal diode equation I = I₀(e<sup>V/V<sub>T</sub></sup> − 1) and explain each term. Find I for V = 0.6 V, I₀ = 10 nA, T = 300 K.',
             given: 'Given: I₀ = 10⁻⁸ A, V = 0.6 V, T = 300 K, V<sub>T</sub> = kT/e = 26 mV',
             required: 'Find: Current I',
             formula: '$I = I_0\\left(e^{V/V_T} - 1\\right)$',
@@ -704,7 +704,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 62, exam: 'jam-physics', chapter: 'Electronics', topic: 'Transistor Amplifier', difficulty: 'moderate', year: '2021',
-            question: 'A BJT in common-emitter configuration has β = 100, Rc = 5 kΩ, and V_CC = 12 V. Find the voltage gain and the Q-point current if V_BE = 0.7 V and R_B = 470 kΩ.',
+            question: 'A BJT in common-emitter configuration has β = 100, Rc = 5 kΩ, and V<sub>CC</sub> = 12 V. Find the voltage gain and the Q-point current if V<sub>BE</sub> = 0.7 V and R<sub>B</sub> = 470 kΩ.',
             given: 'Given: β = 100, Rc = 5000 Ω, V<sub>CC</sub> = 12 V, R<sub>B</sub> = 470 kΩ, V<sub>BE</sub> = 0.7 V',
             required: 'Find: I<sub>B</sub>, I<sub>C</sub>, V<sub>CE</sub>, voltage gain A<sub>v</sub>',
             formula: '$A_v = -\\beta R_C / r_e, \\quad r_e = V_T/I_C$',
@@ -714,7 +714,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 63, exam: 'jam-physics', chapter: 'Electronics', topic: 'Op-Amp Circuits', difficulty: 'easy', year: '2023',
-            question: 'An inverting op-amp circuit has R₁ = 1 kΩ and R_f = 100 kΩ. Find the closed-loop voltage gain and the output for V_in = 0.05 V.',
+            question: 'An inverting op-amp circuit has R₁ = 1 kΩ and R<sub>f</sub> = 100 kΩ. Find the closed-loop voltage gain and the output for V<sub>in</sub> = 0.05 V.',
             given: 'Given: R₁ = 1 kΩ, R<sub>f</sub> = 100 kΩ, V<sub>in</sub> = 0.05 V, ideal op-amp',
             required: 'Find: A<sub>v</sub> and V<sub>out</sub>',
             formula: '$A_v = -\\frac{R_f}{R_1}$',
@@ -744,7 +744,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 66, exam: 'jam-physics', chapter: 'Electronics', topic: 'Modulation', difficulty: 'moderate', year: '2019',
-            question: 'An AM signal has carrier frequency f_c = 1 MHz, carrier amplitude A_c = 10 V, and modulating signal m(t) = 5 cos(2π×1000t). Find the modulation index, sideband frequencies, and total power in sidebands if carrier power is P_c.',
+            question: 'An AM signal has carrier frequency f<sub>c</sub> = 1 MHz, carrier amplitude A<sub>c</sub> = 10 V, and modulating signal m(t) = 5 cos(2π×1000t). Find the modulation index, sideband frequencies, and total power in sidebands if carrier power is P<sub>c</sub>.',
             given: 'Given: f<sub>c</sub> = 1 MHz, A<sub>c</sub> = 10 V, A<sub>m</sub> = 5 V, f<sub>m</sub> = 1 kHz',
             required: 'Find: m, sidebands, P<sub>sidebands</sub>',
             formula: '$m = A_m/A_c, \\quad P_{tot} = P_c(1 + m^2/2)$',
@@ -774,7 +774,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 69, exam: 'jam-physics', chapter: 'Electronics', topic: 'Semiconductor Physics', difficulty: 'advanced', year: '2017',
-            question: 'Find the intrinsic carrier concentration nᵢ for silicon at 300 K. Given: E_g = 1.12 eV, effective masses m*_e = 0.28mₑ, m*_h = 0.81mₑ.',
+            question: 'Find the intrinsic carrier concentration nᵢ for silicon at 300 K. Given: E<sub>g</sub> = 1.12 eV, effective masses m*<sub>e</sub> = 0.28mₑ, m*<sub>h</sub> = 0.81mₑ.',
             given: 'Given: E<sub>g</sub> = 1.12 eV, m*<sub>e</sub> = 0.28mₑ, m*<sub>h</sub> = 0.81mₑ, T = 300 K, kT = 0.0259 eV',
             required: 'Find: nᵢ',
             formula: '$n_i = \\sqrt{N_c N_v}\\, e^{-E_g/2kT}$',
@@ -784,7 +784,7 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 70, exam: 'jam-physics', chapter: 'Electronics', topic: 'Microwave Electronics', difficulty: 'advanced', year: '2016',
-            question: 'A transmission line of characteristic impedance Z₀ = 50 Ω is terminated by Z_L = 100 Ω. Find the reflection coefficient Γ, standing wave ratio SWR, and fraction of power reflected.',
+            question: 'A transmission line of characteristic impedance Z₀ = 50 Ω is terminated by Z<sub>L</sub> = 100 Ω. Find the reflection coefficient Γ, standing wave ratio SWR, and fraction of power reflected.',
             given: 'Given: Z₀ = 50 Ω, Z<sub>L</sub> = 100 Ω',
             required: 'Find: Γ, SWR, P<sub>reflected</sub>/P<sub>incident</sub>',
             formula: '$\\Gamma = \\frac{Z_L - Z_0}{Z_L + Z_0}, \\quad SWR = \\frac{1+|\\Gamma|}{1-|\\Gamma|}$',
@@ -816,12 +816,12 @@ const EXAM_PROBLEMS = {
         },
         {
             id: 73, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Fourier Transform', difficulty: 'moderate', year: '2022',
-            question: 'Find the Fourier transform of a Gaussian f(x) = e^(−αx²) and interpret the result in terms of the uncertainty principle.',
-            given: 'Given: f(x) = e^(−αx²), α > 0',
-            required: 'Find: F̃(k) = ∫<sub>-∞</sub><sup>∞</sup> e^(−αx²) e^(−ikx) dx',
+            question: 'Find the Fourier transform of a Gaussian f(x) = e<sup>−αx²</sup> and interpret the result in terms of the uncertainty principle.',
+            given: 'Given: f(x) = e<sup>−αx²</sup>, α > 0',
+            required: 'Find: F̃(k) = ∫<sub>-∞</sub><sup>∞</sup> e<sup>−αx²</sup> e<sup>−ikx</sup> dx',
             formula: '$\\tilde{F}(k) = \\sqrt{\\frac{\\pi}{\\alpha}} e^{-k^2/4\\alpha}$',
             steps: ['Step 1: Complete the square in exponent: −αx² − ikx = −α(x + ik/2α)² − k²/4α', 'Step 2: F̃(k) = e^(−k²/4α) ∫e^(−α(x+ik/2α)²) dx', 'Step 3: Gaussian integral: ∫e^(−αu²) du = √(π/α)', 'Step 4: F̃(k) = √(π/α) × e^(−k²/4α)', 'Step 5: Width in x: Δx ~ 1/√α; Width in k: Δk ~ √α → Δx × Δk ~ 1'],
-            answer: 'F̃(k) = √(π/α) e^(−k²/4α) — also a Gaussian with width 1/√(4α)',
+            answer: 'F̃(k) = √(π/α) e<sup>−k²/4α</sup> — also a Gaussian with width 1/√(4α)',
             notes: 'The Fourier transform of a Gaussian is a Gaussian: narrow in one domain → wide in the other. This is the mathematical basis of the Heisenberg uncertainty principle: Δx·Δp ≥ ℏ/2.'
         },
         {
@@ -832,7 +832,7 @@ const EXAM_PROBLEMS = {
             formula: '$P_0 = 1, P_1 = x, P_2 = \\frac{1}{2}(3x^2-1)$',
             steps: ['Step 1: P₀ = (1/1) × d⁰/dx⁰(x²−1)⁰ = 1', 'Step 2: P₁ = (1/2) × d/dx(x²−1) = (1/2)(2x) = x', 'Step 3: P₂ = (1/8) × d²/dx²(x²−1)² = (1/8) d²/dx²(x⁴−2x²+1) = (1/8)(12x²−4) = (3x²−1)/2', 'Step 4: Orthogonality: ∫₋₁¹ P₀P₁ dx = ∫₋₁¹ x dx = 0 ✓', 'Step 5: ∫₋₁¹ Pₙ² dx = 2/(2n+1)'],
             answer: 'P₀=1, P₁=x, P₂=(3x²−1)/2; ∫₋₁¹PₘPₙdx = (2/(2n+1))δₘₙ',
-            notes: 'Legendre polynomials appear naturally in spherical problems (separation of variables in Laplace equation). The spherical harmonics Y<sub>l</sub>^m are built from associated Legendre polynomials.'
+            notes: 'Legendre polynomials appear naturally in spherical problems (separation of variables in Laplace equation). The spherical harmonics Y<sub>l</sub><sup>m</sup> are built from associated Legendre polynomials.'
         },
         {
             id: 75, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Differential Equations', difficulty: 'moderate', year: '2022',
@@ -841,28 +841,28 @@ const EXAM_PROBLEMS = {
             required: 'Find: Series solution J₀(x)',
             formula: '$J_0(x) = \\sum_{m=0}^{\\infty} \\frac{(-1)^m}{(m!)^2}\\left(\\frac{x}{2}\\right)^{2m}$',
             steps: ['Step 1: Try y = ∑aₘxᵐ. Substituting gives recurrence: aₘ = −aₘ₋₂/(m²) for m≥2', 'Step 2: a₀ = 1, a₁ = 0 (odd terms vanish)', 'Step 3: a₂ = −a₀/4 = −1/4, a₄ = −a₂/16 = 1/64, a₆ = −1/2304', 'Step 4: J₀(x) = 1 − x²/4 + x⁴/64 − ... = ∑(−1)ᵐ(x/2)^(2m)/(m!)²', 'Step 5: J₀ oscillates with decreasing amplitude, like a damped cosine'],
-            answer: 'J₀(x) = ∑ₘ₌₀^∞ (−1)ᵐ(x/2)^(2m)/(m!)²',
+            answer: 'J₀(x) = ∑ₘ₌₀<sup>∞</sup> (−1)ᵐ(x/2)<sup>2m</sup>/(m!)²',
             notes: 'Bessel functions are the "cylinder functions" appearing in wave equations in cylindrical coordinates. J₀ describes the radial part of EM modes in circular waveguides. Zeros of J₀ determine cutoff frequencies.'
         },
         {
             id: 76, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Tensors', difficulty: 'advanced', year: '2019',
-            question: 'Write the electromagnetic field tensor F^μν in terms of E and B fields. Show that F^μν F_μν is a Lorentz invariant.',
+            question: 'Write the electromagnetic field tensor F<sup>μν</sup> in terms of E and B fields. Show that F<sup>μν</sup> F<sub>μν</sub> is a Lorentz invariant.',
             given: 'Given: E = (E<sub>x</sub>, E<sub>y</sub>, E<sub>z</sub>), B = (B<sub>x</sub>, B<sub>y</sub>, B<sub>z</sub>), c = 1 units',
-            required: 'Find: F^μν and the scalar invariant',
+            required: 'Find: F<sup>μν</sup> and the scalar invariant',
             formula: '$F^{\\mu\\nu} = \\begin{pmatrix} 0 & -E_x & -E_y & -E_z \\\\ E_x & 0 & -B_z & B_y \\\\ E_y & B_z & 0 & -B_x \\\\ E_z & -B_y & B_x & 0 \\end{pmatrix}$',
-            steps: ['Step 1: F^μν is antisymmetric: F^μν = −F^νμ (6 independent components)', 'Step 2: F^0i = −E^i (electric field in time-space components)', 'Step 3: F^ij = −ε^ijk B_k (magnetic field in space-space components)', 'Step 4: F^μν F_μν = F^μν g_μα g_νβ F^αβ', 'Step 5: = 2(B² − E²/c²) in SI. This is Lorentz invariant!'],
-            answer: 'F^μν as above; F^μν F_μν = 2(B² − E²) (invariant)',
-            notes: 'Two Lorentz invariants: F_μν F^μν ∝ B² − E²/c² and ε^μνρσ F_μν F_ρσ ∝ E⃗·B⃗. These are invariant under Lorentz transformations. If E⃗⊥B⃗ in one frame, they remain perpendicular in all frames.'
+            steps: ['Step 1: F<sup>μν</sup> is antisymmetric: F<sup>μν</sup> = −F<sup>νμ</sup> (6 independent components)', 'Step 2: F<sup>0i</sup> = −E<sup>i</sup> (electric field in time-space components)', 'Step 3: F<sup>ij</sup> = −ε<sup>ijk</sup> B<sub>k</sub> (magnetic field in space-space components)', 'Step 4: F<sup>μν</sup> F<sub>μν</sub> = F<sup>μν</sup> g<sub>μα</sub> g<sub>νβ</sub> F<sup>αβ</sup>', 'Step 5: = 2(B² − E²/c²) in SI. This is Lorentz invariant!'],
+            answer: 'F<sup>μν</sup> as above; F<sup>μν</sup> F<sub>μν</sub> = 2(B² − E²) (invariant)',
+            notes: 'Two Lorentz invariants: F<sub>μν</sub> F<sup>μν</sup> ∝ B² − E²/c² and ε<sup>μνρσ</sup> F<sub>μν</sub> F<sub>ρσ</sub> ∝ E⃗·B⃗. These are invariant under Lorentz transformations. If E⃗⊥B⃗ in one frame, they remain perpendicular in all frames.'
         },
         {
             id: 77, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Laplace Transform', difficulty: 'moderate', year: '2021',
-            question: 'Use the Laplace transform to solve the ODE: ẍ + 4ẋ + 4x = e^(−2t), x(0) = 1, ẋ(0) = 0.',
-            given: 'Given: ẍ + 4ẋ + 4x = e^(−2t), initial conditions x(0)=1, ẋ(0)=0',
+            question: 'Use the Laplace transform to solve the ODE: ẍ + 4ẋ + 4x = e<sup>−2t</sup>, x(0) = 1, ẋ(0) = 0.',
+            given: 'Given: ẍ + 4ẋ + 4x = e<sup>−2t</sup>, initial conditions x(0)=1, ẋ(0)=0',
             required: 'Find: x(t)',
             formula: '$\\mathcal{L}[e^{-at}] = \\frac{1}{s+a}$',
-            steps: ['Step 1: L[ẍ+4ẋ+4x] = (s²X−s−0) + 4(sX−1) + 4X = 1/(s+2)', 'Step 2: X(s²+4s+4) = s + 4 + 1/(s+2) = (s+2)² + 1/(s+2) − 1... ', 'Step 3: (s+2)²X = (s+2)² × 1/(s+2)² × something... (s+2)²X = s+4 + 1/(s+2)', 'Step 4: X = (s+4)/((s+2)²) + 1/((s+2)³)', 'Step 5: x(t) = e^(−2t)(1 + 2t) + t²e^(−2t)/2 = e^(−2t)(1 + 2t + t²/2)'],
-            answer: 'x(t) = e^(−2t)(1 + 2t + t²/2)',
-            notes: 'The repeated root s = −2 (critically damped system!) gives polynomial × exponential solutions. The forcing function e^(−2t) at the natural frequency causes secular growth (t² term), analogous to resonance.'
+            steps: ['Step 1: L[ẍ+4ẋ+4x] = (s²X−s−0) + 4(sX−1) + 4X = 1/(s+2)', 'Step 2: X(s²+4s+4) = s + 4 + 1/(s+2) = (s+2)² + 1/(s+2) − 1... ', 'Step 3: (s+2)²X = (s+2)² × 1/(s+2)² × something... (s+2)²X = s+4 + 1/(s+2)', 'Step 4: X = (s+4)/((s+2)²) + 1/((s+2)³)', 'Step 5: x(t) = e<sup>−2t</sup>(1 + 2t) + t²e<sup>−2t</sup>/2 = e<sup>−2t</sup>(1 + 2t + t²/2)'],
+            answer: 'x(t) = e<sup>−2t</sup>(1 + 2t + t²/2)',
+            notes: 'The repeated root s = −2 (critically damped system!) gives polynomial × exponential solutions. The forcing function e<sup>−2t</sup> at the natural frequency causes secular growth (t² term), analogous to resonance.'
         },
         {
             id: 78, exam: 'jam-physics', chapter: 'Mathematical Physics', topic: 'Group Theory', difficulty: 'advanced', year: '2018',
@@ -928,7 +928,7 @@ const EXAM_PROBLEMS = {
             difficulty: 'advanced',
             year: null,
             question: 'For the ground state of a one-dimensional quantum harmonic oscillator with angular frequency ω, calculate the expectation value ⟨x²⟩.',
-            given: 'Given: QHO ground state ψ₀(x) = (mω/πℏ)^(1/4) exp(−mωx²/2ℏ), angular frequency ω, mass m',
+            given: 'Given: QHO ground state ψ₀(x) = (mω/πℏ)<sup>1/4</sup> exp(−mωx²/2ℏ), angular frequency ω, mass m',
             required: 'Find: ⟨x²⟩ = ⟨ψ₀|x²|ψ₀⟩',
             formula: '$$\\langle x^2 \\rangle = \\frac{\\hbar}{2m\\omega}$$',
             steps: [
@@ -1802,4 +1802,5 @@ function getSearchQuery() {
 document.addEventListener('DOMContentLoaded', function () {
     initExamPage();
 });
+
 
