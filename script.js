@@ -1371,6 +1371,13 @@ function openModal(id) {
 
   const body = document.getElementById('modalBody');
   
+  const outcomesHtml = s.detail.outcomes ? `
+    <div class="modal-section-title">🎯 Course Outcomes</div>
+    <ul style="background: rgba(59, 130, 246, 0.05); border-left: 3px solid var(--blue-400); padding: 12px 18px 12px 32px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 20px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+      ${s.detail.outcomes.map(o => `<li style="margin-bottom: 4px;">${o}</li>`).join('')}
+    </ul>
+  ` : '';
+
   const unitsHtml = s.detail.units ? `
     <div class="modal-section-title">📚 Course Units Breakdown</div>
     <div class="modal-units-list" style="margin-bottom: 20px;">
@@ -1383,7 +1390,7 @@ function openModal(id) {
   ` : '';
 
   const labHtml = s.detail.labComponent ? `
-    <div class="modal-section-title">🔬 Practical / Lab Component</div>
+    <div class="modal-section-title">🔬 Practical / Lab Component (Credit-1)</div>
     <div style="background: rgba(34, 211, 238, 0.05); border-left: 3px solid var(--cyan-400); padding: 14px 18px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 20px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
       ${s.detail.labComponent}
     </div>
@@ -1403,7 +1410,23 @@ function openModal(id) {
     </div>
   ` : '';
 
+  const refBooksHtml = s.detail.referenceBooks ? `
+    <div class="modal-section-title">📚 Prescribed Reference Books</div>
+    <div class="modal-textbooks" style="margin-bottom: 20px;">
+      ${s.detail.referenceBooks.map(b => `
+        <div class="modal-textbook">
+          <div class="modal-textbook-icon">📙</div>
+          <div class="modal-textbook-info">
+            <div class="modal-textbook-title">${b.title}</div>
+            <div class="modal-textbook-author">${b.author} (${b.publisher || ''})</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
   body.innerHTML = `
+    ${outcomesHtml}
     ${unitsHtml}
     ${labHtml}
     ${downloadSlotsHtml}
@@ -1420,6 +1443,8 @@ function openModal(id) {
         </div>
       `).join('')}
     </div>
+
+    ${refBooksHtml}
 
     <div class="modal-section-title">⚡ Key Formulae & Core Equations</div>
     <div class="modal-key-formulae">
