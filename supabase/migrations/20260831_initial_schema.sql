@@ -792,7 +792,7 @@ FROM public.papers WHERE paper_code = 'Paper XII' ON CONFLICT DO NOTHING;
 INSERT INTO public.lab_components (paper_id, lab_title, min_experiments, software_tools, experiments_list, lab_reference_books)
 SELECT id, 'LAB: Credit-1 (Solid State Physics Practicals)', 4, 'Solid State Physics Setup & 4-Probe Apparatus',
 ARRAY[
-    'Measurement of susceptibility of paramagnetic solution by Quincke\'s Tube Method.',
+    'Measurement of susceptibility of paramagnetic solution by Quincke''s Tube Method.',
     'To measure the Magnetic susceptibility of Solids.',
     'To measure the Dielectric Constant of a dielectric material with frequency.',
     'To determine the Hall coefficient of a semiconductor sample.',
@@ -815,7 +815,7 @@ ARRAY[
     'To determine refractive index of liquid by total internal reflection using Wollaston air-film.',
     'To determine refractive index of glass & liquid by TIR using Gaussian eyepiece.',
     'To study polarization of light by reflection & determine polarizing angle for air-glass interface.',
-    'To verify Stefan\'s law of radiation & determine Stefan\'s constant.',
+    'To verify Stefan''s law of radiation & determine Stefan''s constant.',
     'To determine Boltzmann constant using V-I characteristics of PN junction Diode.'
 ],
 '[
@@ -828,7 +828,7 @@ FROM public.papers WHERE paper_code = 'Paper XIV' ON CONFLICT DO NOTHING;
 INSERT INTO public.lab_components (paper_id, lab_title, min_experiments, software_tools, experiments_list, lab_reference_books)
 SELECT id, 'LAB: Credit-1 (Statistical Mechanics Computational Lab)', 4, 'C / C++ / Scilab',
 ARRAY[
-    'Plot Planck\'s law for Black Body radiation and compare it with Wien\'s & Rayleigh-Jeans laws at high & low temperatures.',
+    'Plot Planck''s law for Black Body radiation and compare it with Wien''s & Rayleigh-Jeans laws at high & low temperatures.',
     'Plot Specific Heat of Solids comparing Dulong-Petit, Einstein, and Debye distribution functions.',
     'Plot Maxwell-Boltzmann distribution function versus temperature.',
     'Plot Fermi-Dirac distribution function versus temperature.',
