@@ -10,297 +10,574 @@
 ───────────────────────────────────────── */
 
 const SUBJECTS = [
+  // ── SEMESTER I ──
   {
-    id: 'mechanics',
-    semester: 1,
-    icon: '⚙️',
-    iconBg: 'rgba(59,130,246,0.12)',
-    iconBorder: 'rgba(59,130,246,0.25)',
-    accent: 'linear-gradient(90deg,#3b82f6,#22d3ee)',
-    glow: 'rgba(59,130,246,0.08)',
-    title: 'Classical Mechanics',
-    difficulty: 'medium',
-    desc: 'Foundations of Newtonian mechanics, Lagrangian & Hamiltonian formulations, rigid body dynamics, and celestial mechanics.',
-    topics: ['Newton\'s Laws', 'Lagrangian Mechanics', 'Hamiltonian Formalism', 'Central Force Problems', 'Rigid Body Dynamics', 'Small Oscillations'],
-    progress: 72,
-    progressLabel: '72% covered',
-    detail: {
-      allTopics: ['Newton\'s Laws of Motion', 'Work-Energy Theorem', 'Conservation Laws', 'Lagrangian Mechanics', 'Euler-Lagrange Equations', 'Hamiltonian Mechanics', 'Canonical Transformations', 'Poisson Brackets', 'Central Force Problems', 'Kepler\'s Laws', 'Rigid Body Motion', 'Euler\'s Equations', 'Small Oscillations', 'Normal Modes', 'Special Theory of Relativity'],
-      textbooks: [
-        { title: 'Classical Mechanics', author: 'H. Goldstein, C. Poole, J. Safko' },
-        { title: 'Mechanics', author: 'L. D. Landau & E. M. Lifshitz' },
-        { title: 'Classical Dynamics', author: 'J. B. Marion & S. T. Thornton' },
-        { title: 'An Introduction to Mechanics', author: 'D. Kleppner & R. Kolenkow' }
-      ],
-      formulae: ['L = T - V', 'd/dt(∂L/∂q̇) - ∂L/∂q = 0', 'H = Σ(pq̇) - L', '{q_i, p_j} = δ_ij']
-    }
-  },
-  {
-    id: 'mathphys1',
+    id: 'paper-1-math-physics-1',
+    paperCode: 'Paper I',
     semester: 1,
     icon: '📐',
     iconBg: 'rgba(167,139,250,0.12)',
     iconBorder: 'rgba(167,139,250,0.25)',
     accent: 'linear-gradient(90deg,#a78bfa,#f472b6)',
     glow: 'rgba(167,139,250,0.08)',
-    title: 'Mathematical Physics I',
+    title: 'Paper I: Mathematical Physics-I',
     difficulty: 'hard',
-    desc: 'Vector calculus, complex analysis, differential equations, Fourier series, and special functions essential for physics.',
-    topics: ['Vector Calculus', 'Complex Analysis', 'ODEs & PDEs', 'Fourier Series', 'Special Functions', 'Tensor Analysis'],
-    progress: 60,
-    progressLabel: '60% covered',
+    desc: 'Calculus, vector differentiation & integration, orthogonal curvilinear coordinates, and first & second-order differential equations.',
+    topics: ['Vector Calculus', 'Curvilinear Coordinates', 'Vector Integration Theorems', 'Differential Equations'],
+    progress: 75,
+    progressLabel: '75% covered',
     detail: {
-      allTopics: ['Gradient, Divergence, Curl', 'Stokes & Green\'s Theorems', 'Gauss Divergence Theorem', 'Complex Variables', 'Cauchy-Riemann Equations', 'Residue Theorem', 'Contour Integration', 'Fourier Series & Transform', 'Laplace Transform', 'Legendre Polynomials', 'Bessel Functions', 'Hermite & Laguerre Polynomials', 'Tensors & Index Notation', 'Group Theory Basics'],
+      units: [
+        'Unit I: Calculus & Vector Differentiation — Derivatives of vectors, gradient, divergence, curl and their physical significances.',
+        'Unit II: Orthogonal Curvilinear Coordinates — Scale factors, expression for grad, div, curl, Laplacian in spherical & cylindrical coordinates.',
+        'Unit III: Vector Integration & Integral Theorems — Line, surface & volume integrals; Gauss Divergence, Stokes, and Green\'s theorems.',
+        'Unit IV: Differential Equations — First order ODEs, second order linear ODEs with constant & variable coefficients, singular points.'
+      ],
+      labComponent: 'Computational Physics Lab I: Plotting functions (sine, cosine, exponential), numerical differentiation & integration using Python/C++, error analysis.',
+      downloadSlots: [
+        { label: 'Paper I Syllabus PDF', file: 'Paper_I_Mathematical_Physics_I_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_I_Lecture_Notes.pdf' },
+        { label: 'Lab Manual & Codes', file: 'Paper_I_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_I_FMU_PYQs.pdf' }
+      ],
       textbooks: [
         { title: 'Mathematical Methods for Physicists', author: 'G. B. Arfken & H. J. Weber' },
-        { title: 'Mathematical Physics', author: 'B. S. Rajput' },
-        { title: 'Methods of Theoretical Physics', author: 'Morse & Feshbach' }
+        { title: 'Advanced Engineering Mathematics', author: 'E. Kreyszig' },
+        { title: 'Mathematical Physics', author: 'H. K. Dass & R. Verma' }
       ],
-      formulae: ['∇²φ = 0 (Laplace)', '∮ f(z)dz = 2πi Σ Res', 'f(x) = Σ(aₙcos(nπx/L) + bₙsin(nπx/L))']
+      formulae: ['∇²φ = 0 (Laplace Equation)', '∮_C F·dl = ∬_S (∇×F)·dA (Stokes)', '∯_S F·dA = ∭_V (∇·F) dV (Gauss)']
     }
   },
   {
-    id: 'em',
+    id: 'paper-2-mechanics',
+    paperCode: 'Paper II',
+    semester: 1,
+    icon: '⚙️',
+    iconBg: 'rgba(59,130,246,0.12)',
+    iconBorder: 'rgba(59,130,246,0.25)',
+    accent: 'linear-gradient(90deg,#3b82f6,#22d3ee)',
+    glow: 'rgba(59,130,246,0.08)',
+    title: 'Paper II: Mechanics',
+    difficulty: 'medium',
+    desc: 'Rotational dynamics, elasticity, fluid motion, central force gravitation, simple harmonic oscillations, and Special Relativity.',
+    topics: ['Rotational Dynamics', 'Elasticity & Fluids', 'Central Forces', 'Special Relativity'],
+    progress: 80,
+    progressLabel: '80% covered',
+    detail: {
+      units: [
+        'Unit I: Rotational Dynamics & Elasticity — Moment of inertia, parallel and perpendicular axes theorems, moment of inertia of symmetrical bodies, elastic constants Y, K, η, σ and relations.',
+        'Unit II: Fluid Motion & Gravitation — Poiseuille\'s formula, Stokes\' law, central forces, Kepler\'s laws of planetary motion, gravitational potential and field.',
+        'Unit III: Oscillations & Non-Inertial Systems — Damped and forced harmonic oscillations, resonance, Q-factor, fictitious forces, Coriolis force and applications.',
+        'Unit IV: Special Theory of Relativity — Michelson-Morley experiment, Postulates of STR, Lorentz transformations, length contraction, time dilation, mass-energy equivalence E=mc².'
+      ],
+      labComponent: 'Mechanics Lab: Determination of Young\'s Modulus by Searle\'s / bending method, Rigidity modulus by Maxwell\'s needle, Moment of Inertia by Flywheel, Viscosity by Poiseuille\'s method.',
+      downloadSlots: [
+        { label: 'Paper II Syllabus PDF', file: 'Paper_II_Mechanics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_II_Lecture_Notes.pdf' },
+        { label: 'Mechanics Lab Manual', file: 'Paper_II_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_II_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'An Introduction to Mechanics', author: 'D. Kleppner & R. Kolenkow' },
+        { title: 'Mechanics', author: 'D. S. Mathur' },
+        { title: 'Introduction to Special Relativity', author: 'R. Resnick' }
+      ],
+      formulae: ['I = ∫ r² dm', 'T² = (4π²/GM) a³', 'x\' = γ(x - vt), t\' = γ(t - vx/c²)', 'E = mc² = γm₀c²']
+    }
+  },
+
+  // ── SEMESTER II ──
+  {
+    id: 'paper-3-em',
+    paperCode: 'Paper III',
     semester: 2,
     icon: '⚡',
     iconBg: 'rgba(251,191,36,0.12)',
     iconBorder: 'rgba(251,191,36,0.25)',
     accent: 'linear-gradient(90deg,#f59e0b,#fb923c)',
     glow: 'rgba(245,158,11,0.08)',
-    title: 'Electricity & Magnetism',
+    title: 'Paper III: Electricity and Magnetism',
     difficulty: 'hard',
-    desc: 'Electrostatics, magnetostatics, Maxwell\'s equations, electromagnetic waves, and radiation from accelerating charges.',
-    topics: ['Electrostatics', 'Magnetostatics', 'Maxwell\'s Equations', 'EM Waves', 'Electromagnetic Radiation', 'Multipole Expansion'],
-    progress: 55,
-    progressLabel: '55% covered',
+    desc: 'Electrostatics, Gauss law, Laplace equation, magnetostatics, Biot-Savart & Ampere laws, EM induction, transient currents, and AC circuits.',
+    topics: ['Electrostatics', 'Magnetostatics', 'EM Induction', 'Transient & AC Circuits'],
+    progress: 70,
+    progressLabel: '70% covered',
     detail: {
-      allTopics: ['Coulomb\'s Law & Gauss\'s Law', 'Electric Potential', 'Laplace & Poisson Equations', 'Boundary Value Problems', 'Biot-Savart Law', 'Ampere\'s Law', 'Faraday\'s Law', 'Maxwell\'s Equations', 'EM Wave Equation', 'Poynting Theorem', 'Multipole Expansion', 'Magnetic Materials', 'Radiation from Oscillating Dipole', 'Relativistic Electrodynamics'],
+      units: [
+        'Unit I: Electrostatics — Electric field, potential, Gauss\'s Law & applications, Laplace & Poisson equations, dielectrics, polarization P, electric displacement D.',
+        'Unit II: Magnetostatics — Magnetic field B, Biot-Savart law, Ampere\'s circuital law, magnetic vector potential A, magnetic properties of matter (dia, para, ferro).',
+        'Unit III: Electromagnetic Induction — Faraday\'s law, Lenz\'s law, self & mutual inductance, energy stored in magnetic field, Maxwell\'s correction to Ampere\'s law.',
+        'Unit IV: Transient Currents & AC Circuits — Growth and decay of current in LR, CR, LCR circuits, AC circuits, complex impedance, resonance, Q-factor, ballistics.'
+      ],
+      labComponent: 'Electricity & Magnetism Lab: Determination of high resistance by leakage method, Carey Foster\'s bridge, Ballistic Galvanometer calibration, Verification of Thevenin & Norton theorems.',
+      downloadSlots: [
+        { label: 'Paper III Syllabus PDF', file: 'Paper_III_EM_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_III_Lecture_Notes.pdf' },
+        { label: 'EM Lab Manual', file: 'Paper_III_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_III_FMU_PYQs.pdf' }
+      ],
       textbooks: [
         { title: 'Introduction to Electrodynamics', author: 'D. J. Griffiths' },
-        { title: 'Classical Electrodynamics', author: 'J. D. Jackson' },
-        { title: 'Electricity & Magnetism', author: 'Purcell & Morin' }
+        { title: 'Electricity and Magnetism', author: 'E. M. Purcell & D. J. Morin' },
+        { title: 'Electricity and Magnetism', author: 'D. C. Tayal' }
       ],
-      formulae: ['∇·E = ρ/ε₀', '∇×B = μ₀J + μ₀ε₀∂E/∂t', '∇×E = -∂B/∂t', '∇·B = 0']
+      formulae: ['∇·E = ρ/ε₀', '∇×B = μ₀J', 'E = -∇V', 'L(dI/dt) + RI = V']
     }
   },
   {
-    id: 'waves',
+    id: 'paper-4-math-physics-2',
+    paperCode: 'Paper IV',
     semester: 2,
+    icon: '📊',
+    iconBg: 'rgba(52,211,153,0.12)',
+    iconBorder: 'rgba(52,211,153,0.25)',
+    accent: 'linear-gradient(90deg,#34d399,#6ee7b7)',
+    glow: 'rgba(52,211,153,0.08)',
+    title: 'Paper IV: Mathematical Physics-II',
+    difficulty: 'hard',
+    desc: 'Fourier series expansion, special functions (Legendre, Bessel, Hermite, Laguerre), and partial differential equations of physics.',
+    topics: ['Fourier Series', 'Frobenius Method', 'Special Functions', 'Partial Differential Equations'],
+    progress: 65,
+    progressLabel: '65% covered',
+    detail: {
+      units: [
+        'Unit I: Fourier Series — Periodic functions, Dirichlet conditions, Fourier series expansion, even and odd functions, complex form of Fourier series, applications.',
+        'Unit II: Frobenius Method & Special Functions I — Power series solution of differential equations, Legendre differential equation, Legendre polynomials P_n(x), generating functions, orthogonality.',
+        'Unit III: Special Functions II — Bessel differential equation, Bessel functions J_n(x), recurrence relations, generating function, Hermite & Laguerre polynomials intro.',
+        'Unit IV: Partial Differential Equations — Separation of variables method for 1D wave equation, 1D heat conduction equation, and 2D Laplace equation in Cartesian & polar coordinates.'
+      ],
+      labComponent: 'Computational Physics Lab II: Computation of Fourier coefficients, numerical evaluation of Bessel & Legendre functions, solving 1D heat wave equation numerically.',
+      downloadSlots: [
+        { label: 'Paper IV Syllabus PDF', file: 'Paper_IV_Math_Physics_II_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_IV_Lecture_Notes.pdf' },
+        { label: 'Computational Lab Manual II', file: 'Paper_IV_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_IV_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Mathematical Methods for Physicists', author: 'G. B. Arfken & H. J. Weber' },
+        { title: 'Special Functions for Scientists & Engineers', author: 'W. W. Bell' },
+        { title: 'Advanced Mathematical Physics', author: 'B. S. Rajput' }
+      ],
+      formulae: ['f(x) = a₀/2 + Σ(aₙ cos(nπx/L) + bₙ sin(nπx/L))', 'Pₙ(x) = (1/(2ⁿ n!)) (dⁿ/dxⁿ)(x²-1)ⁿ', 'Jₙ(x) recurrence relations']
+    }
+  },
+
+  // ── SEMESTER III ──
+  {
+    id: 'paper-5-waves-optics',
+    paperCode: 'Paper V',
+    semester: 3,
     icon: '🌊',
     iconBg: 'rgba(34,211,238,0.12)',
     iconBorder: 'rgba(34,211,238,0.25)',
     accent: 'linear-gradient(90deg,#22d3ee,#67e8f9)',
     glow: 'rgba(34,211,238,0.08)',
-    title: 'Waves & Optics',
+    title: 'Paper V: Waves and Optics',
     difficulty: 'medium',
-    desc: 'Wave motion, interference, diffraction, polarization, coherence, and advanced topics in physical optics and laser physics.',
-    topics: ['Wave Motion', 'Superposition', 'Interference', 'Diffraction', 'Polarization', 'Lasers & Holography'],
-    progress: 80,
-    progressLabel: '80% covered',
+    desc: 'Wave superposition, interference (division of wavefront & amplitude), Fraunhofer & Fresnel diffraction, polarization, and lasers.',
+    topics: ['Superposition & Beats', 'Interference', 'Diffraction', 'Polarization & Lasers'],
+    progress: 85,
+    progressLabel: '85% covered',
     detail: {
-      allTopics: ['Transverse & Longitudinal Waves', 'Wave Equation', 'Superposition Principle', 'Beats', 'Young\'s Double Slit', 'Thin Film Interference', 'Newton\'s Rings', 'Fraunhofer Diffraction', 'Fresnel Diffraction', 'Diffraction Grating', 'Polarization & Malus\'s Law', 'Brewster\'s Angle', 'Optical Fiber', 'Laser Principles', 'Holography'],
-      textbooks: [
-        { title: 'Optics', author: 'Eugene Hecht' },
-        { title: 'Waves & Oscillations', author: 'N. K. Bajaj' },
-        { title: 'Introduction to Optics', author: 'Pedrotti & Pedrotti' }
+      units: [
+        'Unit I: Wave Motion & Superposition — Group velocity & phase velocity, wave packet, superposition of two harmonic waves, Lissajous figures, standing waves.',
+        'Unit II: Interference — Division of wavefront (Young\'s double slit, Fresnel biprism), Division of amplitude (Thin films, Newton\'s rings, Michelson interferometer).',
+        'Unit III: Diffraction — Fresnel diffraction (Half-period zones, Zone plate), Fraunhofer diffraction (Single slit, Double slit, N-slits grating, Resolving power).',
+        'Unit IV: Polarization & Lasers — Double refraction, Nicol prism, Quarter/Half wave plates, Optical activity, Laser principles (Einstein coefficients, He-Ne & Ruby laser).'
       ],
-      formulae: ['v = fλ', 'I = I₀cos²(θ) [Malus]', 'dsinθ = mλ [Grating]', 'I = 4I₀cos²(δ/2)']
+      labComponent: 'Optics Lab: Determination of wavelength using Newton\'s rings, Spectrometer with Diffraction Grating, Specific rotation of sugar using Polarimeter, Wavelength by Fresnel Biprism.',
+      downloadSlots: [
+        { label: 'Paper V Syllabus PDF', file: 'Paper_V_Waves_Optics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_V_Lecture_Notes.pdf' },
+        { label: 'Optics Lab Manual', file: 'Paper_V_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_V_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Optics', author: 'A. Ghatak' },
+        { title: 'Fundamentals of Optics', author: 'F. A. Jenkins & H. E. White' },
+        { title: 'Waves and Oscillations', author: 'N. K. Bajaj' }
+      ],
+      formulae: ['v_g = dw/dk', 'β = λD/d', 'd sinθ = mλ', 'I = I₀ cos²θ (Malus Law)']
     }
   },
   {
-    id: 'quantum1',
+    id: 'paper-6-math-physics-3',
+    paperCode: 'Paper VI',
     semester: 3,
-    icon: '⚛️',
-    iconBg: 'rgba(52,211,153,0.12)',
-    iconBorder: 'rgba(52,211,153,0.25)',
-    accent: 'linear-gradient(90deg,#34d399,#6ee7b7)',
-    glow: 'rgba(52,211,153,0.08)',
-    title: 'Quantum Mechanics I',
+    icon: '🔮',
+    iconBg: 'rgba(167,139,250,0.12)',
+    iconBorder: 'rgba(167,139,250,0.25)',
+    accent: 'linear-gradient(90deg,#a78bfa,#818cf8)',
+    glow: 'rgba(167,139,250,0.08)',
+    title: 'Paper VI: Mathematical Physics-III',
     difficulty: 'advanced',
-    desc: 'Foundations of quantum theory — wave-particle duality, Schrödinger equation, operators, and exactly solvable potentials.',
-    topics: ['Wave-Particle Duality', 'Schrödinger Equation', 'Operators & Observables', 'Harmonic Oscillator', 'Hydrogen Atom', 'Spin'],
-    progress: 45,
-    progressLabel: '45% covered',
+    desc: 'Complex variables, Cauchy-Riemann equations, contour integration, Residue Theorem, Fourier & Laplace Transforms, and Tensor algebra.',
+    topics: ['Complex Analysis', 'Contour Integration', 'Integral Transforms', 'Tensor Algebra'],
+    progress: 60,
+    progressLabel: '60% covered',
     detail: {
-      allTopics: ['Photoelectric Effect', 'Compton Effect', 'de Broglie Hypothesis', 'Uncertainty Principle', 'Schrödinger Equation', 'Wave Functions & Normalization', 'Operators & Eigenstates', 'Dirac Notation (Bra-Ket)', 'Particle in a Box', 'Quantum Harmonic Oscillator', 'Step Potential & Tunneling', 'Angular Momentum', 'Hydrogen Atom', 'Spin & Pauli Matrices', 'Addition of Angular Momenta'],
-      textbooks: [
-        { title: 'Introduction to Quantum Mechanics', author: 'D. J. Griffiths' },
-        { title: 'Quantum Mechanics', author: 'L. I. Schiff' },
-        { title: 'Principles of Quantum Mechanics', author: 'P. A. M. Dirac' },
-        { title: 'Quantum Mechanics', author: 'J. J. Sakurai & J. Napolitano' }
+      units: [
+        'Unit I: Complex Variables — Complex functions, limits, continuity, differentiability, Cauchy-Riemann conditions, Analytic functions, Harmonic functions.',
+        'Unit II: Complex Integration — Cauchy\'s Integral Theorem, Cauchy\'s Integral Formula, Taylor & Laurent series expansion, Singularities, Residue Theorem & evaluation of definite integrals.',
+        'Unit III: Integral Transforms — Fourier Transform & Inverse Fourier Transform, Properties, Convolution Theorem, Laplace Transform & Properties, Inverse Laplace Transform.',
+        'Unit IV: Tensor Analysis — Transformation of coordinates, Contravariant & Covariant tensors, Metric tensor, Symmetric & Anti-symmetric tensors, Kronecker delta.'
       ],
-      formulae: ['Ĥψ = Eψ', 'ΔxΔp ≥ ℏ/2', 'E_n = ℏω(n+½)', 'E_n = -13.6/n² eV']
+      labComponent: 'Computational Physics Lab III: Evaluation of complex contour integrals, numerical Laplace transform inversion, tensor transformations in Python/Matlab.',
+      downloadSlots: [
+        { label: 'Paper VI Syllabus PDF', file: 'Paper_VI_Math_Physics_III_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_VI_Lecture_Notes.pdf' },
+        { label: 'Lab Manual & Algorithms', file: 'Paper_VI_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_VI_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Complex Variables & Applications', author: 'R. V. Churchill & J. W. Brown' },
+        { title: 'Mathematical Methods for Physicists', author: 'G. B. Arfken & H. J. Weber' },
+        { title: 'Tensors for Physicists', author: 'L. D. Landau' }
+      ],
+      formulae: ['∂u/∂x = ∂v/∂y, ∂u/∂y = -∂v/∂x (C-R)', '∮ f(z) dz = 2πi Σ Res', 'F(k) = (1/√(2π)) ∫ f(x) e^(-ikx) dx']
     }
   },
   {
-    id: 'thermal',
+    id: 'paper-7-thermal-physics',
+    paperCode: 'Paper VII',
     semester: 3,
     icon: '🔥',
     iconBg: 'rgba(248,113,113,0.12)',
     iconBorder: 'rgba(248,113,113,0.25)',
     accent: 'linear-gradient(90deg,#f87171,#fb923c)',
     glow: 'rgba(248,113,113,0.08)',
-    title: 'Thermal Physics',
+    title: 'Paper VII: Thermal Physics',
     difficulty: 'medium',
-    desc: 'Laws of thermodynamics, kinetic theory of gases, entropy, thermodynamic potentials, and phase transitions.',
-    topics: ['Laws of Thermodynamics', 'Kinetic Theory', 'Entropy', 'Carnot Cycle', 'Thermodynamic Potentials', 'Phase Transitions'],
-    progress: 68,
-    progressLabel: '68% covered',
+    desc: 'Laws of thermodynamics, Carnot cycle, entropy, thermodynamic potentials (G, F, H, U), Maxwell relations, and Kinetic Theory of Gases.',
+    topics: ['Thermodynamic Laws', 'Entropy & Carnot Cycle', 'Maxwell Relations', 'Kinetic Theory of Gases'],
+    progress: 75,
+    progressLabel: '75% covered',
     detail: {
-      allTopics: ['Zeroth Law & Temperature', 'First Law: Internal Energy', 'Second Law: Entropy', 'Third Law', 'Carnot Engine & Efficiency', 'Refrigerators & Heat Pumps', 'Kinetic Theory of Gases', 'Maxwell-Boltzmann Distribution', 'Equipartition Theorem', 'Van der Waals Gas', 'Thermodynamic Potentials (G, F, H)', 'Maxwell Relations', 'Clausius-Clapeyron Equation', 'Phase Transitions'],
-      textbooks: [
-        { title: 'Thermal Physics', author: 'F. Reif' },
-        { title: 'Heat & Thermodynamics', author: 'Zemansky & Dittman' },
-        { title: 'Thermodynamics & Statistical Mechanics', author: 'E. Fermi' }
+      units: [
+        'Unit I: Zeroth & First Law — Concept of temperature, Zeroth Law, First Law of thermodynamics, Internal energy U, Work done in isothermal & adiabatic processes.',
+        'Unit II: Second Law & Entropy — Reversible & irreversible processes, Carnot engine & efficiency, Kelvin-Planck & Clausius statements, Concept of Entropy S, T-S diagrams.',
+        'Unit III: Thermodynamic Potentials — Enthalpy H, Helmholtz free energy F, Gibbs free energy G, Maxwell\'s thermodynamic relations and applications (Joule-Thomson effect).',
+        'Unit IV: Kinetic Theory of Gases — Maxwell-Boltzmann velocity distribution, Mean free path, Transport phenomena (Viscosity, Thermal conductivity, Diffusion), Real gases & Van der Waals equation.'
       ],
-      formulae: ['dU = δQ - δW', 'S = k_B ln Ω', 'η_Carnot = 1 - T_c/T_h', 'dG = -SdT + VdP']
+      labComponent: 'Thermal Physics Lab: Determination of Mechanical Equivalent of Heat J by Callender & Barnes method, Thermal Conductivity of bad conductor by Lee\'s Disc, Platinum resistance thermometer calibration.',
+      downloadSlots: [
+        { label: 'Paper VII Syllabus PDF', file: 'Paper_VII_Thermal_Physics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_VII_Lecture_Notes.pdf' },
+        { label: 'Thermal Lab Manual', file: 'Paper_VII_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_VII_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Heat and Thermodynamics', author: 'M. W. Zemansky & R. H. Dittman' },
+        { title: 'Thermal Physics', author: 'S. Garg, R. Bansal & C. Ghosh' },
+        { title: 'Treatise on Heat', author: 'M. N. Saha & B. N. Srivastava' }
+      ],
+      formulae: ['dU = dQ - dW', 'η_Carnot = 1 - T_C/T_H', 'dG = VdP - SdT', '(P + a/V²)(V - b) = RT']
     }
   },
+
+  // ── SEMESTER IV ──
   {
-    id: 'statmech',
-    semester: 4,
-    icon: '📊',
-    iconBg: 'rgba(59,130,246,0.12)',
-    iconBorder: 'rgba(59,130,246,0.25)',
-    accent: 'linear-gradient(90deg,#3b82f6,#818cf8)',
-    glow: 'rgba(99,102,241,0.08)',
-    title: 'Statistical Mechanics',
-    difficulty: 'advanced',
-    desc: 'Ensemble theory, partition functions, quantum statistics (Bose-Einstein & Fermi-Dirac), and applications to real systems.',
-    topics: ['Ensemble Theory', 'Partition Function', 'Bose-Einstein Statistics', 'Fermi-Dirac Statistics', 'Blackbody Radiation', 'Phase Transitions'],
-    progress: 40,
-    progressLabel: '40% covered',
-    detail: {
-      allTopics: ['Microcanonical Ensemble', 'Canonical Ensemble', 'Grand Canonical Ensemble', 'Partition Function Z', 'Thermodynamic Quantities from Z', 'Ideal Gas in Statistical Mechanics', 'Maxwell-Boltzmann Statistics', 'Bose-Einstein Distribution', 'Bose-Einstein Condensation', 'Fermi-Dirac Distribution', 'Free Electron Theory of Metals', 'Planck\'s Radiation Law', 'Einstein & Debye Models', 'Ising Model', 'Mean Field Theory'],
-      textbooks: [
-        { title: 'Statistical Mechanics', author: 'R. K. Pathria & P. D. Beale' },
-        { title: 'Statistical Physics', author: 'L. D. Landau & E. M. Lifshitz' },
-        { title: 'An Introduction to Statistical Mechanics', author: 'Huang' }
-      ],
-      formulae: ['Z = Σ_i e^(-βE_i)', 'F = -k_BT ln Z', 'n̄ = 1/(e^(β(ε-μ)) ± 1)']
-    }
-  },
-  {
-    id: 'electronics',
+    id: 'paper-8-analog-systems',
+    paperCode: 'Paper VIII',
     semester: 4,
     icon: '🔌',
     iconBg: 'rgba(251,191,36,0.12)',
     iconBorder: 'rgba(251,191,36,0.25)',
     accent: 'linear-gradient(90deg,#fbbf24,#34d399)',
     glow: 'rgba(251,191,36,0.08)',
-    title: 'Electronics & Devices',
+    title: 'Paper VIII: Analog Systems and Applications',
     difficulty: 'medium',
-    desc: 'Semiconductor devices, diodes, transistors, op-amps, digital electronics, and analog circuit analysis.',
-    topics: ['Semiconductors', 'p-n Junction', 'Transistors', 'Op-Amps', 'Logic Gates', 'Oscillators'],
-    progress: 75,
-    progressLabel: '75% covered',
+    desc: 'Semiconductor diodes, BJT transistor biasing, h-parameters, FET/MOSFET, Operational Amplifiers (Op-Amps), and Feedback Oscillators.',
+    topics: ['Diode Circuits', 'Transistor Amplifiers', 'Op-Amp Applications', 'Feedback Oscillators'],
+    progress: 72,
+    progressLabel: '72% covered',
     detail: {
-      allTopics: ['Semiconductor Physics', 'p-n Junction Diode', 'Rectifiers & Filters', 'Zener Diode Applications', 'BJT Transistor', 'FET & MOSFET', 'Amplifier Circuits', 'Op-Amp Characteristics', 'Inverting & Non-Inverting Amplifier', 'Differentiator & Integrator', 'Boolean Algebra', 'Logic Gates', 'Flip-Flops', 'Counters & Registers', 'ADC & DAC'],
-      textbooks: [
-        { title: 'Electronics: Devices & Circuit Theory', author: 'R. L. Boylestad & L. Nashelsky' },
-        { title: 'Fundamentals of Physics', author: 'Halliday, Resnick & Walker' },
-        { title: 'Digital Fundamentals', author: 'T. L. Floyd' }
+      units: [
+        'Unit I: Semiconductor Diodes — PN junction, Zener diode, Voltage regulation, Half-wave & Full-wave rectifiers, Filters (C, L, LC, π-section).',
+        'Unit II: Bipolar Junction Transistors (BJT) — CB, CE, CC configurations, Biasing techniques (Q-point, Load line analysis), h-parameter model of CE amplifier.',
+        'Unit III: Operational Amplifiers — Ideal Op-Amp characteristics, CMRR, Inverting & Non-inverting amplifiers, Adder, Subtractor, Differentiator, Integrator.',
+        'Unit IV: Feedback & Oscillators — Positive & negative feedback, Barkhausen criterion, RC phase shift oscillator, Wien bridge oscillator, Hartley & Colpitts oscillators.'
       ],
-      formulae: ['I = I₀(e^(V/V_T) - 1)', 'A_v = -g_m R_D', 'V_out/V_in = -R_f/R_in [Inverting]']
+      labComponent: 'Analog Electronics Lab: V-I characteristics of PN & Zener diodes, Frequency response of CE BJT amplifier, Op-Amp inverting/non-inverting/adder circuit design, Hartley oscillator.',
+      downloadSlots: [
+        { label: 'Paper VIII Syllabus PDF', file: 'Paper_VIII_Analog_Systems_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_VIII_Lecture_Notes.pdf' },
+        { label: 'Analog Lab Manual', file: 'Paper_VIII_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_VIII_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Electronic Devices & Circuit Theory', author: 'R. L. Boylestad & L. Nashelsky' },
+        { title: 'Op-Amps and Linear Integrated Circuits', author: 'R. A. Gayakwad' },
+        { title: 'Foundations of Electronics', author: 'D. Chattopadhyay & P. C. Rakshit' }
+      ],
+      formulae: ['V_out = - (R_f/R_in) V_in [Inverting]', 'A_v = 1 + R_f/R_in [Non-Inverting]', 'f_0 = 1 / (2π RC √(6)) [RC Phase Shift]']
     }
   },
   {
-    id: 'nuclear',
-    semester: 5,
+    id: 'paper-9-basic-instrumentation',
+    paperCode: 'Paper IX',
+    semester: 4,
+    icon: '🛠️',
+    iconBg: 'rgba(45,212,191,0.12)',
+    iconBorder: 'rgba(45,212,191,0.25)',
+    accent: 'linear-gradient(90deg,#2dd4bf,#3b82f6)',
+    glow: 'rgba(45,212,191,0.08)',
+    title: 'Paper IX: Basic Instrumentation Skills',
+    difficulty: 'medium',
+    desc: 'Measurement standards, error analysis, DC & AC meters, Cathode Ray Oscilloscope (CRO), Signal generators, and Electronic Transducers.',
+    topics: ['Measurement Errors', 'Multimeters & Bridges', 'CRO & Signal Generators', 'Transducers & Sensors'],
+    progress: 80,
+    progressLabel: '80% covered',
+    detail: {
+      units: [
+        'Unit I: Basic Measurement Principles — Accuracy, precision, sensitivity, resolution, errors in measurement (systematic & random), standards of measurement.',
+        'Unit II: DC & AC Measuring Instruments — PMMC meter movement, DC Ammeter & Voltmeter, AC Voltmeter using rectifiers, Wheatstone bridge, Maxwell & Schering bridges.',
+        'Unit III: Cathode Ray Oscilloscope (CRO) — Block diagram of CRO, Electron gun, deflection plates, Lissajous figures, measurement of voltage, frequency & phase difference.',
+        'Unit IV: Transducers & Digital Meters — Strain gauges, LVDT, Thermistors, Thermocouples, Digital Multimeter block diagram, Frequency counter.'
+      ],
+      labComponent: 'Instrumentation Lab: Measurement of voltage and frequency using CRO, Calibration of LVDT displacement sensor, Temperature measurement using Thermistor/PT100, AC Bridge balancing.',
+      downloadSlots: [
+        { label: 'Paper IX Syllabus PDF', file: 'Paper_IX_Basic_Instrumentation_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_IX_Lecture_Notes.pdf' },
+        { label: 'Instrumentation Lab Manual', file: 'Paper_IX_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_IX_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'A Course in Electrical and Electronic Measurements', author: 'A. K. Sawhney' },
+        { title: 'Modern Electronic Instrumentation & Measurement Techniques', author: 'Helfrick & Cooper' },
+        { title: 'Electronic Instrumentation', author: 'H. S. Kalsi' }
+      ],
+      formulae: ['Error = V_measured - V_true', 'f = 1 / (T_div × Time/Div)', 'V_pp = Vertical_div × Volts/Div']
+    }
+  },
+  {
+    id: 'paper-10-nuclear-particle-physics',
+    paperCode: 'Paper X',
+    semester: 4,
     icon: '☢️',
     iconBg: 'rgba(248,113,113,0.12)',
     iconBorder: 'rgba(248,113,113,0.25)',
     accent: 'linear-gradient(90deg,#f87171,#a78bfa)',
     glow: 'rgba(248,113,113,0.08)',
-    title: 'Nuclear & Particle Physics',
+    title: 'Paper X: Nuclear and Particle Physics',
     difficulty: 'advanced',
-    desc: 'Nuclear structure, radioactive decay, nuclear reactions, particle accelerators, and the Standard Model of particles.',
-    topics: ['Nuclear Structure', 'Radioactive Decay', 'Nuclear Reactions', 'Fission & Fusion', 'Particle Detectors', 'Standard Model'],
-    progress: 35,
-    progressLabel: '35% covered',
+    desc: 'General nuclear properties, binding energy, Liquid Drop & Shell models, radioactive decay laws, nuclear accelerators, and Standard Model.',
+    topics: ['Nuclear Structure', 'Nuclear Models', 'Radioactivity & Decays', 'Detectors & Particle Physics'],
+    progress: 65,
+    progressLabel: '65% covered',
     detail: {
-      allTopics: ['Nuclear Properties (size, mass, spin)', 'Nuclear Models (Shell, Liquid Drop)', 'Binding Energy & Mass Defect', 'Alpha Decay & Gamow Theory', 'Beta Decay & Neutrinos', 'Gamma Decay & Selection Rules', 'Nuclear Reactions & Cross Sections', 'Nuclear Fission', 'Nuclear Fusion', 'Particle Accelerators', 'Particle Detectors', 'Leptons, Quarks & Bosons', 'Conservation Laws', 'Standard Model', 'Quark Model & Hadrons'],
-      textbooks: [
-        { title: 'Nuclear Physics', author: 'D. C. Tayal' },
-        { title: 'Introduction to Nuclear Physics', author: 'Krane' },
-        { title: 'Introduction to Particle Physics', author: 'Griffiths' }
+      units: [
+        'Unit I: General Nuclear Properties — Size, mass, spin, magnetic moment, quadrupole moment, binding energy curve, semi-empirical mass formula (Weizsacker).',
+        'Unit II: Nuclear Models & Reactions — Liquid drop model, Nuclear fission & fusion, Shell model & magic numbers, Q-value of nuclear reactions.',
+        'Unit III: Radioactivity & Decays — Radioactive decay law, Half-life & mean-life, Alpha decay (Gamow theory), Beta decay (Fermi theory & neutrino hypothesis), Gamma decay.',
+        'Unit IV: Detectors, Accelerators & Particles — GM counter, Scintillation counter, Cyclotron, Synchrotron, Fundamental forces, Leptons, Hadrons, Quarks & Standard Model.'
       ],
-      formulae: ['BE = [Zm_p + Nm_n - M]c²', 'N(t) = N₀e^(-λt)', 't½ = ln2/λ', 'Q = (m_i - m_f)c²']
+      labComponent: 'Nuclear Physics Lab: GM Counter plateau characteristics, Verification of inverse square law for gamma rays, Determination of linear absorption coefficient of Lead for gamma rays.',
+      downloadSlots: [
+        { label: 'Paper X Syllabus PDF', file: 'Paper_X_Nuclear_Particle_Physics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_X_Lecture_Notes.pdf' },
+        { label: 'Nuclear Lab Manual', file: 'Paper_X_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_X_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Introductory Nuclear Physics', author: 'K. S. Krane' },
+        { title: 'Nuclear Physics', author: 'D. C. Tayal' },
+        { title: 'Introduction to High Energy Physics', author: 'D. H. Perkins' }
+      ],
+      formulae: ['BE = [Z m_p + N m_n - M(A,Z)] c²', 'N(t) = N₀ e^(-λt)', 'Q = (m_i - m_f) c²']
+    }
+  },
+
+  // ── SEMESTER V ──
+  {
+    id: 'paper-11-digital-systems',
+    paperCode: 'Paper XI',
+    semester: 5,
+    icon: '💻',
+    iconBg: 'rgba(59,130,246,0.12)',
+    iconBorder: 'rgba(59,130,246,0.25)',
+    accent: 'linear-gradient(90deg,#3b82f6,#818cf8)',
+    glow: 'rgba(59,130,246,0.08)',
+    title: 'Paper XI: Digital Systems and Applications',
+    difficulty: 'medium',
+    desc: 'Number systems, Boolean algebra, De Morgan\'s laws, combinational logic (Adders, Multiplexers), sequential circuits (Flip-Flops, Counters, Registers), and Microprocessor 8085.',
+    topics: ['Boolean Algebra', 'Combinational Circuits', 'Sequential Logic & Flip-Flops', 'Microprocessor 8085'],
+    progress: 75,
+    progressLabel: '75% covered',
+    detail: {
+      units: [
+        'Unit I: Number Systems & Logic Gates — Binary, Octal, Hexadecimal numbers, De Morgan\'s Theorems, Karnaugh Maps (K-Map up to 4 variables), Logic gates implementation.',
+        'Unit II: Combinational Logic Circuits — Half Adder, Full Adder, Half Subtractor, Full Subtractor, Multiplexer (MUX), De-multiplexer (DEMUX), Decoders, Encoders.',
+        'Unit III: Sequential Circuits — SR, JK, Master-Slave JK, D, T Flip-Flops, Shift Registers (SISO, SIPO, PISO, PIPO), Asynchronous & Synchronous Counters.',
+        'Unit IV: Microprocessor 8085 Architecture — 8085 CPU architecture, pin diagram, bus organization, instruction set, simple assembly language programming.'
+      ],
+      labComponent: 'Digital Electronics Lab: Verification of truth tables of AND, OR, NOT, NAND, NOR, XOR gates, Realization of Half/Full Adder using NAND gates, JK Flip-Flop setup, 8085 Addition/Subtraction programming.',
+      downloadSlots: [
+        { label: 'Paper XI Syllabus PDF', file: 'Paper_XI_Digital_Systems_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_XI_Lecture_Notes.pdf' },
+        { label: 'Digital Lab Manual & Assembly Codes', file: 'Paper_XI_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_XI_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Digital Fundamentals', author: 'T. L. Floyd' },
+        { title: 'Digital Principles and Applications', author: 'A. P. Malvino & D. P. Leach' },
+        { title: 'Microprocessor Architecture, Programming & Applications with 8085', author: 'R. S. Gaonkar' }
+      ],
+      formulae: ['(A + B)\' = A\' · B\' (De Morgan)', 'Sum = A ⊕ B, Carry = A · B (Half Adder)', '2ⁿ states for n flip-flops']
     }
   },
   {
-    id: 'solidstate',
+    id: 'paper-12-quantum-mechanics',
+    paperCode: 'Paper XII',
+    semester: 5,
+    icon: '⚛️',
+    iconBg: 'rgba(52,211,153,0.12)',
+    iconBorder: 'rgba(52,211,153,0.25)',
+    accent: 'linear-gradient(90deg,#34d399,#6ee7b7)',
+    glow: 'rgba(52,211,153,0.08)',
+    title: 'Paper XII: Quantum Mechanics and Applications',
+    difficulty: 'advanced',
+    desc: 'Schrödinger wave equation, operators & observables, 1D potential wells, barrier penetration & tunneling, quantum harmonic oscillator, and Hydrogen atom.',
+    topics: ['Wave Functions & Operators', '1D Potentials & Tunneling', 'Harmonic Oscillator', 'Hydrogen Atom'],
+    progress: 70,
+    progressLabel: '70% covered',
+    detail: {
+      units: [
+        'Unit I: Foundations & TISE — De Broglie waves, Wave-particle duality, Heisenberg Uncertainty Principle, Time-Independent Schrödinger Equation (TISE), Wavefunction properties & normalization.',
+        'Unit II: 1D Potentials & Barrier Penetration — Particle in a 1D infinite & finite box, Step potential, Rectangular potential barrier, Quantum mechanical tunneling & alpha decay.',
+        'Unit III: Quantum Harmonic Oscillator — 1D Harmonic oscillator solved using Hermite polynomials & ladder operators (a, a†), zero-point energy E₀ = ½ℏω.',
+        'Unit IV: Hydrogen Atom & Angular Momentum — TISE in spherical polar coordinates, Radial & Angular wavefunctions, Quantum numbers (n, l, m_l), Orbital angular momentum.'
+      ],
+      labComponent: 'Modern Physics Lab: Determination of Planck\'s constant using LEDs, Photoelectric effect experiment (work function determination), Study of Hydrogen spectrum using Spectrometer.',
+      downloadSlots: [
+        { label: 'Paper XII Syllabus PDF', file: 'Paper_XII_Quantum_Mechanics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_XII_Lecture_Notes.pdf' },
+        { label: 'QM Lab Manual', file: 'Paper_XII_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_XII_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Introduction to Quantum Mechanics', author: 'D. J. Griffiths' },
+        { title: 'Quantum Mechanics: Concepts & Applications', author: 'N. Zettili' },
+        { title: 'Quantum Mechanics', author: 'G. Aruldhas' }
+      ],
+      formulae: ['Ĥψ = Eψ', 'E_n = (n² π² ℏ²) / (2m L²)', 'E_n = (n + ½) ℏω', 'E_n = -13.6 / n² eV']
+    }
+  },
+  {
+    id: 'paper-13-solid-state-physics',
+    paperCode: 'Paper XIII',
     semester: 5,
     icon: '💎',
     iconBg: 'rgba(45,212,191,0.12)',
     iconBorder: 'rgba(45,212,191,0.25)',
     accent: 'linear-gradient(90deg,#2dd4bf,#22d3ee)',
     glow: 'rgba(45,212,191,0.08)',
-    title: 'Solid State Physics',
+    title: 'Paper XIII: Solid State Physics',
     difficulty: 'hard',
-    desc: 'Crystal structure, lattice vibrations, electronic band theory, superconductivity, semiconductors, and magnetic properties.',
-    topics: ['Crystal Structure', 'Lattice Dynamics', 'Band Theory', 'Semiconductors', 'Superconductivity', 'Magnetism'],
-    progress: 50,
-    progressLabel: '50% covered',
+    desc: 'Crystal structures, Bravais lattices, X-ray diffraction & Bragg law, phonon lattice dynamics, Free Electron Model, Kronig-Penney band theory, and Superconductivity.',
+    topics: ['Crystallography & XRD', 'Lattice Vibrations', 'Band Theory of Solids', 'Superconductivity & Magnetism'],
+    progress: 65,
+    progressLabel: '65% covered',
     detail: {
-      allTopics: ['Bravais Lattices & Miller Indices', 'X-ray Diffraction & Bragg\'s Law', 'Reciprocal Lattice', 'Phonons & Lattice Vibrations', 'Debye & Einstein Models', 'Free Electron Model', 'Bloch\'s Theorem', 'Band Structure', 'Effective Mass & Holes', 'Intrinsic & Extrinsic Semiconductors', 'Hall Effect', 'Superconductivity & Meissner Effect', 'BCS Theory', 'Diamagnetism, Paramagnetism, Ferromagnetism'],
+      units: [
+        'Unit I: Crystal Structure & XRD — Amorphous & crystalline solids, Bravais lattices, Miller indices, Reciprocal lattice, X-ray diffraction, Bragg\'s Law, Laue & Powder methods.',
+        'Unit II: Lattice Vibrations & Thermal Properties — Phonons, Vibrations of 1D monoatomic & diatomic lattices, Acoustic & Optical branches, Einstein & Debye theories of specific heat.',
+        'Unit III: Free Electron & Band Theory — Drude-Lorentz free electron theory, Sommerfeld model, Fermi energy E_F, Bloch theorem, Kronig-Penney model, Band gap, Metals/Semiconductors/Insulators.',
+        'Unit IV: Magnetic Properties & Superconductivity — Dia, Para, Ferro, Ferrimagnetism, Curie-Weiss law, Superconductivity, Zero resistance, Meissner effect, Type I & Type II superconductors, BCS theory intro.'
+      ],
+      labComponent: 'Solid State Physics Lab: Determination of Hall coefficient & carrier concentration of semiconductor, Band gap of semiconductor by Four-Probe method, Magnetic susceptibility by Quincke\'s method.',
+      downloadSlots: [
+        { label: 'Paper XIII Syllabus PDF', file: 'Paper_XIII_Solid_State_Physics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_XIII_Lecture_Notes.pdf' },
+        { label: 'Solid State Lab Manual', file: 'Paper_XIII_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_XIII_FMU_PYQs.pdf' }
+      ],
       textbooks: [
         { title: 'Introduction to Solid State Physics', author: 'C. Kittel' },
         { title: 'Solid State Physics', author: 'A. J. Dekker' },
         { title: 'Solid State Physics', author: 'S. O. Pillai' }
       ],
-      formulae: ['2d sinθ = nλ [Bragg]', 'ω² = 4C/M · sin²(ka/2)', 'E_F = (ℏ²/2m)(3π²n)^(2/3)']
+      formulae: ['2d sinθ = nλ (Bragg\'s Law)', 'E_F = (ℏ²/2m)(3π²n)^(2/3)', 'χ = C / (T - T_c) (Curie-Weiss)']
+    }
+  },
+
+  // ── SEMESTER VI ──
+  {
+    id: 'paper-14-electromagnetic-theory',
+    paperCode: 'Paper XIV',
+    semester: 6,
+    icon: '🛰️',
+    iconBg: 'rgba(251,191,36,0.12)',
+    iconBorder: 'rgba(251,191,36,0.25)',
+    accent: 'linear-gradient(90deg,#f59e0b,#ef4444)',
+    glow: 'rgba(245,158,11,0.08)',
+    title: 'Paper XIV: Electromagnetic Theory',
+    difficulty: 'advanced',
+    desc: 'Maxwell\'s field equations, displacement current, Poynting vector, EM wave propagation in vacuum, dielectrics, conductors, reflection/refraction, and waveguides.',
+    topics: ['Maxwell Equations', 'EM Wave Propagation', 'Reflection & Refraction', 'Waveguides & Radiation'],
+    progress: 70,
+    progressLabel: '70% covered',
+    detail: {
+      units: [
+        'Unit I: Maxwell\'s Equations — Maxwell\'s equations in differential & integral forms, Displacement current, Vector & Scalar potentials, Gauge transformations (Coulomb & Lorentz gauges).',
+        'Unit II: EM Wave Propagation — Wave equation in free space, Plane EM waves, Transverse nature of EM waves, Poynting vector S, Energy density & momentum density of EM field.',
+        'Unit III: Reflection & Refraction of EM Waves — Boundary conditions at dielectric interface, Reflection & Transmission coefficients, Fresnel\'s equations, Brewster\'s angle, Total Internal Reflection.',
+        'Unit IV: EM Waves in Conducting Media & Waveguides — Wave propagation in conducting media, Skin depth, Dispersion in plasma, TE & TM modes in rectangular waveguides.'
+      ],
+      labComponent: 'Electromagnetic Theory Lab: Determination of Brewster\'s angle for glass using Polarimeter, Polarization of EM waves setup, Verification of Fresnel\'s laws of reflection.',
+      downloadSlots: [
+        { label: 'Paper XIV Syllabus PDF', file: 'Paper_XIV_EM_Theory_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_XIV_Lecture_Notes.pdf' },
+        { label: 'EM Theory Lab Manual', file: 'Paper_XIV_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_XIV_FMU_PYQs.pdf' }
+      ],
+      textbooks: [
+        { title: 'Introduction to Electrodynamics', author: 'D. J. Griffiths' },
+        { title: 'Classical Electrodynamics', author: 'J. D. Jackson' },
+        { title: 'Electromagnetic Waves and Radiating Systems', author: 'E. C. Jordan & K. G. Balmain' }
+      ],
+      formulae: ['∇×E = -∂B/∂t, ∇×B = μ₀J + μ₀ε₀∂E/∂t', 'S = (1/μ₀) (E × B)', 'δ = √(2 / (μωσ)) (Skin Depth)', 'tan θ_B = n₂ / n₁']
     }
   },
   {
-    id: 'atomic',
+    id: 'paper-15-statistical-mechanics',
+    paperCode: 'Paper XV',
     semester: 6,
-    icon: '🔭',
+    icon: '📊',
     iconBg: 'rgba(167,139,250,0.12)',
     iconBorder: 'rgba(167,139,250,0.25)',
-    accent: 'linear-gradient(90deg,#a78bfa,#818cf8)',
+    accent: 'linear-gradient(90deg,#a78bfa,#ec4899)',
     glow: 'rgba(167,139,250,0.08)',
-    title: 'Atomic & Molecular Physics',
+    title: 'Paper XV: Statistical Mechanics',
     difficulty: 'advanced',
-    desc: 'Atomic spectra, term symbols, perturbation theory, molecular bonding, spectroscopy techniques and applications.',
-    topics: ['Atomic Spectra', 'Perturbation Theory', 'Zeeman Effect', 'Molecular Bonding', 'Rotational Spectra', 'Raman Spectroscopy'],
-    progress: 30,
-    progressLabel: '30% covered',
+    desc: 'Microcanonical, Canonical & Grand Canonical Ensembles, Partition Function Z, MB, BE & FD Quantum Statistics, Blackbody radiation laws, and BEC.',
+    topics: ['Ensemble Theory', 'Partition Function', 'Bose-Einstein Statistics', 'Fermi-Dirac Statistics'],
+    progress: 60,
+    progressLabel: '60% covered',
     detail: {
-      allTopics: ['Hydrogen Spectrum & Term Symbols', 'Fine & Hyperfine Structure', 'Time-independent Perturbation Theory', 'Variational Method', 'WKB Approximation', 'Normal & Anomalous Zeeman Effect', 'Stark Effect', 'Helium Atom', 'Multi-electron Atoms & Hund\'s Rules', 'Molecular Orbital Theory', 'Rotational, Vibrational Spectra', 'Raman Effect', 'Electron Spin Resonance', 'NMR Spectroscopy'],
-      textbooks: [
-        { title: 'Atomic & Molecular Spectra', author: 'Raj Kumar' },
-        { title: 'Molecular Quantum Mechanics', author: 'Atkins & Friedman' },
-        { title: 'Introduction to Atomic Spectra', author: 'Harvey E. White' }
+      units: [
+        'Unit I: Classical Statistical Mechanics — Macrostate & Microstate, Phase space, Liouville\'s theorem, Microcanonical, Canonical, and Grand Canonical ensembles, Partition function Z.',
+        'Unit II: Thermodynamic Connections — Calculation of U, S, F, G, P from Partition Function Z, Ideal monoatomic gas in canonical ensemble, Gibbs Paradox & resolution.',
+        'Unit III: Quantum Statistics — Identical particles, Symmetric & Anti-symmetric wavefunctions, Maxwell-Boltzmann (MB), Bose-Einstein (BE), and Fermi-Dirac (FD) distributions.',
+        'Unit IV: Applications of Quantum Statistics — Blackbody radiation (Planck\'s law, Rayleigh-Jeans & Wien laws), Bose-Einstein Condensation (BEC), Degenerate Fermi gas & Fermi energy.'
       ],
-      formulae: ['E_n = E_n⁰ + ⟨n|H\'|n⟩', 'ΔE = m_J g_J μ_B B [Zeeman]', 'Δ̃ν = ±2B(J+1) [Rotational]']
-    }
-  },
-  {
-    id: 'computational',
-    semester: 6,
-    icon: '💻',
-    iconBg: 'rgba(52,211,153,0.12)',
-    iconBorder: 'rgba(52,211,153,0.25)',
-    accent: 'linear-gradient(90deg,#34d399,#3b82f6)',
-    glow: 'rgba(52,211,153,0.08)',
-    title: 'Computational Physics',
-    difficulty: 'medium',
-    desc: 'Numerical methods for physics problems — ODE solvers, Monte Carlo methods, matrix diagonalization, and data analysis.',
-    topics: ['Numerical Methods', 'Monte Carlo', 'ODE Solvers', 'Fourier Analysis', 'Curve Fitting', 'Python for Physics'],
-    progress: 55,
-    progressLabel: '55% covered',
-    detail: {
-      allTopics: ['Error Analysis & Floating Point', 'Root Finding (Bisection, Newton-Raphson)', 'Numerical Integration (Simpson, Romberg)', 'Matrix Methods & Eigenvalue Problems', 'ODE Solvers (Euler, Runge-Kutta)', 'Partial Differential Equations', 'Monte Carlo Simulation', 'Random Walk Problems', 'Fast Fourier Transform (FFT)', 'Least Squares Curve Fitting', 'Python (NumPy, SciPy, Matplotlib)', 'Data Visualization'],
-      textbooks: [
-        { title: 'Computational Physics', author: 'N. J. Giordano & H. Nakanishi' },
-        { title: 'Numerical Recipes in C', author: 'Press, Teukolsky et al.' },
-        { title: 'Computational Physics', author: 'M. Newman' }
+      labComponent: 'Computational Statistical Physics Lab: Simulation of Maxwell-Boltzmann speed distribution, Numerical calculation of Fermi-Dirac integral, Monte Carlo simulation of 2D Ising spin lattice.',
+      downloadSlots: [
+        { label: 'Paper XV Syllabus PDF', file: 'Paper_XV_Statistical_Mechanics_Syllabus.pdf' },
+        { label: 'Unit 1-4 Lecture Notes', file: 'Paper_XV_Lecture_Notes.pdf' },
+        { label: 'Computational Lab Manual XV', file: 'Paper_XV_Lab_Manual.pdf' },
+        { label: 'FMU Solved PYQs (2020-2025)', file: 'Paper_XV_FMU_PYQs.pdf' }
       ],
-      formulae: ['y_{n+1} = y_n + hf(x_n,y_n) [Euler]', 'I ≈ (h/3)[f₀ + 4f₁ + f₂] [Simpson]']
+      textbooks: [
+        { title: 'Statistical Mechanics', author: 'R. K. Pathria & P. D. Beale' },
+        { title: 'Statistical Mechanics', author: 'K. Huang' },
+        { title: 'Fundamentals of Statistical and Thermal Physics', author: 'F. Reif' }
+      ],
+      formulae: ['Z = Σ e^(-β E_i)', 'F = -k_B T ln Z', 'n̄_i = 1 / (e^(β(ε_i - μ)) ∓ 1)', 'u(ν) dν = (8πhν³/c³) / (e^(hν/k_BT) - 1) dν']
     }
   }
 ];
+
 
 const FORMULAE = [
   // Mechanics
@@ -367,33 +644,33 @@ const RESOURCES = [
 const TIMELINE = [
   {
     sem: 'I',
-    label: 'Semester I — Foundations',
-    subjects: ['Classical Mechanics', 'Mathematical Physics I', 'Physics Lab I']
+    label: 'Semester I — Mathematical Physics-I & Mechanics',
+    subjects: ['Paper I: Mathematical Physics-I', 'Paper II: Mechanics', 'Computational & Mechanics Lab']
   },
   {
     sem: 'II',
-    label: 'Semester II — Fields & Waves',
-    subjects: ['Electricity & Magnetism', 'Waves & Optics', 'Mathematical Physics II', 'Physics Lab II']
+    label: 'Semester II — Electricity, Magnetism & Math Physics-II',
+    subjects: ['Paper III: Electricity and Magnetism', 'Paper IV: Mathematical Physics-II', 'EM & Computational Lab II']
   },
   {
     sem: 'III',
-    label: 'Semester III — Quantum Beginnings',
-    subjects: ['Quantum Mechanics I', 'Thermal Physics', 'Analog Electronics', 'Physics Lab III']
+    label: 'Semester III — Waves, Optics, Math Physics-III & Thermal',
+    subjects: ['Paper V: Waves and Optics', 'Paper VI: Mathematical Physics-III', 'Paper VII: Thermal Physics', 'Optics & Thermal Lab']
   },
   {
     sem: 'IV',
-    label: 'Semester IV — Statistical & Digital',
-    subjects: ['Statistical Mechanics', 'Electronics & Devices', 'Quantum Mechanics II', 'Physics Lab IV']
+    label: 'Semester IV — Analog Systems, Instrumentation & Nuclear',
+    subjects: ['Paper VIII: Analog Systems and Applications', 'Paper IX: Basic Instrumentation Skills', 'Paper X: Nuclear and Particle Physics', 'Electronics & Instrumentation Lab']
   },
   {
     sem: 'V',
-    label: 'Semester V — Modern Physics',
-    subjects: ['Nuclear & Particle Physics', 'Solid State Physics', 'Atomic & Molecular Physics', 'Physics Lab V']
+    label: 'Semester V — Digital Systems, Quantum & Solid State',
+    subjects: ['Paper XI: Digital Systems and Applications', 'Paper XII: Quantum Mechanics and Applications', 'Paper XIII: Solid State Physics', 'Digital, Quantum & Solid State Lab']
   },
   {
     sem: 'VI',
-    label: 'Semester VI — Advanced Topics',
-    subjects: ['Computational Physics', 'Atomic & Molecular Spectroscopy', 'Advanced Lab', 'Project / Dissertation']
+    label: 'Semester VI — Electromagnetic Theory & Statistical Mechanics',
+    subjects: ['Paper XIV: Electromagnetic Theory', 'Paper XV: Statistical Mechanics', 'Advanced Physics & Computational Lab']
   }
 ];
 
@@ -1090,16 +1367,48 @@ function openModal(id) {
   document.getElementById('modalIcon').textContent = s.icon;
   document.getElementById('modalIcon').style.background = s.iconBg;
   document.getElementById('modalTitle').textContent = s.title;
-  document.getElementById('modalSemester').textContent = `Semester ${s.semester} · ${s.difficulty.charAt(0).toUpperCase() + s.difficulty.slice(1)} Level`;
+  document.getElementById('modalSemester').textContent = `Fakir Mohan University (NEP 2020) · Semester ${s.semester} · ${s.paperCode || ''}`;
 
   const body = document.getElementById('modalBody');
-  body.innerHTML = `
-    <div class="modal-section-title">Topics Covered</div>
-    <ul class="modal-topics-list">
-      ${s.detail.allTopics.map(t => `<li>${t}</li>`).join('')}
-    </ul>
+  
+  const unitsHtml = s.detail.units ? `
+    <div class="modal-section-title">📚 Course Units Breakdown</div>
+    <div class="modal-units-list" style="margin-bottom: 20px;">
+      ${s.detail.units.map(u => `
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 8px; font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;">
+          ${u}
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
 
-    <div class="modal-section-title">Recommended Textbooks</div>
+  const labHtml = s.detail.labComponent ? `
+    <div class="modal-section-title">🔬 Practical / Lab Component</div>
+    <div style="background: rgba(34, 211, 238, 0.05); border-left: 3px solid var(--cyan-400); padding: 14px 18px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 20px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+      ${s.detail.labComponent}
+    </div>
+  ` : '';
+
+  const downloadSlotsHtml = s.detail.downloadSlots ? `
+    <div class="modal-section-title">📥 Resource Download Slots</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 20px;">
+      ${s.detail.downloadSlots.map(slot => `
+        <div style="background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 0.85rem; font-weight: 500; color: var(--text-primary);">${slot.label}</div>
+          <a href="https://drive.google.com/drive/folders/18NdG14eazAKfoq1HMbBH9aWohgcTgU5o?usp=drive_link" target="_blank" rel="noopener" style="background: var(--blue-500); color: #fff; text-decoration: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+            Download ⬇
+          </a>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
+  body.innerHTML = `
+    ${unitsHtml}
+    ${labHtml}
+    ${downloadSlotsHtml}
+
+    <div class="modal-section-title">📖 Recommended Textbooks</div>
     <div class="modal-textbooks">
       ${s.detail.textbooks.map(b => `
         <div class="modal-textbook">
@@ -1112,7 +1421,7 @@ function openModal(id) {
       `).join('')}
     </div>
 
-    <div class="modal-section-title">Key Formulae</div>
+    <div class="modal-section-title">⚡ Key Formulae & Core Equations</div>
     <div class="modal-key-formulae">
       ${s.detail.formulae.map(f => `<div class="modal-formula-item">${f}</div>`).join('')}
     </div>
@@ -1328,7 +1637,7 @@ function animateCounter(el, target, suffix = '') {
 
 function initCounters() {
   const counters = [
-    { id: 'counter-subjects', val: 12, suffix: '' },
+    { id: 'counter-subjects', val: 15, suffix: '' },
     { id: 'counter-formulas', val: 200, suffix: '+' },
     { id: 'counter-semesters', val: 6, suffix: '' },
     { id: 'counter-books', val: 40, suffix: '+' }

@@ -1,0 +1,36 @@
+{
+  "name": "jeetphysics",
+  "version": "1.0.0",
+  "description": "Educational study portal for B.Sc Physics Honours students under Fakir Mohan University (NEP 2020 Framework)",
+  "main": "script.js",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static asset build ready for Vercel deployment'",
+    "lint": "echo 'No lint errors'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biswajitm559-del/jeetphysics.git"
+  },
+  "keywords": [
+    "physics",
+    "bsc-physics",
+    "fakir-mohan-university",
+    "nep-2020",
+    "pyqs",
+    "syllabus",
+    "jeetphysics"
+  ],
+  "author": "Biswajit Sahu (SSB Lecturer in Physics)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/biswajitm559-del/jeetphysics/issues"
+  },
+  "homepage": "https://jeetphysics.in",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
