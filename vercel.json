@@ -7,11 +7,11 @@
   "rewrites": [
     {
       "source": "/papers/:subject/:semester/:paper",
-      "destination": "/paper.html"
+      "destination": "/paper"
     },
     {
       "source": "/semesters/:subject/:semester",
-      "destination": "/semester.html"
+      "destination": "/semester"
     }
   ],
   "headers": [
