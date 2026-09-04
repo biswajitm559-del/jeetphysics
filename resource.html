@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Resources | JeetPhysics</title>
+  <meta name="description" content="Access official previous year questions, unit-wise lecture notes, and laboratory materials for B.Sc Physics Honours under Fakir Mohan University." />
+  <link rel="canonical" href="https://jeetphysics.in/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Academic Resources | JeetPhysics" />
+  <meta property="og:description" content="Explore official university questions, lecture notes, and practical resources." />
+  <meta property="og:url" content="https://jeetphysics.in/" />
+  <meta property="og:site_name" content="JeetPhysics" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <!-- Structured Data Hook -->
+  <script type="application/ld+json" id="structuredData">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": []
+  }
+  </script>
+
+  <style>
+    .resource-page-wrap {
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 80px;
+    }
+
+    .resource-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .resource-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .resource-breadcrumb a:hover {
+      color: var(--blue-300);
+      text-decoration: underline;
+    }
+
+    /* Hero Header Card */
+    .resource-hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-400), var(--purple-400));
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .resource-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill-category {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .pill-paper {
+      font-size: 0.82rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+    }
+
+    .btn-back-paper {
+      font-family: var(--font-head);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--blue-300);
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-back-paper:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: #fff;
+    }
+
+    .resource-main-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .resource-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 850px;
+    }
+
+    /* Items Container & Cards */
+    .items-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-card);
+    }
+
+    .item-card:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .item-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .badge-year {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--gold-400);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-unit {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+    }
+
+    .item-title {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .item-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .item-file-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .item-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action-primary {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+      border: 1px solid rgba(82, 160, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-action-primary:hover {
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-action-secondary {
+      padding: 10px 14px;
+      background: rgba(8, 20, 50, 0.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-action-secondary:hover {
+      color: #fff;
+      border-color: var(--border-glow);
+    }
+
+    /* Empty State Card */
+    .empty-archive-card {
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 64px 32px;
+      text-align: center;
+      margin: 20px 0 40px;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--text-muted);
+    }
+
+    .empty-title {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .empty-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 560px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    /* State Screens */
+    .state-container {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .error-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 48px 32px;
+      max-width: 520px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .spinner-pulse {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue-400);
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Multi-file & Utility Styles */
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 0.82rem;
+    }
+
+    .item-actions-multi {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .multi-file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .file-name-label {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .multi-file-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .resource-hero-card {
+        padding: 24px 20px;
+      }
+      .resource-main-title {
+        font-size: 1.7rem;
+      }
+      .item-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .item-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .item-actions-multi {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Canvas -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
+    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
+      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+        <span style="font-size: 1.6rem;">⚛️</span>
+        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
+          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
+        </span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a id="navPaperLink" href="/semesters/physics/semester-i" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Paper Overview</a>
+        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container resource-page-wrap">
+
+    <!-- State 1: Loading -->
+    <div id="loadingState" class="state-container">
+      <div>
+        <div class="spinner-pulse"></div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Loading Resource Archive</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Querying published files from Supabase database...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Error Screen -->
+    <div id="errorState" class="state-container" style="display: none;">
+      <div class="error-card">
+        <div style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
+        <h1 style="font-family: var(--font-head); font-size: 1.5rem; color: #fca5a5; margin-bottom: 10px;" id="errorTitle">Resource Not Found</h1>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 24px;" id="errorMessage">
+          The requested resource category could not be resolved under the specified academic hierarchy.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a id="btnErrorBack" href="/" class="btn-action-primary">Return to Homepage</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 3: Active Resource Archive -->
+    <main id="resourceContentState" style="display: none;">
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="resource-breadcrumb">
+        <a href="/">Home</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSubject">Physics</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSemester">Semester</a>
+        <span>&gt;</span>
+        <a href="#" id="bcPaper">Paper</a>
+        <span>&gt;</span>
+        <span style="color: var(--text-primary); font-weight: 500;" id="bcResource">Resources</span>
+      </nav>
+
+      <!-- Hero Header -->
+      <section class="resource-hero-card">
+        <div class="hero-top-row">
+          <div class="resource-badge-group">
+            <span class="pill-category" id="resourceCategory">EXAM ARCHIVE</span>
+            <span class="pill-paper" id="paperCodePill">Paper I</span>
+            <span class="pill-paper" id="paperTypePill">THEORY</span>
+          </div>
+
+          <a href="#" id="btnBackToPaper" class="btn-back-paper">
+            <i class="ph ph-arrow-left"></i>
+            <span>Paper Overview & Syllabus</span>
+          </a>
+        </div>
+
+        <h1 class="resource-main-title">
+          <span id="resourceIcon">📝</span>
+          <span id="resourceTitle">Previous Year Questions</span>
+        </h1>
+        <p class="resource-subtitle" id="resourceDescription">
+          Official semester examination papers for undergraduate B.Sc Physics under Fakir Mohan University.
+        </p>
+      </section>
+
+      <!-- List of Published Resources -->
+      <section>
+        <div id="itemsContainer" class="items-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- Client-side Routing & Data Controller -->
+  <script type="module">
+    import { supabase, AcademicService } from '/lib/supabaseClient.js';
+
+    // UI Elements
+    const loadingState = document.getElementById('loadingState');
+    const errorState = document.getElementById('errorState');
+    const errorTitle = document.getElementById('errorTitle');
+    const errorMessage = document.getElementById('errorMessage');
+    const btnErrorBack = document.getElementById('btnErrorBack');
+    const resourceContentState = document.getElementById('resourceContentState');
+
+    // Breadcrumbs
+    const bcSubject = document.getElementById('bcSubject');
+    const bcSemester = document.getElementById('bcSemester');
+    const bcPaper = document.getElementById('bcPaper');
+    const bcResource = document.getElementById('bcResource');
+    const navPaperLink = document.getElementById('navPaperLink');
+
+    // Hero Elements
+    const resourceCategory = document.getElementById('resourceCategory');
+    const paperCodePill = document.getElementById('paperCodePill');
+    const paperTypePill = document.getElementById('paperTypePill');
+    const btnBackToPaper = document.getElementById('btnBackToPaper');
+    const resourceIcon = document.getElementById('resourceIcon');
+    const resourceTitle = document.getElementById('resourceTitle');
+    const resourceDescription = document.getElementById('resourceDescription');
+    const itemsContainer = document.getElementById('itemsContainer');
+
+    /**
+     * Resolve Route Segments from URL
+     * Format: /:resourceType/:subject/:semester/:paper
+     */
+    function resolveRouteParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryType = urlParams.get('type');
+      const querySubject = urlParams.get('subject');
+      const querySemester = urlParams.get('semester');
+      const queryPaper = urlParams.get('paper');
+
+      if (queryType && querySubject && querySemester && queryPaper) {
+        return {
+          resourceSlug: queryType.trim().toLowerCase(),
+          subjectSlug: querySubject.trim().toLowerCase(),
+          semesterSlug: querySemester.trim().toLowerCase(),
+          paperSlug: queryPaper.trim().toLowerCase()
+        };
+      }
+
+      // Extract from pathname:
+      // Supports /:resourceType/:subject/:semester/:paper
+      // and /resources/:resourceType/:subject/:semester/:paper
+      const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (segments[0] === 'resources' && segments.length >= 5) {
+        return {
+          resourceSlug: segments[1].toLowerCase(),
+          subjectSlug: segments[2].toLowerCase(),
+          semesterSlug: segments[3].toLowerCase(),
+          paperSlug: segments[4].toLowerCase()
+        };
+      }
+      if (segments.length >= 4) {
+        return {
+          resourceSlug: segments[0].toLowerCase(),
+          subjectSlug: segments[1].toLowerCase(),
+          semesterSlug: segments[2].toLowerCase(),
+          paperSlug: segments[3].toLowerCase()
+        };
+      }
+
+      return null;
+    }
+
+    /**
+     * SEO & Open Graph Metadata
+     */
+    function updatePageMetadata(resourceType, subject, semester, paper) {
+      const pageTitle = `${resourceType.display_name} — ${paper.paper_code}: ${paper.name} | JeetPhysics`;
+      const pageDesc = `Download official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, B.Sc Physics).`;
+      const canonicalUrl = `https://jeetphysics.in/${resourceType.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+
+      document.title = pageTitle;
+
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
+
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+
+      const structuredDataTag = document.getElementById('structuredData');
+      if (structuredDataTag) {
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://jeetphysics.in/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": subject.name,
+              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": semester.name,
+              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": `${paper.paper_code}: ${paper.name}`,
+              "item": `https://jeetphysics.in/papers/${subject.slug}/${semester.slug}/${paper.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": resourceType.display_name,
+              "item": canonicalUrl
+            }
+          ]
+        };
+        structuredDataTag.textContent = JSON.stringify(schema, null, 2);
+      }
+    }
+
+    /**
+     * Open document in a new tab using secure signed URL
+     */
+    window.viewResourceFile = async function(fileId, btnElement) {
+      const origHtml = btnElement ? btnElement.innerHTML : '';
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Loading...</span>';
+      }
+      try {
+        const signData = await AcademicService.fetchSignedUrl(fileId);
+        if (signData && signData.signedUrl) {
+          window.open(signData.signedUrl, '_blank');
+        }
+      } catch (err) {
+        alert('Could not view file: ' + err.message);
+      } finally {
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = origHtml;
+        }
+      }
+    };
+
+    /**
+     * Download document using secure signed URL
+     */
+    window.downloadResourceFile = async function(fileId, filename, btnElement) {
+      const origHtml = btnElement ? btnElement.innerHTML : '';
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Preparing...</span>';
+      }
+      try {
+        const signData = await AcademicService.fetchSignedUrl(fileId);
+        if (signData && signData.signedUrl) {
+          const a = document.createElement('a');
+          a.href = signData.signedUrl;
+          a.download = filename || 'document.pdf';
+          a.target = '_blank';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      } catch (err) {
+        alert('Could not retrieve secure download URL: ' + err.message);
+      } finally {
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = origHtml;
+        }
+      }
+    };
+
+    /**
+     * Main Controller
+     */
+    async function initResourcePage() {
+      const params = resolveRouteParams();
+
+      if (!params) {
+        showError(
+          'Malformed Resource URL',
+          'The resource route must follow /:resourceType/:subject/:semester/:paper. Please navigate through the canonical paper page.'
+        );
+        return;
+      }
+
+      const { resourceSlug, subjectSlug, semesterSlug, paperSlug } = params;
+
+      try {
+        // 1. Resolve Paper via full hierarchy
+        const paper = await AcademicService.getPaperBySlug(subjectSlug, semesterSlug, paperSlug);
+        if (!paper) {
+          showError(
+            'Paper Not Found',
+            `Could not resolve paper "${paperSlug}" under ${subjectSlug.toUpperCase()} / ${semesterSlug.toUpperCase()}.`
+          );
+          return;
+        }
+
+        const semester = paper.semesters;
+        const subject = semester.subjects;
+        const paperUrl = `/papers/${subject.slug}/${semester.slug}/${paper.slug}`;
+
+        // 2. Resolve Resource Type from database
+        const resourceType = await AcademicService.getResourceTypeBySlug(resourceSlug);
+        if (!resourceType) {
+          showError(
+            'Resource Category Not Found',
+            `The resource category "${resourceSlug}" is not registered in the curriculum system.`
+          );
+          btnErrorBack.href = paperUrl;
+          btnErrorBack.textContent = `Return to ${paper.paper_code}`;
+          return;
+        }
+
+        // 3. Verify Paper Compatibility (Applicable Paper Type)
+        if (resourceType.applicable_paper_type !== 'BOTH' && resourceType.applicable_paper_type !== paper.paper_type) {
+          showError(
+            'Incompatible Resource Category',
+            `The category "${resourceType.display_name}" is restricted to ${resourceType.applicable_paper_type} papers, but ${paper.paper_code} is a ${paper.paper_type} course.`
+          );
+          btnErrorBack.href = paperUrl;
+          btnErrorBack.textContent = `Return to ${paper.paper_code}`;
+          return;
+        }
+
+        // Populate Breadcrumbs
+        bcSubject.textContent = subject.name;
+        bcSubject.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcSemester.textContent = semester.name;
+        bcSemester.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
+        bcPaper.href = paperUrl;
+        bcResource.textContent = resourceType.display_name;
+        navPaperLink.href = paperUrl;
+
+        // Populate Hero Header
+        resourceIcon.textContent = resourceType.icon || '📄';
+        resourceTitle.textContent = resourceType.display_name;
+        resourceDescription.textContent = resourceType.description || `Official study resources for ${paper.name}.`;
+        resourceCategory.textContent = resourceType.category || 'ACADEMIC';
+        paperCodePill.textContent = paper.paper_code;
+        paperTypePill.textContent = paper.paper_type;
+        btnBackToPaper.href = paperUrl;
+
+        // Update Dynamic SEO
+        updatePageMetadata(resourceType, subject, semester, paper);
+
+        // 4. Fetch Published Resources for this Paper and Type
+        const resources = await AcademicService.getPublishedResources(paper.id, resourceType.type_key);
+
+        if (!resources || resources.length === 0) {
+          // Graceful Empty State
+          itemsContainer.innerHTML = `
+            <div class="empty-archive-card">
+              <div class="empty-icon">📁</div>
+              <h2 class="empty-title">No ${resourceType.display_name} Published Yet</h2>
+              <p class="empty-text">
+                There are currently no published ${resourceType.display_name.toLowerCase()} documents uploaded for <strong>${paper.name}</strong>. Faculty members will add study files as the course progresses.
+              </p>
+              <a href="${paperUrl}" class="btn-action-primary">
+                <i class="ph ph-arrow-left"></i>
+                <span>Back to Paper Overview</span>
+              </a>
+            </div>
+          `;
+        } else {
+          // Sort items appropriately
+          if (resourceType.requires_exam_year) {
+            resources.sort((a, b) => (b.exam_year || 0) - (a.exam_year || 0));
+          } else if (resourceType.requires_unit) {
+            resources.sort((a, b) => (a.unit_number || 0) - (b.unit_number || 0));
+          }
+
+          itemsContainer.innerHTML = resources.map(res => {
+            const files = res.resource_files || [];
+            const primaryFile = files.find(f => f.is_primary) || files[0];
+            const fileSizeStr = primaryFile?.file_size_bytes
+              ? (primaryFile.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
+              : 'PDF Document';
+            const filename = primaryFile?.original_filename || 'document.pdf';
+
+            let badgeMarkup = '';
+            if (res.exam_year) {
+              badgeMarkup = `<span class="badge-year"><i class="ph ph-calendar"></i> ${res.exam_year} Examination</span>`;
+            } else if (res.unit_number) {
+              badgeMarkup = `<span class="badge-unit">Unit ${res.unit_number}${res.unit_name ? ': ' + res.unit_name : ''}</span>`;
+            }
+
+            let actionsMarkup = '';
+            if (files.length === 0) {
+              actionsMarkup = `<span style="color: var(--text-muted); font-size: 0.85rem;">File Pending</span>`;
+            } else if (files.length === 1) {
+              const fileId = primaryFile.id;
+              actionsMarkup = `
+                <button onclick="downloadResourceFile('${fileId}', '${filename}', this)" class="btn-action-primary">
+                  <i class="ph ph-download-simple"></i>
+                  <span>Download PDF</span>
+                </button>
+                <button onclick="viewResourceFile('${fileId}', this)" class="btn-action-secondary" title="View Document in new tab">
+                  <i class="ph ph-arrow-square-out"></i>
+                  <span>View</span>
+                </button>
+              `;
+            } else {
+              // Multiple files attached to this resource
+              actionsMarkup = `
+                <div class="item-actions-multi">
+                  ${files.map(f => {
+                    const fSize = f.file_size_bytes ? ` (${(f.file_size_bytes / (1024 * 1024)).toFixed(1)}MB)` : '';
+                    return `
+                      <div class="multi-file-row">
+                        <span class="file-name-label" title="${f.original_filename}"><i class="ph ph-file-pdf"></i> ${f.original_filename}${fSize}</span>
+                        <div class="multi-file-btns">
+                          <button onclick="viewResourceFile('${f.id}', this)" class="btn-action-secondary btn-sm" title="View">
+                            <i class="ph ph-arrow-square-out"></i>
+                          </button>
+                          <button onclick="downloadResourceFile('${f.id}', '${f.original_filename}', this)" class="btn-action-primary btn-sm" title="Download">
+                            <i class="ph ph-download-simple"></i>
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              `;
+            }
+
+            return `
+              <article class="item-card">
+                <div class="item-info">
+                  ${badgeMarkup ? `<div class="item-badge-row">${badgeMarkup}</div>` : ''}
+                  <h3 class="item-title">${res.title}</h3>
+                  ${res.description ? `<p class="item-desc">${res.description}</p>` : ''}
+                  <div class="item-file-meta">
+                    <span><i class="ph ph-file-pdf"></i> ${files.length > 1 ? `${files.length} Attachments` : filename}</span>
+                    <span>•</span>
+                    <span>${files.length > 1 ? 'Multi-part' : fileSizeStr}</span>
+                  </div>
+                </div>
+
+                <div class="item-actions">
+                  ${actionsMarkup}
+                </div>
+              </article>
+            `;
+          }).join('');
+        }
+
+        // Reveal Main State
+        loadingState.style.display = 'none';
+        errorState.style.display = 'none';
+        resourceContentState.style.display = 'block';
+
+      } catch (err) {
+        console.error('Fatal resource initialization error:', err);
+        showError(
+          'Database Connection Notice',
+          'Unable to communicate with the curriculum database. Please check your network and reload.'
+        );
+      }
+    }
+
+    function showError(title, message) {
+      loadingState.style.display = 'none';
+      resourceContentState.style.display = 'none';
+      errorTitle.textContent = title;
+      errorMessage.textContent = message;
+      errorState.style.display = 'flex';
+    }
+
+    initResourcePage();
+  </script>
+</body>
+</html>

@@ -12,6 +12,50 @@
     {
       "source": "/semesters/:subject/:semester",
       "destination": "/semester"
+    },
+    {
+      "source": "/previous-year-questions/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-qna/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/viva-questions/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/study-material/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/formulae-bank/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/solved-numericals/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type/:subject/:semester/:paper",
+      "destination": "/resource"
     }
   ],
   "headers": [
