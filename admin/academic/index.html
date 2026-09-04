@@ -361,15 +361,32 @@
         </div>
       </div>
 
-      <!-- Phase 4C Status Banner -->
+      <!-- CMS Modules Navigation Card -->
+      <div style="background: rgba(8, 20, 50, 0.85); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px; margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div style="max-width: 680px;">
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--blue-300); font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Curriculum Management</div>
+          <h2 style="font-family: var(--font-head); font-size: 1.4rem; color: var(--text-primary); margin-bottom: 6px;">Academic Resources Manager</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.5; margin: 0;">
+            Manage official previous year questions, unit-wise lecture notes, and laboratory materials across all 6 semesters and 30 core papers.
+          </p>
+        </div>
+        <div>
+          <a href="/admin/academic/resources" class="btn-action" style="padding: 12px 22px; font-size: 0.95rem;">
+            <span>Open Resource Manager</span>
+            <span style="font-size: 1.1rem;">➔</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Phase 5C-1 Status Banner -->
       <div class="phase-banner">
-        <h3>✅ Phase 4C Administrator Session Guard Operational</h3>
+        <h3>✅ Phase 5C-1 Academic Resource Manager Active</h3>
         <p>
           Your session has been authenticated via Supabase Auth and confirmed against <code>public.admin_users</code>.
-          Browser uploads and management operations will use your authenticated session token with database and Storage RLS policies.
+          Metadata management (Create, Edit, Publish, Unpublish, Archive) is available for all active papers.
         </p>
         <p style="margin-top: 12px; color: var(--text-muted); font-size: 0.84rem;">
-          Next Stage: <strong>Phase 5D Academic Resource Upload & Management CMS</strong> will mount the file uploader and paper resource editors onto this foundation upon approval.
+          Next Stage: <strong>Phase 5C-2 Physical PDF Attachment & Private Storage Upload</strong> will attach file management upon approval.
         </p>
       </div>
     </div>

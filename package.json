@@ -4,7 +4,8 @@
   "description": "Educational study portal for B.Sc Physics Honours students under Fakir Mohan University (NEP 2020 Framework)",
   "main": "script.js",
   "scripts": {
-    "start": "npx serve ."
+    "start": "npx serve .",
+    "dev": "vercel dev"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Resource Manager | JeetPhysics Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="../../style.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <style>
+    /* Admin Layout & Navigation */
+    .admin-navbar {
+      background: rgba(2, 8, 24, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: 999px;
+      color: var(--blue-300);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .admin-user-nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .nav-back-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: rgba(8, 20, 50, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .user-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-400);
+      box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+    }
+
+    .btn-logout {
+      padding: 6px 14px;
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      border-radius: var(--radius-sm);
+      color: #fca5a5;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-logout:hover {
+      background: rgba(248, 113, 113, 0.22);
+      border-color: rgba(248, 113, 113, 0.5);
+    }
+
+    .admin-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* State Screens */
+    .state-screen {
+      display: none;
+      min-height: 60vh;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .state-card {
+      background: rgba(8, 20, 50, 0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px 36px;
+      max-width: 540px;
+      margin: 0 auto;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .spinner-large {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue-400);
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Page Header */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: var(--font-head);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    .phase-pill {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+    }
+
+    /* Cascading Selector Card */
+    .selector-card {
+      background: rgba(8, 20, 50, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(12px);
+    }
+
+    .selector-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+    }
+
+    .selector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .form-select, .form-input, .form-textarea {
+      background: rgba(2, 8, 24, 0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-select:focus, .form-input:focus, .form-textarea:focus {
+      border-color: var(--blue-400);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-select option {
+      background: #020818;
+      color: #fff;
+    }
+
+    /* Selected Paper Banner & Actions Bar */
+    .content-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .active-paper-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .paper-code-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+    }
+
+    .paper-type-theory {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+      text-transform: uppercase;
+    }
+
+    .paper-type-lab {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+      text-transform: uppercase;
+    }
+
+    .btn-create {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+      border: 1px solid rgba(82, 160, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-create:hover {
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+      transform: translateY(-1px);
+    }
+
+    /* Resource Cards List */
+    .resource-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .resource-card {
+      background: rgba(8, 20, 50, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      transition: var(--transition);
+    }
+
+    .resource-card:hover {
+      border-color: var(--border-glow);
+      background: rgba(8, 20, 50, 0.9);
+    }
+
+    .res-info {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .res-pill-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .res-type-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-pill {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .status-draft {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--gold-400);
+    }
+
+    .status-published {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+    }
+
+    .status-archived {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    .badge-year {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: var(--gold-400);
+    }
+
+    .badge-unit {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #86efac;
+    }
+
+    .res-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .res-desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .res-meta-sub {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Action Buttons */
+    .res-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action-sm {
+      padding: 7px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: var(--font-head);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      outline: none;
+    }
+
+    .btn-edit {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+    }
+
+    .btn-edit:hover {
+      background: rgba(59, 130, 246, 0.25);
+      color: #fff;
+    }
+
+    .btn-publish {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #86efac;
+    }
+
+    .btn-publish:hover {
+      background: rgba(34, 197, 94, 0.25);
+      color: #fff;
+    }
+
+    .btn-unpublish {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: var(--gold-400);
+    }
+
+    .btn-unpublish:hover {
+      background: rgba(245, 158, 11, 0.25);
+      color: #fff;
+    }
+
+    .btn-archive {
+      background: rgba(148, 163, 184, 0.15);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    .btn-archive:hover {
+      background: rgba(148, 163, 184, 0.25);
+      color: #fff;
+    }
+
+    .btn-delete {
+      background: rgba(248, 113, 113, 0.12);
+      border-color: rgba(248, 113, 113, 0.3);
+      color: #fca5a5;
+    }
+
+    .btn-delete:hover {
+      background: rgba(248, 113, 113, 0.22);
+      color: #fff;
+    }
+
+    /* Empty State Card */
+    .empty-state {
+      background: rgba(8, 20, 50, 0.5);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 56px 24px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .empty-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      max-width: 480px;
+      margin: 0 auto 20px;
+      line-height: 1.5;
+    }
+
+    /* Modal Dialog */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(2, 8, 24, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #081432;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .btn-close-modal:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .modal-body {
+      padding: 24px;
+      max-height: 70vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-context-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(2, 8, 24, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .notice-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      color: var(--blue-300);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      background: rgba(2, 8, 24, 0.4);
+    }
+
+    .btn-secondary {
+      padding: 9px 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-head);
+      font-weight: 500;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-secondary:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      padding: 9px 20px;
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+      border: 1px solid rgba(82, 160, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+    }
+
+    .btn-primary:disabled, .btn-secondary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.25s ease-out;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      border-color: rgba(34, 197, 94, 0.4);
+      color: #86efac;
+    }
+
+    .toast-error {
+      border-color: rgba(248, 113, 113, 0.4);
+      color: #fca5a5;
+    }
+
+    @media (max-width: 768px) {
+      .resource-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .res-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Administrator Navbar -->
+  <nav class="admin-navbar">
+    <div class="admin-brand">
+      <a href="/admin/academic/" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 1.5rem;">⚛️</span>
+        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; color: var(--text-primary);">JeetPhysics</span>
+      </a>
+      <span class="admin-badge">Faculty CMS</span>
+    </div>
+
+    <div class="admin-user-nav" id="adminUserNav" style="display: none;">
+      <a href="/admin/academic/" class="nav-back-link">
+        <i class="ph ph-squares-four"></i>
+        <span>Dashboard</span>
+      </a>
+      <div class="user-pill">
+        <div class="user-dot"></div>
+        <span id="navUserEmail">admin@jeetphysics.in</span>
+      </div>
+      <button class="btn-logout" id="btnLogout">
+        <i class="ph ph-sign-out"></i>
+        <span>Sign Out</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+
+    <!-- State 1: Loading Screen -->
+    <div id="stateLoading" class="state-screen" style="display: flex;">
+      <div class="state-card">
+        <div class="spinner-large"></div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.3rem;">Verifying Session & Privileges</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px;">Connecting to Supabase Auth and validating administrator role in public.admin_users...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Access Denied Screen -->
+    <div id="stateDenied" class="state-screen">
+      <div class="state-card" style="border-color: rgba(248, 113, 113, 0.4);">
+        <div style="font-size: 3rem; margin-bottom: 12px;">⛔</div>
+        <h2 style="font-family: var(--font-head); color: #fca5a5; font-size: 1.4rem;">Access Denied</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 12px 0 24px;" id="deniedMessage">
+          You are authenticated, but your account is not registered as an active administrator. PostgreSQL Row-Level Security (RLS) blocks access.
+        </p>
+        <button class="btn-logout" id="btnDeniedLogout" style="padding: 10px 18px; margin: 0 auto;">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- State 3: Authorized CMS Workspace -->
+    <main id="stateAuthorized" style="display: none;">
+
+      <!-- Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Academic Resources Manager</h1>
+          <p class="page-subtitle">Manage official syllabus notes, previous year questions, and laboratory materials.</p>
+        </div>
+        <div>
+          <span class="phase-pill">Phase 5C-1: Metadata CMS</span>
+        </div>
+      </div>
+
+      <!-- 4-Step Cascading Selection Bar -->
+      <section class="selector-card">
+        <div class="selector-header">
+          <i class="ph ph-tree-structure" style="color: var(--blue-400); font-size: 1.2rem;"></i>
+          <span>Academic Lineage Selection</span>
+        </div>
+        <div class="selector-grid">
+          <!-- Step 1: Subject -->
+          <div class="form-group">
+            <label class="form-label" for="selSubject">1. Subject</label>
+            <select id="selSubject" class="form-select"></select>
+          </div>
+
+          <!-- Step 2: Semester -->
+          <div class="form-group">
+            <label class="form-label" for="selSemester">2. Semester</label>
+            <select id="selSemester" class="form-select"></select>
+          </div>
+
+          <!-- Step 3: Paper -->
+          <div class="form-group">
+            <label class="form-label" for="selPaper">3. Paper</label>
+            <select id="selPaper" class="form-select"></select>
+          </div>
+
+          <!-- Step 4: Resource Type Filter -->
+          <div class="form-group">
+            <label class="form-label" for="selResourceType">4. Resource Category</label>
+            <select id="selResourceType" class="form-select"></select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content Header Bar -->
+      <div class="content-header-bar">
+        <div class="active-paper-info">
+          <span class="paper-code-badge" id="lblPaperCode">Paper I</span>
+          <span id="lblPaperTypeBadge" class="paper-type-theory">THEORY</span>
+          <h2 style="font-family: var(--font-head); font-size: 1.25rem; color: var(--text-primary); margin: 0;" id="lblPaperTitle">Mathematical Physics I</h2>
+          <span style="font-size: 0.85rem; color: var(--text-muted);" id="lblResourceCount">(0 resources)</span>
+        </div>
+
+        <div>
+          <button id="btnOpenCreateModal" class="btn-create">
+            <i class="ph ph-plus-circle"></i>
+            <span>Create Resource</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resources List -->
+      <div id="resourceListContainer" class="resource-list">
+        <!-- Populated via JavaScript -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Create / Edit Resource Modal -->
+  <div id="resourceModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Create Academic Resource</h3>
+        <button id="btnCloseModal" class="btn-close-modal" aria-label="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <form id="resourceForm">
+        <div class="modal-body">
+          <!-- Context Information -->
+          <div class="modal-context-bar">
+            <span><strong>Paper:</strong> <span id="modalPaperLabel">Mathematical Physics I</span></span>
+            <span>•</span>
+            <span><strong>Type:</strong> <span id="modalTypeBadge" class="paper-type-theory">THEORY</span></span>
+          </div>
+
+          <!-- Scope Notice -->
+          <div class="notice-box">
+            <i class="ph ph-info" style="font-size: 1.2rem; flex-shrink: 0;"></i>
+            <span><strong>Metadata Management (Phase 5C-1):</strong> Record creation only. Physical PDF attachment and Storage integration will be enabled in Phase 5C-2.</span>
+          </div>
+
+          <!-- Resource Type Selector (Enabled only on Create) -->
+          <div class="form-group" id="formGroupResourceType">
+            <label class="form-label" for="formResourceType">Resource Category *</label>
+            <select id="formResourceType" class="form-select" required></select>
+          </div>
+
+          <!-- Title -->
+          <div class="form-group">
+            <label class="form-label" for="formTitle">Resource Title *</label>
+            <input type="text" id="formTitle" class="form-input" placeholder="e.g. 2024 End-Semester Question Paper" required maxlength="255" />
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label class="form-label" for="formDescription">Description</label>
+            <textarea id="formDescription" class="form-textarea" rows="2" placeholder="Optional description or syllabus topic breakdown..."></textarea>
+          </div>
+
+          <!-- Dynamic Unit Container (Shown only if requires_unit) -->
+          <div id="unitFieldsContainer" style="display: none; padding: 14px; background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: var(--radius-sm);">
+            <div style="font-family: var(--font-head); font-size: 0.88rem; font-weight: 600; color: #86efac; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+              <i class="ph ph-bookmarks"></i>
+              <span>Unit-wise Metadata (Required for this category)</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 120px 1fr; gap: 12px;">
+              <div class="form-group">
+                <label class="form-label" for="formUnitNumber">Unit (1–10) *</label>
+                <input type="number" id="formUnitNumber" class="form-input" min="1" max="10" placeholder="1" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="formUnitName">Unit Name *</label>
+                <input type="text" id="formUnitName" class="form-input" placeholder="e.g. Vector Calculus" maxlength="150" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Exam Year Container (Shown only if requires_exam_year) -->
+          <div id="yearFieldsContainer" style="display: none; padding: 14px; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: var(--radius-sm);">
+            <div style="font-family: var(--font-head); font-size: 0.88rem; font-weight: 600; color: var(--gold-400); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+              <i class="ph ph-calendar"></i>
+              <span>Exam Year Metadata (Required for this category)</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formExamYear">Examination Year (1990–2050) *</label>
+              <input type="number" id="formExamYear" class="form-input" min="1990" max="2050" placeholder="2024" />
+            </div>
+          </div>
+
+          <!-- Display Order & Initial Publication Status -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="formDisplayOrder">Display Order</label>
+              <input type="number" id="formDisplayOrder" class="form-input" value="0" min="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="formPublicationStatus">Publication Status</label>
+              <select id="formPublicationStatus" class="form-select">
+                <option value="DRAFT" selected>DRAFT (Unpublished)</option>
+                <option value="PUBLISHED">PUBLISHED (Public)</option>
+                <option value="ARCHIVED">ARCHIVED (Hidden)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btnCancelModal" class="btn-secondary">Cancel</button>
+          <button type="submit" id="btnSaveModal" class="btn-primary">
+            <i class="ph ph-check"></i>
+            <span>Save Resource</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #fca5a5;">Confirm Deletion</h3>
+        <button id="btnCloseDeleteModal" class="btn-close-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;">
+          Are you sure you want to permanently delete the resource record:
+          <strong id="deleteResourceTitle" style="color: #fff; display: block; margin: 8px 0;">Resource Title</strong>
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.84rem; line-height: 1.5;">
+          ⚠️ <em>Best Practice:</em> For normal removal from the student portal, use <strong>Archive</strong> instead of permanent deletion to preserve audit history.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelDelete" class="btn-secondary">Cancel</button>
+        <button id="btnConfirmDelete" class="btn-logout" style="padding: 10px 18px;">
+          <i class="ph ph-trash"></i>
+          <span>Delete Permanently</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast">
+    <i id="toastIcon" class="ph ph-check-circle" style="font-size: 1.25rem;"></i>
+    <span id="toastMsg">Action completed successfully.</span>
+  </div>
+
+  <!-- Client-side Logic Module -->
+  <script type="module">
+    import { supabase, AcademicService } from '../../lib/supabaseClient.js';
+    import { AdminAuthGuard } from '../auth-guard.js';
+
+    // State Elements
+    const stateLoading = document.getElementById('stateLoading');
+    const stateDenied = document.getElementById('stateDenied');
+    const stateAuthorized = document.getElementById('stateAuthorized');
+    const adminUserNav = document.getElementById('adminUserNav');
+    const navUserEmail = document.getElementById('navUserEmail');
+    const btnLogout = document.getElementById('btnLogout');
+    const btnDeniedLogout = document.getElementById('btnDeniedLogout');
+    const deniedMessage = document.getElementById('deniedMessage');
+
+    // Cascading Selectors
+    const selSubject = document.getElementById('selSubject');
+    const selSemester = document.getElementById('selSemester');
+    const selPaper = document.getElementById('selPaper');
+    const selResourceType = document.getElementById('selResourceType');
+
+    // Paper Info Labels
+    const lblPaperCode = document.getElementById('lblPaperCode');
+    const lblPaperTypeBadge = document.getElementById('lblPaperTypeBadge');
+    const lblPaperTitle = document.getElementById('lblPaperTitle');
+    const lblResourceCount = document.getElementById('lblResourceCount');
+    const resourceListContainer = document.getElementById('resourceListContainer');
+    const btnOpenCreateModal = document.getElementById('btnOpenCreateModal');
+
+    // Modals
+    const resourceModal = document.getElementById('resourceModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const btnCloseModal = document.getElementById('btnCloseModal');
+    const btnCancelModal = document.getElementById('btnCancelModal');
+    const resourceForm = document.getElementById('resourceForm');
+    const btnSaveModal = document.getElementById('btnSaveModal');
+    const modalPaperLabel = document.getElementById('modalPaperLabel');
+    const modalTypeBadge = document.getElementById('modalTypeBadge');
+    const formGroupResourceType = document.getElementById('formGroupResourceType');
+    const formResourceType = document.getElementById('formResourceType');
+    const formTitle = document.getElementById('formTitle');
+    const formDescription = document.getElementById('formDescription');
+    const unitFieldsContainer = document.getElementById('unitFieldsContainer');
+    const formUnitNumber = document.getElementById('formUnitNumber');
+    const formUnitName = document.getElementById('formUnitName');
+    const yearFieldsContainer = document.getElementById('yearFieldsContainer');
+    const formExamYear = document.getElementById('formExamYear');
+    const formDisplayOrder = document.getElementById('formDisplayOrder');
+    const formPublicationStatus = document.getElementById('formPublicationStatus');
+
+    // Delete Modal
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteResourceTitle = document.getElementById('deleteResourceTitle');
+    const btnCloseDeleteModal = document.getElementById('btnCloseDeleteModal');
+    const btnCancelDelete = document.getElementById('btnCancelDelete');
+    const btnConfirmDelete = document.getElementById('btnConfirmDelete');
+
+    // Toast
+    const toast = document.getElementById('toast');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastMsg = document.getElementById('toastMsg');
+
+    // Memory State
+    let subjects = [];
+    let semesters = [];
+    let papers = [];
+    let allResourceTypes = [];
+    let currentPaper = null;
+    let currentResources = [];
+    let editingResourceId = null;
+    let pendingDeleteResourceId = null;
+
+    // Toast Helper
+    function showToast(message, type = 'success') {
+      toastMsg.textContent = message;
+      toast.className = `toast show ${type === 'success' ? 'toast-success' : 'toast-error'}`;
+      toastIcon.className = type === 'success' ? 'ph ph-check-circle' : 'ph ph-warning-circle';
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 3500);
+    }
+
+    // Attach Logout
+    btnLogout.addEventListener('click', () => AdminAuthGuard.logout());
+    btnDeniedLogout.addEventListener('click', () => AdminAuthGuard.logout());
+
+    // ------------------------------------------------------------------------
+    // Cascading Loading Functions
+    // ------------------------------------------------------------------------
+
+    async function loadSubjects() {
+      subjects = await AcademicService.getSubjects();
+      selSubject.innerHTML = subjects.map(s => `<option value="${s.slug}">${s.name}</option>`).join('');
+      if (subjects.length > 0) {
+        selSubject.value = subjects[0].slug;
+        await loadSemesters();
+      }
+    }
+
+    async function loadSemesters() {
+      const subjectSlug = selSubject.value;
+      semesters = await AcademicService.getSemesters(subjectSlug);
+      selSemester.innerHTML = semesters.map(s => `<option value="${s.slug}">${s.name}</option>`).join('');
+      if (semesters.length > 0) {
+        selSemester.value = semesters[0].slug;
+        await loadPapers();
+      } else {
+        selPaper.innerHTML = '<option value="">No semesters available</option>';
+        resourceListContainer.innerHTML = '';
+      }
+    }
+
+    async function loadPapers() {
+      const subjectSlug = selSubject.value;
+      const semesterSlug = selSemester.value;
+      papers = await AcademicService.getPapersBySemester(subjectSlug, semesterSlug);
+
+      if (papers.length > 0) {
+        selPaper.innerHTML = papers.map(p => `
+          <option value="${p.id}" data-type="${p.paper_type}">
+            ${p.paper_code}: ${p.name} (${p.paper_type})
+          </option>
+        `).join('');
+
+        currentPaper = papers[0];
+        updateActivePaperHeader();
+        await updateCompatibleResourceTypes();
+        await loadResources();
+      } else {
+        selPaper.innerHTML = '<option value="">No papers available</option>';
+        currentPaper = null;
+        resourceListContainer.innerHTML = '';
+      }
+    }
+
+    async function updateCompatibleResourceTypes() {
+      if (!currentPaper) return;
+
+      if (allResourceTypes.length === 0) {
+        allResourceTypes = await AcademicService.getResourceTypes();
+      }
+
+      // Filter: Theory paper -> THEORY + BOTH; Lab paper -> LAB + BOTH
+      const compatibleTypes = allResourceTypes.filter(rt => {
+        if (!rt.is_active) return false;
+        if (rt.applicable_paper_type === 'BOTH') return true;
+        return rt.applicable_paper_type === currentPaper.paper_type;
+      });
+
+      // Populate filter dropdown (includes "All Types")
+      selResourceType.innerHTML = `
+        <option value="">All Categories (${compatibleTypes.length})</option>
+        ${compatibleTypes.map(rt => `<option value="${rt.type_key}">${rt.icon || '📄'} ${rt.display_name}</option>`).join('')}
+      `;
+
+      // Populate modal resource type dropdown
+      formResourceType.innerHTML = compatibleTypes.map(rt => `
+        <option value="${rt.type_key}">${rt.icon || '📄'} ${rt.display_name}</option>
+      `).join('');
+    }
+
+    function updateActivePaperHeader() {
+      if (!currentPaper) return;
+      lblPaperCode.textContent = currentPaper.paper_code;
+      lblPaperTitle.textContent = currentPaper.name;
+      lblPaperTypeBadge.textContent = currentPaper.paper_type;
+      lblPaperTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+    }
+
+    // ------------------------------------------------------------------------
+    // Resource List Query & Render
+    // ------------------------------------------------------------------------
+
+    async function loadResources() {
+      if (!currentPaper) return;
+
+      const selectedTypeKey = selResourceType.value || null;
+
+      try {
+        resourceListContainer.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            <div class="spinner-large" style="width: 32px; height: 32px; margin-bottom: 12px;"></div>
+            <span>Loading published & draft resources...</span>
+          </div>
+        `;
+
+        currentResources = await AcademicService.getAdminResourcesByPaper(currentPaper.id, selectedTypeKey);
+        lblResourceCount.textContent = `(${currentResources.length} ${currentResources.length === 1 ? 'resource' : 'resources'})`;
+
+        if (currentResources.length === 0) {
+          resourceListContainer.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">📁</div>
+              <h3 class="empty-title">No Resources Found</h3>
+              <p class="empty-desc">
+                There are no resource records registered under <strong>${currentPaper.paper_code}</strong>
+                ${selectedTypeKey ? `for category <em>${selectedTypeKey}</em>` : ''}.
+              </p>
+              <button onclick="document.getElementById('btnOpenCreateModal').click()" class="btn-create" style="margin: 0 auto;">
+                <i class="ph ph-plus-circle"></i>
+                <span>Create First Resource</span>
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        // Sort sensibly:
+        // PYQ: exam_year DESC
+        // Unit resources: unit_number ASC, display_order ASC
+        // General: display_order ASC
+        currentResources.sort((a, b) => {
+          if (a.resource_type === 'PYQ' && b.resource_type === 'PYQ') {
+            return (b.exam_year || 0) - (a.exam_year || 0);
+          }
+          if (a.unit_number || b.unit_number) {
+            return (a.unit_number || 0) - (b.unit_number || 0) || (a.display_order || 0) - (b.display_order || 0);
+          }
+          return (a.display_order || 0) - (b.display_order || 0);
+        });
+
+        resourceListContainer.innerHTML = currentResources.map(res => {
+          const rtConfig = allResourceTypes.find(t => t.type_key === res.resource_type);
+          const typeName = rtConfig ? rtConfig.display_name : res.resource_type;
+          const typeIcon = rtConfig ? rtConfig.icon : '📄';
+
+          let statusClass = 'status-draft';
+          if (res.publication_status === 'PUBLISHED') statusClass = 'status-published';
+          if (res.publication_status === 'ARCHIVED') statusClass = 'status-archived';
+
+          let unitBadge = '';
+          if (res.unit_number) {
+            unitBadge = `<span class="badge-unit">Unit ${res.unit_number}${res.unit_name ? ': ' + res.unit_name : ''}</span>`;
+          }
+
+          let yearBadge = '';
+          if (res.exam_year) {
+            yearBadge = `<span class="badge-year"><i class="ph ph-calendar"></i> ${res.exam_year} Exam</span>`;
+          }
+
+          const createdDate = new Date(res.created_at).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+
+          // Action buttons depending on publication_status
+          let actionsMarkup = `
+            <button onclick="window.editResource('${res.id}')" class="btn-action-sm btn-edit" title="Edit Metadata">
+              <i class="ph ph-pencil-simple"></i>
+              <span>Edit</span>
+            </button>
+          `;
+
+          if (res.publication_status === 'DRAFT') {
+            actionsMarkup += `
+              <button onclick="window.updateStatus('${res.id}', 'PUBLISHED')" class="btn-action-sm btn-publish" title="Make publicly visible">
+                <i class="ph ph-globe"></i>
+                <span>Publish</span>
+              </button>
+              <button onclick="window.updateStatus('${res.id}', 'ARCHIVED')" class="btn-action-sm btn-archive" title="Archive resource">
+                <i class="ph ph-archive"></i>
+                <span>Archive</span>
+              </button>
+              <button onclick="window.promptDelete('${res.id}', '${escapeAttr(res.title)}')" class="btn-action-sm btn-delete" title="Delete record">
+                <i class="ph ph-trash"></i>
+              </button>
+            `;
+          } else if (res.publication_status === 'PUBLISHED') {
+            actionsMarkup += `
+              <button onclick="window.updateStatus('${res.id}', 'DRAFT')" class="btn-action-sm btn-unpublish" title="Revert to unpublished draft">
+                <i class="ph ph-eye-slash"></i>
+                <span>Unpublish</span>
+              </button>
+              <button onclick="window.updateStatus('${res.id}', 'ARCHIVED')" class="btn-action-sm btn-archive" title="Archive resource">
+                <i class="ph ph-archive"></i>
+                <span>Archive</span>
+              </button>
+            `;
+          } else if (res.publication_status === 'ARCHIVED') {
+            actionsMarkup += `
+              <button onclick="window.updateStatus('${res.id}', 'DRAFT')" class="btn-action-sm btn-publish" title="Restore to draft">
+                <i class="ph ph-arrow-counter-clockwise"></i>
+                <span>Restore Draft</span>
+              </button>
+              <button onclick="window.promptDelete('${res.id}', '${escapeAttr(res.title)}')" class="btn-action-sm btn-delete" title="Delete record">
+                <i class="ph ph-trash"></i>
+              </button>
+            `;
+          }
+
+          return `
+            <article class="resource-card" id="resCard-${res.id}">
+              <div class="res-info">
+                <div class="res-pill-row">
+                  <span class="res-type-pill">${typeIcon} ${typeName}</span>
+                  <span class="status-pill ${statusClass}">${res.publication_status}</span>
+                  ${yearBadge}
+                  ${unitBadge}
+                </div>
+                <h3 class="res-title">${escapeHtml(res.title)}</h3>
+                ${res.description ? `<p class="res-desc">${escapeHtml(res.description)}</p>` : ''}
+                <div class="res-meta-sub">
+                  <span>Display Order: <strong>${res.display_order}</strong></span>
+                  <span>•</span>
+                  <span>Created: ${createdDate}</span>
+                </div>
+              </div>
+
+              <div class="res-actions">
+                ${actionsMarkup}
+              </div>
+            </article>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Failed to load resources:', err);
+        resourceListContainer.innerHTML = `
+          <div style="padding: 24px; background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248, 113, 113, 0.3); border-radius: var(--radius-md); color: #fca5a5;">
+            Failed to query resources from database: ${err.message}
+          </div>
+        `;
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag));
+    }
+
+    function escapeAttr(str) {
+      if (!str) return '';
+      return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // ------------------------------------------------------------------------
+    // Cascading Dropdown Listeners
+    // ------------------------------------------------------------------------
+
+    selSubject.addEventListener('change', async () => {
+      await loadSemesters();
+    });
+
+    selSemester.addEventListener('change', async () => {
+      await loadPapers();
+    });
+
+    selPaper.addEventListener('change', async () => {
+      const selectedId = selPaper.value;
+      currentPaper = papers.find(p => p.id === selectedId) || null;
+      updateActivePaperHeader();
+      await updateCompatibleResourceTypes();
+      await loadResources();
+    });
+
+    selResourceType.addEventListener('change', async () => {
+      await loadResources();
+    });
+
+    // ------------------------------------------------------------------------
+    // Form Dynamic Configuration (Requires Unit vs Requires Exam Year)
+    // ------------------------------------------------------------------------
+
+    function syncFormTypeFields(typeKey) {
+      const config = allResourceTypes.find(t => t.type_key === typeKey);
+      if (!config) return;
+
+      if (config.requires_unit) {
+        unitFieldsContainer.style.display = 'block';
+        formUnitNumber.required = true;
+        formUnitName.required = true;
+      } else {
+        unitFieldsContainer.style.display = 'none';
+        formUnitNumber.required = false;
+        formUnitName.required = false;
+        formUnitNumber.value = '';
+        formUnitName.value = '';
+      }
+
+      if (config.requires_exam_year) {
+        yearFieldsContainer.style.display = 'block';
+        formExamYear.required = true;
+      } else {
+        yearFieldsContainer.style.display = 'none';
+        formExamYear.required = false;
+        formExamYear.value = '';
+      }
+    }
+
+    formResourceType.addEventListener('change', () => {
+      syncFormTypeFields(formResourceType.value);
+    });
+
+    // ------------------------------------------------------------------------
+    // Modal Open/Close Controls
+    // ------------------------------------------------------------------------
+
+    btnOpenCreateModal.addEventListener('click', () => {
+      if (!currentPaper) {
+        alert('Please select a valid paper first.');
+        return;
+      }
+
+      editingResourceId = null;
+      modalTitle.textContent = 'Create Academic Resource';
+      modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
+      modalTypeBadge.textContent = currentPaper.paper_type;
+      modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+
+      // Reset form
+      resourceForm.reset();
+      formDisplayOrder.value = 0;
+      formPublicationStatus.value = 'DRAFT';
+      formGroupResourceType.style.display = 'block';
+
+      // Pre-select resource type if filter has one selected
+      if (selResourceType.value) {
+        formResourceType.value = selResourceType.value;
+      }
+      syncFormTypeFields(formResourceType.value);
+
+      resourceModal.style.display = 'flex';
+      formTitle.focus();
+    });
+
+    window.editResource = function(resourceId) {
+      const res = currentResources.find(r => r.id === resourceId);
+      if (!res) return;
+
+      editingResourceId = resourceId;
+      modalTitle.textContent = 'Edit Academic Resource';
+      modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
+      modalTypeBadge.textContent = currentPaper.paper_type;
+      modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+
+      // Populate values
+      formResourceType.value = res.resource_type;
+      formGroupResourceType.style.display = 'none'; // Lock identity on edit
+      syncFormTypeFields(res.resource_type);
+
+      formTitle.value = res.title || '';
+      formDescription.value = res.description || '';
+      formUnitNumber.value = res.unit_number || '';
+      formUnitName.value = res.unit_name || '';
+      formExamYear.value = res.exam_year || '';
+      formDisplayOrder.value = res.display_order || 0;
+      formPublicationStatus.value = res.publication_status || 'DRAFT';
+
+      resourceModal.style.display = 'flex';
+      formTitle.focus();
+    };
+
+    function closeModal() {
+      resourceModal.style.display = 'none';
+      editingResourceId = null;
+    }
+
+    btnCloseModal.addEventListener('click', closeModal);
+    btnCancelModal.addEventListener('click', closeModal);
+
+    resourceModal.addEventListener('click', (e) => {
+      if (e.target === resourceModal) closeModal();
+    });
+
+    // ------------------------------------------------------------------------
+    // Resource Form Submit (Create & Update)
+    // ------------------------------------------------------------------------
+
+    resourceForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const typeKey = formResourceType.value;
+      const config = allResourceTypes.find(t => t.type_key === typeKey);
+      const title = formTitle.value.trim();
+      const description = formDescription.value.trim();
+      const displayOrder = parseInt(formDisplayOrder.value, 10) || 0;
+      const publicationStatus = formPublicationStatus.value;
+
+      let unitNumber = null;
+      let unitName = null;
+      let examYear = null;
+
+      // Client-side Validation according to database trigger rules
+      if (!title) {
+        alert('Please enter a title.');
+        return;
+      }
+
+      if (config && config.requires_unit) {
+        unitNumber = parseInt(formUnitNumber.value, 10);
+        unitName = formUnitName.value.trim();
+        if (isNaN(unitNumber) || unitNumber < 1 || unitNumber > 10) {
+          alert('Unit Number must be between 1 and 10.');
+          formUnitNumber.focus();
+          return;
+        }
+        if (!unitName) {
+          alert('Please enter a Unit Name.');
+          formUnitName.focus();
+          return;
+        }
+      }
+
+      if (config && config.requires_exam_year) {
+        examYear = parseInt(formExamYear.value, 10);
+        if (isNaN(examYear) || examYear < 1990 || examYear > 2050) {
+          alert('Exam Year must be between 1990 and 2050.');
+          formExamYear.focus();
+          return;
+        }
+      }
+
+      btnSaveModal.disabled = true;
+      btnSaveModal.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Saving...</span>';
+
+      try {
+        if (editingResourceId) {
+          // UPDATE
+          await AcademicService.updateResourceMetadata(editingResourceId, {
+            title,
+            description,
+            unitNumber,
+            unitName,
+            examYear,
+            displayOrder,
+            publicationStatus
+          });
+          showToast(`Updated "${title}" successfully.`);
+        } else {
+          // CREATE
+          await AcademicService.createResourceMetadata({
+            paperId: currentPaper.id,
+            resourceType: typeKey,
+            title,
+            description,
+            unitNumber,
+            unitName,
+            examYear,
+            displayOrder,
+            publicationStatus
+          });
+          showToast(`Created "${title}" (${publicationStatus}) successfully.`);
+        }
+
+        closeModal();
+        await loadResources();
+
+      } catch (err) {
+        console.error('Save resource error:', err);
+        alert(`Failed to save resource: ${err.message}`);
+      } finally {
+        btnSaveModal.disabled = false;
+        btnSaveModal.innerHTML = '<i class="ph ph-check"></i><span>Save Resource</span>';
+      }
+    });
+
+    // ------------------------------------------------------------------------
+    // Status Change Actions (Publish / Unpublish / Archive)
+    // ------------------------------------------------------------------------
+
+    window.updateStatus = async function(resourceId, newStatus) {
+      try {
+        await AcademicService.setResourcePublicationStatus(resourceId, newStatus);
+        showToast(`Resource status changed to ${newStatus}.`);
+        await loadResources();
+      } catch (err) {
+        console.error('Failed to change publication status:', err);
+        alert(`Failed to change status: ${err.message}`);
+      }
+    };
+
+    // ------------------------------------------------------------------------
+    // Delete Confirmation Flow
+    // ------------------------------------------------------------------------
+
+    window.promptDelete = function(resourceId, title) {
+      pendingDeleteResourceId = resourceId;
+      deleteResourceTitle.textContent = title;
+      deleteModal.style.display = 'flex';
+    };
+
+    function closeDeleteModal() {
+      deleteModal.style.display = 'none';
+      pendingDeleteResourceId = null;
+    }
+
+    btnCloseDeleteModal.addEventListener('click', closeDeleteModal);
+    btnCancelDelete.addEventListener('click', closeDeleteModal);
+    deleteModal.addEventListener('click', (e) => {
+      if (e.target === deleteModal) closeDeleteModal();
+    });
+
+    btnConfirmDelete.addEventListener('click', async () => {
+      if (!pendingDeleteResourceId) return;
+
+      btnConfirmDelete.disabled = true;
+      btnConfirmDelete.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Deleting...</span>';
+
+      try {
+        await AcademicService.deleteResource(pendingDeleteResourceId);
+        showToast('Resource record deleted permanently.');
+        closeDeleteModal();
+        await loadResources();
+      } catch (err) {
+        console.error('Delete resource error:', err);
+        alert(`Failed to delete resource: ${err.message}`);
+      } finally {
+        btnConfirmDelete.disabled = false;
+        btnConfirmDelete.innerHTML = '<i class="ph ph-trash"></i><span>Delete Permanently</span>';
+      }
+    });
+
+    // ------------------------------------------------------------------------
+    // Session Guard Initialization
+    // ------------------------------------------------------------------------
+
+    AdminAuthGuard.requireAdmin({
+      onAuthorized: async (user) => {
+        stateLoading.style.display = 'none';
+        stateDenied.style.display = 'none';
+        stateAuthorized.style.display = 'block';
+        adminUserNav.style.display = 'flex';
+        navUserEmail.textContent = user.email || 'Admin';
+
+        // Initialize cascading selectors
+        await loadSubjects();
+      },
+      onAccessDenied: (user) => {
+        stateLoading.style.display = 'none';
+        stateAuthorized.style.display = 'none';
+        stateDenied.style.display = 'flex';
+        deniedMessage.textContent = `You are authenticated as "${user.email}", but this account is not registered as an active administrator in public.admin_users. Database Row-Level Security (RLS) blocks all operations.`;
+      },
+      onUnauthenticated: () => {
+        const returnUrl = encodeURIComponent(window.location.pathname);
+        window.location.replace(`/admin/login.html?redirect=${returnUrl}`);
+      }
+    });
+
+  </script>
+</body>
+</html>

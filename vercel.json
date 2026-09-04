@@ -56,6 +56,10 @@
     {
       "source": "/resources/:type/:subject/:semester/:paper",
       "destination": "/resource"
+    },
+    {
+      "source": "/admin/academic/resources",
+      "destination": "/admin/academic/resources"
     }
   ],
   "headers": [
