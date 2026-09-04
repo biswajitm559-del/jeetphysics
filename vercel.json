@@ -4,6 +4,16 @@
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/papers/:subject/:semester/:paper",
+      "destination": "/paper.html"
+    },
+    {
+      "source": "/semesters/:subject/:semester",
+      "destination": "/semester.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

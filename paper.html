@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paper Details | JeetPhysics</title>
+  <meta name="description" content="Official syllabus, previous year questions, lecture notes, and study resources for undergraduate B.Sc Physics under Fakir Mohan University." />
+  <link rel="canonical" href="https://jeetphysics.in/papers/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Paper Details | JeetPhysics" />
+  <meta property="og:description" content="Official syllabus, PYQs, and academic resources for B.Sc Physics." />
+  <meta property="og:url" content="https://jeetphysics.in/papers/" />
+  <meta property="og:site_name" content="JeetPhysics" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <!-- Structured Data Hook -->
+  <script type="application/ld+json" id="structuredData">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": []
+  }
+  </script>
+
+  <style>
+    /* Paper Page Scoped Styles */
+    .paper-page-wrap {
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 80px;
+    }
+
+    .paper-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .paper-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .paper-breadcrumb a:hover {
+      color: var(--blue-300);
+      text-decoration: underline;
+    }
+
+    .paper-hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paper-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-400), var(--purple-400));
+    }
+
+    .paper-meta-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .pill-code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+    }
+
+    .pill-type-theory {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .pill-type-lab {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .pill-sem {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+    }
+
+    .paper-main-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    .paper-description-text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 900px;
+    }
+
+    /* Section Headers */
+    .section-title-wrap {
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-subtext {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Resource Chips Grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .resource-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .resource-chip:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+    }
+
+    .chip-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chip-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .chip-name {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .chip-count {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--blue-300);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .chip-count.empty {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border-color: transparent;
+    }
+
+    /* Syllabus Viewer Box */
+    .syllabus-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .syllabus-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .file-details {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .file-icon {
+      font-size: 1.8rem;
+      color: var(--blue-400);
+    }
+
+    .file-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .file-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    .file-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-download {
+      padding: 9px 16px;
+      background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+      border: 1px solid rgba(82, 160, 255, 0.3);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.88rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      background: linear-gradient(135deg, var(--blue-400), var(--blue-500));
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+      padding: 9px 14px;
+      background: rgba(8, 20, 50, 0.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-primary);
+      border-color: var(--border-glow);
+    }
+
+    .pdf-viewer-frame {
+      width: 100%;
+      height: 650px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(2, 8, 24, 0.9);
+      display: block;
+    }
+
+    /* Graceful Syllabus Pending Card */
+    .empty-state-card {
+      padding: 48px 24px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      background: rgba(5, 18, 41, 0.4);
+    }
+
+    .empty-state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .empty-state-text {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      max-width: 520px;
+      margin: 0 auto 16px;
+      line-height: 1.6;
+    }
+
+    /* Loading and Error States */
+    .state-container {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .error-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 48px 32px;
+      max-width: 520px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .spinner-pulse {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue-400);
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .paper-main-title { font-size: 1.7rem; }
+      .paper-hero-card { padding: 24px; }
+      .pdf-viewer-frame { height: 420px; }
+      .syllabus-toolbar { flex-direction: column; align-items: flex-start; }
+      .file-actions { width: 100%; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Ambient Background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
+    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
+      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+        <span style="font-size: 1.6rem;">⚛️</span>
+        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
+          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
+        </span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a id="navSemLink" href="/semesters/physics/semester-i" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Semesters</a>
+        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <div class="container paper-page-wrap">
+
+    <!-- State 1: Loading Skeleton -->
+    <div id="loadingState" class="state-container">
+      <div>
+        <div class="spinner-pulse"></div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Resolving Paper Lineage</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Validating subject, semester, and curriculum hierarchy in Supabase...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Error Screen (Paper Not Found / Invalid Hierarchy) -->
+    <div id="errorState" class="state-container" style="display: none;">
+      <div class="error-card">
+        <div style="font-size: 3rem; margin-bottom: 12px;">🔍</div>
+        <h1 style="font-family: var(--font-head); font-size: 1.5rem; color: #fca5a5; margin-bottom: 10px;" id="errorTitle">Paper Not Found</h1>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 24px;" id="errorMessage">
+          The requested paper could not be found under the specified subject and semester hierarchy.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a href="/semesters/physics/semester-i" class="btn-download" style="background: var(--blue-600);">Browse Physics Semesters</a>
+          <a href="/" class="btn-secondary">Return Home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 3: Canonical Paper View -->
+    <main id="paperContentState" style="display: none;">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="Breadcrumb" class="paper-breadcrumb" id="breadcrumbNav">
+        <a href="/">Home</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSubject">Physics</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSemester">Semester</a>
+        <span>&gt;</span>
+        <span style="color: var(--text-primary); font-weight: 500;" id="bcPaper">Paper</span>
+      </nav>
+
+      <!-- Paper Hero Header -->
+      <section class="paper-hero-card">
+        <div class="paper-meta-pills">
+          <span class="pill-code" id="paperCode">Paper I</span>
+          <span class="pill-type-theory" id="paperTypeBadge">THEORY</span>
+          <span class="pill-sem" id="paperSemesterLabel">Semester I</span>
+          <span class="pill-sem" id="paperSubjectLabel">Physics</span>
+        </div>
+
+        <h1 class="paper-main-title" id="paperTitle">Mathematical Physics-I</h1>
+        <p class="paper-description-text" id="paperDescription">
+          Calculus of one and several variables, first & second order differential equations, vector algebra, vector differentiation, vector integration, Dirac delta function, and orthogonal curvilinear coordinates.
+        </p>
+      </section>
+
+      <!-- Section: Available Resources (Dynamic Resource Chips) -->
+      <section style="margin-bottom: 48px;">
+        <div class="section-title-wrap">
+          <h2 class="section-heading">
+            <i class="ph ph-folder-open" style="color: var(--blue-400);"></i>
+            Available Resources
+          </h2>
+          <p class="section-subtext">Departmental study materials, question banks, and laboratory documentation</p>
+        </div>
+
+        <div class="resources-grid" id="resourceChipsGrid">
+          <!-- Dynamically populated from public.resource_types -->
+        </div>
+      </section>
+
+      <!-- Section: Official Syllabus Document -->
+      <section class="syllabus-box">
+        <div class="section-title-wrap" style="margin-bottom: 16px;">
+          <h2 class="section-heading">
+            <i class="ph ph-scroll" style="color: var(--gold-400);"></i>
+            Official Syllabus
+          </h2>
+          <p class="section-subtext">Authoritative B.Sc. curriculum issued by Fakir Mohan University (NEP 2020 framework)</p>
+        </div>
+
+        <!-- Syllabus Toolbar / File Details -->
+        <div id="syllabusContainer">
+          <!-- Populated by JavaScript depending on published syllabus availability -->
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- Client-side Routing & Data Controller -->
+  <script type="module">
+    import { supabase, AcademicService } from '/lib/supabaseClient.js';
+
+    // UI Elements
+    const loadingState = document.getElementById('loadingState');
+    const errorState = document.getElementById('errorState');
+    const errorTitle = document.getElementById('errorTitle');
+    const errorMessage = document.getElementById('errorMessage');
+    const paperContentState = document.getElementById('paperContentState');
+
+    // Breadcrumb Elements
+    const bcSubject = document.getElementById('bcSubject');
+    const bcSemester = document.getElementById('bcSemester');
+    const bcPaper = document.getElementById('bcPaper');
+    const navSemLink = document.getElementById('navSemLink');
+
+    // Header Elements
+    const paperCode = document.getElementById('paperCode');
+    const paperTypeBadge = document.getElementById('paperTypeBadge');
+    const paperSemesterLabel = document.getElementById('paperSemesterLabel');
+    const paperSubjectLabel = document.getElementById('paperSubjectLabel');
+    const paperTitle = document.getElementById('paperTitle');
+    const paperDescription = document.getElementById('paperDescription');
+
+    // Sections
+    const resourceChipsGrid = document.getElementById('resourceChipsGrid');
+    const syllabusContainer = document.getElementById('syllabusContainer');
+
+    /**
+     * Resolve path hierarchy from URL
+     * Supports:
+     * - /papers/[subject]/[semester]/[paper] (Vercel rewrite)
+     * - /paper.html?subject=...&semester=...&paper=... (Local / Query fallback)
+     */
+    function resolveRouteParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const querySubject = urlParams.get('subject');
+      const querySemester = urlParams.get('semester');
+      const queryPaper = urlParams.get('paper');
+
+      if (querySubject && querySemester && queryPaper) {
+        return {
+          subjectSlug: querySubject.trim().toLowerCase(),
+          semesterSlug: querySemester.trim().toLowerCase(),
+          paperSlug: queryPaper.trim().toLowerCase()
+        };
+      }
+
+      // Extract from pathname: /papers/physics/semester-i/paper-1-mathematical-physics-1
+      const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (segments.length >= 4 && segments[0] === 'papers') {
+        return {
+          subjectSlug: segments[1].toLowerCase(),
+          semesterSlug: segments[2].toLowerCase(),
+          paperSlug: segments[3].toLowerCase()
+        };
+      }
+
+      return null;
+    }
+
+    /**
+     * Update dynamic SEO and Schema tags
+     */
+    function updatePageMetadata(subject, semester, paper) {
+      const pageTitle = `${paper.paper_code}: ${paper.name} | B.Sc Physics ${semester.name} | JeetPhysics`;
+      const pageDesc = paper.description
+        ? `${paper.paper_code} (${paper.paper_type}): ${paper.name}. ${paper.description.substring(0, 150)}...`
+        : `Explore official syllabus and academic resources for ${paper.name} under Fakir Mohan University.`;
+      const canonicalUrl = `https://jeetphysics.in/papers/${subject.slug}/${semester.slug}/${paper.slug}`;
+
+      // Document Title
+      document.title = pageTitle;
+
+      // Meta Description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+
+      // Canonical Link
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
+
+      // Open Graph Tags
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+
+      // Structured Data (BreadcrumbList)
+      const structuredDataTag = document.getElementById('structuredData');
+      if (structuredDataTag) {
+        const schema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://jeetphysics.in/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": subject.name,
+              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": semester.name,
+              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": `${paper.paper_code}: ${paper.name}`,
+              "item": canonicalUrl
+            }
+          ]
+        };
+        structuredDataTag.textContent = JSON.stringify(schema, null, 2);
+      }
+    }
+
+    /**
+     * Render Dynamic Resource Chips
+     */
+    async function renderResourceChips(subject, semester, paper) {
+      try {
+        // 1. Fetch CMS resource types from database
+        const resourceTypes = await AcademicService.getResourceTypes();
+
+        // 2. Fetch all published resources for this paper to calculate counts
+        const publishedResources = await AcademicService.getPublishedResources(paper.id);
+
+        // Group counts by type_key
+        const countsByType = {};
+        publishedResources.forEach(r => {
+          countsByType[r.resource_type] = (countsByType[r.resource_type] || 0) + 1;
+        });
+
+        // 3. Filter eligible resource types:
+        // - show_on_paper === true
+        // - is_active === true
+        // - applicable_paper_type matches 'BOTH' or paper.paper_type
+        // - exclude 'SYLLABUS' (since syllabus is rendered in the dedicated viewer)
+        const eligibleTypes = resourceTypes.filter(rt => {
+          if (!rt.show_on_paper || !rt.is_active) return false;
+          if (rt.type_key === 'SYLLABUS') return false;
+          if (rt.applicable_paper_type !== 'BOTH' && rt.applicable_paper_type !== paper.paper_type) {
+            return false;
+          }
+          return true;
+        });
+
+        if (eligibleTypes.length === 0) {
+          resourceChipsGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 20px; color: var(--text-muted); font-size: 0.9rem;">
+              No resource categories configured for this paper type.
+            </div>
+          `;
+          return;
+        }
+
+        // 4. Render Chips
+        resourceChipsGrid.innerHTML = eligibleTypes.map(rt => {
+          const count = countsByType[rt.type_key] || 0;
+          const targetUrl = `/${rt.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+          const countClass = count > 0 ? 'chip-count' : 'chip-count empty';
+
+          return `
+            <a href="${targetUrl}" class="resource-chip" title="Explore ${rt.display_name}">
+              <div class="chip-left">
+                <span class="chip-icon">${rt.icon || '📄'}</span>
+                <span class="chip-name">${rt.display_name}</span>
+              </div>
+              <span class="${countClass}">${count}</span>
+            </a>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Error rendering resource chips:', err);
+        resourceChipsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; color: var(--text-muted); font-size: 0.88rem;">
+            Unable to load resource categories.
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Render Official Syllabus Section
+     */
+    async function renderSyllabusSection(paper) {
+      try {
+        // Query published syllabus via AcademicService
+        const syllabusResource = await AcademicService.getPublishedSyllabus(paper.id);
+
+        if (!syllabusResource || !syllabusResource.resource_files || syllabusResource.resource_files.length === 0) {
+          // Graceful "Syllabus Not Available Yet" state
+          syllabusContainer.innerHTML = `
+            <div class="empty-state-card">
+              <div class="empty-state-icon">📜</div>
+              <h3 class="empty-state-title">Official Syllabus Document Pending</h3>
+              <p class="empty-state-text">
+                The authoritative university syllabus document for <strong>${paper.name}</strong> has not been published to the student portal yet. Faculty administrators can upload and publish it through the administration portal.
+              </p>
+              <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-muted);">
+                <span>Curriculum: Fakir Mohan University (NEP 2020)</span>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        // Primary file record
+        const fileRecord = syllabusResource.resource_files.find(f => f.is_primary) || syllabusResource.resource_files[0];
+        const fileSizeMb = fileRecord.file_size_bytes
+          ? (fileRecord.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
+          : 'PDF Document';
+
+        // Request secure signed URL from serverless endpoint
+        let signedUrl = null;
+        try {
+          const signData = await AcademicService.fetchSignedUrl(fileRecord.id);
+          signedUrl = signData.signedUrl;
+        } catch (signErr) {
+          console.warn('[paper] Could not fetch signed URL:', signErr.message);
+        }
+
+        if (!signedUrl) {
+          syllabusContainer.innerHTML = `
+            <div class="empty-state-card">
+              <div class="empty-state-icon">🔒</div>
+              <h3 class="empty-state-title">Secure Delivery Unavailable</h3>
+              <p class="empty-state-text">
+                The syllabus document is published, but the secure delivery service could not generate an authorization signature. Please try again shortly.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        // Render Toolbar and Responsive Viewer
+        syllabusContainer.innerHTML = `
+          <div class="syllabus-toolbar">
+            <div class="file-details">
+              <i class="ph ph-file-pdf file-icon"></i>
+              <div>
+                <div class="file-title">${syllabusResource.title || fileRecord.original_filename}</div>
+                <div class="file-meta">Authoritative FMU Syllabus • ${fileSizeMb}</div>
+              </div>
+            </div>
+
+            <div class="file-actions">
+              <a href="${signedUrl}" download="${fileRecord.original_filename}" class="btn-download">
+                <i class="ph ph-download-simple"></i>
+                <span>Download Syllabus PDF</span>
+              </a>
+              <a href="${signedUrl}" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                <i class="ph ph-arrow-square-out"></i>
+                <span>Open in New Tab</span>
+              </a>
+            </div>
+          </div>
+
+          <div style="position: relative;">
+            <object
+              data="${signedUrl}#toolbar=1&navpanes=0"
+              type="application/pdf"
+              class="pdf-viewer-frame"
+            >
+              <div class="empty-state-card" style="margin: 20px 0;">
+                <p class="empty-state-text">
+                  Your device or browser does not support inline PDF previews.
+                </p>
+                <a href="${signedUrl}" download class="btn-download">
+                  Download Official Syllabus (${fileSizeMb})
+                </a>
+              </div>
+            </object>
+          </div>
+        `;
+
+      } catch (err) {
+        console.error('Error rendering syllabus section:', err);
+        syllabusContainer.innerHTML = `
+          <div class="empty-state-card">
+            <p class="empty-state-text" style="color: #fca5a5;">
+              An error occurred while loading the syllabus. Please refresh the page.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Main Initialization Controller
+     */
+    async function initPaperPage() {
+      const params = resolveRouteParams();
+
+      if (!params) {
+        showError(
+          'Invalid Paper URL',
+          'The paper route is malformed. Please navigate using the official semester catalogue.'
+        );
+        return;
+      }
+
+      const { subjectSlug, semesterSlug, paperSlug } = params;
+
+      try {
+        // Strict Full-Hierarchy Resolution: subject.slug -> semester.slug -> paper.slug
+        const paper = await AcademicService.getPaperBySlug(subjectSlug, semesterSlug, paperSlug);
+
+        if (!paper) {
+          showError(
+            'Paper Not Found',
+            `Could not resolve paper "${paperSlug}" under ${subjectSlug.toUpperCase()} / ${semesterSlug.toUpperCase()}. Please check the URL or select a valid core paper.`
+          );
+          return;
+        }
+
+        const semester = paper.semesters;
+        const subject = semester.subjects;
+
+        // Populate Breadcrumbs
+        bcSubject.textContent = subject.name;
+        bcSubject.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcSemester.textContent = semester.name;
+        bcSemester.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
+        navSemLink.href = `/semesters/${subject.slug}/${semester.slug}`;
+
+        // Populate Paper Header
+        paperCode.textContent = paper.paper_code;
+        paperTypeBadge.textContent = paper.paper_type;
+        paperTypeBadge.className = paper.paper_type === 'LAB' ? 'pill-type-lab' : 'pill-type-theory';
+        paperSemesterLabel.textContent = semester.name;
+        paperSubjectLabel.textContent = subject.name;
+        paperTitle.textContent = paper.name;
+        paperDescription.textContent = paper.description || 'Comprehensive undergraduate syllabus curriculum.';
+
+        // Update Dynamic SEO & Schema
+        updatePageMetadata(subject, semester, paper);
+
+        // Render Dynamic Resource Chips
+        await renderResourceChips(subject, semester, paper);
+
+        // Render Official Syllabus Viewer
+        await renderSyllabusSection(paper);
+
+        // Reveal Main State
+        loadingState.style.display = 'none';
+        errorState.style.display = 'none';
+        paperContentState.style.display = 'block';
+
+      } catch (err) {
+        console.error('Fatal initialization error:', err);
+        showError(
+          'System Connection Notice',
+          'Unable to reach the academic curriculum database. Please check your internet connection and reload.'
+        );
+      }
+    }
+
+    function showError(title, message) {
+      loadingState.style.display = 'none';
+      paperContentState.style.display = 'none';
+      errorTitle.textContent = title;
+      errorMessage.textContent = message;
+      errorState.style.display = 'flex';
+    }
+
+    // Launch
+    initPaperPage();
+  </script>
+</body>
+</html>
