@@ -24,6 +24,7 @@
 
   <!-- Base Styles -->
   <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/lib/protectedViewer.css" />
 
   <!-- Import Map for Supabase in Browser -->
   <script type="importmap">
@@ -532,6 +533,7 @@
   <!-- Client-side Routing & Data Controller -->
   <script type="module">
     import { supabase, AcademicService } from '/lib/supabaseClient.js';
+    import { openProtectedViewerModal } from '/lib/protectedViewer.js';
 
     // UI Elements
     const loadingState = document.getElementById('loadingState');
@@ -607,7 +609,7 @@
      */
     function updatePageMetadata(resourceType, subject, semester, paper) {
       const pageTitle = `${resourceType.display_name} — ${paper.paper_code}: ${paper.name} | JeetPhysics`;
-      const pageDesc = `Download official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, B.Sc Physics).`;
+      const pageDesc = `Access official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, B.Sc Physics) online.`;
       const canonicalUrl = `https://jeetphysics.in/${resourceType.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
 
       document.title = pageTitle;
@@ -670,57 +672,24 @@
     }
 
     /**
-     * Open document in a new tab using secure signed URL
+     * Open document in Protected Online Viewer modal
+     * Requests temporary signed token via AcademicService.fetchSignedUrl (/api/resources/sign-url)
      */
-    window.viewResourceFile = async function(fileId, btnElement) {
-      const origHtml = btnElement ? btnElement.innerHTML : '';
-      if (btnElement) {
-        btnElement.disabled = true;
-        btnElement.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Loading...</span>';
-      }
-      try {
-        const signData = await AcademicService.fetchSignedUrl(fileId);
-        if (signData && signData.signedUrl) {
-          window.open(signData.signedUrl, '_blank');
-        }
-      } catch (err) {
-        alert('Could not view file: ' + err.message);
-      } finally {
-        if (btnElement) {
-          btnElement.disabled = false;
-          btnElement.innerHTML = origHtml;
+    window.viewResourceFile = function(fileId, btnOrTitle) {
+      let docTitle = 'Academic Document';
+      if (typeof btnOrTitle === 'string') {
+        docTitle = btnOrTitle;
+      } else if (btnOrTitle && btnOrTitle.getAttribute) {
+        const raw = btnOrTitle.getAttribute('data-title');
+        if (raw) {
+          try { docTitle = decodeURIComponent(raw); } catch (_) { docTitle = raw; }
         }
       }
-    };
 
-    /**
-     * Download document using secure signed URL
-     */
-    window.downloadResourceFile = async function(fileId, filename, btnElement) {
-      const origHtml = btnElement ? btnElement.innerHTML : '';
-      if (btnElement) {
-        btnElement.disabled = true;
-        btnElement.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Preparing...</span>';
-      }
-      try {
-        const signData = await AcademicService.fetchSignedUrl(fileId);
-        if (signData && signData.signedUrl) {
-          const a = document.createElement('a');
-          a.href = signData.signedUrl;
-          a.download = filename || 'document.pdf';
-          a.target = '_blank';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        }
-      } catch (err) {
-        alert('Could not retrieve secure download URL: ' + err.message);
-      } finally {
-        if (btnElement) {
-          btnElement.disabled = false;
-          btnElement.innerHTML = origHtml;
-        }
-      }
+      openProtectedViewerModal({
+        fileId,
+        title: docTitle
+      });
     };
 
     /**
@@ -845,14 +814,11 @@
               actionsMarkup = `<span style="color: var(--text-muted); font-size: 0.85rem;">File Pending</span>`;
             } else if (files.length === 1) {
               const fileId = primaryFile.id;
+              const encodedTitle = encodeURIComponent(res.title || 'Academic Document');
               actionsMarkup = `
-                <button onclick="downloadResourceFile('${fileId}', '${filename}', this)" class="btn-action-primary">
-                  <i class="ph ph-download-simple"></i>
-                  <span>Download PDF</span>
-                </button>
-                <button onclick="viewResourceFile('${fileId}', this)" class="btn-action-secondary" title="View Document in new tab">
-                  <i class="ph ph-arrow-square-out"></i>
-                  <span>View</span>
+                <button onclick="viewResourceFile('${fileId}', this)" data-title="${encodedTitle}" class="btn-action-primary" title="Read Protected Online Document">
+                  <i class="ph ph-book-open"></i>
+                  <span>Read Online</span>
                 </button>
               `;
             } else {
@@ -861,15 +827,14 @@
                 <div class="item-actions-multi">
                   ${files.map(f => {
                     const fSize = f.file_size_bytes ? ` (${(f.file_size_bytes / (1024 * 1024)).toFixed(1)}MB)` : '';
+                    const encodedSubTitle = encodeURIComponent(`${res.title} — ${f.original_filename}`);
                     return `
                       <div class="multi-file-row">
                         <span class="file-name-label" title="${f.original_filename}"><i class="ph ph-file-pdf"></i> ${f.original_filename}${fSize}</span>
                         <div class="multi-file-btns">
-                          <button onclick="viewResourceFile('${f.id}', this)" class="btn-action-secondary btn-sm" title="View">
-                            <i class="ph ph-arrow-square-out"></i>
-                          </button>
-                          <button onclick="downloadResourceFile('${f.id}', '${f.original_filename}', this)" class="btn-action-primary btn-sm" title="Download">
-                            <i class="ph ph-download-simple"></i>
+                          <button onclick="viewResourceFile('${f.id}', this)" data-title="${encodedSubTitle}" class="btn-action-primary btn-sm" title="Read Protected Online Document">
+                            <i class="ph ph-book-open"></i>
+                            <span>Read</span>
                           </button>
                         </div>
                       </div>

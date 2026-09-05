@@ -24,6 +24,7 @@
 
   <!-- Base Styles -->
   <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/lib/protectedViewer.css" />
 
   <!-- Import Map for Supabase in Browser -->
   <script type="importmap">
@@ -531,6 +532,7 @@
   <!-- Client-side Routing & Data Controller -->
   <script type="module">
     import { supabase, AcademicService } from '/lib/supabaseClient.js';
+    import { mountProtectedViewer } from '/lib/protectedViewer.js';
 
     // UI Elements
     const loadingState = document.getElementById('loadingState');
@@ -756,68 +758,36 @@
           ? (fileRecord.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
           : 'PDF Document';
 
-        // Request secure signed URL from serverless endpoint
-        let signedUrl = null;
-        try {
-          const signData = await AcademicService.fetchSignedUrl(fileRecord.id);
-          signedUrl = signData.signedUrl;
-        } catch (signErr) {
-          console.warn('[paper] Could not fetch signed URL:', signErr.message);
-        }
-
-        if (!signedUrl) {
-          syllabusContainer.innerHTML = `
-            <div class="empty-state-card">
-              <div class="empty-state-icon">🔒</div>
-              <h3 class="empty-state-title">Secure Delivery Unavailable</h3>
-              <p class="empty-state-text">
-                The syllabus document is published, but the secure delivery service could not generate an authorization signature. Please try again shortly.
-              </p>
-            </div>
-          `;
-          return;
-        }
-
-        // Render Toolbar and Responsive Viewer
+        // Render syllabus header and mount Protected Online Viewer
         syllabusContainer.innerHTML = `
-          <div class="syllabus-toolbar">
+          <div class="syllabus-toolbar" style="margin-bottom: 12px;">
             <div class="file-details">
               <i class="ph ph-file-pdf file-icon"></i>
               <div>
                 <div class="file-title">${syllabusResource.title || fileRecord.original_filename}</div>
-                <div class="file-meta">Authoritative FMU Syllabus • ${fileSizeMb}</div>
+                <div class="file-meta">Authoritative FMU Syllabus • ${fileSizeMb} • Protected Online Reading</div>
               </div>
             </div>
 
             <div class="file-actions">
-              <a href="${signedUrl}" download="${fileRecord.original_filename}" class="btn-download">
-                <i class="ph ph-download-simple"></i>
-                <span>Download Syllabus PDF</span>
-              </a>
-              <a href="${signedUrl}" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-                <i class="ph ph-arrow-square-out"></i>
-                <span>Open in New Tab</span>
-              </a>
+              <span class="pv-doc-badge" style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; font-size: 0.78rem;">
+                <i class="ph ph-shield-check"></i>
+                <span>ONLINE READING ONLY</span>
+              </span>
             </div>
           </div>
 
-          <div style="position: relative;">
-            <object
-              data="${signedUrl}#toolbar=1&navpanes=0"
-              type="application/pdf"
-              class="pdf-viewer-frame"
-            >
-              <div class="empty-state-card" style="margin: 20px 0;">
-                <p class="empty-state-text">
-                  Your device or browser does not support inline PDF previews.
-                </p>
-                <a href="${signedUrl}" download class="btn-download">
-                  Download Official Syllabus (${fileSizeMb})
-                </a>
-              </div>
-            </object>
-          </div>
+          <div id="syllabusViewerMount"></div>
         `;
+
+        const mountEl = document.getElementById('syllabusViewerMount');
+        if (mountEl) {
+          // Mount protected canvas viewer; fetches short-lived token via AcademicService.fetchSignedUrl (/api/resources/sign-url)
+          mountProtectedViewer(mountEl, {
+            fileId: fileRecord.id,
+            title: syllabusResource.title || `${paper.name} Official Syllabus`
+          });
+        }
 
       } catch (err) {
         console.error('Error rendering syllabus section:', err);
