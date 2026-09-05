@@ -14,6 +14,9 @@
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
+  <!-- PDF-lib for PDF Structural Stream Optimization & Signature Inspection -->
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
   <!-- Base Styles -->
   <link rel="stylesheet" href="../../style.css" />
 
@@ -545,6 +548,182 @@
       color: #fff;
     }
 
+    /* Phase 5C-2 Attached Files Section */
+    .res-files-container {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      width: 100%;
+    }
+
+    .files-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .files-header-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-attach-pdf {
+      padding: 5px 12px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: var(--radius-sm);
+      color: var(--blue-300);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-attach-pdf:hover {
+      background: rgba(59, 130, 246, 0.28);
+      color: #fff;
+    }
+
+    .file-item-card {
+      background: rgba(2, 8, 24, 0.65);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .file-meta-col {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .file-badge-version {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-secondary);
+    }
+
+    .file-badge-primary {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .file-name-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    .file-size-text {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .file-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-file-act {
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      outline: none;
+    }
+
+    .btn-file-view {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: var(--blue-300);
+    }
+    .btn-file-view:hover {
+      background: rgba(59, 130, 246, 0.25);
+      color: #fff;
+    }
+
+    .btn-file-download {
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #d8b4fe;
+    }
+    .btn-file-download:hover {
+      background: rgba(168, 85, 247, 0.25);
+      color: #fff;
+    }
+
+    .btn-file-replace {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: var(--gold-400);
+    }
+    .btn-file-replace:hover {
+      background: rgba(245, 158, 11, 0.25);
+      color: #fff;
+    }
+
+    .btn-file-del {
+      background: rgba(248, 113, 113, 0.12);
+      border-color: rgba(248, 113, 113, 0.3);
+      color: #fca5a5;
+    }
+    .btn-file-del:hover {
+      background: rgba(248, 113, 113, 0.25);
+      color: #fff;
+    }
+
+    .btn-file-primary {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+    .btn-file-primary:hover {
+      background: rgba(34, 197, 94, 0.25);
+      color: #fff;
+    }
+
     /* Empty State Card */
     .empty-state {
       background: rgba(8, 20, 50, 0.5);
@@ -841,7 +1020,7 @@
           <p class="page-subtitle">Manage official syllabus notes, previous year questions, and laboratory materials.</p>
         </div>
         <div>
-          <span class="phase-pill">Phase 5C-1: Metadata CMS</span>
+          <span class="phase-pill">Phase 5C-2: PDF Storage Integration</span>
         </div>
       </div>
 
@@ -1032,6 +1211,116 @@
     </div>
   </div>
 
+  <!-- Attach / Replace PDF Modal (Phase 5C-2) -->
+  <div id="uploadModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 560px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="uploadModalTitle">Attach Academic PDF</h3>
+        <button id="btnCloseUploadModal" class="btn-close-modal" aria-label="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <form id="uploadForm">
+        <div class="modal-body">
+          <!-- Resource Context Bar -->
+          <div class="modal-context-bar">
+            <span><strong>Target Resource:</strong> <span id="uploadTargetTitle">Resource Title</span></span>
+          </div>
+
+          <!-- Notice box -->
+          <div class="notice-box">
+            <i class="ph ph-file-pdf" style="font-size: 1.3rem; flex-shrink: 0; color: #ef4444;"></i>
+            <span>
+              <strong>Private Supabase Storage:</strong> Only authentic PDF files (%PDF- signature) up to <strong>50 MB</strong> are accepted. Files are optimized before storage while preserving text, equations, and vector diagrams.
+            </span>
+          </div>
+
+          <!-- Replacement warning banner (displayed only in replace mode) -->
+          <div id="replaceNotice" style="display: none; padding: 10px 14px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-sm); font-size: 0.84rem; color: var(--gold-400);">
+            <i class="ph ph-arrows-clockwise"></i>
+            <span>Replacing file: <strong id="replaceOldFileName">old.pdf</strong>. A new version will be uploaded first; the old file is safely removed only after the new version succeeds.</span>
+          </div>
+
+          <!-- File Picker -->
+          <div class="form-group">
+            <label class="form-label" for="pdfFileInput">Select PDF Document *</label>
+            <input type="file" id="pdfFileInput" class="form-input" accept=".pdf,application/pdf" required style="padding: 8px;" />
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Maximum PDF size: 50 MB • Validated with %PDF- header signature</span>
+          </div>
+
+          <!-- Selected File Details & Pre-validation card -->
+          <div id="fileValidationPreview" style="display: none; padding: 12px 14px; background: rgba(2, 8, 24, 0.8); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.85rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-weight: 600; color: var(--text-primary);" id="valFileName">filename.pdf</span>
+              <span style="font-family: var(--font-mono); color: var(--text-secondary);" id="valFileSize">0 KB</span>
+            </div>
+            <div id="valStatusRow" style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #86efac;">
+              <i class="ph ph-check-circle"></i>
+              <span id="valStatusText">Valid %PDF- document ready for optimization</span>
+            </div>
+          </div>
+
+          <!-- Optimization & Upload Progress Box -->
+          <div id="uploadProgressBox" style="display: none; padding: 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: var(--radius-sm);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 0.84rem;">
+              <span style="font-weight: 600; color: var(--blue-300);" id="uploadProgressLabel">Processing...</span>
+              <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary);" id="uploadProgressPercent"></span>
+            </div>
+            <div style="width: 100%; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 999px; overflow: hidden;">
+              <div id="uploadProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--blue-500), #8b5cf6); transition: width 0.3s ease;"></div>
+            </div>
+            <div id="uploadOptimizationStats" style="margin-top: 8px; font-family: var(--font-mono); font-size: 0.8rem; color: #86efac; display: none;"></div>
+          </div>
+
+          <!-- Primary checkbox -->
+          <div class="form-group" id="groupIsPrimary" style="flex-direction: row; align-items: center; gap: 8px; margin-top: 4px;">
+            <input type="checkbox" id="chkIsPrimary" style="width: 16px; height: 16px; accent-color: var(--blue-500);" />
+            <label for="chkIsPrimary" style="font-size: 0.85rem; color: var(--text-primary); cursor: pointer;">
+              Set as primary download file for this resource
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btnCancelUploadModal" class="btn-secondary">Cancel</button>
+          <button type="submit" id="btnSubmitUpload" class="btn-primary">
+            <i class="ph ph-upload-simple"></i>
+            <span id="btnSubmitUploadText">Upload & Attach</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete File Confirmation Modal (Phase 5C-2) -->
+  <div id="deleteFileModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #fca5a5;">Delete PDF File</h3>
+        <button id="btnCloseDeleteFileModal" class="btn-close-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;">
+          Delete this PDF file from private storage?
+          <strong id="deleteFileLabel" style="color: #fff; display: block; margin: 8px 0; font-family: var(--font-mono); font-size: 0.9rem;">filename.pdf</strong>
+        </p>
+        <div style="padding: 10px 12px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--blue-300); line-height: 1.5;">
+          ℹ️ <strong>Scope Notice:</strong> The parent resource record will remain. Only this physical PDF file attachment and its storage object will be deleted.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelDeleteFile" class="btn-secondary">Cancel</button>
+        <button id="btnConfirmDeleteFile" class="btn-logout" style="padding: 10px 18px;">
+          <i class="ph ph-trash"></i>
+          <span>Delete File</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div id="toast" class="toast">
     <i id="toastIcon" class="ph ph-check-circle" style="font-size: 1.25rem;"></i>
@@ -1095,6 +1384,38 @@
     const btnCancelDelete = document.getElementById('btnCancelDelete');
     const btnConfirmDelete = document.getElementById('btnConfirmDelete');
 
+    // Upload & Replace Modal (Phase 5C-2)
+    const uploadModal = document.getElementById('uploadModal');
+    const uploadModalTitle = document.getElementById('uploadModalTitle');
+    const btnCloseUploadModal = document.getElementById('btnCloseUploadModal');
+    const btnCancelUploadModal = document.getElementById('btnCancelUploadModal');
+    const uploadForm = document.getElementById('uploadForm');
+    const btnSubmitUpload = document.getElementById('btnSubmitUpload');
+    const btnSubmitUploadText = document.getElementById('btnSubmitUploadText');
+    const uploadTargetTitle = document.getElementById('uploadTargetTitle');
+    const replaceNotice = document.getElementById('replaceNotice');
+    const replaceOldFileName = document.getElementById('replaceOldFileName');
+    const pdfFileInput = document.getElementById('pdfFileInput');
+    const fileValidationPreview = document.getElementById('fileValidationPreview');
+    const valFileName = document.getElementById('valFileName');
+    const valFileSize = document.getElementById('valFileSize');
+    const valStatusRow = document.getElementById('valStatusRow');
+    const valStatusText = document.getElementById('valStatusText');
+    const uploadProgressBox = document.getElementById('uploadProgressBox');
+    const uploadProgressLabel = document.getElementById('uploadProgressLabel');
+    const uploadProgressPercent = document.getElementById('uploadProgressPercent');
+    const uploadProgressBar = document.getElementById('uploadProgressBar');
+    const uploadOptimizationStats = document.getElementById('uploadOptimizationStats');
+    const groupIsPrimary = document.getElementById('groupIsPrimary');
+    const chkIsPrimary = document.getElementById('chkIsPrimary');
+
+    // Delete File Modal (Phase 5C-2)
+    const deleteFileModal = document.getElementById('deleteFileModal');
+    const deleteFileLabel = document.getElementById('deleteFileLabel');
+    const btnCloseDeleteFileModal = document.getElementById('btnCloseDeleteFileModal');
+    const btnCancelDeleteFile = document.getElementById('btnCancelDeleteFile');
+    const btnConfirmDeleteFile = document.getElementById('btnConfirmDeleteFile');
+
     // Toast
     const toast = document.getElementById('toast');
     const toastIcon = document.getElementById('toastIcon');
@@ -1109,6 +1430,19 @@
     let currentResources = [];
     let editingResourceId = null;
     let pendingDeleteResourceId = null;
+    let uploadTargetResourceId = null;
+    let uploadReplaceFileId = null;
+    let selectedUploadFile = null;
+    let pendingDeleteFileId = null;
+
+    // Helper: format file size
+    function formatFileSize(bytes) {
+      if (!bytes || isNaN(bytes)) return '0 B';
+      if (bytes >= 1048576) {
+        return `${(bytes / 1048576).toFixed(2)} MB`;
+      }
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
 
     // Toast Helper
     function showToast(message, type = 'success') {
@@ -1329,6 +1663,89 @@
             `;
           }
 
+          // Attached Files Markup (Phase 5C-2)
+          const files = res.resource_files || [];
+          let filesMarkup = '';
+
+          if (files.length > 0) {
+            files.sort((a, b) => (b.file_version || 0) - (a.file_version || 0));
+
+            filesMarkup = `
+              <div class="res-files-container">
+                <div class="files-header-row">
+                  <span class="files-header-title">
+                    <i class="ph ph-file-pdf" style="color: #ef4444; font-size: 0.95rem;"></i>
+                    <span>Attached PDF Files (${files.length})</span>
+                  </span>
+                  <button onclick="window.openUploadModal('${res.id}', '${escapeAttr(res.title)}')" class="btn-attach-pdf" title="Attach an additional PDF version">
+                    <i class="ph ph-plus"></i>
+                    <span>Add Version</span>
+                  </button>
+                </div>
+                <div class="files-list">
+                  ${files.map(f => {
+                    const primaryBadge = f.is_primary ? `<span class="file-badge-primary"><i class="ph ph-star-fill"></i> PRIMARY</span>` : '';
+                    const sizeStr = formatFileSize(f.file_size_bytes);
+                    const fileDate = new Date(f.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+                    return `
+                      <div class="file-item-card" id="fileCard-${f.id}">
+                        <div class="file-meta-col">
+                          <span class="file-badge-version">v${f.file_version}</span>
+                          ${primaryBadge}
+                          <span class="file-name-text" title="${escapeAttr(f.original_filename)}">${escapeHtml(f.original_filename)}</span>
+                          <span class="file-size-text">• ${sizeStr}</span>
+                          <span class="file-size-text">• ${fileDate}</span>
+                        </div>
+                        <div class="file-actions-row">
+                          <button onclick="window.viewFile('${f.id}')" class="btn-file-act btn-file-view" title="Preview document via secure signed URL">
+                            <i class="ph ph-eye"></i>
+                            <span>View</span>
+                          </button>
+                          <button onclick="window.downloadFile('${f.id}', '${escapeAttr(f.original_filename)}')" class="btn-file-act btn-file-download" title="Download document via signed URL">
+                            <i class="ph ph-download-simple"></i>
+                            <span>Download</span>
+                          </button>
+                          ${!f.is_primary ? `
+                            <button onclick="window.setPrimaryFile('${res.id}', '${f.id}')" class="btn-file-act btn-file-primary" title="Make this file primary">
+                              <i class="ph ph-star"></i>
+                              <span>Make Primary</span>
+                            </button>
+                          ` : ''}
+                          <button onclick="window.openReplaceModal('${res.id}', '${f.id}', '${escapeAttr(res.title)}', '${escapeAttr(f.original_filename)}')" class="btn-file-act btn-file-replace" title="Replace file with newer version">
+                            <i class="ph ph-arrows-clockwise"></i>
+                            <span>Replace</span>
+                          </button>
+                          <button onclick="window.openDeleteFileModal('${f.id}', '${escapeAttr(f.original_filename)}', ${f.file_version})" class="btn-file-act btn-file-del" title="Delete this file attachment">
+                            <i class="ph ph-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          } else {
+            filesMarkup = `
+              <div class="res-files-container">
+                <div class="files-header-row">
+                  <span class="files-header-title">
+                    <i class="ph ph-file-pdf" style="color: var(--text-muted); font-size: 0.95rem;"></i>
+                    <span>Attached Files (0)</span>
+                  </span>
+                  <button onclick="window.openUploadModal('${res.id}', '${escapeAttr(res.title)}')" class="btn-attach-pdf" title="Attach PDF document">
+                    <i class="ph ph-upload-simple"></i>
+                    <span>Attach PDF</span>
+                  </button>
+                </div>
+                <div style="font-size: 0.83rem; color: var(--text-muted); font-style: italic; padding: 4px 0;">
+                  No PDF document attached yet. Click <strong>Attach PDF</strong> to upload.
+                </div>
+              </div>
+            `;
+          }
+
           return `
             <article class="resource-card" id="resCard-${res.id}">
               <div class="res-info">
@@ -1350,6 +1767,8 @@
               <div class="res-actions">
                 ${actionsMarkup}
               </div>
+
+              ${filesMarkup}
             </article>
           `;
         }).join('');
@@ -1656,6 +2075,267 @@
         btnConfirmDelete.innerHTML = '<i class="ph ph-trash"></i><span>Delete Permanently</span>';
       }
     });
+
+    // ------------------------------------------------------------------------
+    // Phase 5C-2: File Upload, Replace & Delete Controls
+    // ------------------------------------------------------------------------
+
+    window.openUploadModal = function(resourceId, resourceTitle) {
+      uploadTargetResourceId = resourceId;
+      uploadReplaceFileId = null;
+      selectedUploadFile = null;
+
+      uploadModalTitle.textContent = 'Attach Academic PDF';
+      uploadTargetTitle.textContent = resourceTitle;
+      btnSubmitUploadText.textContent = 'Upload & Attach';
+      replaceNotice.style.display = 'none';
+      groupIsPrimary.style.display = 'flex';
+
+      const targetRes = currentResources.find(r => r.id === resourceId);
+      const hasFiles = targetRes && targetRes.resource_files && targetRes.resource_files.length > 0;
+      chkIsPrimary.checked = !hasFiles;
+
+      uploadForm.reset();
+      fileValidationPreview.style.display = 'none';
+      uploadProgressBox.style.display = 'none';
+      uploadOptimizationStats.style.display = 'none';
+      btnSubmitUpload.disabled = false;
+
+      uploadModal.style.display = 'flex';
+      pdfFileInput.focus();
+    };
+
+    window.openReplaceModal = function(resourceId, fileId, resourceTitle, oldFileName) {
+      uploadTargetResourceId = resourceId;
+      uploadReplaceFileId = fileId;
+      selectedUploadFile = null;
+
+      uploadModalTitle.textContent = 'Replace Academic PDF';
+      uploadTargetTitle.textContent = resourceTitle;
+      btnSubmitUploadText.textContent = 'Upload & Replace';
+      replaceNotice.style.display = 'block';
+      replaceOldFileName.textContent = oldFileName;
+      groupIsPrimary.style.display = 'none';
+      chkIsPrimary.checked = true;
+
+      uploadForm.reset();
+      fileValidationPreview.style.display = 'none';
+      uploadProgressBox.style.display = 'none';
+      uploadOptimizationStats.style.display = 'none';
+      btnSubmitUpload.disabled = false;
+
+      uploadModal.style.display = 'flex';
+      pdfFileInput.focus();
+    };
+
+    function closeUploadModal() {
+      uploadModal.style.display = 'none';
+      uploadTargetResourceId = null;
+      uploadReplaceFileId = null;
+      selectedUploadFile = null;
+    }
+
+    btnCloseUploadModal.addEventListener('click', closeUploadModal);
+    btnCancelUploadModal.addEventListener('click', closeUploadModal);
+    uploadModal.addEventListener('click', (e) => {
+      if (e.target === uploadModal) closeUploadModal();
+    });
+
+    pdfFileInput.addEventListener('change', async (e) => {
+      const files = e.target.files;
+      if (!files || files.length === 0) {
+        fileValidationPreview.style.display = 'none';
+        selectedUploadFile = null;
+        return;
+      }
+
+      const file = files[0];
+      selectedUploadFile = file;
+
+      valFileName.textContent = file.name;
+      valFileSize.textContent = formatFileSize(file.size);
+      fileValidationPreview.style.display = 'block';
+
+      if (file.size > 52428800) {
+        valStatusRow.style.color = '#fca5a5';
+        valStatusRow.innerHTML = `<i class="ph ph-warning-circle"></i><span>File exceeds the 50 MB maximum limit (${formatFileSize(file.size)})</span>`;
+        btnSubmitUpload.disabled = true;
+        return;
+      }
+
+      try {
+        const slice = file.slice(0, 8);
+        const buffer = await slice.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        AcademicService.validatePdfSignature(bytes);
+
+        valStatusRow.style.color = '#86efac';
+        valStatusRow.innerHTML = `<i class="ph ph-check-circle"></i><span>Valid %PDF- document verified • Ready for upload</span>`;
+        btnSubmitUpload.disabled = false;
+      } catch (sigErr) {
+        valStatusRow.style.color = '#fca5a5';
+        valStatusRow.innerHTML = `<i class="ph ph-warning-circle"></i><span>${sigErr.message}</span>`;
+        btnSubmitUpload.disabled = true;
+      }
+    });
+
+    uploadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!selectedUploadFile || !uploadTargetResourceId) {
+        alert('Please select a valid PDF file.');
+        return;
+      }
+
+      btnSubmitUpload.disabled = true;
+      btnCloseUploadModal.disabled = true;
+      btnCancelUploadModal.disabled = true;
+
+      uploadProgressBox.style.display = 'block';
+      uploadProgressBar.style.width = '25%';
+      uploadProgressBar.style.background = 'linear-gradient(90deg, var(--blue-500), #8b5cf6)';
+      uploadProgressLabel.textContent = 'Analyzing and optimizing document streams...';
+      uploadProgressPercent.textContent = '25%';
+
+      try {
+        const isPrimary = chkIsPrimary.checked;
+        let uploadResult;
+
+        uploadProgressBar.style.width = '55%';
+        uploadProgressLabel.textContent = 'Compressing and uploading to private storage...';
+        uploadProgressPercent.textContent = '55%';
+
+        if (uploadReplaceFileId) {
+          uploadResult = await AcademicService.replaceResourceFile({
+            resourceId: uploadTargetResourceId,
+            oldFileId: uploadReplaceFileId,
+            file: selectedUploadFile
+          });
+        } else {
+          uploadResult = await AcademicService.uploadResourceFile({
+            resourceId: uploadTargetResourceId,
+            file: selectedUploadFile,
+            isPrimary
+          });
+        }
+
+        uploadProgressBar.style.width = '100%';
+        uploadProgressLabel.textContent = 'Upload and verification completed!';
+        uploadProgressPercent.textContent = '100%';
+
+        if (uploadResult && uploadResult.optimization) {
+          const opt = uploadResult.optimization;
+          const uploadMethodBadge = uploadResult.uploadType === 'resumable-tus' ? ' • Resumable TUS' : '';
+          if (opt.wasOptimized) {
+            uploadOptimizationStats.style.display = 'block';
+            uploadOptimizationStats.textContent = `⚡ Stream-Optimized: ${formatFileSize(opt.originalSize)} ➔ ${formatFileSize(opt.optimizedSize)} (-${opt.savedPercent}%)${uploadMethodBadge}`;
+          } else {
+            uploadOptimizationStats.style.display = 'block';
+            uploadOptimizationStats.textContent = `ℹ️ Original file retained (${formatFileSize(opt.originalSize)}) for maximum document fidelity.${uploadMethodBadge}`;
+          }
+        }
+
+        showToast(uploadReplaceFileId ? 'File replaced successfully with new version.' : 'File uploaded and attached successfully.');
+
+        setTimeout(async () => {
+          closeUploadModal();
+          await loadResources();
+        }, 800);
+
+      } catch (err) {
+        console.error('File upload error:', err);
+        uploadProgressLabel.textContent = 'Upload failed';
+        uploadProgressPercent.textContent = '';
+        uploadProgressBar.style.background = '#ef4444';
+        alert(`Upload error: ${err.message}`);
+        btnSubmitUpload.disabled = false;
+        btnCloseUploadModal.disabled = false;
+        btnCancelUploadModal.disabled = false;
+      }
+    });
+
+    window.openDeleteFileModal = function(fileId, filename, version) {
+      pendingDeleteFileId = fileId;
+      deleteFileLabel.textContent = `${filename} (v${version})`;
+      deleteFileModal.style.display = 'flex';
+    };
+
+    function closeDeleteFileModal() {
+      deleteFileModal.style.display = 'none';
+      pendingDeleteFileId = null;
+    }
+
+    btnCloseDeleteFileModal.addEventListener('click', closeDeleteFileModal);
+    btnCancelDeleteFile.addEventListener('click', closeDeleteFileModal);
+    deleteFileModal.addEventListener('click', (e) => {
+      if (e.target === deleteFileModal) closeDeleteFileModal();
+    });
+
+    btnConfirmDeleteFile.addEventListener('click', async () => {
+      if (!pendingDeleteFileId) return;
+
+      btnConfirmDeleteFile.disabled = true;
+      btnConfirmDeleteFile.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Deleting...</span>';
+
+      try {
+        await AcademicService.deleteResourceFile(pendingDeleteFileId);
+        showToast('PDF file deleted from storage and metadata updated.');
+        closeDeleteFileModal();
+        await loadResources();
+      } catch (err) {
+        console.error('Delete file error:', err);
+        alert(`Failed to delete file: ${err.message}`);
+      } finally {
+        btnConfirmDeleteFile.disabled = false;
+        btnConfirmDeleteFile.innerHTML = '<i class="ph ph-trash"></i><span>Delete File</span>';
+      }
+    });
+
+    window.setPrimaryFile = async function(resourceId, fileId) {
+      try {
+        await AcademicService.setPrimaryResourceFile(resourceId, fileId);
+        showToast('File marked as primary.');
+        await loadResources();
+      } catch (err) {
+        console.error('Set primary file error:', err);
+        alert(`Failed to set primary file: ${err.message}`);
+      }
+    };
+
+    window.viewFile = async function(fileId) {
+      try {
+        showToast('Generating secure download token...');
+        const result = await AcademicService.fetchSignedUrl(fileId);
+        if (result && result.signedUrl) {
+          window.open(result.signedUrl, '_blank', 'noopener,noreferrer');
+        } else {
+          throw new Error('Signed URL was not returned by API');
+        }
+      } catch (err) {
+        console.error('View file error:', err);
+        alert(`Failed to access file: ${err.message}`);
+      }
+    };
+
+    window.downloadFile = async function(fileId, filename) {
+      try {
+        showToast('Preparing download...');
+        const result = await AcademicService.fetchSignedUrl(fileId);
+        if (result && result.signedUrl) {
+          const a = document.createElement('a');
+          a.href = result.signedUrl;
+          a.download = filename || result.original_filename || 'document.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } else {
+          throw new Error('Signed URL was not returned by API');
+        }
+      } catch (err) {
+        console.error('Download file error:', err);
+        alert(`Failed to download file: ${err.message}`);
+      }
+    };
 
     // ------------------------------------------------------------------------
     // Session Guard Initialization
