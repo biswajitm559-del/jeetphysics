@@ -447,12 +447,26 @@
         };
       }
 
-      // Extract from pathname: /semesters/physics/semester-i
+      // Extract from pathname: /semesters/physics/semester-i or /semesters/physics
       const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
       if (segments.length >= 3 && segments[0] === 'semesters') {
         return {
           subjectSlug: segments[1].toLowerCase(),
           semesterSlug: segments[2].toLowerCase()
+        };
+      }
+
+      if (segments.length === 2 && segments[0] === 'semesters') {
+        return {
+          subjectSlug: segments[1].toLowerCase(),
+          semesterSlug: null
+        };
+      }
+
+      if (querySubject) {
+        return {
+          subjectSlug: querySubject.trim().toLowerCase(),
+          semesterSlug: null
         };
       }
 
@@ -464,8 +478,8 @@
     }
 
     function updatePageMetadata(subject, semester) {
-      const pageTitle = `B.Sc Physics ${semester.name} Papers & Syllabus | JeetPhysics`;
-      const pageDesc = `Official FMU B.Sc Physics ${semester.name} curriculum. Access core Theory and Laboratory Practical papers, official syllabi, and study resources.`;
+      const pageTitle = `B.Sc ${subject.name} ${semester.name} Papers & Syllabus | JeetPhysics`;
+      const pageDesc = `Official FMU B.Sc ${subject.name} ${semester.name} curriculum. Access core Theory and Laboratory Practical papers, official syllabi, and study resources.`;
       const canonicalUrl = `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`;
 
       document.title = pageTitle;
@@ -516,9 +530,23 @@
     }
 
     async function initSemesterPage() {
-      const { subjectSlug, semesterSlug } = resolveRouteParams();
+      let { subjectSlug, semesterSlug } = resolveRouteParams();
 
       try {
+        // If semester was not specified, dynamically resolve the first active semester for this subject
+        if (!semesterSlug) {
+          const sems = await AcademicService.getSemesters(subjectSlug);
+          if (sems && sems.length > 0) {
+            semesterSlug = sems[0].slug;
+          } else {
+            showError(
+              'No Semesters Found',
+              `No active semesters found for subject "${subjectSlug}". Please select a valid subject.`
+            );
+            return;
+          }
+        }
+
         // 1. Resolve Semester and Subject
         const semester = await AcademicService.getSemesterBySlug(subjectSlug, semesterSlug);
 

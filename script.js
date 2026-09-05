@@ -1224,7 +1224,7 @@ function initNavbar() {
       ? 'ph ph-x' : 'ph ph-list';
   });
 
-  navLinks.querySelectorAll('a').forEach(a => {
+  navLinks.querySelectorAll('a:not(.nav-dropdown-trigger)').forEach(a => {
     a.addEventListener('click', () => {
       navLinks.classList.remove('open');
       hamburger.querySelector('i').className = 'ph ph-list';
@@ -1244,14 +1244,27 @@ function initNavbar() {
     });
   }
 
-  // Dropdown toggle for mobile
+  // Dropdown toggle for mobile and desktop click accessibility
   document.querySelectorAll('.nav-dropdown-trigger').forEach(trigger => {
     trigger.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768) {
-        e.preventDefault();
-        trigger.closest('.nav-dropdown').classList.toggle('open');
+      e.preventDefault();
+      const parent = trigger.closest('.nav-dropdown');
+      if (parent) {
+        const isOpen = parent.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
     });
+  });
+
+  // Close open dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+        d.classList.remove('open');
+        const t = d.querySelector('.nav-dropdown-trigger');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    }
   });
 }
 

@@ -18,7 +18,7 @@
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
   <!-- Base Styles -->
-  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="/style.css" />
 
   <!-- Import Map for Supabase in Browser -->
   <script type="importmap">
@@ -964,7 +964,7 @@
   <!-- Administrator Navbar -->
   <nav class="admin-navbar">
     <div class="admin-brand">
-      <a href="/admin/academic/" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+      <a href="/admin/academic" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
         <span style="font-size: 1.5rem;">⚛️</span>
         <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.25rem; color: var(--text-primary);">JeetPhysics</span>
       </a>
@@ -972,7 +972,7 @@
     </div>
 
     <div class="admin-user-nav" id="adminUserNav" style="display: none;">
-      <a href="/admin/academic/" class="nav-back-link">
+      <a href="/admin/academic" class="nav-back-link">
         <i class="ph ph-squares-four"></i>
         <span>Dashboard</span>
       </a>
@@ -1329,8 +1329,8 @@
 
   <!-- Client-side Logic Module -->
   <script type="module">
-    import { supabase, AcademicService } from '../../lib/supabaseClient.js';
-    import { AdminAuthGuard } from '../auth-guard.js';
+    import { supabase, AcademicService } from '/lib/supabaseClient.js';
+    import { AdminAuthGuard } from '/admin/auth-guard.js';
 
     // State Elements
     const stateLoading = document.getElementById('stateLoading');

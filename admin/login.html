@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Base Styles -->
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="/style.css" />
 
   <!-- Import Map for Supabase in Browser -->
   <script type="importmap">
@@ -231,7 +231,7 @@
   <div class="auth-wrapper">
     <div class="auth-card">
       <div class="auth-header">
-        <a href="../index.html" class="auth-logo">
+        <a href="/index.html" class="auth-logo">
           <span class="auth-logo-icon">⚛️</span>
           <span class="auth-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
         </a>
@@ -278,14 +278,14 @@
       </form>
 
       <div class="auth-footer">
-        <a href="../index.html">← Return to JeetPhysics Homepage</a>
+        <a href="/index.html">← Return to JeetPhysics Homepage</a>
       </div>
     </div>
   </div>
 
   <script type="module">
-    import { supabase, AcademicService } from '../lib/supabaseClient.js';
-    import { AdminAuthGuard } from './auth-guard.js';
+    import { supabase, AcademicService } from '/lib/supabaseClient.js';
+    import { AdminAuthGuard } from '/admin/auth-guard.js';
 
     const loginForm = document.getElementById('loginForm');
     const emailInput = document.getElementById('email');
@@ -297,7 +297,7 @@
 
     // Parse URL search params for redirects or error flags
     const urlParams = new URLSearchParams(window.location.search);
-    const redirectUrl = urlParams.get('redirect') || '/admin/academic/';
+    const redirectUrl = urlParams.get('redirect') || '/admin/academic';
     const errorParam = urlParams.get('error');
 
     if (errorParam === 'unauthorized') {

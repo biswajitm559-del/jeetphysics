@@ -14,6 +14,10 @@
       "destination": "/semester"
     },
     {
+      "source": "/semesters/:subject",
+      "destination": "/semester"
+    },
+    {
       "source": "/previous-year-questions/:subject/:semester/:paper",
       "destination": "/resource"
     },
@@ -56,6 +60,10 @@
     {
       "source": "/resources/:type/:subject/:semester/:paper",
       "destination": "/resource"
+    },
+    {
+      "source": "/admin/academic",
+      "destination": "/admin/academic"
     },
     {
       "source": "/admin/academic/resources",

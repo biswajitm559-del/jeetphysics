@@ -273,11 +273,18 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.2; }
     margin-top: 4px; margin-bottom: 4px;
     display: none;
   }
-  .nav-dropdown.open .nav-dropdown-menu,
-  .nav-links.open .nav-dropdown-menu {
+  .nav-dropdown.open .nav-dropdown-menu {
     display: block;
   }
   .nav-dropdown-trigger { justify-content: space-between; width: 100%; }
+}
+
+.nav-dropdown-trigger i {
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown.open .nav-dropdown-trigger i {
+  transform: rotate(180deg);
 }
 
 .nav-cta {

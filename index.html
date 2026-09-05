@@ -77,6 +77,15 @@
   <!-- Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -111,7 +120,17 @@
       </div>
     </li>
     <li><a href="#pyq">PYQ's</a></li>
-    <li><a href="#syllabus">Syllabus</a></li>
+    <li class="nav-dropdown" id="navSyllabusDropdown">
+      <a href="javascript:void(0)" class="nav-dropdown-trigger" id="syllabusTrigger" aria-haspopup="true" aria-expanded="false" role="button" tabindex="0">
+        <span>Syllabus</span>
+        <i class="ph ph-caret-down" style="font-size:0.7em;margin-left:2px;" aria-hidden="true"></i>
+      </a>
+      <div class="nav-dropdown-menu" id="syllabusDropdownMenu" role="menu" aria-label="Syllabus by Subject">
+        <div class="dropdown-loading" style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+          <i class="ph ph-spinner ph-spin"></i> Loading subjects...
+        </div>
+      </div>
+    </li>
     <li><a href="#tips">Study Tips</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
@@ -459,5 +478,172 @@
 </button>
 
 <script src="script.js"></script>
+
+<script type="module">
+  import { AcademicService } from '/lib/supabaseClient.js';
+
+  async function initSyllabusDropdown() {
+    const dropdown = document.getElementById('navSyllabusDropdown');
+    const trigger = document.getElementById('syllabusTrigger');
+    const menu = document.getElementById('syllabusDropdownMenu');
+    if (!dropdown || !trigger || !menu) return;
+
+    function setOpen(open) {
+      if (open) {
+        dropdown.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    // Keyboard accessibility on trigger
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setOpen(true);
+        const firstItem = menu.querySelector('a:not([aria-disabled="true"])');
+        if (firstItem) firstItem.focus();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+      }
+    });
+
+    // Keyboard accessibility inside menu
+    menu.addEventListener('keydown', (e) => {
+      const focusable = Array.from(menu.querySelectorAll('a'));
+      const activeIdx = focusable.indexOf(document.activeElement);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIdx = (activeIdx + 1) % focusable.length;
+        focusable[nextIdx]?.focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIdx = (activeIdx - 1 + focusable.length) % focusable.length;
+        focusable[prevIdx]?.focus();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+        trigger.focus();
+      } else if (e.key === 'Tab') {
+        setOpen(false);
+      }
+    });
+
+    // Dynamic resolution from database
+    try {
+      const subjects = await AcademicService.getSubjects();
+
+      if (!subjects || subjects.length === 0) {
+        menu.innerHTML = `
+          <div style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted);">
+            No subjects available.
+          </div>
+        `;
+        return;
+      }
+
+      // Resolve first active semester for each subject in parallel
+      const subjectSemesters = await Promise.all(
+        subjects.map(async (subj) => {
+          try {
+            const semesters = await AcademicService.getSemesters(subj.slug);
+            const firstSem = (semesters && semesters.length > 0) ? semesters[0] : null;
+            return { subj, firstSem };
+          } catch (err) {
+            console.error(`Failed to load semesters for ${subj.slug}:`, err);
+            return { subj, firstSem: null };
+          }
+        })
+      );
+
+      const subjectIcons = {
+        physics: '⚛️',
+        mathematics: '📐',
+        chemistry: '🧪',
+        'computer-science': '💻',
+        biology: '🧬'
+      };
+
+      menu.innerHTML = subjectSemesters.map(({ subj, firstSem }) => {
+        const icon = subjectIcons[subj.slug] || '📘';
+        if (firstSem) {
+          const targetUrl = `/semesters/${encodeURIComponent(subj.slug)}/${encodeURIComponent(firstSem.slug)}`;
+          return `
+            <a href="${targetUrl}" role="menuitem" tabindex="0" class="syllabus-dropdown-item" title="Explore ${escapeHtml(subj.name)} syllabus">
+              <span class="dropdown-icon">${icon}</span>
+              <span>${escapeHtml(subj.name)} Syllabus</span>
+            </a>
+          `;
+        } else {
+          return `
+            <a href="javascript:void(0)" role="menuitem" class="syllabus-dropdown-item disabled" aria-disabled="true" title="Curriculum pending for ${escapeHtml(subj.name)}" style="opacity: 0.6; cursor: not-allowed;">
+              <span class="dropdown-icon">${icon}</span>
+              <span>${escapeHtml(subj.name)} Syllabus</span>
+              <span style="font-size: 0.68rem; margin-left: auto; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--text-muted);">Soon</span>
+            </a>
+          `;
+        }
+      }).join('');
+
+      // When a menu link is clicked, ensure mobile drawer closes
+      menu.querySelectorAll('a:not(.disabled)').forEach(a => {
+        a.addEventListener('click', () => {
+          const navLinks = document.getElementById('navLinks');
+          const hamburger = document.getElementById('hamburger');
+          if (navLinks && navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            if (hamburger) {
+              const icon = hamburger.querySelector('i');
+              if (icon) icon.className = 'ph ph-list';
+            }
+          }
+          setOpen(false);
+        });
+      });
+
+    } catch (err) {
+      console.error('Error populating syllabus dropdown:', err);
+      menu.innerHTML = `
+        <div style="padding: 10px 14px; font-size: 0.85rem; color: #fca5a5; display: flex; align-items: center; gap: 6px;">
+          <i class="ph ph-warning-circle"></i>
+          <span>Failed to load.</span>
+          <button id="retrySyllabusBtn" style="background: none; border: none; color: var(--blue-400); text-decoration: underline; cursor: pointer; padding: 0; font-size: inherit; font-family: inherit;">Retry</button>
+        </div>
+      `;
+      const retryBtn = document.getElementById('retrySyllabusBtn');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          menu.innerHTML = `
+            <div class="dropdown-loading" style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
+              <i class="ph ph-spinner ph-spin"></i> Loading subjects...
+            </div>
+          `;
+          initSyllabusDropdown();
+        });
+      }
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSyllabusDropdown);
+  } else {
+    initSyllabusDropdown();
+  }
+</script>
 </body>
 </html>
