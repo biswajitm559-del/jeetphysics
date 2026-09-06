@@ -494,8 +494,25 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100;
+      z-index: 2000;
       padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    .btn-primary:disabled,
+    .btn-secondary:disabled,
+    .btn-logout:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     .modal-box {
@@ -1110,9 +1127,15 @@
       <form id="semesterForm">
         <div class="modal-body">
           <div class="modal-error-alert" id="semesterModalError"></div>
-          <div class="form-group">
-            <label class="form-label" for="semesterSubjectSelect">Parent Subject *</label>
-            <select id="semesterSubjectSelect" class="form-select" required></select>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="semesterStreamSelect">Parent Stream *</label>
+              <select id="semesterStreamSelect" class="form-select" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="semesterSubjectSelect">Parent Subject *</label>
+              <select id="semesterSubjectSelect" class="form-select" required></select>
+            </div>
           </div>
           <div class="form-grid-2">
             <div class="form-group">
@@ -1159,11 +1182,21 @@
       <form id="paperForm">
         <div class="modal-body">
           <div class="modal-error-alert" id="paperModalError"></div>
-          <div class="form-grid-2">
+          <div class="form-grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label" for="paperStreamSelect">Parent Stream *</label>
+              <select id="paperStreamSelect" class="form-select" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="paperSubjectSelect">Parent Subject *</label>
+              <select id="paperSubjectSelect" class="form-select" required></select>
+            </div>
             <div class="form-group">
               <label class="form-label" for="paperSemesterSelect">Parent Semester *</label>
               <select id="paperSemesterSelect" class="form-select" required></select>
             </div>
+          </div>
+          <div class="form-grid-2">
             <div class="form-group">
               <label class="form-label" for="paperType">Paper Type *</label>
               <select id="paperType" class="form-select" required>
@@ -1171,7 +1204,6 @@
                 <option value="LAB">LAB (Practical)</option>
               </select>
             </div>
-          </div>
           <div class="form-grid-2">
             <div class="form-group">
               <label class="form-label" for="paperCode">Paper Code *</label>
@@ -1373,6 +1405,13 @@
     const categoryModal = document.getElementById('categoryModal');
     const deleteModal = document.getElementById('deleteModal');
 
+    // Cascading Modal Selectors
+    const semesterStreamSelect = document.getElementById('semesterStreamSelect');
+    const semesterSubjectSelect = document.getElementById('semesterSubjectSelect');
+    const paperStreamSelect = document.getElementById('paperStreamSelect');
+    const paperSubjectSelect = document.getElementById('paperSubjectSelect');
+    const paperSemesterSelect = document.getElementById('paperSemesterSelect');
+
     // Toast
     const toast = document.getElementById('toast');
     const toastIcon = document.getElementById('toastIcon');
@@ -1422,13 +1461,28 @@
         .replace(/\-\-+/g, '-');
     }
 
-    // Modal helpers
+    function toRoman(num) {
+      const romanMap = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII' };
+      return romanMap[num] || String(num);
+    }
+
+    // Modal helpers (guarantees both .open CSS class and inline display)
     function openModal(el) {
+      if (!el) return;
+      el.classList.add('open');
       el.style.display = 'flex';
       document.body.style.overflow = 'hidden';
+      // clear errors
+      const err = el.querySelector('.modal-error-alert');
+      if (err) {
+        err.style.display = 'none';
+        err.textContent = '';
+      }
     }
 
     function closeModal(el) {
+      if (!el) return;
+      el.classList.remove('open');
       el.style.display = 'none';
       document.body.style.overflow = '';
       // clear errors
@@ -1448,14 +1502,18 @@
     });
 
     [streamModal, subjectModal, semesterModal, paperModal, categoryModal, deleteModal].forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal(modal);
-      });
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal(modal);
+        });
+      }
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        [streamModal, subjectModal, semesterModal, paperModal, categoryModal, deleteModal].forEach(m => closeModal(m));
+        [streamModal, subjectModal, semesterModal, paperModal, categoryModal, deleteModal].forEach(m => {
+          if (m && m.classList.contains('open')) closeModal(m);
+        });
       }
     });
 
@@ -1477,10 +1535,18 @@
     btnDeniedLogout.addEventListener('click', () => AdminAuthGuard.logout());
 
     // ------------------------------------------------------------------------
-    // DATA LOADERS
+    // DATA LOADERS & FILTER POPULATION
     // ------------------------------------------------------------------------
 
     async function loadAllCMSData() {
+      // Save current filter values to preserve them across reloads
+      const prevSubStream = filterSubjectStream.value;
+      const prevSemStream = filterSemesterStream.value;
+      const prevSemSub = filterSemesterSubject.value;
+      const prevPaperStream = filterPaperStream.value;
+      const prevPaperSub = filterPaperSubject.value;
+      const prevPaperSem = filterPaperSemester.value;
+
       try {
         const [streams, subjects, semesters, papers, categories] = await Promise.all([
           AcademicService.getAllStreamsForAdmin(),
@@ -1503,13 +1569,13 @@
         statPapers.textContent = allPapers.length;
         statCategories.textContent = allCategories.length;
 
-        // Populate Tables
+        // Populate Tables & Filter Dropdowns with preserved state
         renderStreamsTable();
-        populateStreamFilterDropdowns();
+        populateStreamFilterDropdowns(prevSubStream, prevSemStream, prevPaperStream);
         renderSubjectsTable();
-        populateSemesterFilterDropdowns();
+        populateSemesterFilterDropdowns(prevSemSub);
         renderSemestersTable();
-        populatePaperFilterDropdowns();
+        populatePaperFilterDropdowns(prevPaperSub, prevPaperSem);
         renderPapersTable();
         renderCategoriesTable();
 
@@ -1537,15 +1603,15 @@
           <td><code style="color: var(--blue-300);">${escapeHtml(s.slug)}</code></td>
           <td style="max-width: 280px; font-size: 0.84rem;">${escapeHtml(s.description || '—')}</td>
           <td>
-            <button class="status-toggle" onclick="window.toggleStreamActive('${s.id}', ${!s.is_active})">
+            <button class="status-toggle" data-action="toggle-stream" data-id="${s.id}" onclick="window.toggleStreamActive('${s.id}')" title="Toggle active status">
               <span class="badge ${s.is_active ? 'badge-active' : 'badge-inactive'}">${s.is_active ? 'Active' : 'Inactive'}</span>
             </button>
           </td>
           <td style="text-align: right; white-space: nowrap;">
-            <button class="btn-sm btn-sm-edit" onclick="window.openEditStream('${s.id}')">
+            <button class="btn-sm btn-sm-edit" data-action="edit-stream" data-id="${s.id}" onclick="window.openEditStream('${s.id}')" title="Edit stream">
               <i class="ph ph-pencil"></i> Edit
             </button>
-            <button class="btn-sm btn-sm-delete" onclick="window.confirmDeleteStream('${s.id}', '${escapeHtml(s.name)}')">
+            <button class="btn-sm btn-sm-delete" data-action="delete-stream" data-id="${s.id}" onclick="window.confirmDeleteStream('${s.id}')" title="Delete stream">
               <i class="ph ph-trash"></i>
             </button>
           </td>
@@ -1584,17 +1650,33 @@
 
     document.getElementById('streamForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const saveBtn = document.getElementById('btnSaveStream');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('streamModalError');
+      errEl.style.display = 'none';
+
       const payload = {
-        name: document.getElementById('streamName').value,
-        slug: document.getElementById('streamSlug').value,
-        icon: document.getElementById('streamIcon').value || '🏛️',
+        name: document.getElementById('streamName').value.trim(),
+        slug: document.getElementById('streamSlug').value.trim().toLowerCase(),
+        icon: document.getElementById('streamIcon').value.trim() || '🏛️',
         displayOrder: parseInt(document.getElementById('streamDisplayOrder').value, 10) || 0,
-        description: document.getElementById('streamDescription').value,
+        description: document.getElementById('streamDescription').value.trim() || null,
         isActive: document.getElementById('streamIsActive').checked
       };
 
-      const errEl = document.getElementById('streamModalError');
-      errEl.style.display = 'none';
+      if (!payload.name) {
+        errEl.textContent = 'Stream name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Stream slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
 
       try {
         if (editingStreamId) {
@@ -1609,24 +1691,32 @@
       } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
       }
     });
 
-    window.toggleStreamActive = async function(id, newStatus) {
+    window.toggleStreamActive = async function(id) {
+      const s = allStreams.find(item => item.id === id);
+      if (!s) return;
+      const newStatus = !s.is_active;
       try {
         await AcademicService.updateStream(id, { isActive: newStatus });
-        showToast('Stream status updated.');
+        showToast(`Stream "${s.name}" is now ${newStatus ? 'active' : 'inactive'}.`);
         await loadAllCMSData();
       } catch (err) {
         showToast(`Failed to update status: ${err.message}`, 'error');
       }
     };
 
-    window.confirmDeleteStream = function(id, name) {
+    window.confirmDeleteStream = function(id) {
+      const s = allStreams.find(item => item.id === id);
+      if (!s) return;
       pendingDeleteAction = async () => {
         await AcademicService.deleteStream(id);
       };
-      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete academic stream: <strong>${name}</strong>?`;
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete academic stream: <strong>${escapeHtml(s.name)}</strong>?`;
       openModal(deleteModal);
     };
 
@@ -1634,15 +1724,32 @@
     // 2. SUBJECTS TAB
     // ------------------------------------------------------------------------
 
-    function populateStreamFilterDropdowns() {
+    function populateStreamFilterDropdowns(preservedSubStream = null, preservedSemStream = null, preservedPaperStream = null) {
       const streamOptionsHtml = allStreams.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
 
       filterSubjectStream.innerHTML = `<option value="">All Streams (${allStreams.length})</option>` + streamOptionsHtml;
+      if (preservedSubStream && allStreams.some(s => s.id === preservedSubStream)) {
+        filterSubjectStream.value = preservedSubStream;
+      }
 
       document.getElementById('subjectStreamSelect').innerHTML = `<option value="">Select Stream...</option>` + streamOptionsHtml;
 
+      if (semesterStreamSelect) {
+        semesterStreamSelect.innerHTML = streamOptionsHtml;
+      }
+      if (paperStreamSelect) {
+        paperStreamSelect.innerHTML = streamOptionsHtml;
+      }
+
       filterSemesterStream.innerHTML = streamOptionsHtml;
+      if (preservedSemStream && allStreams.some(s => s.id === preservedSemStream)) {
+        filterSemesterStream.value = preservedSemStream;
+      }
+
       filterPaperStream.innerHTML = streamOptionsHtml;
+      if (preservedPaperStream && allStreams.some(s => s.id === preservedPaperStream)) {
+        filterPaperStream.value = preservedPaperStream;
+      }
     }
 
     function renderSubjectsTable() {
@@ -1668,15 +1775,15 @@
             <td><span class="badge badge-stream">${escapeHtml(streamName)}</span></td>
             <td style="max-width: 260px; font-size: 0.84rem;">${escapeHtml(sub.description || '—')}</td>
             <td>
-              <button class="status-toggle" onclick="window.toggleSubjectActive('${sub.id}', ${!sub.is_active})">
+              <button class="status-toggle" data-action="toggle-subject" data-id="${sub.id}" onclick="window.toggleSubjectActive('${sub.id}')" title="Toggle active status">
                 <span class="badge ${sub.is_active ? 'badge-active' : 'badge-inactive'}">${sub.is_active ? 'Active' : 'Inactive'}</span>
               </button>
             </td>
             <td style="text-align: right; white-space: nowrap;">
-              <button class="btn-sm btn-sm-edit" onclick="window.openEditSubject('${sub.id}')">
+              <button class="btn-sm btn-sm-edit" data-action="edit-subject" data-id="${sub.id}" onclick="window.openEditSubject('${sub.id}')" title="Edit subject">
                 <i class="ph ph-pencil"></i> Edit
               </button>
-              <button class="btn-sm btn-sm-delete" onclick="window.confirmDeleteSubject('${sub.id}', '${escapeHtml(sub.name)}')">
+              <button class="btn-sm btn-sm-delete" data-action="delete-subject" data-id="${sub.id}" onclick="window.confirmDeleteSubject('${sub.id}')" title="Delete subject">
                 <i class="ph ph-trash"></i>
               </button>
             </td>
@@ -1721,17 +1828,38 @@
 
     document.getElementById('subjectForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const saveBtn = document.getElementById('btnSaveSubject');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('subjectModalError');
+      errEl.style.display = 'none';
+
       const payload = {
         streamId: document.getElementById('subjectStreamSelect').value,
-        name: document.getElementById('subjectName').value,
-        slug: document.getElementById('subjectSlug').value,
+        name: document.getElementById('subjectName').value.trim(),
+        slug: document.getElementById('subjectSlug').value.trim().toLowerCase(),
         displayOrder: parseInt(document.getElementById('subjectDisplayOrder').value, 10) || 0,
-        description: document.getElementById('subjectDescription').value,
+        description: document.getElementById('subjectDescription').value.trim() || null,
         isActive: document.getElementById('subjectIsActive').checked
       };
 
-      const errEl = document.getElementById('subjectModalError');
-      errEl.style.display = 'none';
+      if (!payload.streamId) {
+        errEl.textContent = 'Parent stream selection is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.name) {
+        errEl.textContent = 'Subject name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Subject slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
 
       try {
         if (editingSubjectId) {
@@ -1746,24 +1874,32 @@
       } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
       }
     });
 
-    window.toggleSubjectActive = async function(id, newStatus) {
+    window.toggleSubjectActive = async function(id) {
+      const sub = allSubjects.find(item => item.id === id);
+      if (!sub) return;
+      const newStatus = !sub.is_active;
       try {
         await AcademicService.updateSubject(id, { isActive: newStatus });
-        showToast('Subject status updated.');
+        showToast(`Subject "${sub.name}" is now ${newStatus ? 'active' : 'inactive'}.`);
         await loadAllCMSData();
       } catch (err) {
         showToast(`Failed to update status: ${err.message}`, 'error');
       }
     };
 
-    window.confirmDeleteSubject = function(id, name) {
+    window.confirmDeleteSubject = function(id) {
+      const sub = allSubjects.find(item => item.id === id);
+      if (!sub) return;
       pendingDeleteAction = async () => {
         await AcademicService.deleteSubject(id);
       };
-      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete subject: <strong>${name}</strong>?`;
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete subject: <strong>${escapeHtml(sub.name)}</strong>?`;
       openModal(deleteModal);
     };
 
@@ -1771,17 +1907,36 @@
     // 3. SEMESTERS TAB
     // ------------------------------------------------------------------------
 
-    function populateSemesterFilterDropdowns() {
+    function populateSemesterModalSubjects(streamId, selectedSubId = null) {
+      const filtered = streamId
+        ? allSubjects.filter(s => s.stream_id === streamId)
+        : allSubjects;
+
+      semesterSubjectSelect.innerHTML = `<option value="">Select Subject...</option>` +
+        filtered.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+
+      if (selectedSubId && filtered.some(s => s.id === selectedSubId)) {
+        semesterSubjectSelect.value = selectedSubId;
+      }
+    }
+
+    if (semesterStreamSelect) {
+      semesterStreamSelect.addEventListener('change', () => {
+        populateSemesterModalSubjects(semesterStreamSelect.value);
+      });
+    }
+
+    function populateSemesterFilterDropdowns(preservedSubId = null) {
       const selectedStreamId = filterSemesterStream.value;
       const subjectsInStream = allSubjects.filter(sub => !selectedStreamId || sub.stream_id === selectedStreamId);
 
       filterSemesterSubject.innerHTML = subjectsInStream.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
 
-      // Modal parent select
-      document.getElementById('semesterSubjectSelect').innerHTML = allSubjects.map(s => {
-        const stream = s.academic_streams || allStreams.find(st => st.id === s.stream_id);
-        return `<option value="${s.id}">${escapeHtml(s.name)} (${stream ? stream.name : 'Stream'})</option>`;
-      }).join('');
+      if (preservedSubId && subjectsInStream.some(s => s.id === preservedSubId)) {
+        filterSemesterSubject.value = preservedSubId;
+      }
+
+      populateSemesterModalSubjects(semesterStreamSelect ? semesterStreamSelect.value : null);
     }
 
     function renderSemestersTable() {
@@ -1807,15 +1962,15 @@
             <td><span class="badge badge-stream">${escapeHtml(subjectName)}</span></td>
             <td><span style="font-family: var(--font-mono);">${sem.display_order}</span></td>
             <td>
-              <button class="status-toggle" onclick="window.toggleSemesterActive('${sem.id}', ${!sem.is_active})">
+              <button class="status-toggle" data-action="toggle-semester" data-id="${sem.id}" onclick="window.toggleSemesterActive('${sem.id}')" title="Toggle active status">
                 <span class="badge ${sem.is_active ? 'badge-active' : 'badge-inactive'}">${sem.is_active ? 'Active' : 'Inactive'}</span>
               </button>
             </td>
             <td style="text-align: right; white-space: nowrap;">
-              <button class="btn-sm btn-sm-edit" onclick="window.openEditSemester('${sem.id}')">
+              <button class="btn-sm btn-sm-edit" data-action="edit-semester" data-id="${sem.id}" onclick="window.openEditSemester('${sem.id}')" title="Edit semester">
                 <i class="ph ph-pencil"></i> Edit
               </button>
-              <button class="btn-sm btn-sm-delete" onclick="window.confirmDeleteSemester('${sem.id}', '${escapeHtml(sem.name)}')">
+              <button class="btn-sm btn-sm-delete" data-action="delete-semester" data-id="${sem.id}" onclick="window.confirmDeleteSemester('${sem.id}')" title="Delete semester">
                 <i class="ph ph-trash"></i>
               </button>
             </td>
@@ -1835,15 +1990,38 @@
       editingSemesterId = null;
       document.getElementById('semesterModalTitle').textContent = 'Add Semester';
       document.getElementById('semesterForm').reset();
-      if (filterSemesterSubject.value) {
-        document.getElementById('semesterSubjectSelect').value = filterSemesterSubject.value;
+      document.getElementById('semesterModalError').style.display = 'none';
+
+      // Set stream in modal based on active filter
+      const activeStreamId = filterSemesterStream.value || (allStreams.length > 0 ? allStreams[0].id : '');
+      if (semesterStreamSelect) {
+        semesterStreamSelect.value = activeStreamId;
       }
-      document.getElementById('semesterNumber').value = 1;
-      document.getElementById('semesterName').value = 'Semester I';
-      document.getElementById('semesterSlug').value = 'semester-i';
-      document.getElementById('semesterDisplayOrder').value = 1;
+      populateSemesterModalSubjects(activeStreamId, filterSemesterSubject.value);
+
+      // Determine next semester number for this subject
+      const currentSubId = document.getElementById('semesterSubjectSelect').value;
+      const existingInSub = allSemesters.filter(s => s.subject_id === currentSubId);
+      const maxNum = existingInSub.reduce((max, s) => Math.max(max, s.semester_number || 0), 0);
+      const nextNum = Math.min(8, maxNum + 1);
+
+      document.getElementById('semesterNumber').value = nextNum;
+      document.getElementById('semesterName').value = `Semester ${toRoman(nextNum)}`;
+      document.getElementById('semesterSlug').value = `semester-${toRoman(nextNum).toLowerCase()}`;
+      document.getElementById('semesterDisplayOrder').value = nextNum;
       document.getElementById('semesterIsActive').checked = true;
       openModal(semesterModal);
+    });
+
+    document.getElementById('semesterNumber').addEventListener('input', (e) => {
+      if (!editingSemesterId) {
+        const num = parseInt(e.target.value, 10);
+        if (num >= 1 && num <= 8) {
+          document.getElementById('semesterName').value = `Semester ${toRoman(num)}`;
+          document.getElementById('semesterSlug').value = `semester-${toRoman(num).toLowerCase()}`;
+          document.getElementById('semesterDisplayOrder').value = num;
+        }
+      }
     });
 
     window.openEditSemester = function(id) {
@@ -1851,6 +2029,15 @@
       if (!sem) return;
       editingSemesterId = sem.id;
       document.getElementById('semesterModalTitle').textContent = 'Edit Semester';
+      document.getElementById('semesterModalError').style.display = 'none';
+
+      const parentSub = allSubjects.find(s => s.id === sem.subject_id);
+      const streamId = parentSub ? parentSub.stream_id : (allStreams.length > 0 ? allStreams[0].id : '');
+      if (semesterStreamSelect) {
+        semesterStreamSelect.value = streamId;
+      }
+      populateSemesterModalSubjects(streamId, sem.subject_id);
+
       document.getElementById('semesterSubjectSelect').value = sem.subject_id;
       document.getElementById('semesterNumber').value = sem.semester_number;
       document.getElementById('semesterName').value = sem.name;
@@ -1863,18 +2050,39 @@
 
     document.getElementById('semesterForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const saveBtn = document.getElementById('btnSaveSemester');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('semesterModalError');
+      errEl.style.display = 'none';
+
       const payload = {
         subjectId: document.getElementById('semesterSubjectSelect').value,
         semesterNumber: parseInt(document.getElementById('semesterNumber').value, 10),
-        name: document.getElementById('semesterName').value,
-        slug: document.getElementById('semesterSlug').value,
+        name: document.getElementById('semesterName').value.trim(),
+        slug: document.getElementById('semesterSlug').value.trim().toLowerCase(),
         displayOrder: parseInt(document.getElementById('semesterDisplayOrder').value, 10) || 1,
-        description: document.getElementById('semesterDescription').value,
+        description: document.getElementById('semesterDescription').value.trim() || null,
         isActive: document.getElementById('semesterIsActive').checked
       };
 
-      const errEl = document.getElementById('semesterModalError');
-      errEl.style.display = 'none';
+      if (!payload.subjectId) {
+        errEl.textContent = 'Parent subject selection is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.name) {
+        errEl.textContent = 'Semester name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Semester slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
 
       try {
         if (editingSemesterId) {
@@ -1889,24 +2097,32 @@
       } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
       }
     });
 
-    window.toggleSemesterActive = async function(id, newStatus) {
+    window.toggleSemesterActive = async function(id) {
+      const sem = allSemesters.find(item => item.id === id);
+      if (!sem) return;
+      const newStatus = !sem.is_active;
       try {
         await AcademicService.updateSemester(id, { isActive: newStatus });
-        showToast('Semester status updated.');
+        showToast(`Semester "${sem.name}" is now ${newStatus ? 'active' : 'inactive'}.`);
         await loadAllCMSData();
       } catch (err) {
         showToast(`Failed to update status: ${err.message}`, 'error');
       }
     };
 
-    window.confirmDeleteSemester = function(id, name) {
+    window.confirmDeleteSemester = function(id) {
+      const sem = allSemesters.find(item => item.id === id);
+      if (!sem) return;
       pendingDeleteAction = async () => {
         await AcademicService.deleteSemester(id);
       };
-      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete semester: <strong>${name}</strong>?`;
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete semester: <strong>${escapeHtml(sem.name)}</strong>?`;
       openModal(deleteModal);
     };
 
@@ -1914,22 +2130,68 @@
     // 4. PAPERS TAB
     // ------------------------------------------------------------------------
 
-    function populatePaperFilterDropdowns() {
+    function populatePaperModalSubjects(streamId, selectedSubId = null) {
+      const filtered = streamId
+        ? allSubjects.filter(s => s.stream_id === streamId)
+        : allSubjects;
+
+      paperSubjectSelect.innerHTML = `<option value="">Select Subject...</option>` +
+        filtered.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+
+      if (selectedSubId && filtered.some(s => s.id === selectedSubId)) {
+        paperSubjectSelect.value = selectedSubId;
+      }
+    }
+
+    function populatePaperModalSemesters(subjectId, selectedSemId = null) {
+      const filtered = subjectId
+        ? allSemesters.filter(sem => sem.subject_id === subjectId)
+        : allSemesters;
+
+      paperSemesterSelect.innerHTML = `<option value="">Select Semester...</option>` +
+        filtered.map(sem => `<option value="${sem.id}">${escapeHtml(sem.name)} (Semester #${sem.semester_number})</option>`).join('');
+
+      if (selectedSemId && filtered.some(s => s.id === selectedSemId)) {
+        paperSemesterSelect.value = selectedSemId;
+      }
+    }
+
+    if (paperStreamSelect) {
+      paperStreamSelect.addEventListener('change', () => {
+        populatePaperModalSubjects(paperStreamSelect.value);
+        populatePaperModalSemesters(paperSubjectSelect.value);
+      });
+    }
+
+    if (paperSubjectSelect) {
+      paperSubjectSelect.addEventListener('change', () => {
+        populatePaperModalSemesters(paperSubjectSelect.value);
+      });
+    }
+
+    function populatePaperFilterDropdowns(preservedSubId = null, preservedSemId = null) {
       const selectedStreamId = filterPaperStream.value;
       const subjectsInStream = allSubjects.filter(sub => !selectedStreamId || sub.stream_id === selectedStreamId);
 
       filterPaperSubject.innerHTML = subjectsInStream.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+
+      if (preservedSubId && subjectsInStream.some(s => s.id === preservedSubId)) {
+        filterPaperSubject.value = preservedSubId;
+      }
 
       const selectedSubjectId = filterPaperSubject.value;
       const semestersInSubject = allSemesters.filter(sem => !selectedSubjectId || sem.subject_id === selectedSubjectId);
 
       filterPaperSemester.innerHTML = semestersInSubject.map(sem => `<option value="${sem.id}">${escapeHtml(sem.name)}</option>`).join('');
 
-      // Modal parent select
-      document.getElementById('paperSemesterSelect').innerHTML = allSemesters.map(sem => {
-        const sub = sem.subjects || allSubjects.find(s => s.id === sem.subject_id);
-        return `<option value="${sem.id}" data-sub="${sem.subject_id}">${escapeHtml(sem.name)} (${sub ? sub.name : 'Subject'})</option>`;
-      }).join('');
+      if (preservedSemId && semestersInSubject.some(s => s.id === preservedSemId)) {
+        filterPaperSemester.value = preservedSemId;
+      }
+
+      // Initialize modal selects
+      const modalStreamId = paperStreamSelect ? paperStreamSelect.value : null;
+      populatePaperModalSubjects(modalStreamId);
+      populatePaperModalSemesters(paperSubjectSelect ? paperSubjectSelect.value : null);
     }
 
     function renderPapersTable() {
@@ -1955,15 +2217,15 @@
           <td><span style="font-family: var(--font-mono);">${p.marks || '—'}</span></td>
           <td><span style="font-family: var(--font-mono); color: var(--text-muted);">${p.display_order}</span></td>
           <td>
-            <button class="status-toggle" onclick="window.togglePaperActive('${p.id}', ${!p.is_active})">
+            <button class="status-toggle" data-action="toggle-paper" data-id="${p.id}" onclick="window.togglePaperActive('${p.id}')" title="Toggle active status">
               <span class="badge ${p.is_active ? 'badge-active' : 'badge-inactive'}">${p.is_active ? 'Active' : 'Inactive'}</span>
             </button>
           </td>
           <td style="text-align: right; white-space: nowrap;">
-            <button class="btn-sm btn-sm-edit" onclick="window.openEditPaper('${p.id}')">
+            <button class="btn-sm btn-sm-edit" data-action="edit-paper" data-id="${p.id}" onclick="window.openEditPaper('${p.id}')" title="Edit paper">
               <i class="ph ph-pencil"></i> Edit
             </button>
-            <button class="btn-sm btn-sm-delete" onclick="window.confirmDeletePaper('${p.id}', '${escapeHtml(p.paper_code)}: ${escapeHtml(p.name)}')">
+            <button class="btn-sm btn-sm-delete" data-action="delete-paper" data-id="${p.id}" onclick="window.confirmDeletePaper('${p.id}')" title="Delete paper">
               <i class="ph ph-trash"></i>
             </button>
           </td>
@@ -1989,6 +2251,17 @@
       editingPaperId = null;
       document.getElementById('paperModalTitle').textContent = 'Add Paper';
       document.getElementById('paperForm').reset();
+      document.getElementById('paperModalError').style.display = 'none';
+
+      const activeStreamId = filterPaperStream.value || (allStreams.length > 0 ? allStreams[0].id : '');
+      if (paperStreamSelect) {
+        paperStreamSelect.value = activeStreamId;
+      }
+      populatePaperModalSubjects(activeStreamId, filterPaperSubject.value);
+
+      const activeSubId = filterPaperSubject.value || (paperSubjectSelect.value || '');
+      populatePaperModalSemesters(activeSubId, filterPaperSemester.value);
+
       if (filterPaperSemester.value) {
         document.getElementById('paperSemesterSelect').value = filterPaperSemester.value;
       }
@@ -2010,6 +2283,19 @@
       if (!p) return;
       editingPaperId = p.id;
       document.getElementById('paperModalTitle').textContent = 'Edit Paper';
+      document.getElementById('paperModalError').style.display = 'none';
+
+      // Find semester and subject hierarchy
+      const sem = allSemesters.find(s => s.id === p.semester_id);
+      const sub = allSubjects.find(s => s.id === (sem ? sem.subject_id : p.subject_id));
+      const streamId = sub ? sub.stream_id : (allStreams.length > 0 ? allStreams[0].id : '');
+
+      if (paperStreamSelect) {
+        paperStreamSelect.value = streamId;
+      }
+      populatePaperModalSubjects(streamId, sub ? sub.id : null);
+      populatePaperModalSemesters(sub ? sub.id : null, p.semester_id);
+
       document.getElementById('paperSemesterSelect').value = p.semester_id;
       document.getElementById('paperType').value = p.paper_type;
       document.getElementById('paperCode').value = p.paper_code;
@@ -2025,27 +2311,52 @@
 
     document.getElementById('paperForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const semSelect = document.getElementById('paperSemesterSelect');
-      const semesterId = semSelect.value;
-      const semOption = semSelect.options[semSelect.selectedIndex];
-      const subjectId = semOption?.getAttribute('data-sub') || allSemesters.find(s => s.id === semesterId)?.subject_id;
+      const saveBtn = document.getElementById('btnSavePaper');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('paperModalError');
+      errEl.style.display = 'none';
+
+      const semesterId = document.getElementById('paperSemesterSelect').value;
+      const sem = allSemesters.find(s => s.id === semesterId);
+      const subjectId = sem ? sem.subject_id : (paperSubjectSelect ? paperSubjectSelect.value : null);
 
       const payload = {
         semesterId,
         subjectId,
-        paperCode: document.getElementById('paperCode').value,
-        name: document.getElementById('paperName').value,
-        slug: document.getElementById('paperSlug').value,
+        paperCode: document.getElementById('paperCode').value.trim().toUpperCase(),
+        name: document.getElementById('paperName').value.trim(),
+        slug: document.getElementById('paperSlug').value.trim().toLowerCase(),
         paperType: document.getElementById('paperType').value,
         credits: document.getElementById('paperCredits').value ? parseInt(document.getElementById('paperCredits').value, 10) : null,
         marks: document.getElementById('paperMarks').value ? parseInt(document.getElementById('paperMarks').value, 10) : null,
         displayOrder: parseInt(document.getElementById('paperDisplayOrder').value, 10) || 0,
-        description: document.getElementById('paperDescription').value,
+        description: document.getElementById('paperDescription').value.trim() || null,
         isActive: document.getElementById('paperIsActive').checked
       };
 
-      const errEl = document.getElementById('paperModalError');
-      errEl.style.display = 'none';
+      if (!payload.semesterId) {
+        errEl.textContent = 'Parent semester selection is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.paperCode) {
+        errEl.textContent = 'Paper code is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.name) {
+        errEl.textContent = 'Paper name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Paper slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
 
       try {
         if (editingPaperId) {
@@ -2060,24 +2371,32 @@
       } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
       }
     });
 
-    window.togglePaperActive = async function(id, newStatus) {
+    window.togglePaperActive = async function(id) {
+      const p = allPapers.find(item => item.id === id);
+      if (!p) return;
+      const newStatus = !p.is_active;
       try {
         await AcademicService.updatePaper(id, { isActive: newStatus });
-        showToast('Paper status updated.');
+        showToast(`Paper "${p.paper_code}" is now ${newStatus ? 'active' : 'inactive'}.`);
         await loadAllCMSData();
       } catch (err) {
         showToast(`Failed to update status: ${err.message}`, 'error');
       }
     };
 
-    window.confirmDeletePaper = function(id, label) {
+    window.confirmDeletePaper = function(id) {
+      const p = allPapers.find(item => item.id === id);
+      if (!p) return;
       pendingDeleteAction = async () => {
         await AcademicService.deletePaper(id);
       };
-      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete paper: <strong>${label}</strong>?`;
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete paper: <strong>${escapeHtml(p.paper_code)}: ${escapeHtml(p.name)}</strong>?`;
       openModal(deleteModal);
     };
 
@@ -2102,15 +2421,15 @@
           <td>${c.requires_exam_year ? '✅' : '—'}</td>
           <td>${c.show_on_paper ? '✅' : '❌'}</td>
           <td>
-            <button class="status-toggle" onclick="window.toggleCategoryActive('${c.id}', ${!c.is_active})">
+            <button class="status-toggle" data-action="toggle-category" data-id="${c.id}" onclick="window.toggleCategoryActive('${c.id}')" title="Toggle active status">
               <span class="badge ${c.is_active ? 'badge-active' : 'badge-inactive'}">${c.is_active ? 'Active' : 'Inactive'}</span>
             </button>
           </td>
           <td style="text-align: right; white-space: nowrap;">
-            <button class="btn-sm btn-sm-edit" onclick="window.openEditCategory('${c.id}')">
+            <button class="btn-sm btn-sm-edit" data-action="edit-category" data-id="${c.id}" onclick="window.openEditCategory('${c.id}')" title="Edit category">
               <i class="ph ph-pencil"></i> Edit
             </button>
-            <button class="btn-sm btn-sm-delete" onclick="window.confirmDeleteCategory('${c.id}', '${escapeHtml(c.display_name)}')">
+            <button class="btn-sm btn-sm-delete" data-action="delete-category" data-id="${c.id}" onclick="window.confirmDeleteCategory('${c.id}')" title="Delete category">
               <i class="ph ph-trash"></i>
             </button>
           </td>
@@ -2122,7 +2441,9 @@
       editingCategoryId = null;
       document.getElementById('categoryModalTitle').textContent = 'Add Resource Category';
       document.getElementById('categoryForm').reset();
+      document.getElementById('categoryModalError').style.display = 'none';
       document.getElementById('categoryTypeKey').readOnly = false;
+      document.getElementById('categoryApplicable').value = 'BOTH';
       document.getElementById('categoryDisplayOrder').value = allCategories.length + 1;
       document.getElementById('categoryShowOnPaper').checked = true;
       document.getElementById('categoryIsActive').checked = true;
@@ -2141,6 +2462,7 @@
       if (!c) return;
       editingCategoryId = c.id;
       document.getElementById('categoryModalTitle').textContent = 'Edit Resource Category';
+      document.getElementById('categoryModalError').style.display = 'none';
       document.getElementById('categoryDisplayName').value = c.display_name;
       document.getElementById('categoryTypeKey').value = c.type_key;
       document.getElementById('categoryTypeKey').readOnly = true; // Key cannot change once created
@@ -2158,6 +2480,11 @@
 
     document.getElementById('categoryForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const saveBtn = document.getElementById('btnSaveCategory');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('categoryModalError');
+      errEl.style.display = 'none';
+
       const payload = {
         typeKey: document.getElementById('categoryTypeKey').value.trim().toUpperCase(),
         displayName: document.getElementById('categoryDisplayName').value.trim(),
@@ -2165,15 +2492,31 @@
         icon: document.getElementById('categoryIcon').value.trim() || '📄',
         applicablePaperType: document.getElementById('categoryApplicable').value,
         displayOrder: parseInt(document.getElementById('categoryDisplayOrder').value, 10) || 0,
-        description: document.getElementById('categoryDescription').value,
+        description: document.getElementById('categoryDescription').value.trim() || null,
         requiresUnit: document.getElementById('categoryRequiresUnit').checked,
         requiresExamYear: document.getElementById('categoryRequiresYear').checked,
         showOnPaper: document.getElementById('categoryShowOnPaper').checked,
         isActive: document.getElementById('categoryIsActive').checked
       };
 
-      const errEl = document.getElementById('categoryModalError');
-      errEl.style.display = 'none';
+      if (!payload.typeKey) {
+        errEl.textContent = 'Type key is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.displayName) {
+        errEl.textContent = 'Display name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
 
       try {
         if (editingCategoryId) {
@@ -2188,32 +2531,45 @@
       } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
       }
     });
 
-    window.toggleCategoryActive = async function(id, newStatus) {
+    window.toggleCategoryActive = async function(id) {
+      const c = allCategories.find(item => item.id === id);
+      if (!c) return;
+      const newStatus = !c.is_active;
       try {
         await AcademicService.updateResourceType(id, { isActive: newStatus });
-        showToast('Resource Category status updated.');
+        showToast(`Category "${c.display_name}" is now ${newStatus ? 'active' : 'inactive'}.`);
         await loadAllCMSData();
       } catch (err) {
         showToast(`Failed to update status: ${err.message}`, 'error');
       }
     };
 
-    window.confirmDeleteCategory = function(id, name) {
+    window.confirmDeleteCategory = function(id) {
+      const c = allCategories.find(item => item.id === id);
+      if (!c) return;
       pendingDeleteAction = async () => {
         await AcademicService.deleteResourceType(id);
       };
-      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete category: <strong>${name}</strong>?`;
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete category: <strong>${escapeHtml(c.display_name)} (${escapeHtml(c.type_key)})</strong>?`;
       openModal(deleteModal);
     };
 
     // Confirm Delete Click
     document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
       if (!pendingDeleteAction) return;
+      const deleteBtn = document.getElementById('btnConfirmDelete');
+      const origText = deleteBtn.innerHTML;
       const errEl = document.getElementById('deleteModalError');
       errEl.style.display = 'none';
+
+      deleteBtn.disabled = true;
+      deleteBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Deleting...';
 
       try {
         await pendingDeleteAction();
@@ -2225,6 +2581,9 @@
         console.error('Delete error:', err);
         errEl.textContent = err.message;
         errEl.style.display = 'flex';
+      } finally {
+        deleteBtn.disabled = false;
+        deleteBtn.innerHTML = origText;
       }
     });
 
