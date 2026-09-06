@@ -268,19 +268,27 @@
 
     .file-details {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
     }
 
     .file-icon {
       font-size: 1.8rem;
       color: var(--blue-400);
+      margin-top: 2px;
     }
 
     .file-title {
       font-weight: 600;
       color: var(--text-primary);
       font-size: 0.95rem;
+    }
+
+    .syllabus-file-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin: 4px 0 6px;
+      line-height: 1.5;
     }
 
     .file-meta {
@@ -559,6 +567,16 @@
     const resourceChipsGrid = document.getElementById('resourceChipsGrid');
     const syllabusContainer = document.getElementById('syllabusContainer');
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     /**
      * Resolve path hierarchy from URL
      * Supports:
@@ -764,7 +782,8 @@
             <div class="file-details">
               <i class="ph ph-file-pdf file-icon"></i>
               <div>
-                <div class="file-title">${syllabusResource.title || fileRecord.original_filename}</div>
+                <div class="file-title">${escapeHtml(syllabusResource.title || fileRecord.original_filename)}</div>
+                ${syllabusResource.description ? `<p class="syllabus-file-desc">${escapeHtml(syllabusResource.description)}</p>` : ''}
                 <div class="file-meta">Authoritative FMU Syllabus • ${fileSizeMb} • Protected Online Reading</div>
               </div>
             </div>

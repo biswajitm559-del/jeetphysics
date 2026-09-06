@@ -671,6 +671,16 @@
       }
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     /**
      * Open document in Protected Online Viewer modal
      * Requests temporary signed token via AcademicService.fetchSignedUrl (/api/resources/sign-url)
@@ -848,8 +858,8 @@
               <article class="item-card">
                 <div class="item-info">
                   ${badgeMarkup ? `<div class="item-badge-row">${badgeMarkup}</div>` : ''}
-                  <h3 class="item-title">${res.title}</h3>
-                  ${res.description ? `<p class="item-desc">${res.description}</p>` : ''}
+                  <h3 class="item-title">${escapeHtml(res.title)}</h3>
+                  ${res.description ? `<p class="item-desc">${escapeHtml(res.description)}</p>` : ''}
                   <div class="item-file-meta">
                     <span><i class="ph ph-file-pdf"></i> ${files.length > 1 ? `${files.length} Attachments` : filename}</span>
                     <span>•</span>

@@ -181,10 +181,10 @@
 }
 
 .pv-watermark-line {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: rgba(30, 41, 59, 0.12);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: rgba(30, 41, 59, 0.14);
   text-transform: uppercase;
   transform: rotate(-25deg);
   white-space: nowrap;
