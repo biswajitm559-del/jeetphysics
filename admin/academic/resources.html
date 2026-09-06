@@ -757,17 +757,23 @@
     /* Modal Dialog */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(2, 8, 24, 0.8);
+      inset: 0;
+      background: rgba(2, 8, 24, 0.85);
       backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100;
+      z-index: 2000;
       padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
 
     .modal-box {
@@ -944,6 +950,21 @@
     }
 
     @media (max-width: 768px) {
+      .admin-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+      .admin-user-nav {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+      .admin-container {
+        padding: 16px 12px 60px;
+      }
       .resource-card {
         flex-direction: column;
         align-items: flex-start;
@@ -955,6 +976,26 @@
       .page-header {
         flex-direction: column;
         align-items: flex-start;
+      }
+      .modal-overlay {
+        padding: 12px;
+      }
+      .modal-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto;
+      }
+      .modal-body {
+        padding: 16px;
+        max-height: 75vh;
+      }
+      .modal-context-bar {
+        font-size: 0.8rem;
+        gap: 6px;
+      }
+      .modal-grid-2col {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
       }
     }
   </style>
@@ -1095,16 +1136,28 @@
       <form id="resourceForm">
         <div class="modal-body">
           <!-- Context Information -->
-          <div class="modal-context-bar">
+          <div class="modal-context-bar" id="modalContextBar">
+            <span><strong>Subject:</strong> <span id="modalSubjectLabel">Physics</span></span>
+            <span>•</span>
+            <span><strong>Semester:</strong> <span id="modalSemesterLabel">Semester I</span></span>
+            <span>•</span>
             <span><strong>Paper:</strong> <span id="modalPaperLabel">Mathematical Physics I</span></span>
             <span>•</span>
-            <span><strong>Type:</strong> <span id="modalTypeBadge" class="paper-type-theory">THEORY</span></span>
+            <span><strong>Category:</strong> <span id="modalCategoryLabel">Syllabus</span></span>
+            <span>•</span>
+            <span id="modalTypeBadge" class="paper-type-theory">THEORY</span>
+          </div>
+
+          <!-- Error Notification Container -->
+          <div id="modalFormError" style="display: none; padding: 12px 14px; background: rgba(248, 113, 113, 0.12); border: 1px solid rgba(248, 113, 113, 0.35); border-radius: var(--radius-sm); color: #fca5a5; font-size: 0.86rem; align-items: center; gap: 8px;">
+            <i class="ph ph-warning-circle" style="font-size: 1.1rem; flex-shrink: 0;"></i>
+            <span id="modalFormErrorText">Error message</span>
           </div>
 
           <!-- Scope Notice -->
           <div class="notice-box">
             <i class="ph ph-info" style="font-size: 1.2rem; flex-shrink: 0;"></i>
-            <span><strong>Metadata Management (Phase 5C-1):</strong> Record creation only. Physical PDF attachment and Storage integration will be enabled in Phase 5C-2.</span>
+            <span><strong>Resource Metadata:</strong> Creating a resource registers its academic metadata in DRAFT status. You can attach PDF files immediately after creation using the "Attach PDF" action.</span>
           </div>
 
           <!-- Resource Type Selector (Enabled only on Create) -->
@@ -1131,14 +1184,14 @@
               <i class="ph ph-bookmarks"></i>
               <span>Unit-wise Metadata (Required for this category)</span>
             </div>
-            <div style="display: grid; grid-template-columns: 120px 1fr; gap: 12px;">
+            <div class="modal-grid-2col" style="display: grid; grid-template-columns: 120px 1fr; gap: 12px;">
               <div class="form-group">
                 <label class="form-label" for="formUnitNumber">Unit (1–10) *</label>
                 <input type="number" id="formUnitNumber" class="form-input" min="1" max="10" placeholder="1" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="formUnitName">Unit Name *</label>
-                <input type="text" id="formUnitName" class="form-input" placeholder="e.g. Vector Calculus" maxlength="150" />
+                <label class="form-label" for="formUnitName">Unit Name</label>
+                <input type="text" id="formUnitName" class="form-input" placeholder="e.g. Vector Calculus (Optional)" maxlength="150" />
               </div>
             </div>
           </div>
@@ -1156,7 +1209,7 @@
           </div>
 
           <!-- Display Order & Initial Publication Status -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="modal-grid-2col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="form-group">
               <label class="form-label" for="formDisplayOrder">Display Order</label>
               <input type="number" id="formDisplayOrder" class="form-input" value="0" min="0" />
@@ -1364,6 +1417,11 @@
     const resourceForm = document.getElementById('resourceForm');
     const btnSaveModal = document.getElementById('btnSaveModal');
     const modalPaperLabel = document.getElementById('modalPaperLabel');
+    const modalSubjectLabel = document.getElementById('modalSubjectLabel');
+    const modalSemesterLabel = document.getElementById('modalSemesterLabel');
+    const modalCategoryLabel = document.getElementById('modalCategoryLabel');
+    const modalFormError = document.getElementById('modalFormError');
+    const modalFormErrorText = document.getElementById('modalFormErrorText');
     const modalTypeBadge = document.getElementById('modalTypeBadge');
     const formGroupResourceType = document.getElementById('formGroupResourceType');
     const formResourceType = document.getElementById('formResourceType');
@@ -1570,7 +1628,7 @@
                 There are no resource records registered under <strong>${currentPaper.paper_code}</strong>
                 ${selectedTypeKey ? `for category <em>${selectedTypeKey}</em>` : ''}.
               </p>
-              <button onclick="document.getElementById('btnOpenCreateModal').click()" class="btn-create" style="margin: 0 auto;">
+              <button id="btnOpenCreateModalEmpty" onclick="window.openCreateResourceModal()" class="btn-create" style="margin: 0 auto;">
                 <i class="ph ph-plus-circle"></i>
                 <span>Create First Resource</span>
               </button>
@@ -1855,26 +1913,72 @@
 
     formResourceType.addEventListener('change', () => {
       syncFormTypeFields(formResourceType.value);
+      updateModalCategoryContext();
     });
 
     // ------------------------------------------------------------------------
-    // Modal Open/Close Controls
+    // Modal Open/Close Controls & Helper Functions
     // ------------------------------------------------------------------------
 
-    btnOpenCreateModal.addEventListener('click', () => {
+    let lastActiveElementBeforeModal = null;
+    let isSavingResource = false;
+
+    function openModal(modalEl) {
+      if (!modalEl) return;
+      modalEl.classList.add('open');
+      modalEl.style.display = 'flex';
+    }
+
+    function closeModalEl(modalEl) {
+      if (!modalEl) return;
+      modalEl.classList.remove('open');
+      modalEl.style.display = 'none';
+    }
+
+    function showModalError(msg) {
+      if (modalFormError && modalFormErrorText) {
+        modalFormErrorText.textContent = msg;
+        modalFormError.style.display = 'flex';
+      }
+    }
+
+    function hideModalError() {
+      if (modalFormError && modalFormErrorText) {
+        modalFormError.style.display = 'none';
+        modalFormErrorText.textContent = '';
+      }
+    }
+
+    function updateModalCategoryContext() {
+      if (!modalCategoryLabel || !formResourceType) return;
+      const selectedOpt = formResourceType.options[formResourceType.selectedIndex];
+      modalCategoryLabel.textContent = selectedOpt ? selectedOpt.text.replace(/^[^\w\s]+/, '').trim() : (formResourceType.value || 'None');
+    }
+
+    function openCreateResourceModal() {
       if (!currentPaper) {
         alert('Please select a valid paper first.');
         return;
       }
 
+      lastActiveElementBeforeModal = document.activeElement;
       editingResourceId = null;
       modalTitle.textContent = 'Create Academic Resource';
-      modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
-      modalTypeBadge.textContent = currentPaper.paper_type;
-      modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
 
-      // Reset form
+      const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
+      const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
+
+      if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
+      if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
+      if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
+      if (modalTypeBadge) {
+        modalTypeBadge.textContent = currentPaper.paper_type;
+        modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+      }
+
+      // Reset form & error
       resourceForm.reset();
+      hideModalError();
       formDisplayOrder.value = 0;
       formPublicationStatus.value = 'DRAFT';
       formGroupResourceType.style.display = 'block';
@@ -1884,25 +1988,42 @@
         formResourceType.value = selResourceType.value;
       }
       syncFormTypeFields(formResourceType.value);
+      updateModalCategoryContext();
 
-      resourceModal.style.display = 'flex';
-      formTitle.focus();
-    });
+      openModal(resourceModal);
+      setTimeout(() => formTitle.focus(), 50);
+    }
+
+    // Expose globally so both header and empty state button share identical workflow
+    window.openCreateResourceModal = openCreateResourceModal;
+    btnOpenCreateModal.addEventListener('click', openCreateResourceModal);
 
     window.editResource = function(resourceId) {
       const res = currentResources.find(r => r.id === resourceId);
       if (!res) return;
 
+      lastActiveElementBeforeModal = document.activeElement;
       editingResourceId = resourceId;
       modalTitle.textContent = 'Edit Academic Resource';
-      modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
-      modalTypeBadge.textContent = currentPaper.paper_type;
-      modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+
+      const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
+      const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
+
+      if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
+      if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
+      if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
+      if (modalTypeBadge) {
+        modalTypeBadge.textContent = currentPaper.paper_type;
+        modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+      }
+
+      hideModalError();
 
       // Populate values
       formResourceType.value = res.resource_type;
       formGroupResourceType.style.display = 'none'; // Lock identity on edit
       syncFormTypeFields(res.resource_type);
+      updateModalCategoryContext();
 
       formTitle.value = res.title || '';
       formDescription.value = res.description || '';
@@ -1912,13 +2033,18 @@
       formDisplayOrder.value = res.display_order || 0;
       formPublicationStatus.value = res.publication_status || 'DRAFT';
 
-      resourceModal.style.display = 'flex';
-      formTitle.focus();
+      openModal(resourceModal);
+      setTimeout(() => formTitle.focus(), 50);
     };
 
     function closeModal() {
-      resourceModal.style.display = 'none';
+      closeModalEl(resourceModal);
       editingResourceId = null;
+      hideModalError();
+      if (lastActiveElementBeforeModal) {
+        try { lastActiveElementBeforeModal.focus(); } catch (_) {}
+        lastActiveElementBeforeModal = null;
+      }
     }
 
     btnCloseModal.addEventListener('click', closeModal);
@@ -1928,12 +2054,30 @@
       if (e.target === resourceModal) closeModal();
     });
 
+    // Global keyboard listener for Escape key dismissal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (resourceModal && resourceModal.classList.contains('open')) {
+          closeModal();
+        } else if (deleteModal && deleteModal.classList.contains('open')) {
+          closeDeleteModal();
+        } else if (uploadModal && uploadModal.classList.contains('open')) {
+          closeUploadModal();
+        } else if (deleteFileModal && deleteFileModal.classList.contains('open')) {
+          closeDeleteFileModal();
+        }
+      }
+    });
+
     // ------------------------------------------------------------------------
     // Resource Form Submit (Create & Update)
     // ------------------------------------------------------------------------
 
     resourceForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (isSavingResource) return; // Prevent double submission
+
+      hideModalError();
 
       const typeKey = formResourceType.value;
       const config = allResourceTypes.find(t => t.type_key === typeKey);
@@ -1948,21 +2092,17 @@
 
       // Client-side Validation according to database trigger rules
       if (!title) {
-        alert('Please enter a title.');
+        showModalError('Please enter a Resource Title.');
+        formTitle.focus();
         return;
       }
 
       if (config && config.requires_unit) {
         unitNumber = parseInt(formUnitNumber.value, 10);
-        unitName = formUnitName.value.trim();
+        unitName = formUnitName.value.trim() || null;
         if (isNaN(unitNumber) || unitNumber < 1 || unitNumber > 10) {
-          alert('Unit Number must be between 1 and 10.');
+          showModalError('Unit Number is required and must be between 1 and 10.');
           formUnitNumber.focus();
-          return;
-        }
-        if (!unitName) {
-          alert('Please enter a Unit Name.');
-          formUnitName.focus();
           return;
         }
       }
@@ -1970,12 +2110,13 @@
       if (config && config.requires_exam_year) {
         examYear = parseInt(formExamYear.value, 10);
         if (isNaN(examYear) || examYear < 1990 || examYear > 2050) {
-          alert('Exam Year must be between 1990 and 2050.');
+          showModalError('Examination Year is required and must be between 1990 and 2050.');
           formExamYear.focus();
           return;
         }
       }
 
+      isSavingResource = true;
       btnSaveModal.disabled = true;
       btnSaveModal.innerHTML = '<i class="ph ph-spinner ph-spin"></i><span>Saving...</span>';
 
@@ -2013,8 +2154,9 @@
 
       } catch (err) {
         console.error('Save resource error:', err);
-        alert(`Failed to save resource: ${err.message}`);
+        showModalError(`Failed to save resource: ${err.message}`);
       } finally {
+        isSavingResource = false;
         btnSaveModal.disabled = false;
         btnSaveModal.innerHTML = '<i class="ph ph-check"></i><span>Save Resource</span>';
       }
@@ -2042,11 +2184,11 @@
     window.promptDelete = function(resourceId, title) {
       pendingDeleteResourceId = resourceId;
       deleteResourceTitle.textContent = title;
-      deleteModal.style.display = 'flex';
+      openModal(deleteModal);
     };
 
     function closeDeleteModal() {
-      deleteModal.style.display = 'none';
+      closeModalEl(deleteModal);
       pendingDeleteResourceId = null;
     }
 
@@ -2101,7 +2243,7 @@
       uploadOptimizationStats.style.display = 'none';
       btnSubmitUpload.disabled = false;
 
-      uploadModal.style.display = 'flex';
+      openModal(uploadModal);
       pdfFileInput.focus();
     };
 
@@ -2124,12 +2266,12 @@
       uploadOptimizationStats.style.display = 'none';
       btnSubmitUpload.disabled = false;
 
-      uploadModal.style.display = 'flex';
+      openModal(uploadModal);
       pdfFileInput.focus();
     };
 
     function closeUploadModal() {
-      uploadModal.style.display = 'none';
+      closeModalEl(uploadModal);
       uploadTargetResourceId = null;
       uploadReplaceFileId = null;
       selectedUploadFile = null;
@@ -2257,11 +2399,11 @@
     window.openDeleteFileModal = function(fileId, filename, version) {
       pendingDeleteFileId = fileId;
       deleteFileLabel.textContent = `${filename} (v${version})`;
-      deleteFileModal.style.display = 'flex';
+      openModal(deleteFileModal);
     };
 
     function closeDeleteFileModal() {
-      deleteFileModal.style.display = 'none';
+      closeModalEl(deleteFileModal);
       pendingDeleteFileId = null;
     }
 
