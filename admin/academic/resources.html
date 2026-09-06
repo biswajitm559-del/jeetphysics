@@ -1072,27 +1072,33 @@
           <span>Academic Lineage Selection</span>
         </div>
         <div class="selector-grid">
-          <!-- Step 1: Subject -->
+          <!-- Step 1: Stream -->
           <div class="form-group">
-            <label class="form-label" for="selSubject">1. Subject</label>
+            <label class="form-label" for="selStream">1. Stream</label>
+            <select id="selStream" class="form-select"></select>
+          </div>
+
+          <!-- Step 2: Subject -->
+          <div class="form-group">
+            <label class="form-label" for="selSubject">2. Subject</label>
             <select id="selSubject" class="form-select"></select>
           </div>
 
-          <!-- Step 2: Semester -->
+          <!-- Step 3: Semester -->
           <div class="form-group">
-            <label class="form-label" for="selSemester">2. Semester</label>
+            <label class="form-label" for="selSemester">3. Semester</label>
             <select id="selSemester" class="form-select"></select>
           </div>
 
-          <!-- Step 3: Paper -->
+          <!-- Step 4: Paper -->
           <div class="form-group">
-            <label class="form-label" for="selPaper">3. Paper</label>
+            <label class="form-label" for="selPaper">4. Paper</label>
             <select id="selPaper" class="form-select"></select>
           </div>
 
-          <!-- Step 4: Resource Type Filter -->
+          <!-- Step 5: Resource Type Filter -->
           <div class="form-group">
-            <label class="form-label" for="selResourceType">4. Resource Category</label>
+            <label class="form-label" for="selResourceType">5. Resource Category</label>
             <select id="selResourceType" class="form-select"></select>
           </div>
         </div>
@@ -1137,6 +1143,8 @@
         <div class="modal-body">
           <!-- Context Information -->
           <div class="modal-context-bar" id="modalContextBar">
+            <span><strong>Stream:</strong> <span id="modalStreamLabel">Science</span></span>
+            <span>•</span>
             <span><strong>Subject:</strong> <span id="modalSubjectLabel">Physics</span></span>
             <span>•</span>
             <span><strong>Semester:</strong> <span id="modalSemesterLabel">Semester I</span></span>
@@ -1396,6 +1404,7 @@
     const deniedMessage = document.getElementById('deniedMessage');
 
     // Cascading Selectors
+    const selStream = document.getElementById('selStream');
     const selSubject = document.getElementById('selSubject');
     const selSemester = document.getElementById('selSemester');
     const selPaper = document.getElementById('selPaper');
@@ -1416,6 +1425,7 @@
     const btnCancelModal = document.getElementById('btnCancelModal');
     const resourceForm = document.getElementById('resourceForm');
     const btnSaveModal = document.getElementById('btnSaveModal');
+    const modalStreamLabel = document.getElementById('modalStreamLabel');
     const modalPaperLabel = document.getElementById('modalPaperLabel');
     const modalSubjectLabel = document.getElementById('modalSubjectLabel');
     const modalSemesterLabel = document.getElementById('modalSemesterLabel');
@@ -1480,6 +1490,7 @@
     const toastMsg = document.getElementById('toastMsg');
 
     // Memory State
+    let streams = [];
     let subjects = [];
     let semesters = [];
     let papers = [];
@@ -1520,18 +1531,38 @@
     // Cascading Loading Functions
     // ------------------------------------------------------------------------
 
+    async function loadStreams() {
+      streams = await AcademicService.getStreams();
+      selStream.innerHTML = streams.map(s => `<option value="${s.slug}">${s.name}</option>`).join('');
+      if (streams.length > 0) {
+        selStream.value = streams[0].slug;
+        await loadSubjects();
+      } else {
+        selSubject.innerHTML = '<option value="">No streams available</option>';
+        selSemester.innerHTML = '<option value="">No subjects available</option>';
+        selPaper.innerHTML = '<option value="">No papers available</option>';
+        resourceListContainer.innerHTML = '';
+      }
+    }
+
     async function loadSubjects() {
-      subjects = await AcademicService.getSubjects();
+      const streamSlug = selStream.value;
+      subjects = await AcademicService.getSubjects(streamSlug);
       selSubject.innerHTML = subjects.map(s => `<option value="${s.slug}">${s.name}</option>`).join('');
       if (subjects.length > 0) {
         selSubject.value = subjects[0].slug;
         await loadSemesters();
+      } else {
+        selSemester.innerHTML = '<option value="">No subjects available</option>';
+        selPaper.innerHTML = '<option value="">No papers available</option>';
+        resourceListContainer.innerHTML = '';
       }
     }
 
     async function loadSemesters() {
+      const streamSlug = selStream.value;
       const subjectSlug = selSubject.value;
-      semesters = await AcademicService.getSemesters(subjectSlug);
+      semesters = await AcademicService.getSemesters(streamSlug, subjectSlug);
       selSemester.innerHTML = semesters.map(s => `<option value="${s.slug}">${s.name}</option>`).join('');
       if (semesters.length > 0) {
         selSemester.value = semesters[0].slug;
@@ -1543,9 +1574,10 @@
     }
 
     async function loadPapers() {
+      const streamSlug = selStream.value;
       const subjectSlug = selSubject.value;
       const semesterSlug = selSemester.value;
-      papers = await AcademicService.getPapersBySemester(subjectSlug, semesterSlug);
+      papers = await AcademicService.getPapersBySemester(streamSlug, subjectSlug, semesterSlug);
 
       if (papers.length > 0) {
         selPaper.innerHTML = papers.map(p => `
@@ -1561,7 +1593,10 @@
       } else {
         selPaper.innerHTML = '<option value="">No papers available</option>';
         currentPaper = null;
-        resourceListContainer.innerHTML = '';
+        lblPaperCode.textContent = '—';
+        lblPaperTitle.textContent = 'No Papers Found';
+        lblResourceCount.textContent = '(0 resources)';
+        resourceListContainer.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">No papers registered under this semester.</div>';
       }
     }
 
@@ -1861,6 +1896,10 @@
     // Cascading Dropdown Listeners
     // ------------------------------------------------------------------------
 
+    selStream.addEventListener('change', async () => {
+      await loadSubjects();
+    });
+
     selSubject.addEventListener('change', async () => {
       await loadSemesters();
     });
@@ -1965,9 +2004,11 @@
       editingResourceId = null;
       modalTitle.textContent = 'Create Academic Resource';
 
+      const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
       const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
       const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
 
+      if (modalStreamLabel) modalStreamLabel.textContent = streamName;
       if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
       if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
       if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
@@ -2006,9 +2047,11 @@
       editingResourceId = resourceId;
       modalTitle.textContent = 'Edit Academic Resource';
 
+      const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
       const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
       const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
 
+      if (modalStreamLabel) modalStreamLabel.textContent = streamName;
       if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
       if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
       if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
@@ -2492,7 +2535,7 @@
         navUserEmail.textContent = user.email || 'Admin';
 
         // Initialize cascading selectors
-        await loadSubjects();
+        await loadStreams();
       },
       onAccessDenied: (user) => {
         stateLoading.style.display = 'none';

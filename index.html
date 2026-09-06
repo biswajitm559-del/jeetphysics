@@ -533,60 +533,28 @@
       }
     });
 
-    // Dynamic resolution from database
+    // Dynamic resolution of academic streams from database
     try {
-      const subjects = await AcademicService.getSubjects();
+      const streams = await AcademicService.getStreams();
 
-      if (!subjects || subjects.length === 0) {
+      if (!streams || streams.length === 0) {
         menu.innerHTML = `
           <div style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted);">
-            No subjects available.
+            No streams available.
           </div>
         `;
         return;
       }
 
-      // Resolve first active semester for each subject in parallel
-      const subjectSemesters = await Promise.all(
-        subjects.map(async (subj) => {
-          try {
-            const semesters = await AcademicService.getSemesters(subj.slug);
-            const firstSem = (semesters && semesters.length > 0) ? semesters[0] : null;
-            return { subj, firstSem };
-          } catch (err) {
-            console.error(`Failed to load semesters for ${subj.slug}:`, err);
-            return { subj, firstSem: null };
-          }
-        })
-      );
-
-      const subjectIcons = {
-        physics: '⚛️',
-        mathematics: '📐',
-        chemistry: '🧪',
-        'computer-science': '💻',
-        biology: '🧬'
-      };
-
-      menu.innerHTML = subjectSemesters.map(({ subj, firstSem }) => {
-        const icon = subjectIcons[subj.slug] || '📘';
-        if (firstSem) {
-          const targetUrl = `/semesters/${encodeURIComponent(subj.slug)}/${encodeURIComponent(firstSem.slug)}`;
-          return `
-            <a href="${targetUrl}" role="menuitem" tabindex="0" class="syllabus-dropdown-item" title="Explore ${escapeHtml(subj.name)} syllabus">
-              <span class="dropdown-icon">${icon}</span>
-              <span>${escapeHtml(subj.name)} Syllabus</span>
-            </a>
-          `;
-        } else {
-          return `
-            <a href="javascript:void(0)" role="menuitem" class="syllabus-dropdown-item disabled" aria-disabled="true" title="Curriculum pending for ${escapeHtml(subj.name)}" style="opacity: 0.6; cursor: not-allowed;">
-              <span class="dropdown-icon">${icon}</span>
-              <span>${escapeHtml(subj.name)} Syllabus</span>
-              <span style="font-size: 0.68rem; margin-left: auto; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--text-muted);">Soon</span>
-            </a>
-          `;
-        }
+      menu.innerHTML = streams.map(stream => {
+        const icon = stream.icon || '🎓';
+        const targetUrl = `/syllabus/${encodeURIComponent(stream.slug)}`;
+        return `
+          <a href="${targetUrl}" role="menuitem" tabindex="0" class="syllabus-dropdown-item" title="Explore ${escapeHtml(stream.name)} curriculum">
+            <span class="dropdown-icon">${icon}</span>
+            <span>${escapeHtml(stream.name)}</span>
+          </a>
+        `;
       }).join('');
 
       // When a menu link is clicked, ensure mobile drawer closes

@@ -6,8 +6,24 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/syllabus/:stream",
+      "destination": "/stream"
+    },
+    {
+      "source": "/subjects/:stream/:subject",
+      "destination": "/subject"
+    },
+    {
+      "source": "/papers/:stream/:subject/:semester/:paper",
+      "destination": "/paper"
+    },
+    {
       "source": "/papers/:subject/:semester/:paper",
       "destination": "/paper"
+    },
+    {
+      "source": "/semesters/:stream/:subject/:semester",
+      "destination": "/semester"
     },
     {
       "source": "/semesters/:subject/:semester",
@@ -18,7 +34,15 @@
       "destination": "/semester"
     },
     {
+      "source": "/previous-year-questions/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/previous-year-questions/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
@@ -26,7 +50,15 @@
       "destination": "/resource"
     },
     {
+      "source": "/unit-wise-qna/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/unit-wise-qna/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
@@ -34,7 +66,15 @@
       "destination": "/resource"
     },
     {
+      "source": "/viva-questions/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/viva-questions/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
@@ -42,7 +82,15 @@
       "destination": "/resource"
     },
     {
+      "source": "/study-material/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/study-material/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
@@ -50,11 +98,23 @@
       "destination": "/resource"
     },
     {
+      "source": "/formulae-bank/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/formulae-bank/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
+      "source": "/solved-numericals/:stream/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
       "source": "/solved-numericals/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {

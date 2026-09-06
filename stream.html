@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undergraduate Academic Stream | JeetPhysics</title>
+  <meta name="description" content="Explore undergraduate academic disciplines, honours curricula, and resources across university departments." />
+  <link rel="canonical" href="https://jeetphysics.in/syllabus/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Undergraduate Academic Stream | JeetPhysics" />
+  <meta property="og:description" content="Official undergraduate curricula and academic resources." />
+  <meta property="og:url" content="https://jeetphysics.in/syllabus/" />
+  <meta property="og:site_name" content="JeetPhysics" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <!-- Structured Data Hook -->
+  <script type="application/ld+json" id="structuredData">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": []
+  }
+  </script>
+
+  <style>
+    .stream-page-wrap {
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 80px;
+    }
+
+    .stream-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stream-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .stream-breadcrumb a:hover {
+      color: var(--blue-300);
+      text-decoration: underline;
+    }
+
+    .stream-hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stream-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-400), var(--purple-400));
+    }
+
+    .stream-icon-large {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .stream-main-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .stream-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 800px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .subject-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subject-card:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .subject-card-top {
+      margin-bottom: 20px;
+    }
+
+    .subject-card-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+
+    .subject-card-title {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .subject-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .subject-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid rgba(82, 160, 255, 0.1);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--blue-300);
+      font-family: var(--font-head);
+    }
+
+    .subject-card:hover .subject-card-footer i {
+      transform: translateX(4px);
+    }
+
+    .subject-card-footer i {
+      transition: transform 0.2s ease;
+    }
+
+    /* State screens */
+    .state-container {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .spinner-pulse {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue-400);
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Ambient Background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
+    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
+      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+        <span style="font-size: 1.6rem;">⚛️</span>
+        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
+          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
+        </span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="/" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Home</a>
+        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container stream-page-wrap">
+
+    <!-- State 1: Loading -->
+    <div id="loadingState" class="state-container">
+      <div>
+        <div class="spinner-pulse"></div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Loading Stream Curriculum</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Fetching academic faculty configuration...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Error / 404 -->
+    <div id="errorState" class="state-container" style="display: none;">
+      <div style="max-width: 480px;">
+        <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.4rem;" id="errorTitle">Stream Not Found</h2>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin: 12px 0 24px;" id="errorMessage">
+          The requested academic stream could not be found or is currently inactive.
+        </p>
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-head); font-weight: 600;">
+          <i class="ph ph-arrow-left"></i> Return Home
+        </a>
+      </div>
+    </div>
+
+    <!-- State 3: Stream Content -->
+    <main id="streamContentState" style="display: none;">
+
+      <!-- Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="stream-breadcrumb">
+        <a href="/">Home</a>
+        <i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>
+        <span>Syllabus</span>
+        <i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>
+        <span id="bcStream" style="color: var(--text-primary); font-weight: 500;">Stream</span>
+      </nav>
+
+      <!-- Stream Hero Card -->
+      <section class="stream-hero-card">
+        <div class="stream-icon-large" id="streamIcon">🎓</div>
+        <h1 class="stream-main-title" id="streamTitle">Academic Stream</h1>
+        <p class="stream-desc" id="streamDescription">
+          Undergraduate curriculum and academic resources across departments.
+        </p>
+      </section>
+
+      <!-- Active Subjects Section -->
+      <section>
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
+            Academic Subjects
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin: 0;">
+            Select a subject to explore semester-wise curricula and papers.
+          </p>
+        </div>
+
+        <div class="subjects-grid" id="subjectsGrid">
+          <!-- Populated dynamically via AcademicService -->
+        </div>
+
+        <!-- Empty State (No Active Subjects) -->
+        <div id="emptySubjectsState" class="state-container" style="display: none; min-height: 30vh; background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius-md);">
+          <div>
+            <div style="font-size: 2.4rem; margin-bottom: 12px;">📚</div>
+            <h3 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Curriculum Coming Soon</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 440px; margin: 8px auto 0;">
+              No active subjects have been published under this academic stream yet. Please check back later.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script type="module">
+    import { AcademicService } from '/lib/supabaseClient.js';
+
+    const loadingState = document.getElementById('loadingState');
+    const errorState = document.getElementById('errorState');
+    const errorTitle = document.getElementById('errorTitle');
+    const errorMessage = document.getElementById('errorMessage');
+    const streamContentState = document.getElementById('streamContentState');
+
+    const bcStream = document.getElementById('bcStream');
+    const streamIcon = document.getElementById('streamIcon');
+    const streamTitle = document.getElementById('streamTitle');
+    const streamDescription = document.getElementById('streamDescription');
+    const subjectsGrid = document.getElementById('subjectsGrid');
+    const emptySubjectsState = document.getElementById('emptySubjectsState');
+
+    function resolveStreamSlug() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryStream = urlParams.get('stream');
+      if (queryStream) return queryStream.trim().toLowerCase();
+
+      // Path format: /syllabus/:stream
+      const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (segments.length >= 2 && segments[0] === 'syllabus') {
+        return segments[1].toLowerCase();
+      }
+
+      return null;
+    }
+
+    function updatePageMetadata(stream) {
+      const canonicalUrl = `https://jeetphysics.in/syllabus/${encodeURIComponent(stream.slug)}`;
+      document.title = `${stream.name} Stream Curriculum | JeetPhysics`;
+
+      const descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta && stream.description) descMeta.setAttribute('content', stream.description);
+
+      let canLink = document.querySelector('link[rel="canonical"]');
+      if (canLink) canLink.setAttribute('href', canonicalUrl);
+
+      // JSON-LD BreadcrumbList
+      const ldJson = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://jeetphysics.in/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Syllabus',
+            'item': 'https://jeetphysics.in/#syllabus'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': stream.name,
+            'item': canonicalUrl
+          }
+        ]
+      };
+      const sdEl = document.getElementById('structuredData');
+      if (sdEl) sdEl.textContent = JSON.stringify(ldJson);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    async function loadStreamPage() {
+      const streamSlug = resolveStreamSlug();
+      if (!streamSlug) {
+        showError('Invalid Stream', 'No academic stream was specified in the URL.');
+        return;
+      }
+
+      try {
+        const stream = await AcademicService.getStreamBySlug(streamSlug);
+        if (!stream) {
+          showError('Stream Not Found', `The academic stream "${streamSlug}" does not exist or has been deactivated.`);
+          return;
+        }
+
+        // Populate Stream Header
+        bcStream.textContent = stream.name;
+        streamIcon.textContent = stream.icon || '🎓';
+        streamTitle.textContent = `${stream.name} Stream`;
+        streamDescription.textContent = stream.description || `Undergraduate courses and academic resources for ${stream.name}.`;
+        updatePageMetadata(stream);
+
+        // Fetch active subjects strictly scoped to this stream
+        const subjects = await AcademicService.getSubjects(streamSlug);
+
+        if (!subjects || subjects.length === 0) {
+          subjectsGrid.style.display = 'none';
+          emptySubjectsState.style.display = 'flex';
+        } else {
+          emptySubjectsState.style.display = 'none';
+          subjectsGrid.style.display = 'grid';
+
+          const subjectIcons = {
+            physics: '⚛️',
+            mathematics: '📐',
+            chemistry: '🧪',
+            'computer-science': '💻',
+            biology: '🧬',
+            english: '📖',
+            economics: '📈',
+            history: '🏛️',
+            commerce: '📊',
+            accounting: '📑'
+          };
+
+          subjectsGrid.innerHTML = subjects.map(subj => {
+            const icon = subjectIcons[subj.slug] || '📘';
+            const targetUrl = `/subjects/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subj.slug)}`;
+            return `
+              <a href="${targetUrl}" class="subject-card" title="Explore ${escapeHtml(subj.name)}">
+                <div class="subject-card-top">
+                  <div class="subject-card-icon">${icon}</div>
+                  <h3 class="subject-card-title">${escapeHtml(subj.name)}</h3>
+                  <p class="subject-card-desc">${escapeHtml(subj.description || 'Comprehensive undergraduate curriculum and semester-wise papers.')}</p>
+                </div>
+                <div class="subject-card-footer">
+                  <span>View Semesters</span>
+                  <i class="ph ph-arrow-right"></i>
+                </div>
+              </a>
+            `;
+          }).join('');
+        }
+
+        loadingState.style.display = 'none';
+        errorState.style.display = 'none';
+        streamContentState.style.display = 'block';
+
+      } catch (err) {
+        console.error('Error loading stream page:', err);
+        showError('Unable to Load Stream', err.message || 'A network error occurred.');
+      }
+    }
+
+    function showError(title, message) {
+      loadingState.style.display = 'none';
+      streamContentState.style.display = 'none';
+      errorState.style.display = 'flex';
+      errorTitle.textContent = title;
+      errorMessage.textContent = message;
+    }
+
+    loadStreamPage();
+  </script>
+</body>
+</html>

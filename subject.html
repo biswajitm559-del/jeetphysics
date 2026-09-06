@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subject Curriculum & Semesters | JeetPhysics</title>
+  <meta name="description" content="Explore undergraduate subject curriculum, semester structure, and papers under Fakir Mohan University (NEP 2020)." />
+  <link rel="canonical" href="https://jeetphysics.in/subjects/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Subject Curriculum & Semesters | JeetPhysics" />
+  <meta property="og:description" content="Explore undergraduate subject curriculum and active semester courses." />
+  <meta property="og:url" content="https://jeetphysics.in/subjects/" />
+  <meta property="og:site_name" content="JeetPhysics" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <!-- Structured Data Hook -->
+  <script type="application/ld+json" id="structuredData">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": []
+  }
+  </script>
+
+  <style>
+    .subject-page-wrap {
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 80px;
+    }
+
+    .subject-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .subject-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .subject-breadcrumb a:hover {
+      color: var(--blue-300);
+      text-decoration: underline;
+    }
+
+    .subject-hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subject-hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-500), var(--cyan-400), var(--purple-400));
+    }
+
+    .subject-stream-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 12px;
+    }
+
+    .subject-main-title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .subject-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 800px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .semesters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .semester-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .semester-card:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .semester-card-top {
+      margin-bottom: 16px;
+    }
+
+    .semester-pill {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: var(--blue-300);
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .semester-card-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .semester-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .semester-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid rgba(82, 160, 255, 0.1);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--blue-300);
+      font-family: var(--font-head);
+    }
+
+    .semester-card:hover .semester-card-footer i {
+      transform: translateX(4px);
+    }
+
+    .semester-card-footer i {
+      transition: transform 0.2s ease;
+    }
+
+    /* State screens */
+    .state-container {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .spinner-pulse {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--blue-400);
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield Ambient Background -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
+    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
+      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+        <span style="font-size: 1.6rem;">⚛️</span>
+        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
+          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
+        </span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="/" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Home</a>
+        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container subject-page-wrap">
+
+    <!-- State 1: Loading -->
+    <div id="loadingState" class="state-container">
+      <div>
+        <div class="spinner-pulse"></div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Loading Subject Curriculum</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Resolving academic stream and subject structure...</p>
+      </div>
+    </div>
+
+    <!-- State 2: Error / 404 -->
+    <div id="errorState" class="state-container" style="display: none;">
+      <div style="max-width: 480px;">
+        <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+        <h2 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.4rem;" id="errorTitle">Subject Not Found</h2>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin: 12px 0 24px;" id="errorMessage">
+          The requested subject could not be resolved under this academic stream.
+        </p>
+        <a href="/" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); text-decoration: none; font-family: var(--font-head); font-weight: 600;">
+          <i class="ph ph-arrow-left"></i> Return Home
+        </a>
+      </div>
+    </div>
+
+    <!-- State 3: Subject Content -->
+    <main id="subjectContentState" style="display: none;">
+
+      <!-- Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="subject-breadcrumb">
+        <a href="/">Home</a>
+        <i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>
+        <a href="/#syllabus">Syllabus</a>
+        <i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>
+        <a href="#" id="bcStreamLink">Stream</a>
+        <i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>
+        <span id="bcSubject" style="color: var(--text-primary); font-weight: 500;">Subject</span>
+      </nav>
+
+      <!-- Subject Hero Card -->
+      <section class="subject-hero-card">
+        <div class="subject-stream-tag" id="subjectStreamTag">
+          <span id="subjectStreamIcon">🔬</span>
+          <span id="subjectStreamName">Science</span>
+        </div>
+        <h1 class="subject-main-title" id="subjectTitle">Subject Curriculum</h1>
+        <p class="subject-desc" id="subjectDescription">
+          Undergraduate syllabus and semester-wise papers.
+        </p>
+      </section>
+
+      <!-- Semesters Section -->
+      <section>
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
+            Available Semesters
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin: 0;">
+            Select a semester to view core Theory and Laboratory Practical papers.
+          </p>
+        </div>
+
+        <div class="semesters-grid" id="semestersGrid">
+          <!-- Populated dynamically via AcademicService -->
+        </div>
+
+        <!-- Empty State (No Active Semesters) -->
+        <div id="emptySemestersState" class="state-container" style="display: none; min-height: 30vh; background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius-md);">
+          <div>
+            <div style="font-size: 2.4rem; margin-bottom: 12px;">📋</div>
+            <h3 style="font-family: var(--font-head); color: var(--text-primary); font-size: 1.2rem;">Curriculum Coming Soon</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 440px; margin: 8px auto 0;">
+              No active semester papers are published for this subject yet.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script type="module">
+    import { AcademicService } from '/lib/supabaseClient.js';
+
+    const loadingState = document.getElementById('loadingState');
+    const errorState = document.getElementById('errorState');
+    const errorTitle = document.getElementById('errorTitle');
+    const errorMessage = document.getElementById('errorMessage');
+    const subjectContentState = document.getElementById('subjectContentState');
+
+    const bcStreamLink = document.getElementById('bcStreamLink');
+    const bcSubject = document.getElementById('bcSubject');
+    const subjectStreamTag = document.getElementById('subjectStreamTag');
+    const subjectStreamIcon = document.getElementById('subjectStreamIcon');
+    const subjectStreamName = document.getElementById('subjectStreamName');
+    const subjectTitle = document.getElementById('subjectTitle');
+    const subjectDescription = document.getElementById('subjectDescription');
+    const semestersGrid = document.getElementById('semestersGrid');
+    const emptySemestersState = document.getElementById('emptySemestersState');
+
+    function resolveRouteParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryStream = urlParams.get('stream');
+      const querySubject = urlParams.get('subject');
+
+      if (queryStream && querySubject) {
+        return {
+          streamSlug: queryStream.trim().toLowerCase(),
+          subjectSlug: querySubject.trim().toLowerCase()
+        };
+      }
+
+      // Path format: /subjects/:stream/:subject
+      const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (segments.length >= 3 && segments[0] === 'subjects') {
+        return {
+          streamSlug: segments[1].toLowerCase(),
+          subjectSlug: segments[2].toLowerCase()
+        };
+      }
+
+      return null;
+    }
+
+    function updatePageMetadata(stream, subject) {
+      const canonicalUrl = `https://jeetphysics.in/subjects/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}`;
+      document.title = `${subject.name} Curriculum (${stream.name}) | JeetPhysics`;
+
+      const descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta && subject.description) descMeta.setAttribute('content', subject.description);
+
+      let canLink = document.querySelector('link[rel="canonical"]');
+      if (canLink) canLink.setAttribute('href', canonicalUrl);
+
+      // JSON-LD BreadcrumbList
+      const ldJson = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://jeetphysics.in/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': stream.name,
+            'item': `https://jeetphysics.in/syllabus/${encodeURIComponent(stream.slug)}`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': subject.name,
+            'item': canonicalUrl
+          }
+        ]
+      };
+      const sdEl = document.getElementById('structuredData');
+      if (sdEl) sdEl.textContent = JSON.stringify(ldJson);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    async function loadSubjectPage() {
+      const params = resolveRouteParams();
+      if (!params || !params.streamSlug || !params.subjectSlug) {
+        showError('Invalid URL', 'Academic stream and subject must both be specified in the URL.');
+        return;
+      }
+
+      const { streamSlug, subjectSlug } = params;
+
+      try {
+        // Resolve subject strictly scoped under parent stream
+        const subject = await AcademicService.getSubjectBySlug(streamSlug, subjectSlug);
+        if (!subject) {
+          showError('Subject Not Found', `Subject "${subjectSlug}" does not exist under stream "${streamSlug}".`);
+          return;
+        }
+
+        const stream = subject.academic_streams || await AcademicService.getStreamBySlug(streamSlug);
+        if (!stream) {
+          showError('Stream Not Found', `Parent stream "${streamSlug}" is invalid or inactive.`);
+          return;
+        }
+
+        // Populate Header & Breadcrumbs
+        bcStreamLink.textContent = stream.name;
+        bcStreamLink.href = `/syllabus/${encodeURIComponent(stream.slug)}`;
+        bcSubject.textContent = subject.name;
+
+        subjectStreamName.textContent = stream.name;
+        subjectStreamIcon.textContent = stream.icon || '🎓';
+        subjectTitle.textContent = `${subject.name} Curriculum`;
+        subjectDescription.textContent = subject.description || `Official undergraduate curriculum and semester-wise papers for ${subject.name}.`;
+        updatePageMetadata(stream, subject);
+
+        // Fetch active semesters for this stream + subject
+        const semesters = await AcademicService.getSemesters(streamSlug, subjectSlug);
+
+        if (!semesters || semesters.length === 0) {
+          semestersGrid.style.display = 'none';
+          emptySemestersState.style.display = 'flex';
+        } else {
+          emptySemestersState.style.display = 'none';
+          semestersGrid.style.display = 'grid';
+
+          semestersGrid.innerHTML = semesters.map(sem => {
+            const targetUrl = `/semesters/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}/${encodeURIComponent(sem.slug)}`;
+            return `
+              <a href="${targetUrl}" class="semester-card" title="Open ${escapeHtml(sem.name)}">
+                <div class="semester-card-top">
+                  <span class="semester-pill">Semester ${sem.semester_number}</span>
+                  <h3 class="semester-card-title">${escapeHtml(sem.name)}</h3>
+                  <p class="semester-card-desc">Theory core papers and practical laboratory modules.</p>
+                </div>
+                <div class="semester-card-footer">
+                  <span>Explore Papers</span>
+                  <i class="ph ph-arrow-right"></i>
+                </div>
+              </a>
+            `;
+          }).join('');
+        }
+
+        loadingState.style.display = 'none';
+        errorState.style.display = 'none';
+        subjectContentState.style.display = 'block';
+
+      } catch (err) {
+        console.error('Error loading subject page:', err);
+        showError('Unable to Load Subject', err.message || 'A network error occurred.');
+      }
+    }
+
+    function showError(title, message) {
+      loadingState.style.display = 'none';
+      subjectContentState.style.display = 'none';
+      errorState.style.display = 'flex';
+      errorTitle.textContent = title;
+      errorMessage.textContent = message;
+    }
+
+    loadSubjectPage();
+  </script>
+</body>
+</html>

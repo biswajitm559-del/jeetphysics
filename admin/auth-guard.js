@@ -4,7 +4,7 @@
  * Phase 4C Architecture: Supabase Auth & public.admin_users RLS Guard
  */
 
-import { supabase, AcademicService } from '/lib/supabaseClient.js';
+import { supabase, AcademicService } from '../lib/supabaseClient.js';
 
 export const AdminAuthGuard = {
   /**

@@ -487,7 +487,11 @@
       <nav aria-label="Breadcrumb" class="resource-breadcrumb">
         <a href="/">Home</a>
         <span>&gt;</span>
-        <a href="#" id="bcSubject">Physics</a>
+        <a href="/#syllabus">Syllabus</a>
+        <span>&gt;</span>
+        <a href="#" id="bcStream">Stream</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSubject">Subject</a>
         <span>&gt;</span>
         <a href="#" id="bcSemester">Semester</a>
         <span>&gt;</span>
@@ -544,6 +548,7 @@
     const resourceContentState = document.getElementById('resourceContentState');
 
     // Breadcrumbs
+    const bcStream = document.getElementById('bcStream');
     const bcSubject = document.getElementById('bcSubject');
     const bcSemester = document.getElementById('bcSemester');
     const bcPaper = document.getElementById('bcPaper');
@@ -562,11 +567,15 @@
 
     /**
      * Resolve Route Segments from URL
-     * Format: /:resourceType/:subject/:semester/:paper
+     * Format:
+     * - /:resourceType/:stream/:subject/:semester/:paper (Canonical)
+     * - /resources/:resourceType/:stream/:subject/:semester/:paper
+     * - /:resourceType/:subject/:semester/:paper (Legacy)
      */
     function resolveRouteParams() {
       const urlParams = new URLSearchParams(window.location.search);
       const queryType = urlParams.get('type');
+      const queryStream = urlParams.get('stream');
       const querySubject = urlParams.get('subject');
       const querySemester = urlParams.get('semester');
       const queryPaper = urlParams.get('paper');
@@ -574,6 +583,7 @@
       if (queryType && querySubject && querySemester && queryPaper) {
         return {
           resourceSlug: queryType.trim().toLowerCase(),
+          streamSlug: queryStream ? queryStream.trim().toLowerCase() : null,
           subjectSlug: querySubject.trim().toLowerCase(),
           semesterSlug: querySemester.trim().toLowerCase(),
           paperSlug: queryPaper.trim().toLowerCase()
@@ -581,24 +591,45 @@
       }
 
       // Extract from pathname:
-      // Supports /:resourceType/:subject/:semester/:paper
-      // and /resources/:resourceType/:subject/:semester/:paper
       const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
-      if (segments[0] === 'resources' && segments.length >= 5) {
-        return {
-          resourceSlug: segments[1].toLowerCase(),
-          subjectSlug: segments[2].toLowerCase(),
-          semesterSlug: segments[3].toLowerCase(),
-          paperSlug: segments[4].toLowerCase()
-        };
-      }
-      if (segments.length >= 4) {
-        return {
-          resourceSlug: segments[0].toLowerCase(),
-          subjectSlug: segments[1].toLowerCase(),
-          semesterSlug: segments[2].toLowerCase(),
-          paperSlug: segments[3].toLowerCase()
-        };
+      if (segments[0] === 'resources') {
+        if (segments.length >= 6) {
+          return {
+            resourceSlug: segments[1].toLowerCase(),
+            streamSlug: segments[2].toLowerCase(),
+            subjectSlug: segments[3].toLowerCase(),
+            semesterSlug: segments[4].toLowerCase(),
+            paperSlug: segments[5].toLowerCase()
+          };
+        }
+        if (segments.length >= 5) {
+          return {
+            resourceSlug: segments[1].toLowerCase(),
+            streamSlug: null,
+            subjectSlug: segments[2].toLowerCase(),
+            semesterSlug: segments[3].toLowerCase(),
+            paperSlug: segments[4].toLowerCase()
+          };
+        }
+      } else {
+        if (segments.length >= 5) {
+          return {
+            resourceSlug: segments[0].toLowerCase(),
+            streamSlug: segments[1].toLowerCase(),
+            subjectSlug: segments[2].toLowerCase(),
+            semesterSlug: segments[3].toLowerCase(),
+            paperSlug: segments[4].toLowerCase()
+          };
+        }
+        if (segments.length >= 4) {
+          return {
+            resourceSlug: segments[0].toLowerCase(),
+            streamSlug: null,
+            subjectSlug: segments[1].toLowerCase(),
+            semesterSlug: segments[2].toLowerCase(),
+            paperSlug: segments[3].toLowerCase()
+          };
+        }
       }
 
       return null;
@@ -607,10 +638,11 @@
     /**
      * SEO & Open Graph Metadata
      */
-    function updatePageMetadata(resourceType, subject, semester, paper) {
+    function updatePageMetadata(resourceType, stream, subject, semester, paper) {
+      const streamSlug = stream?.slug || 'science';
       const pageTitle = `${resourceType.display_name} — ${paper.paper_code}: ${paper.name} | JeetPhysics`;
-      const pageDesc = `Access official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, B.Sc Physics) online.`;
-      const canonicalUrl = `https://jeetphysics.in/${resourceType.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+      const pageDesc = `Access official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, ${subject.name}) online.`;
+      const canonicalUrl = `https://jeetphysics.in/${resourceType.slug}/${streamSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
 
       document.title = pageTitle;
 
@@ -644,24 +676,36 @@
             {
               "@type": "ListItem",
               "position": 2,
-              "name": subject.name,
-              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+              "name": "Syllabus",
+              "item": "https://jeetphysics.in/#syllabus"
             },
             {
               "@type": "ListItem",
               "position": 3,
-              "name": semester.name,
-              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+              "name": stream?.name || 'Science',
+              "item": `https://jeetphysics.in/syllabus/${streamSlug}`
             },
             {
               "@type": "ListItem",
               "position": 4,
-              "name": `${paper.paper_code}: ${paper.name}`,
-              "item": `https://jeetphysics.in/papers/${subject.slug}/${semester.slug}/${paper.slug}`
+              "name": subject.name,
+              "item": `https://jeetphysics.in/subjects/${streamSlug}/${subject.slug}`
             },
             {
               "@type": "ListItem",
               "position": 5,
+              "name": semester.name,
+              "item": `https://jeetphysics.in/semesters/${streamSlug}/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "name": `${paper.paper_code}: ${paper.name}`,
+              "item": `https://jeetphysics.in/papers/${streamSlug}/${subject.slug}/${semester.slug}/${paper.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 7,
               "name": resourceType.display_name,
               "item": canonicalUrl
             }
@@ -716,11 +760,11 @@
         return;
       }
 
-      const { resourceSlug, subjectSlug, semesterSlug, paperSlug } = params;
+      const { resourceSlug, streamSlug, subjectSlug, semesterSlug, paperSlug } = params;
 
       try {
         // 1. Resolve Paper via full hierarchy
-        const paper = await AcademicService.getPaperBySlug(subjectSlug, semesterSlug, paperSlug);
+        const paper = await AcademicService.getPaperBySlug(streamSlug, subjectSlug, semesterSlug, paperSlug);
         if (!paper) {
           showError(
             'Paper Not Found',
@@ -731,7 +775,10 @@
 
         const semester = paper.semesters;
         const subject = semester.subjects;
-        const paperUrl = `/papers/${subject.slug}/${semester.slug}/${paper.slug}`;
+        const stream = subject.academic_streams || { slug: streamSlug || 'science', name: 'Science' };
+        const strSlug = stream.slug || streamSlug || 'science';
+        const strName = stream.name || 'Science';
+        const paperUrl = `/papers/${strSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
 
         // 2. Resolve Resource Type from database
         const resourceType = await AcademicService.getResourceTypeBySlug(resourceSlug);
@@ -757,10 +804,14 @@
         }
 
         // Populate Breadcrumbs
+        if (bcStream) {
+          bcStream.textContent = strName;
+          bcStream.href = `/syllabus/${strSlug}`;
+        }
         bcSubject.textContent = subject.name;
-        bcSubject.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcSubject.href = `/subjects/${strSlug}/${subject.slug}`;
         bcSemester.textContent = semester.name;
-        bcSemester.href = `/semesters/${subject.slug}/${semester.slug}`;
+        bcSemester.href = `/semesters/${strSlug}/${subject.slug}/${semester.slug}`;
         bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
         bcPaper.href = paperUrl;
         bcResource.textContent = resourceType.display_name;
@@ -776,7 +827,7 @@
         btnBackToPaper.href = paperUrl;
 
         // Update Dynamic SEO
-        updatePageMetadata(resourceType, subject, semester, paper);
+        updatePageMetadata(resourceType, stream, subject, semester, paper);
 
         // 4. Fetch Published Resources for this Paper and Type
         const resources = await AcademicService.getPublishedResources(paper.id, resourceType.type_key);

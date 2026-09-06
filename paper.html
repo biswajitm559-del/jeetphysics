@@ -481,9 +481,13 @@
       <nav aria-label="Breadcrumb" class="paper-breadcrumb" id="breadcrumbNav">
         <a href="/">Home</a>
         <span>&gt;</span>
-        <a href="#" id="bcSubject">Physics</a>
+        <a href="/#syllabus">Syllabus</a>
         <span>&gt;</span>
-        <a href="#" id="bcSemester">Semester</a>
+        <a href="#" id="bcStreamLink"><span id="bcStream">Stream</span></a>
+        <span>&gt;</span>
+        <a href="#" id="bcSubjectLink"><span id="bcSubject">Subject</span></a>
+        <span>&gt;</span>
+        <a href="#" id="bcSemesterLink"><span id="bcSemester">Semester</span></a>
         <span>&gt;</span>
         <span style="color: var(--text-primary); font-weight: 500;" id="bcPaper">Paper</span>
       </nav>
@@ -550,8 +554,12 @@
     const paperContentState = document.getElementById('paperContentState');
 
     // Breadcrumb Elements
+    const bcStream = document.getElementById('bcStream');
+    const bcStreamLink = document.getElementById('bcStreamLink');
     const bcSubject = document.getElementById('bcSubject');
+    const bcSubjectLink = document.getElementById('bcSubjectLink');
     const bcSemester = document.getElementById('bcSemester');
+    const bcSemesterLink = document.getElementById('bcSemesterLink');
     const bcPaper = document.getElementById('bcPaper');
     const navSemLink = document.getElementById('navSemLink');
 
@@ -580,31 +588,46 @@
     /**
      * Resolve path hierarchy from URL
      * Supports:
-     * - /papers/[subject]/[semester]/[paper] (Vercel rewrite)
-     * - /paper.html?subject=...&semester=...&paper=... (Local / Query fallback)
+     * - /papers/[stream]/[subject]/[semester]/[paper] (Canonical Vercel rewrite)
+     * - /papers/[subject]/[semester]/[paper] (Legacy Vercel rewrite)
+     * - /paper.html?stream=...&subject=...&semester=...&paper=... (Local / Query fallback)
      */
     function resolveRouteParams() {
       const urlParams = new URLSearchParams(window.location.search);
+      const queryStream = urlParams.get('stream');
       const querySubject = urlParams.get('subject');
       const querySemester = urlParams.get('semester');
       const queryPaper = urlParams.get('paper');
 
       if (querySubject && querySemester && queryPaper) {
         return {
+          streamSlug: queryStream ? queryStream.trim().toLowerCase() : null,
           subjectSlug: querySubject.trim().toLowerCase(),
           semesterSlug: querySemester.trim().toLowerCase(),
           paperSlug: queryPaper.trim().toLowerCase()
         };
       }
 
-      // Extract from pathname: /papers/physics/semester-i/paper-1-mathematical-physics-1
+      // Extract from pathname:
+      // /papers/science/physics/semester-i/paper-1-mathematical-physics-1 (5 segments)
+      // /papers/physics/semester-i/paper-1-mathematical-physics-1 (legacy 4 segments)
       const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
-      if (segments.length >= 4 && segments[0] === 'papers') {
-        return {
-          subjectSlug: segments[1].toLowerCase(),
-          semesterSlug: segments[2].toLowerCase(),
-          paperSlug: segments[3].toLowerCase()
-        };
+      if (segments[0] === 'papers') {
+        if (segments.length >= 5) {
+          return {
+            streamSlug: segments[1].toLowerCase(),
+            subjectSlug: segments[2].toLowerCase(),
+            semesterSlug: segments[3].toLowerCase(),
+            paperSlug: segments[4].toLowerCase()
+          };
+        } else if (segments.length >= 4) {
+          return {
+            streamSlug: null,
+            subjectSlug: segments[1].toLowerCase(),
+            semesterSlug: segments[2].toLowerCase(),
+            paperSlug: segments[3].toLowerCase()
+          };
+        }
       }
 
       return null;
@@ -613,12 +636,13 @@
     /**
      * Update dynamic SEO and Schema tags
      */
-    function updatePageMetadata(subject, semester, paper) {
-      const pageTitle = `${paper.paper_code}: ${paper.name} | B.Sc Physics ${semester.name} | JeetPhysics`;
+    function updatePageMetadata(stream, subject, semester, paper) {
+      const streamSlug = stream?.slug || 'science';
+      const pageTitle = `${paper.paper_code}: ${paper.name} | ${subject.name} ${semester.name} | JeetPhysics`;
       const pageDesc = paper.description
         ? `${paper.paper_code} (${paper.paper_type}): ${paper.name}. ${paper.description.substring(0, 150)}...`
         : `Explore official syllabus and academic resources for ${paper.name} under Fakir Mohan University.`;
-      const canonicalUrl = `https://jeetphysics.in/papers/${subject.slug}/${semester.slug}/${paper.slug}`;
+      const canonicalUrl = `https://jeetphysics.in/papers/${streamSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
 
       // Document Title
       document.title = pageTitle;
@@ -657,18 +681,30 @@
             {
               "@type": "ListItem",
               "position": 2,
-              "name": subject.name,
-              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+              "name": "Syllabus",
+              "item": "https://jeetphysics.in/#syllabus"
             },
             {
               "@type": "ListItem",
               "position": 3,
-              "name": semester.name,
-              "item": `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`
+              "name": stream?.name || 'Science',
+              "item": `https://jeetphysics.in/syllabus/${streamSlug}`
             },
             {
               "@type": "ListItem",
               "position": 4,
+              "name": subject.name,
+              "item": `https://jeetphysics.in/subjects/${streamSlug}/${subject.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": semester.name,
+              "item": `https://jeetphysics.in/semesters/${streamSlug}/${subject.slug}/${semester.slug}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
               "name": `${paper.paper_code}: ${paper.name}`,
               "item": canonicalUrl
             }
@@ -679,56 +715,41 @@
     }
 
     /**
-     * Render Dynamic Resource Chips
+     * Render Dynamic Resource Chips (Authoritative Visibility Rule)
+     * A resource category is visible on the paper page ONLY if:
+     * 1. resource_types.is_active = true
+     * 2. show_on_paper = true
+     * 3. applicable_paper_type matches 'BOTH' or paper.paper_type
+     * 4. Exclude 'SYLLABUS' (dedicated official syllabus viewer)
+     * 5. Paper has at least 1 published active resource in that category (publishedTypeKeys)
      */
-    async function renderResourceChips(subject, semester, paper) {
+    async function renderResourceChips(stream, subject, semester, paper) {
       try {
-        // 1. Fetch CMS resource types from database
-        const resourceTypes = await AcademicService.getResourceTypes();
-
-        // 2. Fetch all published resources for this paper to calculate counts
-        const publishedResources = await AcademicService.getPublishedResources(paper.id);
-
-        // Group counts by type_key
-        const countsByType = {};
-        publishedResources.forEach(r => {
-          countsByType[r.resource_type] = (countsByType[r.resource_type] || 0) + 1;
-        });
-
-        // 3. Filter eligible resource types:
-        // - show_on_paper === true
-        // - is_active === true
-        // - applicable_paper_type matches 'BOTH' or paper.paper_type
-        // - exclude 'SYLLABUS' (since syllabus is rendered in the dedicated viewer)
-        const eligibleTypes = resourceTypes.filter(rt => {
-          if (!rt.show_on_paper || !rt.is_active) return false;
-          if (rt.type_key === 'SYLLABUS') return false;
-          if (rt.applicable_paper_type !== 'BOTH' && rt.applicable_paper_type !== paper.paper_type) {
-            return false;
-          }
-          return true;
-        });
+        // Fetch visible resource types using consolidated AcademicService visibility rule
+        const eligibleTypes = await AcademicService.getVisibleResourceTypesForPaper(paper.id, paper.paper_type);
 
         if (eligibleTypes.length === 0) {
           resourceChipsGrid.innerHTML = `
-            <div style="grid-column: 1 / -1; padding: 20px; color: var(--text-muted); font-size: 0.9rem;">
-              No resource categories configured for this paper type.
+            <div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.95rem; background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius-md);">
+              No additional study materials or question papers published for this paper yet. Check back soon!
             </div>
           `;
           return;
         }
 
-        // 4. Render Chips
+        const strSlug = stream?.slug || 'science';
+
+        // Render Chips pointing to canonical stream-aware URLs
         resourceChipsGrid.innerHTML = eligibleTypes.map(rt => {
-          const count = countsByType[rt.type_key] || 0;
-          const targetUrl = `/${rt.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+          const count = rt.published_count || 0;
+          const targetUrl = `/${rt.slug}/${strSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
           const countClass = count > 0 ? 'chip-count' : 'chip-count empty';
 
           return `
-            <a href="${targetUrl}" class="resource-chip" title="Explore ${rt.display_name}">
+            <a href="${targetUrl}" class="resource-chip" title="Explore ${escapeHtml(rt.display_name)}">
               <div class="chip-left">
-                <span class="chip-icon">${rt.icon || '📄'}</span>
-                <span class="chip-name">${rt.display_name}</span>
+                <span class="chip-icon">${escapeHtml(rt.icon || '📄')}</span>
+                <span class="chip-name">${escapeHtml(rt.display_name)}</span>
               </div>
               <span class="${countClass}">${count}</span>
             </a>
@@ -834,11 +855,11 @@
         return;
       }
 
-      const { subjectSlug, semesterSlug, paperSlug } = params;
+      const { streamSlug, subjectSlug, semesterSlug, paperSlug } = params;
 
       try {
-        // Strict Full-Hierarchy Resolution: subject.slug -> semester.slug -> paper.slug
-        const paper = await AcademicService.getPaperBySlug(subjectSlug, semesterSlug, paperSlug);
+        // Strict Full-Hierarchy Resolution: streamSlug (optional) -> subject.slug -> semester.slug -> paper.slug
+        const paper = await AcademicService.getPaperBySlug(streamSlug, subjectSlug, semesterSlug, paperSlug);
 
         if (!paper) {
           showError(
@@ -850,14 +871,19 @@
 
         const semester = paper.semesters;
         const subject = semester.subjects;
+        const stream = subject.academic_streams || { slug: streamSlug || 'science', name: 'Science' };
+        const strSlug = stream.slug || streamSlug || 'science';
+        const strName = stream.name || 'Science';
 
         // Populate Breadcrumbs
-        bcSubject.textContent = subject.name;
-        bcSubject.href = `/semesters/${subject.slug}/${semester.slug}`;
-        bcSemester.textContent = semester.name;
-        bcSemester.href = `/semesters/${subject.slug}/${semester.slug}`;
-        bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
-        navSemLink.href = `/semesters/${subject.slug}/${semester.slug}`;
+        if (bcStream) bcStream.textContent = strName;
+        if (bcStreamLink) bcStreamLink.href = `/syllabus/${strSlug}`;
+        if (bcSubject) bcSubject.textContent = subject.name;
+        if (bcSubjectLink) bcSubjectLink.href = `/subjects/${strSlug}/${subject.slug}`;
+        if (bcSemester) bcSemester.textContent = semester.name;
+        if (bcSemesterLink) bcSemesterLink.href = `/semesters/${strSlug}/${subject.slug}/${semester.slug}`;
+        if (bcPaper) bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
+        if (navSemLink) navSemLink.href = `/semesters/${strSlug}/${subject.slug}/${semester.slug}`;
 
         // Populate Paper Header
         paperCode.textContent = paper.paper_code;
@@ -869,10 +895,10 @@
         paperDescription.textContent = paper.description || 'Comprehensive undergraduate syllabus curriculum.';
 
         // Update Dynamic SEO & Schema
-        updatePageMetadata(subject, semester, paper);
+        updatePageMetadata(stream, subject, semester, paper);
 
-        // Render Dynamic Resource Chips
-        await renderResourceChips(subject, semester, paper);
+        // Render Dynamic Resource Chips (Authoritative Visibility)
+        await renderResourceChips(stream, subject, semester, paper);
 
         // Render Official Syllabus Viewer
         await renderSyllabusSection(paper);

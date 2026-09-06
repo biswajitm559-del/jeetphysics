@@ -370,7 +370,11 @@
       <nav aria-label="Breadcrumb" class="sem-breadcrumb">
         <a href="/">Home</a>
         <span>&gt;</span>
-        <span id="bcSubject">Physics</span>
+        <a href="/#syllabus">Syllabus</a>
+        <span>&gt;</span>
+        <a href="#" id="bcStreamLink">Stream</a>
+        <span>&gt;</span>
+        <a href="#" id="bcSubjectLink"><span id="bcSubject">Subject</span></a>
         <span>&gt;</span>
         <span style="color: var(--text-primary); font-weight: 500;" id="bcSemester">Semester</span>
       </nav>
@@ -428,6 +432,8 @@
     const errorMessage = document.getElementById('errorMessage');
     const semContentState = document.getElementById('semContentState');
 
+    const bcStreamLink = document.getElementById('bcStreamLink');
+    const bcSubjectLink = document.getElementById('bcSubjectLink');
     const bcSubject = document.getElementById('bcSubject');
     const bcSemester = document.getElementById('bcSemester');
     const semTitle = document.getElementById('semTitle');
@@ -437,20 +443,31 @@
 
     function resolveRouteParams() {
       const urlParams = new URLSearchParams(window.location.search);
+      const queryStream = urlParams.get('stream');
       const querySubject = urlParams.get('subject');
       const querySemester = urlParams.get('semester');
 
       if (querySubject && querySemester) {
         return {
+          streamSlug: queryStream ? queryStream.trim().toLowerCase() : null,
           subjectSlug: querySubject.trim().toLowerCase(),
           semesterSlug: querySemester.trim().toLowerCase()
         };
       }
 
-      // Extract from pathname: /semesters/physics/semester-i or /semesters/physics
+      // Extract from pathname: /semesters/:stream/:subject/:semester or /semesters/:subject/:semester
       const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
-      if (segments.length >= 3 && segments[0] === 'semesters') {
+      if (segments.length >= 4 && segments[0] === 'semesters') {
         return {
+          streamSlug: segments[1].toLowerCase(),
+          subjectSlug: segments[2].toLowerCase(),
+          semesterSlug: segments[3].toLowerCase()
+        };
+      }
+
+      if (segments.length === 3 && segments[0] === 'semesters') {
+        return {
+          streamSlug: null,
           subjectSlug: segments[1].toLowerCase(),
           semesterSlug: segments[2].toLowerCase()
         };
@@ -458,29 +475,23 @@
 
       if (segments.length === 2 && segments[0] === 'semesters') {
         return {
+          streamSlug: null,
           subjectSlug: segments[1].toLowerCase(),
           semesterSlug: null
         };
       }
 
-      if (querySubject) {
-        return {
-          subjectSlug: querySubject.trim().toLowerCase(),
-          semesterSlug: null
-        };
-      }
-
-      // Default fallback if visiting /semesters or /semester.html directly
       return {
+        streamSlug: 'science',
         subjectSlug: 'physics',
         semesterSlug: 'semester-i'
       };
     }
 
-    function updatePageMetadata(subject, semester) {
-      const pageTitle = `B.Sc ${subject.name} ${semester.name} Papers & Syllabus | JeetPhysics`;
-      const pageDesc = `Official FMU B.Sc ${subject.name} ${semester.name} curriculum. Access core Theory and Laboratory Practical papers, official syllabi, and study resources.`;
-      const canonicalUrl = `https://jeetphysics.in/semesters/${subject.slug}/${semester.slug}`;
+    function updatePageMetadata(stream, subject, semester) {
+      const pageTitle = `${subject.name} ${semester.name} Papers & Syllabus (${stream.name}) | JeetPhysics`;
+      const pageDesc = `Official ${subject.name} ${semester.name} curriculum under ${stream.name} stream. Access core Theory and Laboratory Practical papers, official syllabi, and study resources.`;
+      const canonicalUrl = `https://jeetphysics.in/semesters/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}/${encodeURIComponent(semester.slug)}`;
 
       document.title = pageTitle;
 
@@ -514,12 +525,18 @@
             {
               "@type": "ListItem",
               "position": 2,
-              "name": subject.name,
-              "item": canonicalUrl
+              "name": stream.name,
+              "item": `https://jeetphysics.in/syllabus/${encodeURIComponent(stream.slug)}`
             },
             {
               "@type": "ListItem",
               "position": 3,
+              "name": subject.name,
+              "item": `https://jeetphysics.in/subjects/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}`
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
               "name": semester.name,
               "item": canonicalUrl
             }
@@ -530,12 +547,12 @@
     }
 
     async function initSemesterPage() {
-      let { subjectSlug, semesterSlug } = resolveRouteParams();
+      let { streamSlug, subjectSlug, semesterSlug } = resolveRouteParams();
 
       try {
         // If semester was not specified, dynamically resolve the first active semester for this subject
         if (!semesterSlug) {
-          const sems = await AcademicService.getSemesters(subjectSlug);
+          const sems = await AcademicService.getSemesters(streamSlug, subjectSlug);
           if (sems && sems.length > 0) {
             semesterSlug = sems[0].slug;
           } else {
@@ -547,8 +564,8 @@
           }
         }
 
-        // 1. Resolve Semester and Subject
-        const semester = await AcademicService.getSemesterBySlug(subjectSlug, semesterSlug);
+        // 1. Resolve Semester and Subject strictly with stream context
+        const semester = await AcademicService.getSemesterBySlug(streamSlug, subjectSlug, semesterSlug);
 
         if (!semester) {
           showError(
@@ -559,34 +576,39 @@
         }
 
         const subject = semester.subjects;
+        const stream = subject.academic_streams;
 
         // 2. Fetch all semesters for subject to populate switcher tabs
-        const allSemesters = await AcademicService.getSemesters(subjectSlug);
+        const allSemesters = await AcademicService.getSemesters(stream.slug, subject.slug);
 
         semSwitcher.innerHTML = allSemesters.map(s => {
           const isActive = s.slug === semester.slug;
           const activeClass = isActive ? 'sem-tab active' : 'sem-tab';
+          const targetUrl = `/semesters/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}/${encodeURIComponent(s.slug)}`;
           return `
-            <a href="/semesters/${subject.slug}/${s.slug}" class="${activeClass}">
+            <a href="${targetUrl}" class="${activeClass}">
               <span>${s.name}</span>
             </a>
           `;
         }).join('');
 
         // 3. Populate Header & Breadcrumbs
+        bcStreamLink.textContent = stream.name;
+        bcStreamLink.href = `/syllabus/${encodeURIComponent(stream.slug)}`;
+        bcSubjectLink.href = `/subjects/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}`;
         bcSubject.textContent = subject.name;
         bcSemester.textContent = semester.name;
         semTitle.textContent = `${subject.name} — ${semester.name}`;
-        updatePageMetadata(subject, semester);
+        updatePageMetadata(stream, subject, semester);
 
         // 4. Fetch all papers for this semester
-        const papers = await AcademicService.getPapersBySemester(subjectSlug, semesterSlug);
+        const papers = await AcademicService.getPapersBySemester(stream.slug, subject.slug, semester.slug);
 
         const theoryPapers = papers.filter(p => p.paper_type === 'THEORY');
         const labPapers = papers.filter(p => p.paper_type === 'LAB');
 
         function renderPaperCard(paper) {
-          const targetUrl = `/papers/${subject.slug}/${semester.slug}/${paper.slug}`;
+          const targetUrl = `/papers/${encodeURIComponent(stream.slug)}/${encodeURIComponent(subject.slug)}/${encodeURIComponent(semester.slug)}/${encodeURIComponent(paper.slug)}`;
           const badgeClass = paper.paper_type === 'LAB' ? 'badge-lab' : 'badge-theory';
           const badgeLabel = paper.paper_type === 'LAB' ? 'PRACTICAL' : 'THEORY';
 
