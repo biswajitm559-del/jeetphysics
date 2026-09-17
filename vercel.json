@@ -6,12 +6,24 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/subjects/:stream/:subject",
+      "destination": "/subject"
+    },
+    {
+      "source": "/subjects/:stream",
+      "destination": "/stream"
+    },
+    {
+      "source": "/subjects",
+      "destination": "/stream"
+    },
+    {
       "source": "/syllabus/:stream",
       "destination": "/stream"
     },
     {
-      "source": "/subjects/:stream/:subject",
-      "destination": "/subject"
+      "source": "/syllabus",
+      "destination": "/stream"
     },
     {
       "source": "/papers/:stream/:subject/:semester/:paper",
@@ -42,11 +54,43 @@
       "destination": "/resource"
     },
     {
+      "source": "/previous-year-questions/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/previous-year-questions/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/previous-year-questions/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/previous-year-questions",
+      "destination": "/resource"
+    },
+    {
       "source": "/unit-wise-notes/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
       "source": "/unit-wise-notes/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-notes",
       "destination": "/resource"
     },
     {
@@ -58,11 +102,43 @@
       "destination": "/resource"
     },
     {
+      "source": "/unit-wise-qna/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-qna/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-qna/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/unit-wise-qna",
+      "destination": "/resource"
+    },
+    {
       "source": "/lab-manuals/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
       "source": "/lab-manuals/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/lab-manuals",
       "destination": "/resource"
     },
     {
@@ -74,11 +150,43 @@
       "destination": "/resource"
     },
     {
+      "source": "/viva-questions/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/viva-questions/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/viva-questions/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/viva-questions",
+      "destination": "/resource"
+    },
+    {
       "source": "/experiment-notes/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
       "source": "/experiment-notes/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/experiment-notes",
       "destination": "/resource"
     },
     {
@@ -90,11 +198,43 @@
       "destination": "/resource"
     },
     {
+      "source": "/study-material/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/study-material/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/study-material/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/study-material",
+      "destination": "/resource"
+    },
+    {
       "source": "/other-resources/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
       "source": "/other-resources/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/other-resources",
       "destination": "/resource"
     },
     {
@@ -106,11 +246,43 @@
       "destination": "/resource"
     },
     {
+      "source": "/formulae-bank/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/formulae-bank/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/formulae-bank/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/formulae-bank",
+      "destination": "/resource"
+    },
+    {
       "source": "/solved-numericals/:stream/:subject/:semester/:paper",
       "destination": "/resource"
     },
     {
       "source": "/solved-numericals/:subject/:semester/:paper",
+      "destination": "/resource"
+    },
+    {
+      "source": "/solved-numericals/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/solved-numericals/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/solved-numericals/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/solved-numericals",
       "destination": "/resource"
     },
     {
@@ -120,6 +292,38 @@
     {
       "source": "/resources/:type/:subject/:semester/:paper",
       "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type/:stream/:subject/:semester",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type/:stream/:subject",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type/:stream",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources/:type",
+      "destination": "/resource"
+    },
+    {
+      "source": "/resources",
+      "destination": "/resource"
+    },
+    {
+      "source": "/entrance-exams/:exam/:topic",
+      "destination": "/entrance-exam"
+    },
+    {
+      "source": "/entrance-exams/:exam",
+      "destination": "/entrance-exam"
+    },
+    {
+      "source": "/entrance-exams",
+      "destination": "/entrance-exams"
     },
     {
       "source": "/admin/academic",

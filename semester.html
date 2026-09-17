@@ -325,21 +325,7 @@
   <canvas id="starfield"></canvas>
 
   <!-- Navigation Bar -->
-  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
-    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
-      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-        <span style="font-size: 1.6rem;">⚛️</span>
-        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
-          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
-        </span>
-      </a>
-
-      <div style="display: flex; align-items: center; gap: 16px;">
-        <a href="/" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Home</a>
-        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="navbar" id="navbar"></nav>
 
   <div class="container sem-page-wrap">
 
@@ -662,5 +648,6 @@
 
     initSemesterPage();
   </script>
+  <script type="module" src="/lib/navbar.js"></script>
 </body>
 </html>

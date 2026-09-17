@@ -3,34 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JeetPhysics</title>
-  <meta name="description" content="A comprehensive study portal for B.Sc Physics Honours students. Explore all subjects, formula sheets, textbooks, and resources — from Classical Mechanics to Quantum Physics." />
-  <meta name="keywords" content="physics, BSc honours, quantum mechanics, classical mechanics, electromagnetism, study portal" />
+  <title>JeetPhysics — Academic Portal &amp; Entrance Examination Platform</title>
+  <meta name="description" content="A comprehensive academic portal for undergraduate university students and competitive entrance examination aspirants. Access syllabi, semester question archives, core papers, lecture notes, and exam prep." />
+  <meta name="keywords" content="academic portal, undergraduate, BSc, semester questions, PYQs, syllabus, entrance exams, IIT JAM, notes, university papers" />
   <link rel="canonical" href="https://jeetphysics.in/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jeetphysics.in/" />
-  <meta property="og:title" content="JeetPhysics — B.Sc Honours Study Portal" />
-  <meta property="og:description" content="Your complete physics study companion for B.Sc Honours." />
+  <meta property="og:title" content="JeetPhysics — Academic Portal &amp; Entrance Examination Platform" />
+  <meta property="og:description" content="Comprehensive undergraduate university curriculum and competitive entrance examination preparation platform." />
   <meta property="og:image" content="https://jeetphysics.in/og-image.jpg" />
   <meta property="og:site_name" content="JeetPhysics" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://jeetphysics.in/" />
-  <meta name="twitter:title" content="JeetPhysics — B.Sc Honours Study Portal" />
-  <meta name="twitter:description" content="Your complete physics study companion for B.Sc Honours." />
+  <meta name="twitter:title" content="JeetPhysics — Academic Portal &amp; Entrance Examination Platform" />
+  <meta name="twitter:description" content="Comprehensive undergraduate university curriculum and competitive entrance examination preparation platform." />
   <meta name="twitter:image" content="https://jeetphysics.in/og-image.jpg" />
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -61,22 +52,9 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet" />
-
-  <!-- KaTeX for math rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {
-      delimiters: [
-        {left:'$$', right:'$$', display:true},
-        {left:'$', right:'$', display:false}
-      ]
-    })"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet" />
 
   <!-- Icons -->
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
-
   <!-- Import Map for Supabase in Browser -->
   <script type="importmap">
   {
@@ -96,48 +74,273 @@
 <!-- ═══ ANNOUNCEMENT BANNER ═══ -->
 <div class="banner" id="banner">
   <span class="banner-badge">New</span>
-  <span>Quantum Mechanics formula sheets &amp; Irodov solutions are now available! 🚀</span>
+  <span>Explore university semester question papers &amp; competitive entrance exams! 🚀</span>
   <button class="banner-close" id="bannerClose" aria-label="Close banner">✕</button>
 </div>
 
 <!-- ═══ NAVBAR ═══ -->
 <nav class="navbar" id="navbar">
-  <a href="#" class="nav-brand">
-    <div class="nav-logo-icon">⚛️</div>
-    <span class="nav-logo-text"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#subjects">Subjects</a></li>
-    <li><a href="#formulae">Formulae</a></li>
-    <li><a href="#resources">Resources</a></li>
-    <li class="nav-dropdown">
-      <a href="#numericals" class="nav-dropdown-trigger">Numericals <i class="ph ph-caret-down" style="font-size:0.7em;margin-left:2px;"></i></a>
-      <div class="nav-dropdown-menu">
-        <a href="numericals/index.html?exam=jam-physics"><span class="dropdown-icon">🔬</span> JAM Physics</a>
-        <a href="numericals/index.html?exam=csir-net"><span class="dropdown-icon">📜</span> CSIR-UGC NET</a>
-        <a href="numericals/index.html?exam=gate-physics"><span class="dropdown-icon">🏗️</span> GATE Physics</a>
-        <a href="numericals/index.html?exam=cuet-science"><span class="dropdown-icon">📝</span> CUET Science</a>
-      </div>
-    </li>
-    <li><a href="#pyq">PYQ's</a></li>
-    <li class="nav-dropdown" id="navSyllabusDropdown">
-      <a href="javascript:void(0)" class="nav-dropdown-trigger" id="syllabusTrigger" aria-haspopup="true" aria-expanded="false" role="button" tabindex="0">
-        <span>Syllabus</span>
-        <i class="ph ph-caret-down" style="font-size:0.7em;margin-left:2px;" aria-hidden="true"></i>
-      </a>
-      <div class="nav-dropdown-menu" id="syllabusDropdownMenu" role="menu" aria-label="Syllabus by Subject">
-        <div class="dropdown-loading" style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
-          <i class="ph ph-spinner ph-spin"></i> Loading subjects...
+  <div class="nav-inner" style="max-width: 1320px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 68px; width: 100%;">
+    <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+      <div class="nav-logo-icon">⚛️</div>
+      <span class="nav-logo-text">
+        <span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span>
+      </span>
+    </a>
+
+    <ul class="nav-links" id="globalNavLinks" role="menubar">
+      <!-- 1. Subjects Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/subjects" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerSubjects">
+          <span>Subjects</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerSubjects" id="menuSubjects">
+          <a href="/subjects" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">📚</span>
+            <strong>All Streams &amp; Subjects</strong>
+          </a>
         </div>
-      </div>
-    </li>
-    <li><a href="#tips">Study Tips</a></li>
-    <li><a href="#contact" class="nav-cta">Contact</a></li>
-  </ul>
-  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
-    <i class="ph ph-list"></i>
-  </button>
+      </li>
+
+      <!-- 2. Semester Questions Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/previous-year-questions" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerPYQ">
+          <span>Semester Questions</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerPYQ" id="menuPYQ">
+          <a href="/previous-year-questions" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">📝</span>
+            <strong>All Question Papers</strong>
+          </a>
+        </div>
+      </li>
+
+      <!-- 3. Notes Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/unit-wise-notes" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerNotes">
+          <span>Notes</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerNotes" id="menuNotes">
+          <a href="/unit-wise-notes" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">📖</span>
+            <strong>All Unit-wise Notes</strong>
+          </a>
+        </div>
+      </li>
+
+      <!-- 4. Q&A Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/unit-wise-qna" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerQNA">
+          <span>Q&amp;A</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerQNA" id="menuQNA">
+          <a href="/unit-wise-qna" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">💡</span>
+            <strong>All Unit-wise Q&amp;A</strong>
+          </a>
+        </div>
+      </li>
+
+      <!-- 5. Syllabus Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/syllabus" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerSyllabus">
+          <span>Syllabus</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerSyllabus" id="menuSyllabus">
+          <a href="/syllabus" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">📋</span>
+            <strong>All University Syllabi</strong>
+          </a>
+        </div>
+      </li>
+
+      <!-- 6. Entrance Exams Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/entrance-exams" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerEntrance">
+          <span>Entrance Exams</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerEntrance" id="menuEntrance">
+          <a href="/entrance-exams" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">🎯</span>
+            <strong>Explore All Entrance Exams</strong>
+          </a>
+        </div>
+      </li>
+
+      <!-- 7. Resources Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/resources" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerResources">
+          <span>Resources</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerResources" id="menuResources">
+          <a href="/resources" role="menuitem" class="dropdown-header-link">
+            <span class="dropdown-icon">📁</span>
+            <strong>All Resources Archive</strong>
+          </a>
+          <a href="/lab-manuals" role="menuitem">
+            <span class="dropdown-icon">🔬</span>
+            <span>Lab Manuals</span>
+          </a>
+          <a href="/viva-questions" role="menuitem">
+            <span class="dropdown-icon">🗣️</span>
+            <span>Viva Questions</span>
+          </a>
+          <a href="/study-material" role="menuitem">
+            <span class="dropdown-icon">📚</span>
+            <span>Study Material</span>
+          </a>
+        </div>
+      </li>
+
+      <!-- 8. Study Tools Dropdown -->
+      <li class="nav-dropdown" role="none">
+        <a href="/formulae-bank" class="nav-dropdown-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false" id="triggerTools">
+          <span>Study Tools</span>
+          <svg class="nav-caret" width="11" height="11" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+        </a>
+        <div class="nav-dropdown-menu" role="menu" aria-labelledby="triggerTools">
+          <a href="/formulae-bank" role="menuitem">
+            <span class="dropdown-icon">📐</span>
+            <span>Formulae Bank</span>
+          </a>
+          <a href="/#tips" role="menuitem">
+            <span class="dropdown-icon">💡</span>
+            <span>Preparation Tips</span>
+          </a>
+        </div>
+      </li>
+
+      <!-- 9. Contact Anchor -->
+      <li role="none">
+        <a href="/#contact" role="menuitem" class="nav-link-direct">Contact</a>
+      </li>
+
+      <!-- 10. Faculty CMS CTA -->
+      <li role="none" style="margin-left: 6px;">
+        <a href="/admin/login.html" role="menuitem" class="nav-cms-badge" title="Faculty Content Management System">
+          <svg class="nav-cms-icon" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-80-56v24a8,8,0,0,1-16,0V152a8,8,0,0,1,16,0Z"></path></svg>
+          <span>Faculty CMS</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Hamburger Button (Mobile Only) -->
+    <button class="nav-hamburger" id="globalHamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="globalMobileDrawer">
+      <svg class="nav-hamburger-icon" width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
+    </button>
+  </div>
 </nav>
+
+<!-- ═══ GLOBAL MOBILE DRAWER ═══ -->
+<div class="drawer-overlay" id="globalDrawerOverlay"></div>
+<div class="mobile-drawer" id="globalMobileDrawer">
+  <div class="drawer-header">
+    <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+      <div class="nav-logo-icon" style="width: 32px; height: 32px; font-size: 0.95rem;">⚛️</div>
+      <span class="nav-logo-text" style="font-size: 1.1rem;">
+        <span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span>
+      </span>
+    </a>
+    <button class="drawer-close" id="drawerCloseBtn" aria-label="Close navigation menu">
+      <svg class="nav-close-icon" width="20" height="20" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
+    </button>
+  </div>
+
+  <div class="drawer-body">
+    <!-- Section 1: Academics -->
+    <div class="drawer-group">
+      <button type="button" class="drawer-accordion-btn" aria-expanded="false">
+        <span class="drawer-group-title"><span>🎓</span> Academics</span>
+        <svg class="nav-accordion-caret" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+      </button>
+      <div class="drawer-accordion-content" id="drawerAcademicsContent">
+        <a href="/subjects" class="drawer-link drawer-link-lead">All Streams &amp; Subjects</a>
+        <a href="/syllabus" class="drawer-link">
+          <span>📋</span> All Syllabi
+        </a>
+      </div>
+    </div>
+
+    <!-- Section 2: Exam Archive -->
+    <div class="drawer-group">
+      <button type="button" class="drawer-accordion-btn" aria-expanded="false">
+        <span class="drawer-group-title"><span>📝</span> Exam Archive</span>
+        <svg class="nav-accordion-caret" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+      </button>
+      <div class="drawer-accordion-content" id="drawerArchiveContent">
+        <a href="/previous-year-questions" class="drawer-link drawer-link-lead">
+          <span>📝</span> Previous Year Questions
+        </a>
+        <a href="/unit-wise-notes" class="drawer-link">
+          <span>📚</span> Unit-wise Lecture Notes
+        </a>
+        <a href="/unit-wise-qna" class="drawer-link">
+          <span>💡</span> Unit-wise Q&amp;A
+        </a>
+      </div>
+    </div>
+
+    <!-- Section 3: Entrance Exams -->
+    <div class="drawer-group">
+      <button type="button" class="drawer-accordion-btn" aria-expanded="false">
+        <span class="drawer-group-title"><span>🎯</span> Entrance Exams</span>
+        <svg class="nav-accordion-caret" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+      </button>
+      <div class="drawer-accordion-content" id="drawerEntranceContent">
+        <a href="/entrance-exams" class="drawer-link drawer-link-lead">All Entrance Exams</a>
+      </div>
+    </div>
+
+    <!-- Section 4: Academic Resources -->
+    <div class="drawer-group">
+      <button type="button" class="drawer-accordion-btn" aria-expanded="false">
+        <span class="drawer-group-title"><span>📁</span> Resources</span>
+        <svg class="nav-accordion-caret" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+      </button>
+      <div class="drawer-accordion-content" id="drawerResourcesContent">
+        <a href="/resources" class="drawer-link drawer-link-lead">All Resources Archive</a>
+        <a href="/lab-manuals" class="drawer-link"><span>🔬</span> Lab Manuals</a>
+        <a href="/viva-questions" class="drawer-link"><span>🗣️</span> Viva Questions</a>
+        <a href="/study-material" class="drawer-link"><span>📚</span> Study Material</a>
+      </div>
+    </div>
+
+    <!-- Section 5: Study Tools -->
+    <div class="drawer-group">
+      <button type="button" class="drawer-accordion-btn" aria-expanded="false">
+        <span class="drawer-group-title"><span>🛠️</span> Study Tools</span>
+        <svg class="nav-accordion-caret" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+      </button>
+      <div class="drawer-accordion-content" id="drawerToolsContent">
+        <a href="/formulae-bank" class="drawer-link">
+          <span>📐</span> Formulae Bank
+        </a>
+        <a href="/#tips" class="drawer-link">
+          <span>💡</span> Study &amp; Exam Tips
+        </a>
+      </div>
+    </div>
+
+    <!-- Section 6: Direct Links -->
+    <div class="drawer-direct-links">
+      <a href="/#contact" class="drawer-direct-item">
+        <span>✉️</span>
+        <span>Student Guidance &amp; Contact</span>
+      </a>
+      <a href="/admin/login.html" class="drawer-direct-item drawer-direct-cms">
+        <svg class="nav-cms-icon" width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-80-56v24a8,8,0,0,1-16,0V152a8,8,0,0,1,16,0Z"></path></svg>
+        <span>Faculty Portal &amp; CMS</span>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="home">
@@ -154,34 +357,34 @@
 
   <div class="container" style="position:relative;z-index:3;">
     <h1 class="hero-title">
-      Master the<br/>
-      <span class="gradient-text">Universe</span>
-      of Physics
+      Empowering<br/>
+      <span class="gradient-text">Higher Education</span>
+      &amp; Entrance Prep
     </h1>
 
     <p class="hero-subtitle">
-      Your all-in-one study companion — covering all 15 official Fakir Mohan University NEP 2020 core papers,
-      formula banks, textbook references, and structured learning paths for B.Sc Honours Physics.
+      Your comprehensive university study companion — covering academic streams, core papers,
+      semester question archives, official syllabi, and structured competitive entrance examination preparation.
     </p>
 
     <div class="hero-actions">
-      <a href="#subjects" class="btn-primary" id="hero-explore-btn">
-        <i class="ph ph-rocket-launch"></i> Explore Core Papers
+      <a href="/subjects" class="btn-primary" id="hero-explore-btn">
+        <span>📚</span> Explore Subjects
       </a>
-      <a href="#formulae" class="btn-secondary" id="hero-formulae-btn">
-        <i class="ph ph-function"></i> Formula Bank
+      <a href="/entrance-exams" class="btn-secondary" id="hero-entrance-btn">
+        <span>🎯</span> Entrance Exams
       </a>
     </div>
 
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-number" id="counter-subjects">15</div>
-        <div class="stat-label">Core Papers (NEP 2020)</div>
+        <div class="stat-number" id="counter-subjects">15+</div>
+        <div class="stat-label">Core Papers</div>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
         <div class="stat-number" id="counter-formulae">200+</div>
-        <div class="stat-label">Key Formulae</div>
+        <div class="stat-label">Study Resources</div>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
@@ -190,8 +393,8 @@
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
-        <div class="stat-number" id="counter-books">40+</div>
-        <div class="stat-label">Reference Books</div>
+        <div class="stat-number" id="counter-books">100%</div>
+        <div class="stat-label">Free &amp; Open</div>
       </div>
     </div>
   </div>
@@ -236,7 +439,7 @@
     </div>
 
     <div class="formulae-search-wrapper reveal">
-      <span class="search-icon"><i class="ph ph-magnifying-glass"></i></span>
+      <span class="search-icon"><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></span>
       <input type="text" class="formulae-search" id="formulaeSearch" placeholder="Search formulae (e.g. Schrödinger, Maxwell, Lagrangian...)" />
     </div>
 
@@ -274,35 +477,6 @@
   </div>
 </section>
 
-<!-- ═══ NUMERICALS ═══ -->
-<section class="numericals-section" id="numericals">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">Practice Problems</div>
-      <h2 class="section-title">Physics <span class="gradient-text">Numericals</span></h2>
-      <p class="section-subtitle">
-        Solve curated easy-to-intermediate numericals across all branches of physics. Click any card to reveal the solution.
-      </p>
-    </div>
-
-    <div class="numericals-categories reveal" id="numCats">
-      <button class="num-cat-btn active" data-cat="all">All Branches</button>
-      <button class="num-cat-btn" data-cat="mechanics">Mechanics</button>
-      <button class="num-cat-btn" data-cat="em">Electromagnetism</button>
-      <button class="num-cat-btn" data-cat="waves">Waves & Optics</button>
-      <button class="num-cat-btn" data-cat="quantum">Quantum Mechanics</button>
-      <button class="num-cat-btn" data-cat="thermal">Thermal Physics</button>
-      <button class="num-cat-btn" data-cat="nuclear">Nuclear Physics</button>
-      <button class="num-cat-btn" data-cat="solidstate">Solid State</button>
-      <button class="num-cat-btn" data-cat="electronics">Electronics</button>
-    </div>
-
-    <div class="numericals-grid reveal" id="numericalsGrid">
-      <!-- Injected by JS -->
-    </div>
-  </div>
-</section>
-
 <!-- ═══ PREVIOUS YEAR QUESTIONS ═══ -->
 <section class="pyq-section" id="pyq">
   <div class="container">
@@ -316,7 +490,7 @@
 
     <div class="pyq-access-container reveal">
       <a href="https://drive.google.com/drive/folders/18NdG14eazAKfoq1HMbBH9aWohgcTgU5o?usp=drive_link" target="_blank" rel="noopener" class="btn-primary-large">
-        <i class="ph ph-download"></i> Get Access to Previous Year Questions
+        <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" style="margin-right:8px;vertical-align:middle;"><path d="M224,152v56a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V152a8,8,0,0,1,16,0v56H208V152a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,132.69V40a8,8,0,0,0-16,0v92.69L93.66,106.34a8,8,0,0,0-11.32,11.32Z"></path></svg>Get Access to Previous Year Questions
       </a>
     </div>
   </div>
@@ -366,7 +540,7 @@
           <div class="nav-logo-icon">⚛️</div>
           <span class="nav-logo-text" style="font-size:1.3rem;"><span class="brand-jeet">Jeet</span><span class="brand-physics">Physics</span></span>
         </a>
-        <p>A dedicated study portal for B.Sc Physics Honours students. Built with passion for physics education, covering the complete 3-year curriculum.</p>
+        <p>A dedicated academic platform for undergraduate university students and competitive examination aspirants. Structured curricula, question archives, and learning resources.</p>
       </div>
 
       <div>
@@ -387,7 +561,7 @@
           <li><a href="#resources">Textbooks</a></li>
           <li><a href="#resources">Video Lectures</a></li>
           <li><a href="#syllabus">Syllabus</a></li>
-          <li><a href="#numericals">Numericals</a></li>
+          <li><a href="/entrance-exams">Entrance Exams</a></li>
           <li><a href="#tips">Study Tips</a></li>
         </ul>
       </div>
@@ -405,16 +579,16 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 <span class="brand-jeet" style="font-family:'Playfair Display',serif;font-style:italic;">Jeet</span><span style="color:var(--gold-400);font-weight:700;">Physics</span> — B.Sc Physics Honours Study Portal. Made with ❤️ for physics students.</p>
+      <p class="footer-copy">© 2026 <span class="brand-jeet" style="font-family:'Playfair Display',serif;font-style:italic;">Jeet</span><span style="color:var(--gold-400);font-weight:700;">Physics</span> — Undergraduate Academic &amp; Entrance Examination Platform. Made with ❤️ for students.</p>
       <div class="footer-socials">
         <a href="#" class="footer-social-btn" aria-label="GitHub" title="GitHub">
-          <i class="ph ph-github-logo"></i>
+          <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,0,0,24,128c0,46,30.68,85,73.18,97.7,5.2,1,7.12-2.25,7.12-5v-19.5c-30.07,6.54-36.42-14.5-36.42-14.5-4.73-12-11.55-15.22-11.55-15.22-9.82-6.71.74-6.58.74-6.58,10.85.76,16.56,11.14,16.56,11.14,9.65,16.53,25.26,11.75,31.42,9,1-7,3.79-11.75,6.89-14.45-24-2.73-49.25-12-49.25-53.42a41.8,41.8,0,0,1,11.14-29,38.86,38.86,0,0,1,4-28.61s9.1-2.91,29.8,11.11a103,103,0,0,1,54.24,0c20.7-14,29.77-11.11,29.77-11.11a38.86,38.86,0,0,1,4,28.61,41.8,41.8,0,0,1,11.14,29c0,41.52-25.29,50.66-49.36,53.33,3.91,3.37,7.4,10,7.4,20.21V220.7c0,2.77,1.9,6,7.19,5A104.09,104.09,0,0,0,232,128,104,104,0,0,0,128,24Z"></path></svg>
         </a>
         <a href="#" class="footer-social-btn" aria-label="YouTube" title="YouTube">
-          <i class="ph ph-youtube-logo"></i>
+          <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M234.38,69.52a24.15,24.15,0,0,0-17-17.09C202.39,48,128,48,128,48s-74.39,0-89.38,4.43a24.15,24.15,0,0,0-17,17.09C17.2,84.51,17.2,128,17.2,128s0,43.49,4.42,58.48a24.15,24.15,0,0,0,17,17.09C53.61,208,128,208,128,208s74.39,0,89.38-4.43a24.15,24.15,0,0,0,17-17.09C238.8,171.49,238.8,128,238.8,128S238.8,84.51,234.38,69.52ZM104,156V100l48,28Z"></path></svg>
         </a>
         <a href="#" class="footer-social-btn" aria-label="Email" title="Email">
-          <i class="ph ph-envelope"></i>
+          <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM208,192H48V64.88l80,68.57,80-68.57Zm-80-71.12L52.89,64h150.22Z"></path></svg>
         </a>
       </div>
     </div>
@@ -436,182 +610,13 @@
   </div>
 </div>
 
-<!-- ═══ PHYSICS CHATBOT ═══ -->
-<div class="chatbot-container" id="chatbotContainer">
-  <div class="chatbot-header">
-    <div class="chatbot-title">
-      <i class="ph ph-robot"></i>
-      <span>Physics Assistant</span>
-    </div>
-    <button class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">✕</button>
-  </div>
-  <div class="chatbot-messages" id="chatbotMessages">
-    <div class="chatbot-message bot-message">
-      <div class="message-content">
-        <p>Welcome to the Physics Assistant! 👋</p>
-        <p>I can help you with:</p>
-        <ul>
-          <li>Physics laws, principles, and formulae</li>
-          <li>Explanations of concepts and terminology</li>
-          <li>Guidance about this website</li>
-          <li>Study tips and problem-solving strategies</li>
-        </ul>
-        <p>Ask me anything!</p>
-      </div>
-    </div>
-  </div>
-  <div class="chatbot-input-wrapper">
-    <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Ask about physics..." />
-    <button class="chatbot-send" id="chatbotSend" aria-label="Send message">
-      <i class="ph ph-paper-plane-right"></i>
-    </button>
-  </div>
-</div>
-
-<button class="chatbot-toggle" id="chatbotToggle" aria-label="Open Physics Assistant" title="Physics Assistant">
-  <i class="ph ph-robot"></i>
-</button>
-
 <!-- ═══ BACK TO TOP ═══ -->
 <button id="backToTop" aria-label="Back to top" title="Back to top">
-  <i class="ph ph-arrow-up"></i>
+  <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,149.66a8,8,0,0,1-11.32,0L136,91.31V216a8,8,0,0,1-16,0V91.31L61.66,149.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,149.66Z"></path></svg>
 </button>
 
 <script src="script.js"></script>
 
-<script type="module">
-  import { AcademicService } from '/lib/supabaseClient.js';
-
-  async function initSyllabusDropdown() {
-    const dropdown = document.getElementById('navSyllabusDropdown');
-    const trigger = document.getElementById('syllabusTrigger');
-    const menu = document.getElementById('syllabusDropdownMenu');
-    if (!dropdown || !trigger || !menu) return;
-
-    function setOpen(open) {
-      if (open) {
-        dropdown.classList.add('open');
-        trigger.setAttribute('aria-expanded', 'true');
-      } else {
-        dropdown.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-      }
-    }
-
-    // Keyboard accessibility on trigger
-    trigger.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setOpen(true);
-        const firstItem = menu.querySelector('a:not([aria-disabled="true"])');
-        if (firstItem) firstItem.focus();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        setOpen(false);
-      }
-    });
-
-    // Keyboard accessibility inside menu
-    menu.addEventListener('keydown', (e) => {
-      const focusable = Array.from(menu.querySelectorAll('a'));
-      const activeIdx = focusable.indexOf(document.activeElement);
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const nextIdx = (activeIdx + 1) % focusable.length;
-        focusable[nextIdx]?.focus();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const prevIdx = (activeIdx - 1 + focusable.length) % focusable.length;
-        focusable[prevIdx]?.focus();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        setOpen(false);
-        trigger.focus();
-      } else if (e.key === 'Tab') {
-        setOpen(false);
-      }
-    });
-
-    // Dynamic resolution of academic streams from database
-    try {
-      const streams = await AcademicService.getStreams();
-
-      if (!streams || streams.length === 0) {
-        menu.innerHTML = `
-          <div style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted);">
-            No streams available.
-          </div>
-        `;
-        return;
-      }
-
-      menu.innerHTML = streams.map(stream => {
-        const icon = stream.icon || '🎓';
-        const targetUrl = `/syllabus/${encodeURIComponent(stream.slug)}`;
-        return `
-          <a href="${targetUrl}" role="menuitem" tabindex="0" class="syllabus-dropdown-item" title="Explore ${escapeHtml(stream.name)} curriculum">
-            <span class="dropdown-icon">${icon}</span>
-            <span>${escapeHtml(stream.name)}</span>
-          </a>
-        `;
-      }).join('');
-
-      // When a menu link is clicked, ensure mobile drawer closes
-      menu.querySelectorAll('a:not(.disabled)').forEach(a => {
-        a.addEventListener('click', () => {
-          const navLinks = document.getElementById('navLinks');
-          const hamburger = document.getElementById('hamburger');
-          if (navLinks && navLinks.classList.contains('open')) {
-            navLinks.classList.remove('open');
-            if (hamburger) {
-              const icon = hamburger.querySelector('i');
-              if (icon) icon.className = 'ph ph-list';
-            }
-          }
-          setOpen(false);
-        });
-      });
-
-    } catch (err) {
-      console.error('Error populating syllabus dropdown:', err);
-      menu.innerHTML = `
-        <div style="padding: 10px 14px; font-size: 0.85rem; color: #fca5a5; display: flex; align-items: center; gap: 6px;">
-          <i class="ph ph-warning-circle"></i>
-          <span>Failed to load.</span>
-          <button id="retrySyllabusBtn" style="background: none; border: none; color: var(--blue-400); text-decoration: underline; cursor: pointer; padding: 0; font-size: inherit; font-family: inherit;">Retry</button>
-        </div>
-      `;
-      const retryBtn = document.getElementById('retrySyllabusBtn');
-      if (retryBtn) {
-        retryBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          menu.innerHTML = `
-            <div class="dropdown-loading" style="padding: 10px 14px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px;">
-              <i class="ph ph-spinner ph-spin"></i> Loading subjects...
-            </div>
-          `;
-          initSyllabusDropdown();
-        });
-      }
-    }
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSyllabusDropdown);
-  } else {
-    initSyllabusDropdown();
-  }
-</script>
+<script type="module" src="/lib/navbar.js"></script>
 </body>
 </html>

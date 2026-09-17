@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrance Examination Portal | JeetPhysics</title>
+  <meta name="description" content="Access official previous year question papers, notes, and study material for competitive entrance examinations." />
+  <link rel="canonical" href="https://jeetphysics.in/entrance-exams" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Entrance Examination Portal | JeetPhysics" />
+  <meta property="og:description" content="Comprehensive entrance examination archives, previous year papers, and syllabus topics." />
+  <meta property="og:url" content="https://jeetphysics.in/entrance-exams" />
+  <meta property="og:site_name" content="JeetPhysics" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Protected Canvas Viewer Stylesheet -->
+  <link rel="stylesheet" href="/lib/protectedViewer.css" />
+
+  <!-- Import Map for Supabase in Browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    }
+  }
+  </script>
+
+  <!-- Structured Data Hook -->
+  <script type="application/ld+json" id="structuredData">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": []
+  }
+  </script>
+
+  <style>
+    .entrance-detail-wrap {
+      position: relative;
+      z-index: 2;
+      padding: 32px 0 80px;
+    }
+
+    .entrance-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .entrance-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .entrance-breadcrumb a:hover {
+      color: var(--blue-300);
+      text-decoration: underline;
+    }
+
+    /* Hero Card */
+    .exam-hero-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exam-hero-card::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .exam-hero-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .exam-hero-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      flex-shrink: 0;
+    }
+
+    .exam-hero-titles {
+      flex: 1;
+    }
+
+    .exam-badges-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-exam-code {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--blue-400);
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+
+    .badge-topic-focus {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .exam-hero-card h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .exam-hero-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0;
+      max-width: 800px;
+    }
+
+    /* Filter Chips Bar */
+    .filter-section {
+      margin-bottom: 28px;
+    }
+
+    .filter-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chips-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .filter-chip:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: var(--blue-300);
+    }
+
+    .filter-chip.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--blue-500);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Resource Cards & Dynamic PYQ Grouping */
+    .pyq-year-group {
+      margin-bottom: 36px;
+    }
+
+    .pyq-year-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pyq-year-heading .year-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: var(--blue-300);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .resource-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+
+    .resource-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .res-card-top {
+      margin-bottom: 16px;
+    }
+
+    .res-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .res-type-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--blue-300);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .res-topic-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(52, 211, 153, 0.1);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.25);
+    }
+
+    .res-card-title {
+      font-family: var(--font-head);
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 6px;
+      line-height: 1.35;
+    }
+
+    .res-card-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .res-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+
+    .res-file-size {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+    }
+
+    .btn-view-pdf {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--blue-600);
+      border: 1px solid var(--blue-500);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-view-pdf:hover {
+      background: var(--blue-500);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* State Screens */
+    .state-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 60px 24px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .state-icon {
+      font-size: 2.8rem;
+      color: var(--blue-400);
+      margin-bottom: 16px;
+    }
+
+    .state-title {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin: 0 0 8px;
+    }
+
+    .state-desc {
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <!-- Global Navigation Mount -->
+  <nav class="navbar" id="navbar"></nav>
+
+  <main class="entrance-detail-wrap">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="entrance-breadcrumb" id="breadcrumbNav" aria-label="Breadcrumb">
+        <a href="/"><i class="ph ph-house"></i> Home</a>
+        <i class="ph ph-caret-right"></i>
+        <a href="/entrance-exams">Entrance Exams</a>
+        <i class="ph ph-caret-right"></i>
+        <span id="breadcrumbCurrent">Loading...</span>
+      </nav>
+
+      <!-- Main Portal Container -->
+      <div id="portalContent">
+        <div class="state-card">
+          <i class="ph ph-spinner state-icon animate-spin"></i>
+          <div class="state-title">Loading Entrance Examination Portal...</div>
+          <div class="state-desc">Resolving accredited examination syllabus and verified resources.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span class="brand-text">Jeet<span class="brand-accent">Physics</span></span>
+        <p class="footer-tagline">Comprehensive Physics learning and competitive entrance portal.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/subjects">Undergraduate</a>
+        <a href="/entrance-exams">Entrance Exams</a>
+        <a href="/resources">Resource Repository</a>
+        <a href="/admin/login.html">Faculty CMS</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 JeetPhysics. Built for Physics Scholars.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Centralized Navbar Script -->
+  <script type="module" src="/lib/navbar.js"></script>
+
+  <!-- Page Controller Logic -->
+  <script type="module">
+    import { AcademicService } from '/lib/supabaseClient.js';
+    import { openProtectedViewerModal } from '/lib/protectedViewer.js';
+
+    // Global file viewer handler
+    window.viewResourceFile = function(fileId, title) {
+      if (!fileId) return;
+      let displayTitle = title || 'Entrance Examination Document';
+      try {
+        displayTitle = decodeURIComponent(displayTitle);
+      } catch (_) {}
+      openProtectedViewerModal({
+        fileId: fileId,
+        title: displayTitle
+      });
+    };
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Parse URL segments: /entrance-exams/:exam or /entrance-exams/:exam/:topic
+    function resolveRouteParams() {
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const urlParams = new URLSearchParams(window.location.search);
+
+      let examSlug = urlParams.get('exam') || null;
+      let topicSlug = urlParams.get('topic') || null;
+      let typeKey = urlParams.get('type') || null;
+
+      if (pathSegments.length >= 2 && pathSegments[0] === 'entrance-exams') {
+        examSlug = pathSegments[1];
+        if (pathSegments.length >= 3) {
+          topicSlug = pathSegments[2];
+        }
+      }
+
+      return { examSlug, topicSlug, typeKey };
+    }
+
+    async function initPortal() {
+      const { examSlug, topicSlug, typeKey } = resolveRouteParams();
+      const container = document.getElementById('portalContent');
+
+      if (!examSlug) {
+        window.location.replace('/entrance-exams');
+        return;
+      }
+
+      try {
+        // 1. Fetch Entrance Exam Record
+        const exam = await AcademicService.getEntranceExamBySlug(examSlug);
+        if (!exam) {
+          container.innerHTML = `
+            <div class="state-card" style="border-color: rgba(248, 113, 113, 0.4);">
+              <i class="ph ph-warning-circle state-icon" style="color: #f87171;"></i>
+              <div class="state-title">Entrance Examination Not Found</div>
+              <div class="state-desc">The requested examination portal ("${escapeHtml(examSlug)}") could not be found or has been deactivated.</div>
+              <div style="margin-top: 20px;">
+                <a href="/entrance-exams" class="btn btn-primary">
+                  <i class="ph ph-arrow-left"></i> View All Entrance Exams
+                </a>
+              </div>
+            </div>
+          `;
+          document.getElementById('breadcrumbCurrent').textContent = 'Not Found';
+          return;
+        }
+
+        // 2. Fetch Topics for this Exam
+        const topics = await AcademicService.getEntranceTopics(exam.id);
+
+        // 3. Resolve Active Topic (if slug provided)
+        let currentTopic = null;
+        if (topicSlug && topics && topics.length > 0) {
+          currentTopic = topics.find(t => t.slug === topicSlug.trim().toLowerCase()) || null;
+        }
+
+        // 4. Update Document Metadata & Breadcrumbs
+        const pageTitle = currentTopic 
+          ? `${currentTopic.name} - ${exam.short_name || exam.name} | JeetPhysics`
+          : `${exam.name} Preparation Portal | JeetPhysics`;
+        document.title = pageTitle;
+
+        updateBreadcrumbs(exam, currentTopic);
+
+        // 5. Fetch Available Resource Types
+        const resourceTypes = await AcademicService.getResourceTypes();
+
+        // 6. Fetch Published Resources
+        const resources = await AcademicService.getPublishedEntranceResources(
+          exam.id,
+          typeKey || null,
+          currentTopic ? currentTopic.id : null
+        );
+
+        // 7. Render Portal Interface
+        renderPortal({
+          exam,
+          topics: topics || [],
+          currentTopic,
+          resourceTypes: resourceTypes || [],
+          activeTypeKey: typeKey || null,
+          resources: resources || []
+        });
+
+      } catch (err) {
+        console.error('Error initializing entrance exam portal:', err);
+        container.innerHTML = `
+          <div class="state-card" style="border-color: rgba(248, 113, 113, 0.4);">
+            <i class="ph ph-warning-circle state-icon" style="color: #f87171;"></i>
+            <div class="state-title">Portal Initialization Error</div>
+            <div class="state-desc">${escapeHtml(err.message || 'Failed to connect to the academic database.')}</div>
+            <div style="margin-top: 20px;">
+              <button onclick="window.location.reload()" class="btn btn-secondary">
+                <i class="ph ph-arrows-clockwise"></i> Try Again
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function updateBreadcrumbs(exam, topic) {
+      const breadcrumbNav = document.getElementById('breadcrumbNav');
+      const structuredData = document.getElementById('structuredData');
+
+      let breadcrumbsHtml = `
+        <a href="/"><i class="ph ph-house"></i> Home</a>
+        <i class="ph ph-caret-right"></i>
+        <a href="/entrance-exams">Entrance Exams</a>
+        <i class="ph ph-caret-right"></i>
+      `;
+
+      const itemList = [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jeetphysics.in/" },
+        { "@type": "ListItem", "position": 2, "name": "Entrance Exams", "item": "https://jeetphysics.in/entrance-exams" }
+      ];
+
+      if (topic) {
+        breadcrumbsHtml += `
+          <a href="/entrance-exams/${encodeURIComponent(exam.slug)}">${escapeHtml(exam.short_name || exam.name)}</a>
+          <i class="ph ph-caret-right"></i>
+          <span>${escapeHtml(topic.name)}</span>
+        `;
+        itemList.push({
+          "@type": "ListItem",
+          "position": 3,
+          "name": exam.name,
+          "item": `https://jeetphysics.in/entrance-exams/${encodeURIComponent(exam.slug)}`
+        });
+        itemList.push({
+          "@type": "ListItem",
+          "position": 4,
+          "name": topic.name,
+          "item": `https://jeetphysics.in/entrance-exams/${encodeURIComponent(exam.slug)}/${encodeURIComponent(topic.slug)}`
+        });
+      } else {
+        breadcrumbsHtml += `<span>${escapeHtml(exam.name)}</span>`;
+        itemList.push({
+          "@type": "ListItem",
+          "position": 3,
+          "name": exam.name,
+          "item": `https://jeetphysics.in/entrance-exams/${encodeURIComponent(exam.slug)}`
+        });
+      }
+
+      breadcrumbNav.innerHTML = breadcrumbsHtml;
+      if (structuredData) {
+        structuredData.textContent = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": itemList
+        });
+      }
+    }
+
+    function renderPortal({ exam, topics, currentTopic, resourceTypes, activeTypeKey, resources }) {
+      const container = document.getElementById('portalContent');
+      const icon = exam.icon ? escapeHtml(exam.icon) : '🎯';
+      const examName = escapeHtml(exam.name);
+      const shortName = escapeHtml(exam.short_name || exam.name);
+      const examDesc = escapeHtml(exam.description || 'Verified past papers, specialized notes, and reference material for entrance prep.');
+
+      // 1. Hero Card Markup
+      let heroHtml = `
+        <div class="exam-hero-card">
+          <div class="exam-hero-top">
+            <div class="exam-hero-icon" aria-hidden="true">${icon}</div>
+            <div class="exam-hero-titles">
+              <div class="exam-badges-row">
+                <span class="badge-exam-code">${shortName}</span>
+                ${currentTopic ? `<span class="badge-topic-focus"><i class="ph ph-tree-structure"></i> ${escapeHtml(currentTopic.name)}</span>` : ''}
+              </div>
+              <h1>${currentTopic ? `${escapeHtml(currentTopic.name)} — ${examName}` : examName}</h1>
+            </div>
+          </div>
+          <p class="exam-hero-desc">${currentTopic && currentTopic.description ? escapeHtml(currentTopic.description) : examDesc}</p>
+        </div>
+      `;
+
+      // 2. Topics Filter Chips (Only rendered if exam has topics)
+      let topicsHtml = '';
+      if (topics.length > 0) {
+        const allTopicsUrl = `/entrance-exams/${encodeURIComponent(exam.slug)}${activeTypeKey ? `?type=${encodeURIComponent(activeTypeKey)}` : ''}`;
+        const isAllActive = !currentTopic;
+
+        topicsHtml = `
+          <div class="filter-section">
+            <div class="filter-label"><i class="ph ph-tree-structure"></i> Syllabus Topics</div>
+            <div class="chips-bar">
+              <a href="${allTopicsUrl}" class="filter-chip ${isAllActive ? 'active' : ''}">
+                <i class="ph ph-squares-four"></i> All Topics
+              </a>
+              ${topics.map(t => {
+                const isSelected = currentTopic && currentTopic.id === t.id;
+                const topicUrl = `/entrance-exams/${encodeURIComponent(exam.slug)}/${encodeURIComponent(t.slug)}${activeTypeKey ? `?type=${encodeURIComponent(activeTypeKey)}` : ''}`;
+                return `
+                  <a href="${topicUrl}" class="filter-chip ${isSelected ? 'active' : ''}">
+                    ${escapeHtml(t.name)}
+                  </a>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. Resource Types Filter Chips
+      const baseTopicPath = currentTopic
+        ? `/entrance-exams/${encodeURIComponent(exam.slug)}/${encodeURIComponent(currentTopic.slug)}`
+        : `/entrance-exams/${encodeURIComponent(exam.slug)}`;
+
+      const typesHtml = `
+        <div class="filter-section">
+          <div class="filter-label"><i class="ph ph-tag"></i> Resource Category</div>
+          <div class="chips-bar">
+            <a href="${baseTopicPath}" class="filter-chip ${!activeTypeKey ? 'active' : ''}">
+              <i class="ph ph-folder"></i> All Categories
+            </a>
+            ${resourceTypes.map(rt => {
+              const isSelected = activeTypeKey === rt.type_key;
+              const typeUrl = `${baseTopicPath}?type=${encodeURIComponent(rt.type_key)}`;
+              return `
+                <a href="${typeUrl}" class="filter-chip ${isSelected ? 'active' : ''}">
+                  ${escapeHtml(rt.display_name || rt.name)}
+                </a>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      // 4. Resources Rendering
+      let resourcesHtml = '';
+      if (resources.length === 0) {
+        resourcesHtml = `
+          <div class="state-card">
+            <i class="ph ph-folder-open state-icon"></i>
+            <div class="state-title">No Resources Published Here Yet</div>
+            <div class="state-desc">
+              No verified documents match this specific category or topic filter. Please try selecting a different category above.
+            </div>
+            ${activeTypeKey || currentTopic ? `
+              <div style="margin-top: 20px;">
+                <a href="/entrance-exams/${encodeURIComponent(exam.slug)}" class="btn btn-secondary">
+                  <i class="ph ph-arrows-clockwise"></i> Reset Filters
+                </a>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } else {
+        // Check if we should group by exam_year (e.g. for PYQ or when years are present)
+        const hasYears = resources.some(r => r.exam_year);
+        const isPyqFilter = activeTypeKey === 'PYQ';
+
+        if (isPyqFilter || hasYears) {
+          // Dynamic year grouping: sort years descending with ZERO hardcoded years
+          const byYear = {};
+          const unassignedYear = [];
+
+          resources.forEach(r => {
+            if (r.exam_year) {
+              if (!byYear[r.exam_year]) byYear[r.exam_year] = [];
+              byYear[r.exam_year].push(r);
+            } else {
+              unassignedYear.push(r);
+            }
+          });
+
+          const sortedYears = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+
+          let groupedHtml = '';
+          sortedYears.forEach(year => {
+            groupedHtml += `
+              <section class="pyq-year-group">
+                <h2 class="pyq-year-heading">
+                  <span class="year-pill"><i class="ph ph-calendar"></i> ${year}</span>
+                  <span>${year} Examination Archive</span>
+                </h2>
+                <div class="resources-grid">
+                  ${byYear[year].map(renderResourceCard).join('')}
+                </div>
+              </section>
+            `;
+          });
+
+          if (unassignedYear.length > 0) {
+            groupedHtml += `
+              <section class="pyq-year-group">
+                <h2 class="pyq-year-heading">
+                  <span class="year-pill"><i class="ph ph-files"></i> General</span>
+                  <span>Additional Prep Documents</span>
+                </h2>
+                <div class="resources-grid">
+                  ${unassignedYear.map(renderResourceCard).join('')}
+                </div>
+              </section>
+            `;
+          }
+
+          resourcesHtml = groupedHtml;
+        } else {
+          // Standard grid
+          resourcesHtml = `
+            <div class="resources-grid">
+              ${resources.map(renderResourceCard).join('')}
+            </div>
+          `;
+        }
+      }
+
+      container.innerHTML = heroHtml + topicsHtml + typesHtml + resourcesHtml;
+    }
+
+    function renderResourceCard(res) {
+      const files = res.resource_files || [];
+      const primaryFile = files.find(f => f.is_primary) || files[0];
+      const fileSizeStr = primaryFile?.file_size_bytes
+        ? (primaryFile.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
+        : 'PDF Document';
+
+      const topicName = res.entrance_topics?.name;
+      const typeKey = escapeHtml(res.resource_type);
+      const title = escapeHtml(res.title);
+      const desc = res.description ? escapeHtml(res.description) : '';
+
+      return `
+        <article class="resource-card">
+          <div class="res-card-top">
+            <div class="res-card-meta">
+              <span class="res-type-badge">${typeKey}</span>
+              ${topicName ? `<span class="res-topic-badge"><i class="ph ph-tree-structure"></i> ${escapeHtml(topicName)}</span>` : ''}
+              ${res.exam_year ? `<span class="res-topic-badge" style="color: #60a5fa; background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.25);"><i class="ph ph-calendar"></i> ${res.exam_year}</span>` : ''}
+            </div>
+            <h3 class="res-card-title">${title}</h3>
+            ${desc ? `<p class="res-card-desc">${desc}</p>` : ''}
+          </div>
+
+          <div class="res-card-footer">
+            <span class="res-file-size">
+              <i class="ph ph-file-pdf" style="color: #f87171;"></i> ${fileSizeStr}
+            </span>
+            ${primaryFile ? `
+              <button 
+                class="btn-view-pdf"
+                onclick="window.viewResourceFile('${primaryFile.id}', '${encodeURIComponent(res.title)}')"
+              >
+                <i class="ph ph-eye"></i> View PDF
+              </button>
+            ` : `
+              <span style="font-size: 0.78rem; color: var(--text-muted);">No File Attached</span>
+            `}
+          </div>
+        </article>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', initPortal);
+  </script>
+</body>
+</html>

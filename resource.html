@@ -413,6 +413,120 @@
       flex-shrink: 0;
     }
 
+    /* Multi-Stage Discovery Grid & Cards */
+    .discovery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 22px;
+      margin-bottom: 48px;
+    }
+
+    .discovery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .discovery-card:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .discovery-card-top {
+      margin-bottom: 18px;
+    }
+
+    .discovery-card-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .discovery-card-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .discovery-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .discovery-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .discovery-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid rgba(82, 160, 255, 0.1);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--blue-300);
+      font-family: var(--font-head);
+    }
+
+    .discovery-card:hover .discovery-card-footer i {
+      transform: translateX(4px);
+    }
+
+    .discovery-card-footer i {
+      transition: transform 0.2s ease;
+    }
+
+    /* PYQ Dynamic Year Grouping */
+    .pyq-year-group {
+      margin-bottom: 32px;
+    }
+
+    .pyq-year-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(82, 160, 255, 0.15);
+    }
+
+    .pyq-year-pill {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--gold-400);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     @media (max-width: 768px) {
       .resource-hero-card {
         padding: 24px 20px;
@@ -431,6 +545,9 @@
       .item-actions-multi {
         max-width: 100%;
       }
+      .discovery-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -440,21 +557,7 @@
   <canvas id="starfield"></canvas>
 
   <!-- Navigation Bar -->
-  <nav class="navbar" style="background: rgba(2, 8, 24, 0.95); position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--border);">
-    <div class="nav-container" style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px;">
-      <a href="/" class="nav-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-        <span style="font-size: 1.6rem;">⚛️</span>
-        <span style="font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--text-primary);">
-          <span class="brand-jeet" style="color: var(--blue-400);">Jeet</span><span class="brand-physics" style="color: #fff;">Physics</span>
-        </span>
-      </a>
-
-      <div style="display: flex; align-items: center; gap: 16px;">
-        <a id="navPaperLink" href="/semesters/physics/semester-i" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Paper Overview</a>
-        <a href="/admin/login.html" style="color: var(--blue-300); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);">Faculty CMS</a>
-      </div>
-    </div>
-  </nav>
+  <nav class="navbar" id="navbar"></nav>
 
   <div class="container resource-page-wrap">
 
@@ -484,20 +587,8 @@
     <!-- State 3: Active Resource Archive -->
     <main id="resourceContentState" style="display: none;">
       <!-- Breadcrumb -->
-      <nav aria-label="Breadcrumb" class="resource-breadcrumb">
-        <a href="/">Home</a>
-        <span>&gt;</span>
-        <a href="/#syllabus">Syllabus</a>
-        <span>&gt;</span>
-        <a href="#" id="bcStream">Stream</a>
-        <span>&gt;</span>
-        <a href="#" id="bcSubject">Subject</a>
-        <span>&gt;</span>
-        <a href="#" id="bcSemester">Semester</a>
-        <span>&gt;</span>
-        <a href="#" id="bcPaper">Paper</a>
-        <span>&gt;</span>
-        <span style="color: var(--text-primary); font-weight: 500;" id="bcResource">Resources</span>
+      <nav aria-label="Breadcrumb" class="resource-breadcrumb" id="resourceBreadcrumb">
+        <!-- Dynamically rendered -->
       </nav>
 
       <!-- Hero Header -->
@@ -505,13 +596,13 @@
         <div class="hero-top-row">
           <div class="resource-badge-group">
             <span class="pill-category" id="resourceCategory">EXAM ARCHIVE</span>
-            <span class="pill-paper" id="paperCodePill">Paper I</span>
-            <span class="pill-paper" id="paperTypePill">THEORY</span>
+            <span class="pill-paper" id="paperCodePill" style="display: none;">Paper I</span>
+            <span class="pill-paper" id="paperTypePill" style="display: none;">THEORY</span>
           </div>
 
-          <a href="#" id="btnBackToPaper" class="btn-back-paper">
+          <a href="#" id="btnBackToPaper" class="btn-back-paper" style="display: none;">
             <i class="ph ph-arrow-left"></i>
-            <span>Paper Overview & Syllabus</span>
+            <span id="btnBackText">Paper Overview & Syllabus</span>
           </a>
         </div>
 
@@ -524,7 +615,7 @@
         </p>
       </section>
 
-      <!-- List of Published Resources -->
+      <!-- List of Published Resources / Discovery Cards -->
       <section>
         <div id="itemsContainer" class="items-container">
           <!-- Populated by JavaScript -->
@@ -534,7 +625,7 @@
 
   </div>
 
-  <!-- Client-side Routing & Data Controller -->
+  <!-- Client-side Routing & Multi-Stage Discovery Controller -->
   <script type="module">
     import { supabase, AcademicService } from '/lib/supabaseClient.js';
     import { openProtectedViewerModal } from '/lib/protectedViewer.js';
@@ -547,12 +638,8 @@
     const btnErrorBack = document.getElementById('btnErrorBack');
     const resourceContentState = document.getElementById('resourceContentState');
 
-    // Breadcrumbs
-    const bcStream = document.getElementById('bcStream');
-    const bcSubject = document.getElementById('bcSubject');
-    const bcSemester = document.getElementById('bcSemester');
-    const bcPaper = document.getElementById('bcPaper');
-    const bcResource = document.getElementById('bcResource');
+    // Breadcrumbs & Nav
+    const resourceBreadcrumb = document.getElementById('resourceBreadcrumb');
     const navPaperLink = document.getElementById('navPaperLink');
 
     // Hero Elements
@@ -560,17 +647,22 @@
     const paperCodePill = document.getElementById('paperCodePill');
     const paperTypePill = document.getElementById('paperTypePill');
     const btnBackToPaper = document.getElementById('btnBackToPaper');
+    const btnBackText = document.getElementById('btnBackText');
     const resourceIcon = document.getElementById('resourceIcon');
     const resourceTitle = document.getElementById('resourceTitle');
     const resourceDescription = document.getElementById('resourceDescription');
     const itemsContainer = document.getElementById('itemsContainer');
 
     /**
-     * Resolve Route Segments from URL
-     * Format:
-     * - /:resourceType/:stream/:subject/:semester/:paper (Canonical)
-     * - /resources/:resourceType/:stream/:subject/:semester/:paper
-     * - /:resourceType/:subject/:semester/:paper (Legacy)
+     * Resolve Multi-Stage Route Segments from URL
+     * Supports:
+     * - Level 0: /resources
+     * - Level 1: /:type or /resources/:type
+     * - Level 2: /:type/:stream or /resources/:type/:stream
+     * - Level 3: /:type/:stream/:subject or /resources/:type/:stream/:subject
+     * - Level 4: /:type/:stream/:subject/:semester or /resources/:type/:stream/:subject/:semester
+     * - Level 5: /:type/:stream/:subject/:semester/:paper or /resources/:type/:stream/:subject/:semester/:paper
+     * - Legacy 4-Segment: /:type/:subject/:semester/:paper
      */
     function resolveRouteParams() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -580,54 +672,96 @@
       const querySemester = urlParams.get('semester');
       const queryPaper = urlParams.get('paper');
 
-      if (queryType && querySubject && querySemester && queryPaper) {
+      if (queryType || queryPaper) {
+        let level = 1;
+        if (queryPaper && querySemester && querySubject) level = 5;
+        else if (querySemester && querySubject) level = 4;
+        else if (querySubject) level = 3;
+        else if (queryStream) level = 2;
         return {
-          resourceSlug: queryType.trim().toLowerCase(),
+          level,
+          isGenericPrefix: false,
+          resourceSlug: queryType ? queryType.trim().toLowerCase() : null,
           streamSlug: queryStream ? queryStream.trim().toLowerCase() : null,
-          subjectSlug: querySubject.trim().toLowerCase(),
-          semesterSlug: querySemester.trim().toLowerCase(),
-          paperSlug: queryPaper.trim().toLowerCase()
+          subjectSlug: querySubject ? querySubject.trim().toLowerCase() : null,
+          semesterSlug: querySemester ? querySemester.trim().toLowerCase() : null,
+          paperSlug: queryPaper ? queryPaper.trim().toLowerCase() : null
         };
       }
 
-      // Extract from pathname:
-      const segments = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+      const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '');
+      if (!rawPath || rawPath === 'resources') {
+        return { level: 0, isGenericPrefix: true, resourceSlug: null, streamSlug: null, subjectSlug: null, semesterSlug: null, paperSlug: null };
+      }
+
+      const segments = rawPath.split('/').map(s => s.toLowerCase());
+
       if (segments[0] === 'resources') {
-        if (segments.length >= 6) {
-          return {
-            resourceSlug: segments[1].toLowerCase(),
-            streamSlug: segments[2].toLowerCase(),
-            subjectSlug: segments[3].toLowerCase(),
-            semesterSlug: segments[4].toLowerCase(),
-            paperSlug: segments[5].toLowerCase()
-          };
+        const sub = segments.slice(1);
+        if (sub.length === 0) {
+          return { level: 0, isGenericPrefix: true, resourceSlug: null, streamSlug: null, subjectSlug: null, semesterSlug: null, paperSlug: null };
         }
-        if (segments.length >= 5) {
-          return {
-            resourceSlug: segments[1].toLowerCase(),
-            streamSlug: null,
-            subjectSlug: segments[2].toLowerCase(),
-            semesterSlug: segments[3].toLowerCase(),
-            paperSlug: segments[4].toLowerCase()
-          };
+        const resourceSlug = sub[0];
+        if (sub.length === 1) {
+          return { level: 1, isGenericPrefix: true, resourceSlug, streamSlug: null, subjectSlug: null, semesterSlug: null, paperSlug: null };
+        }
+        if (sub.length === 2) {
+          return { level: 2, isGenericPrefix: true, resourceSlug, streamSlug: sub[1], subjectSlug: null, semesterSlug: null, paperSlug: null };
+        }
+        if (sub.length === 3) {
+          return { level: 3, isGenericPrefix: true, resourceSlug, streamSlug: sub[1], subjectSlug: sub[2], semesterSlug: null, paperSlug: null };
+        }
+        if (sub.length === 4) {
+          return { level: 4, isGenericPrefix: true, resourceSlug, streamSlug: sub[1], subjectSlug: sub[2], semesterSlug: sub[3], paperSlug: null };
+        }
+        if (sub.length >= 5) {
+          return { level: 5, isGenericPrefix: true, resourceSlug, streamSlug: sub[1], subjectSlug: sub[2], semesterSlug: sub[3], paperSlug: sub[4] };
         }
       } else {
+        const resourceSlug = segments[0];
+        if (segments.length === 1) {
+          return { level: 1, isGenericPrefix: false, resourceSlug, streamSlug: null, subjectSlug: null, semesterSlug: null, paperSlug: null };
+        }
+        if (segments.length === 2) {
+          return { level: 2, isGenericPrefix: false, resourceSlug, streamSlug: segments[1], subjectSlug: null, semesterSlug: null, paperSlug: null };
+        }
+        if (segments.length === 3) {
+          return { level: 3, isGenericPrefix: false, resourceSlug, streamSlug: segments[1], subjectSlug: segments[2], semesterSlug: null, paperSlug: null };
+        }
+        if (segments.length === 4) {
+          // Check legacy 4-segment: /:type/:subject/:semester/:paper (Level 5)
+          // Semesters in FMU UG follow 'semester-1', 'semester-i', etc.
+          if (segments[2].startsWith('semester') || segments[2].startsWith('sem-')) {
+            return {
+              level: 5,
+              isGenericPrefix: false,
+              resourceSlug,
+              streamSlug: null,
+              subjectSlug: segments[1],
+              semesterSlug: segments[2],
+              paperSlug: segments[3]
+            };
+          } else {
+            return {
+              level: 4,
+              isGenericPrefix: false,
+              resourceSlug,
+              streamSlug: segments[1],
+              subjectSlug: segments[2],
+              semesterSlug: segments[3],
+              paperSlug: null
+            };
+          }
+        }
         if (segments.length >= 5) {
           return {
-            resourceSlug: segments[0].toLowerCase(),
-            streamSlug: segments[1].toLowerCase(),
-            subjectSlug: segments[2].toLowerCase(),
-            semesterSlug: segments[3].toLowerCase(),
-            paperSlug: segments[4].toLowerCase()
-          };
-        }
-        if (segments.length >= 4) {
-          return {
-            resourceSlug: segments[0].toLowerCase(),
-            streamSlug: null,
-            subjectSlug: segments[1].toLowerCase(),
-            semesterSlug: segments[2].toLowerCase(),
-            paperSlug: segments[3].toLowerCase()
+            level: 5,
+            isGenericPrefix: false,
+            resourceSlug,
+            streamSlug: segments[1],
+            subjectSlug: segments[2],
+            semesterSlug: segments[3],
+            paperSlug: segments[4]
           };
         }
       }
@@ -635,84 +769,55 @@
       return null;
     }
 
-    /**
-     * SEO & Open Graph Metadata
-     */
-    function updatePageMetadata(resourceType, stream, subject, semester, paper) {
-      const streamSlug = stream?.slug || 'science';
-      const pageTitle = `${resourceType.display_name} — ${paper.paper_code}: ${paper.name} | JeetPhysics`;
-      const pageDesc = `Access official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, ${subject.name}) online.`;
-      const canonicalUrl = `https://jeetphysics.in/${resourceType.slug}/${streamSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+    function makeBasePrefix(isGeneric, resourceSlug) {
+      return isGeneric ? `/resources/${resourceSlug}` : `/${resourceSlug}`;
+    }
 
-      document.title = pageTitle;
+    function renderBreadcrumbs(crumbs) {
+      if (!resourceBreadcrumb) return;
+      resourceBreadcrumb.innerHTML = crumbs.map((c, i) => {
+        const isLast = i === crumbs.length - 1;
+        const sep = i > 0 ? `<i class="ph ph-caret-right" style="font-size: 0.75rem;"></i>` : '';
+        if (isLast || !c.url) {
+          return `${sep}<span style="color: var(--text-primary); font-weight: 500;">${escapeHtml(c.label)}</span>`;
+        }
+        return `${sep}<a href="${c.url}">${escapeHtml(c.label)}</a>`;
+      }).join('');
+
+      const structuredDataTag = document.getElementById('structuredData');
+      if (structuredDataTag) {
+        const schema = {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          'itemListElement': crumbs.map((c, idx) => ({
+            '@type': 'ListItem',
+            'position': idx + 1,
+            'name': c.label,
+            'item': c.url ? (c.url.startsWith('http') ? c.url : `https://jeetphysics.in${c.url}`) : 'https://jeetphysics.in/'
+          }))
+        };
+        structuredDataTag.textContent = JSON.stringify(schema, null, 2);
+      }
+    }
+
+    function updateMetadata(title, description, canonicalPath) {
+      document.title = title;
+      const canonicalUrl = `https://jeetphysics.in${canonicalPath}`;
 
       let metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+      if (metaDesc) metaDesc.setAttribute('content', description);
 
       let canonicalLink = document.querySelector('link[rel="canonical"]');
       if (canonicalLink) canonicalLink.setAttribute('href', canonicalUrl);
 
       const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+      if (ogTitle) ogTitle.setAttribute('content', title);
 
       const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+      if (ogDesc) ogDesc.setAttribute('content', description);
 
       const ogUrl = document.querySelector('meta[property="og:url"]');
       if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
-
-      const structuredDataTag = document.getElementById('structuredData');
-      if (structuredDataTag) {
-        const schema = {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://jeetphysics.in/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Syllabus",
-              "item": "https://jeetphysics.in/#syllabus"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": stream?.name || 'Science',
-              "item": `https://jeetphysics.in/syllabus/${streamSlug}`
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "name": subject.name,
-              "item": `https://jeetphysics.in/subjects/${streamSlug}/${subject.slug}`
-            },
-            {
-              "@type": "ListItem",
-              "position": 5,
-              "name": semester.name,
-              "item": `https://jeetphysics.in/semesters/${streamSlug}/${subject.slug}/${semester.slug}`
-            },
-            {
-              "@type": "ListItem",
-              "position": 6,
-              "name": `${paper.paper_code}: ${paper.name}`,
-              "item": `https://jeetphysics.in/papers/${streamSlug}/${subject.slug}/${semester.slug}/${paper.slug}`
-            },
-            {
-              "@type": "ListItem",
-              "position": 7,
-              "name": resourceType.display_name,
-              "item": canonicalUrl
-            }
-          ]
-        };
-        structuredDataTag.textContent = JSON.stringify(schema, null, 2);
-      }
     }
 
     function escapeHtml(str) {
@@ -725,10 +830,6 @@
         .replace(/'/g, '&#039;');
     }
 
-    /**
-     * Open document in Protected Online Viewer modal
-     * Requests temporary signed token via AcademicService.fetchSignedUrl (/api/resources/sign-url)
-     */
     window.viewResourceFile = function(fileId, btnOrTitle) {
       let docTitle = 'Academic Document';
       if (typeof btnOrTitle === 'string') {
@@ -746,6 +847,525 @@
       });
     };
 
+    function renderResourceCard(res) {
+      const files = res.resource_files || [];
+      const primaryFile = files.find(f => f.is_primary) || files[0];
+      const fileSizeStr = primaryFile?.file_size_bytes
+        ? (primaryFile.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
+        : 'PDF Document';
+      const filename = primaryFile?.original_filename || 'document.pdf';
+
+      let badgeMarkup = '';
+      if (res.exam_year) {
+        badgeMarkup = `<span class="badge-year"><i class="ph ph-calendar"></i> ${res.exam_year} Examination</span>`;
+      } else if (res.unit_number) {
+        badgeMarkup = `<span class="badge-unit">Unit ${res.unit_number}${res.unit_name ? ': ' + escapeHtml(res.unit_name) : ''}</span>`;
+      }
+
+      let actionsMarkup = '';
+      if (files.length === 0) {
+        actionsMarkup = `<span style="color: var(--text-muted); font-size: 0.85rem;">File Pending</span>`;
+      } else if (files.length === 1) {
+        const fileId = primaryFile.id;
+        const encodedTitle = encodeURIComponent(res.title || 'Academic Document');
+        actionsMarkup = `
+          <button onclick="viewResourceFile('${fileId}', this)" data-title="${encodedTitle}" class="btn-action-primary" title="Read Protected Online Document">
+            <i class="ph ph-book-open"></i>
+            <span>Read Online</span>
+          </button>
+        `;
+      } else {
+        actionsMarkup = `
+          <div class="item-actions-multi">
+            ${files.map(f => {
+              const fSize = f.file_size_bytes ? ` (${(f.file_size_bytes / (1024 * 1024)).toFixed(1)}MB)` : '';
+              const encodedSubTitle = encodeURIComponent(`${res.title} — ${f.original_filename}`);
+              return `
+                <div class="multi-file-row">
+                  <span class="file-name-label" title="${escapeHtml(f.original_filename)}"><i class="ph ph-file-pdf"></i> ${escapeHtml(f.original_filename)}${fSize}</span>
+                  <div class="multi-file-btns">
+                    <button onclick="viewResourceFile('${f.id}', this)" data-title="${encodedSubTitle}" class="btn-action-primary btn-sm" title="Read Protected Online Document">
+                      <i class="ph ph-book-open"></i>
+                      <span>Read</span>
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      return `
+        <article class="item-card">
+          <div class="item-info">
+            ${badgeMarkup ? `<div class="item-badge-row">${badgeMarkup}</div>` : ''}
+            <h3 class="item-title">${escapeHtml(res.title)}</h3>
+            ${res.description ? `<p class="item-desc">${escapeHtml(res.description)}</p>` : ''}
+            <div class="item-file-meta">
+              <span><i class="ph ph-file-pdf"></i> ${files.length > 1 ? `${files.length} Attachments` : escapeHtml(filename)}</span>
+              <span>•</span>
+              <span>${files.length > 1 ? 'Multi-part' : fileSizeStr}</span>
+            </div>
+          </div>
+
+          <div class="item-actions">
+            ${actionsMarkup}
+          </div>
+        </article>
+      `;
+    }
+
+    // =========================================================================
+    // LEVEL RENDERERS
+    // =========================================================================
+
+    async function renderLevel0() {
+      const types = await AcademicService.getResourceTypes();
+
+      resourceCategory.textContent = 'REPOSITORY';
+      paperCodePill.style.display = 'none';
+      paperTypePill.style.display = 'none';
+      btnBackToPaper.style.display = 'none';
+      resourceIcon.textContent = '📁';
+      resourceTitle.textContent = 'Academic Resources Repository';
+      resourceDescription.textContent = 'Browse university previous year questions, lecture notes, laboratory manuals, and official academic archives across all disciplines.';
+      if (navPaperLink) navPaperLink.style.display = 'none';
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: null }
+      ]);
+
+      updateMetadata(
+        'Academic Resources Repository | JeetPhysics',
+        'Explore university question papers, unit-wise notes, and course resources under Fakir Mohan University.',
+        '/resources'
+      );
+
+      if (!types || types.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No Resource Categories Configured</h2>
+            <p class="empty-text">No academic resource types are currently published in the repository.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const dedicatedSlugs = ['previous-year-questions', 'unit-wise-notes', 'unit-wise-qna', 'lab-manuals', 'viva-questions', 'experiment-notes', 'study-material', 'other-resources', 'formulae-bank', 'solved-numericals'];
+
+      itemsContainer.innerHTML = `
+        <div class="discovery-grid">
+          ${types.map(rt => {
+            const targetUrl = dedicatedSlugs.includes(rt.slug) ? `/${rt.slug}` : `/resources/${rt.slug}`;
+            return `
+              <a href="${targetUrl}" class="discovery-card">
+                <div class="discovery-card-top">
+                  <div class="discovery-card-icon">${rt.icon || '📄'}</div>
+                  <span class="pill-category" style="margin-bottom: 8px; display: inline-block;">${escapeHtml(rt.category || 'ACADEMIC')}</span>
+                  <h3 class="discovery-card-title">${escapeHtml(rt.display_name)}</h3>
+                  <p class="discovery-card-desc">${escapeHtml(rt.description || 'Access official academic documents and files.')}</p>
+                </div>
+                <div class="discovery-card-footer">
+                  <span>Browse Category</span>
+                  <i class="ph ph-arrow-right"></i>
+                </div>
+              </a>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    async function renderLevel1(resourceType, isGeneric) {
+      const basePrefix = makeBasePrefix(isGeneric, resourceType.slug);
+      const streams = await AcademicService.getStreams();
+
+      resourceCategory.textContent = resourceType.category || 'ACADEMIC';
+      paperCodePill.style.display = 'none';
+      paperTypePill.style.display = 'none';
+      btnBackToPaper.style.display = 'inline-flex';
+      btnBackToPaper.href = '/resources';
+      if (btnBackText) btnBackText.textContent = 'All Categories';
+      resourceIcon.textContent = resourceType.icon || '📝';
+      resourceTitle.textContent = resourceType.display_name;
+      resourceDescription.textContent = resourceType.description || `Select an academic faculty stream to browse ${resourceType.display_name.toLowerCase()}.`;
+      if (navPaperLink) {
+        navPaperLink.href = '/resources';
+        navPaperLink.textContent = 'Resources';
+      }
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: '/resources' },
+        { label: resourceType.display_name, url: null }
+      ]);
+
+      updateMetadata(
+        `${resourceType.display_name} | JeetPhysics`,
+        `Official ${resourceType.display_name.toLowerCase()} across university streams under Fakir Mohan University.`,
+        basePrefix
+      );
+
+      if (!streams || streams.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No Academic Streams Available</h2>
+            <p class="empty-text">No active academic faculty streams are currently published.</p>
+          </div>
+        `;
+        return;
+      }
+
+      itemsContainer.innerHTML = `
+        <div class="discovery-grid">
+          ${streams.map(s => `
+            <a href="${basePrefix}/${s.slug}" class="discovery-card">
+              <div class="discovery-card-top">
+                <div class="discovery-card-icon">${s.icon || '🎓'}</div>
+                <h3 class="discovery-card-title">${escapeHtml(s.name)} Stream</h3>
+                <p class="discovery-card-desc">${escapeHtml(s.description || 'Explore undergraduate disciplines and study resources.')}</p>
+              </div>
+              <div class="discovery-card-footer">
+                <span>Select Stream</span>
+                <i class="ph ph-arrow-right"></i>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    async function renderLevel2(resourceType, stream, isGeneric) {
+      const basePrefix = makeBasePrefix(isGeneric, resourceType.slug);
+      const subjects = await AcademicService.getSubjects(stream.slug);
+
+      resourceCategory.textContent = resourceType.category || 'ACADEMIC';
+      paperCodePill.style.display = 'none';
+      paperTypePill.style.display = 'none';
+      btnBackToPaper.style.display = 'inline-flex';
+      btnBackToPaper.href = basePrefix;
+      if (btnBackText) btnBackText.textContent = 'All Streams';
+      resourceIcon.textContent = resourceType.icon || '📝';
+      resourceTitle.textContent = `${resourceType.display_name} — ${stream.name}`;
+      resourceDescription.textContent = `Select an academic honours discipline under the ${stream.name} faculty to access ${resourceType.display_name.toLowerCase()}.`;
+      if (navPaperLink) {
+        navPaperLink.href = `/subjects/${stream.slug}`;
+        navPaperLink.textContent = `${stream.name} Subjects`;
+      }
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: '/resources' },
+        { label: resourceType.display_name, url: basePrefix },
+        { label: stream.name, url: null }
+      ]);
+
+      updateMetadata(
+        `${resourceType.display_name} — ${stream.name} | JeetPhysics`,
+        `Access official ${resourceType.display_name.toLowerCase()} for ${stream.name} undergraduate disciplines.`,
+        `${basePrefix}/${stream.slug}`
+      );
+
+      if (!subjects || subjects.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No Subjects Published</h2>
+            <p class="empty-text">No active subjects have been published under the ${escapeHtml(stream.name)} faculty yet.</p>
+            <a href="${basePrefix}" class="btn-action-primary"><i class="ph ph-arrow-left"></i> All Streams</a>
+          </div>
+        `;
+        return;
+      }
+
+      itemsContainer.innerHTML = `
+        <div class="discovery-grid">
+          ${subjects.map(subj => `
+            <a href="${basePrefix}/${stream.slug}/${subj.slug}" class="discovery-card">
+              <div class="discovery-card-top">
+                <div class="discovery-card-icon">📘</div>
+                <h3 class="discovery-card-title">${escapeHtml(subj.name)}</h3>
+                <p class="discovery-card-desc">${escapeHtml(subj.description || 'Curriculum structure, semester syllabi, and study resources.')}</p>
+              </div>
+              <div class="discovery-card-footer">
+                <span>Select Subject</span>
+                <i class="ph ph-arrow-right"></i>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    async function renderLevel3(resourceType, stream, subject, isGeneric) {
+      const basePrefix = makeBasePrefix(isGeneric, resourceType.slug);
+      const semesters = await AcademicService.getSemesters(subject.id);
+
+      resourceCategory.textContent = resourceType.category || 'ACADEMIC';
+      paperCodePill.style.display = 'none';
+      paperTypePill.style.display = 'none';
+      btnBackToPaper.style.display = 'inline-flex';
+      btnBackToPaper.href = `${basePrefix}/${stream.slug}`;
+      if (btnBackText) btnBackText.textContent = `Back to ${stream.name}`;
+      resourceIcon.textContent = resourceType.icon || '📝';
+      resourceTitle.textContent = `${resourceType.display_name} — ${subject.name}`;
+      resourceDescription.textContent = `Select a semester (Semesters I to VI) to browse available course papers and ${resourceType.display_name.toLowerCase()}.`;
+      if (navPaperLink) {
+        navPaperLink.href = `/subjects/${stream.slug}/${subject.slug}`;
+        navPaperLink.textContent = `${subject.name} Overview`;
+      }
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: '/resources' },
+        { label: resourceType.display_name, url: basePrefix },
+        { label: stream.name, url: `${basePrefix}/${stream.slug}` },
+        { label: subject.name, url: null }
+      ]);
+
+      updateMetadata(
+        `${resourceType.display_name} — ${subject.name} | JeetPhysics`,
+        `Semester-wise ${resourceType.display_name.toLowerCase()} for B.Sc ${subject.name} Honours.`,
+        `${basePrefix}/${stream.slug}/${subject.slug}`
+      );
+
+      if (!semesters || semesters.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No Semesters Found</h2>
+            <p class="empty-text">No active semesters have been registered under ${escapeHtml(subject.name)}.</p>
+            <a href="${basePrefix}/${stream.slug}" class="btn-action-primary"><i class="ph ph-arrow-left"></i> All Subjects</a>
+          </div>
+        `;
+        return;
+      }
+
+      itemsContainer.innerHTML = `
+        <div class="discovery-grid">
+          ${semesters.map(sem => `
+            <a href="${basePrefix}/${stream.slug}/${subject.slug}/${sem.slug}" class="discovery-card">
+              <div class="discovery-card-top">
+                <div class="discovery-card-icon">📅</div>
+                <span class="pill-category" style="margin-bottom: 8px; display: inline-block;">Semester ${sem.semester_number}</span>
+                <h3 class="discovery-card-title">${escapeHtml(sem.name)}</h3>
+                <p class="discovery-card-desc">Browse core papers and official examination resources.</p>
+              </div>
+              <div class="discovery-card-footer">
+                <span>View Papers</span>
+                <i class="ph ph-arrow-right"></i>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    async function renderLevel4(resourceType, stream, subject, semester, isGeneric) {
+      const basePrefix = makeBasePrefix(isGeneric, resourceType.slug);
+      const papers = await AcademicService.getPapersBySemester(semester.id);
+
+      const applicablePapers = (papers || []).filter(p => {
+        if (resourceType.applicable_paper_type === 'BOTH') return true;
+        return p.paper_type === resourceType.applicable_paper_type;
+      });
+
+      resourceCategory.textContent = resourceType.category || 'ACADEMIC';
+      paperCodePill.style.display = 'none';
+      paperTypePill.style.display = 'none';
+      btnBackToPaper.style.display = 'inline-flex';
+      btnBackToPaper.href = `${basePrefix}/${stream.slug}/${subject.slug}`;
+      if (btnBackText) btnBackText.textContent = `Back to Semesters`;
+      resourceIcon.textContent = resourceType.icon || '📝';
+      resourceTitle.textContent = `${resourceType.display_name} — ${semester.name}`;
+      resourceDescription.textContent = `Select a course paper to explore official ${resourceType.display_name.toLowerCase()} for ${semester.name}, ${subject.name}.`;
+      if (navPaperLink) {
+        navPaperLink.href = `/semesters/${stream.slug}/${subject.slug}/${semester.slug}`;
+        navPaperLink.textContent = `${semester.name} Papers`;
+      }
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: '/resources' },
+        { label: resourceType.display_name, url: basePrefix },
+        { label: stream.name, url: `${basePrefix}/${stream.slug}` },
+        { label: subject.name, url: `${basePrefix}/${stream.slug}/${subject.slug}` },
+        { label: semester.name, url: null }
+      ]);
+
+      updateMetadata(
+        `${resourceType.display_name} — ${semester.name} | JeetPhysics`,
+        `Course papers and ${resourceType.display_name.toLowerCase()} for ${semester.name}, ${subject.name}.`,
+        `${basePrefix}/${stream.slug}/${subject.slug}/${semester.slug}`
+      );
+
+      if (!applicablePapers || applicablePapers.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No Compatible Papers Found</h2>
+            <p class="empty-text">
+              There are currently no active ${resourceType.applicable_paper_type !== 'BOTH' ? resourceType.applicable_paper_type.toLowerCase() : ''} papers registered under ${escapeHtml(semester.name)}.
+            </p>
+            <a href="${basePrefix}/${stream.slug}/${subject.slug}" class="btn-action-primary"><i class="ph ph-arrow-left"></i> Return to Semesters</a>
+          </div>
+        `;
+        return;
+      }
+
+      itemsContainer.innerHTML = `
+        <div class="discovery-grid">
+          ${applicablePapers.map(p => `
+            <a href="${basePrefix}/${stream.slug}/${subject.slug}/${semester.slug}/${p.slug}" class="discovery-card">
+              <div class="discovery-card-top">
+                <div class="discovery-card-icon">📄</div>
+                <div class="discovery-card-meta">
+                  <span class="pill-paper" style="font-weight: 700; color: var(--blue-300);">${escapeHtml(p.paper_code)}</span>
+                  <span class="pill-paper">${escapeHtml(p.paper_type)}</span>
+                  ${p.credits ? `<span class="pill-paper">${p.credits} Credits</span>` : ''}
+                </div>
+                <h3 class="discovery-card-title" style="margin-top: 10px;">${escapeHtml(p.name)}</h3>
+                <p class="discovery-card-desc">${escapeHtml(p.description || `Official ${resourceType.display_name.toLowerCase()} and study files.`)}</p>
+              </div>
+              <div class="discovery-card-footer">
+                <span>Open ${escapeHtml(resourceType.display_name)}</span>
+                <i class="ph ph-arrow-right"></i>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    async function renderLevel5(resourceType, stream, subject, semester, paper, isGeneric) {
+      const basePrefix = makeBasePrefix(isGeneric, resourceType.slug);
+      const paperUrl = `/papers/${stream.slug}/${subject.slug}/${semester.slug}/${paper.slug}`;
+
+      if (resourceType.applicable_paper_type !== 'BOTH' && resourceType.applicable_paper_type !== paper.paper_type) {
+        showError(
+          'Incompatible Resource Category',
+          `The category "${resourceType.display_name}" is restricted to ${resourceType.applicable_paper_type} papers, but ${paper.paper_code} is a ${paper.paper_type} course.`
+        );
+        btnErrorBack.href = paperUrl;
+        btnErrorBack.textContent = `Return to ${paper.paper_code}`;
+        return;
+      }
+
+      resourceCategory.textContent = resourceType.category || 'EXAM ARCHIVE';
+      paperCodePill.textContent = paper.paper_code;
+      paperCodePill.style.display = 'inline-flex';
+      paperTypePill.textContent = paper.paper_type;
+      paperTypePill.style.display = 'inline-flex';
+      btnBackToPaper.style.display = 'inline-flex';
+      btnBackToPaper.href = paperUrl;
+      if (btnBackText) btnBackText.textContent = 'Paper Overview & Syllabus';
+      resourceIcon.textContent = resourceType.icon || '📝';
+      resourceTitle.textContent = resourceType.display_name;
+      resourceDescription.textContent = resourceType.description || `Official study resources for ${paper.name}.`;
+      if (navPaperLink) {
+        navPaperLink.href = paperUrl;
+        navPaperLink.textContent = `${paper.paper_code} Overview`;
+        navPaperLink.style.display = 'inline-flex';
+      }
+
+      renderBreadcrumbs([
+        { label: 'Home', url: '/' },
+        { label: 'Resources', url: '/resources' },
+        { label: resourceType.display_name, url: basePrefix },
+        { label: stream.name, url: `${basePrefix}/${stream.slug}` },
+        { label: subject.name, url: `${basePrefix}/${stream.slug}/${subject.slug}` },
+        { label: semester.name, url: `${basePrefix}/${stream.slug}/${subject.slug}/${semester.slug}` },
+        { label: `${paper.paper_code}: ${paper.name}`, url: null }
+      ]);
+
+      updateMetadata(
+        `${resourceType.display_name} — ${paper.paper_code}: ${paper.name} | JeetPhysics`,
+        `Access official ${resourceType.display_name} for ${paper.paper_code}: ${paper.name} (${semester.name}, ${subject.name}) online.`,
+        `${basePrefix}/${stream.slug}/${subject.slug}/${semester.slug}/${paper.slug}`
+      );
+
+      const resources = await AcademicService.getPublishedResources(paper.id, resourceType.type_key);
+
+      if (!resources || resources.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="empty-archive-card">
+            <div class="empty-icon">📁</div>
+            <h2 class="empty-title">No ${escapeHtml(resourceType.display_name)} Published Yet</h2>
+            <p class="empty-text">
+              There are currently no published ${escapeHtml(resourceType.display_name.toLowerCase())} documents uploaded for <strong>${escapeHtml(paper.name)}</strong>. Faculty members will add study files as the course progresses.
+            </p>
+            <a href="${paperUrl}" class="btn-action-primary">
+              <i class="ph ph-arrow-left"></i>
+              <span>Back to Paper Overview</span>
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      // If PYQ or requires_exam_year: Group dynamically by exam_year
+      if (resourceType.type_key === 'PYQ' || resourceType.requires_exam_year) {
+        const byYear = {};
+        const unassigned = [];
+
+        resources.forEach(r => {
+          if (r.exam_year) {
+            if (!byYear[r.exam_year]) byYear[r.exam_year] = [];
+            byYear[r.exam_year].push(r);
+          } else {
+            unassigned.push(r);
+          }
+        });
+
+        const sortedYears = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+
+        let html = '';
+        sortedYears.forEach(year => {
+          const yearItems = byYear[year];
+          html += `
+            <div class="pyq-year-group">
+              <div class="pyq-year-heading">
+                <span class="pyq-year-pill"><i class="ph ph-calendar"></i> ${year} Examination</span>
+                <span style="font-size: 0.95rem; color: var(--text-secondary); font-weight: 500;">Annual University Question Paper</span>
+              </div>
+              <div class="items-container">
+                ${yearItems.map(res => renderResourceCard(res)).join('')}
+              </div>
+            </div>
+          `;
+        });
+
+        if (unassigned.length > 0) {
+          html += `
+            <div class="pyq-year-group">
+              <div class="pyq-year-heading">
+                <span class="pyq-year-pill"><i class="ph ph-files"></i> Additional Papers</span>
+              </div>
+              <div class="items-container">
+                ${unassigned.map(res => renderResourceCard(res)).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        itemsContainer.innerHTML = html;
+      } else {
+        if (resourceType.requires_unit || resourceType.type_key === 'NOTES') {
+          resources.sort((a, b) => (a.unit_number || 0) - (b.unit_number || 0));
+        }
+
+        itemsContainer.innerHTML = `
+          <div class="items-container">
+            ${resources.map(res => renderResourceCard(res)).join('')}
+          </div>
+        `;
+      }
+    }
+
     /**
      * Main Controller
      */
@@ -755,188 +1375,96 @@
       if (!params) {
         showError(
           'Malformed Resource URL',
-          'The resource route must follow /:resourceType/:subject/:semester/:paper. Please navigate through the canonical paper page.'
+          'The resource route must follow /:resourceType/:stream/:subject/:semester/:paper or /resources/:resourceType/...'
         );
         return;
       }
 
-      const { resourceSlug, streamSlug, subjectSlug, semesterSlug, paperSlug } = params;
-
       try {
-        // 1. Resolve Paper via full hierarchy
-        const paper = await AcademicService.getPaperBySlug(streamSlug, subjectSlug, semesterSlug, paperSlug);
-        if (!paper) {
-          showError(
-            'Paper Not Found',
-            `Could not resolve paper "${paperSlug}" under ${subjectSlug.toUpperCase()} / ${semesterSlug.toUpperCase()}.`
-          );
-          return;
-        }
-
-        const semester = paper.semesters;
-        const subject = semester.subjects;
-        const stream = subject.academic_streams || { slug: streamSlug || 'science', name: 'Science' };
-        const strSlug = stream.slug || streamSlug || 'science';
-        const strName = stream.name || 'Science';
-        const paperUrl = `/papers/${strSlug}/${subject.slug}/${semester.slug}/${paper.slug}`;
-
-        // 2. Resolve Resource Type from database
-        const resourceType = await AcademicService.getResourceTypeBySlug(resourceSlug);
-        if (!resourceType) {
-          showError(
-            'Resource Category Not Found',
-            `The resource category "${resourceSlug}" is not registered in the curriculum system.`
-          );
-          btnErrorBack.href = paperUrl;
-          btnErrorBack.textContent = `Return to ${paper.paper_code}`;
-          return;
-        }
-
-        // 3. Verify Paper Compatibility (Applicable Paper Type)
-        if (resourceType.applicable_paper_type !== 'BOTH' && resourceType.applicable_paper_type !== paper.paper_type) {
-          showError(
-            'Incompatible Resource Category',
-            `The category "${resourceType.display_name}" is restricted to ${resourceType.applicable_paper_type} papers, but ${paper.paper_code} is a ${paper.paper_type} course.`
-          );
-          btnErrorBack.href = paperUrl;
-          btnErrorBack.textContent = `Return to ${paper.paper_code}`;
-          return;
-        }
-
-        // Populate Breadcrumbs
-        if (bcStream) {
-          bcStream.textContent = strName;
-          bcStream.href = `/syllabus/${strSlug}`;
-        }
-        bcSubject.textContent = subject.name;
-        bcSubject.href = `/subjects/${strSlug}/${subject.slug}`;
-        bcSemester.textContent = semester.name;
-        bcSemester.href = `/semesters/${strSlug}/${subject.slug}/${semester.slug}`;
-        bcPaper.textContent = `${paper.paper_code}: ${paper.name}`;
-        bcPaper.href = paperUrl;
-        bcResource.textContent = resourceType.display_name;
-        navPaperLink.href = paperUrl;
-
-        // Populate Hero Header
-        resourceIcon.textContent = resourceType.icon || '📄';
-        resourceTitle.textContent = resourceType.display_name;
-        resourceDescription.textContent = resourceType.description || `Official study resources for ${paper.name}.`;
-        resourceCategory.textContent = resourceType.category || 'ACADEMIC';
-        paperCodePill.textContent = paper.paper_code;
-        paperTypePill.textContent = paper.paper_type;
-        btnBackToPaper.href = paperUrl;
-
-        // Update Dynamic SEO
-        updatePageMetadata(resourceType, stream, subject, semester, paper);
-
-        // 4. Fetch Published Resources for this Paper and Type
-        const resources = await AcademicService.getPublishedResources(paper.id, resourceType.type_key);
-
-        if (!resources || resources.length === 0) {
-          // Graceful Empty State
-          itemsContainer.innerHTML = `
-            <div class="empty-archive-card">
-              <div class="empty-icon">📁</div>
-              <h2 class="empty-title">No ${resourceType.display_name} Published Yet</h2>
-              <p class="empty-text">
-                There are currently no published ${resourceType.display_name.toLowerCase()} documents uploaded for <strong>${paper.name}</strong>. Faculty members will add study files as the course progresses.
-              </p>
-              <a href="${paperUrl}" class="btn-action-primary">
-                <i class="ph ph-arrow-left"></i>
-                <span>Back to Paper Overview</span>
-              </a>
-            </div>
-          `;
-        } else {
-          // Sort items appropriately
-          if (resourceType.requires_exam_year) {
-            resources.sort((a, b) => (b.exam_year || 0) - (a.exam_year || 0));
-          } else if (resourceType.requires_unit) {
-            resources.sort((a, b) => (a.unit_number || 0) - (b.unit_number || 0));
+        if (params.level === 0) {
+          await renderLevel0();
+        } else if (params.level === 1) {
+          const resourceType = await AcademicService.getResourceTypeBySlug(params.resourceSlug);
+          if (!resourceType) {
+            showError('Resource Category Not Found', `The resource category "${params.resourceSlug}" is not registered.`);
+            return;
           }
-
-          itemsContainer.innerHTML = resources.map(res => {
-            const files = res.resource_files || [];
-            const primaryFile = files.find(f => f.is_primary) || files[0];
-            const fileSizeStr = primaryFile?.file_size_bytes
-              ? (primaryFile.file_size_bytes / (1024 * 1024)).toFixed(2) + ' MB'
-              : 'PDF Document';
-            const filename = primaryFile?.original_filename || 'document.pdf';
-
-            let badgeMarkup = '';
-            if (res.exam_year) {
-              badgeMarkup = `<span class="badge-year"><i class="ph ph-calendar"></i> ${res.exam_year} Examination</span>`;
-            } else if (res.unit_number) {
-              badgeMarkup = `<span class="badge-unit">Unit ${res.unit_number}${res.unit_name ? ': ' + res.unit_name : ''}</span>`;
-            }
-
-            let actionsMarkup = '';
-            if (files.length === 0) {
-              actionsMarkup = `<span style="color: var(--text-muted); font-size: 0.85rem;">File Pending</span>`;
-            } else if (files.length === 1) {
-              const fileId = primaryFile.id;
-              const encodedTitle = encodeURIComponent(res.title || 'Academic Document');
-              actionsMarkup = `
-                <button onclick="viewResourceFile('${fileId}', this)" data-title="${encodedTitle}" class="btn-action-primary" title="Read Protected Online Document">
-                  <i class="ph ph-book-open"></i>
-                  <span>Read Online</span>
-                </button>
-              `;
-            } else {
-              // Multiple files attached to this resource
-              actionsMarkup = `
-                <div class="item-actions-multi">
-                  ${files.map(f => {
-                    const fSize = f.file_size_bytes ? ` (${(f.file_size_bytes / (1024 * 1024)).toFixed(1)}MB)` : '';
-                    const encodedSubTitle = encodeURIComponent(`${res.title} — ${f.original_filename}`);
-                    return `
-                      <div class="multi-file-row">
-                        <span class="file-name-label" title="${f.original_filename}"><i class="ph ph-file-pdf"></i> ${f.original_filename}${fSize}</span>
-                        <div class="multi-file-btns">
-                          <button onclick="viewResourceFile('${f.id}', this)" data-title="${encodedSubTitle}" class="btn-action-primary btn-sm" title="Read Protected Online Document">
-                            <i class="ph ph-book-open"></i>
-                            <span>Read</span>
-                          </button>
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              `;
-            }
-
-            return `
-              <article class="item-card">
-                <div class="item-info">
-                  ${badgeMarkup ? `<div class="item-badge-row">${badgeMarkup}</div>` : ''}
-                  <h3 class="item-title">${escapeHtml(res.title)}</h3>
-                  ${res.description ? `<p class="item-desc">${escapeHtml(res.description)}</p>` : ''}
-                  <div class="item-file-meta">
-                    <span><i class="ph ph-file-pdf"></i> ${files.length > 1 ? `${files.length} Attachments` : filename}</span>
-                    <span>•</span>
-                    <span>${files.length > 1 ? 'Multi-part' : fileSizeStr}</span>
-                  </div>
-                </div>
-
-                <div class="item-actions">
-                  ${actionsMarkup}
-                </div>
-              </article>
-            `;
-          }).join('');
+          await renderLevel1(resourceType, params.isGenericPrefix);
+        } else if (params.level === 2) {
+          const resourceType = await AcademicService.getResourceTypeBySlug(params.resourceSlug);
+          if (!resourceType) {
+            showError('Resource Category Not Found', `The resource category "${params.resourceSlug}" is not registered.`);
+            return;
+          }
+          const stream = await AcademicService.getStreamBySlug(params.streamSlug);
+          if (!stream) {
+            showError('Stream Not Found', `The academic stream "${params.streamSlug}" does not exist.`);
+            return;
+          }
+          await renderLevel2(resourceType, stream, params.isGenericPrefix);
+        } else if (params.level === 3) {
+          const resourceType = await AcademicService.getResourceTypeBySlug(params.resourceSlug);
+          if (!resourceType) {
+            showError('Resource Category Not Found', `The resource category "${params.resourceSlug}" is not registered.`);
+            return;
+          }
+          const stream = await AcademicService.getStreamBySlug(params.streamSlug);
+          if (!stream) {
+            showError('Stream Not Found', `The academic stream "${params.streamSlug}" does not exist.`);
+            return;
+          }
+          const subject = await AcademicService.getSubjectBySlug(params.streamSlug, params.subjectSlug);
+          if (!subject) {
+            showError('Subject Not Found', `Could not resolve subject "${params.subjectSlug}" under ${stream.name}.`);
+            return;
+          }
+          await renderLevel3(resourceType, stream, subject, params.isGenericPrefix);
+        } else if (params.level === 4) {
+          const resourceType = await AcademicService.getResourceTypeBySlug(params.resourceSlug);
+          if (!resourceType) {
+            showError('Resource Category Not Found', `The resource category "${params.resourceSlug}" is not registered.`);
+            return;
+          }
+          const stream = await AcademicService.getStreamBySlug(params.streamSlug);
+          if (!stream) {
+            showError('Stream Not Found', `The academic stream "${params.streamSlug}" does not exist.`);
+            return;
+          }
+          const subject = await AcademicService.getSubjectBySlug(params.streamSlug, params.subjectSlug);
+          if (!subject) {
+            showError('Subject Not Found', `Could not resolve subject "${params.subjectSlug}" under ${stream.name}.`);
+            return;
+          }
+          const semester = await AcademicService.getSemesterBySlug(params.streamSlug, params.subjectSlug, params.semesterSlug);
+          if (!semester) {
+            showError('Semester Not Found', `Could not resolve semester "${params.semesterSlug}" under ${subject.name}.`);
+            return;
+          }
+          await renderLevel4(resourceType, stream, subject, semester, params.isGenericPrefix);
+        } else if (params.level === 5) {
+          const paper = await AcademicService.getPaperBySlug(params.streamSlug, params.subjectSlug, params.semesterSlug, params.paperSlug);
+          if (!paper) {
+            showError('Paper Not Found', `Could not resolve paper "${params.paperSlug}" under ${params.subjectSlug.toUpperCase()} / ${params.semesterSlug.toUpperCase()}.`);
+            return;
+          }
+          const semester = paper.semesters;
+          const subject = semester.subjects;
+          const stream = subject.academic_streams || { slug: params.streamSlug || 'science', name: 'Science' };
+          const resourceType = await AcademicService.getResourceTypeBySlug(params.resourceSlug);
+          if (!resourceType) {
+            showError('Resource Category Not Found', `The resource category "${params.resourceSlug}" is not registered.`);
+            return;
+          }
+          await renderLevel5(resourceType, stream, subject, semester, paper, params.isGenericPrefix);
         }
 
-        // Reveal Main State
         loadingState.style.display = 'none';
         errorState.style.display = 'none';
         resourceContentState.style.display = 'block';
 
       } catch (err) {
         console.error('Fatal resource initialization error:', err);
-        showError(
-          'Database Connection Notice',
-          'Unable to communicate with the curriculum database. Please check your network and reload.'
-        );
+        showError('Database Connection Notice', 'Unable to communicate with the curriculum database. Please check your network and reload.');
       }
     }
 
@@ -950,5 +1478,6 @@
 
     initResourcePage();
   </script>
+  <script type="module" src="/lib/navbar.js"></script>
 </body>
 </html>

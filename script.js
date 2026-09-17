@@ -700,451 +700,6 @@ const PYQS = [
   { exam: 'university', year: 2021, subject: 'Atomic Physics', title: 'Bohr Model of Hydrogen', difficulty: 'medium', desc: 'Derive the energy levels and radius of Bohr\'s model of hydrogen atom.' }
 ];
 
-const NUMERICALS = [
-  // ── Mechanics ──
-  {
-    cat: 'mechanics', branch: 'Mechanics', difficulty: 'easy',
-    question: 'A 2 kg block slides down a frictionless inclined plane of height 5 m. Find its speed at the bottom.',
-    given: '<strong>Given:</strong> m = 2 kg, h = 5 m, g = 9.8 m/s²',
-    steps: ['Using conservation of energy: mgh = ½mv²', 'v² = 2gh = 2 × 9.8 × 5 = 98', 'v = √98 = 9.9 m/s'],
-    answer: 'v = 9.9 m/s'
-  },
-  {
-    cat: 'mechanics', branch: 'Mechanics', difficulty: 'easy',
-    question: 'A body of mass 5 kg is moving with a velocity of 10 m/s. Find its kinetic energy.',
-    given: '<strong>Given:</strong> m = 5 kg, v = 10 m/s',
-    steps: ['Kinetic energy: KE = ½mv²', 'KE = ½ × 5 × (10)²', 'KE = ½ × 5 × 100 = 250 J'],
-    answer: 'KE = 250 J'
-  },
-  {
-    cat: 'mechanics', branch: 'Mechanics', difficulty: 'medium',
-    question: 'Find the moment of inertia of a uniform solid sphere of mass 3 kg and radius 0.2 m about an axis through its centre.',
-    given: '<strong>Given:</strong> m = 3 kg, R = 0.2 m, I = (2/5)mR² for solid sphere',
-    steps: ['I = (2/5) × m × R²', 'I = (2/5) × 3 × (0.2)²', 'I = 0.4 × 3 × 0.04 = 0.048 kg·m²'],
-    answer: 'I = 0.048 kg·m²'
-  },
-  // ── Electromagnetism ──
-  {
-    cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
-    question: 'Find the electric field at a distance of 0.3 m from a point charge of 5 μC in vacuum.',
-    given: '<strong>Given:</strong> q = 5 &times; 10<sup>&minus;6</sup> C, r = 0.3 m, k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>',
-    steps: ['E = kq/r<sup>2</sup>', 'E = (9 &times; 10<sup>9</sup> &times; 5 &times; 10<sup>&minus;6</sup>) / (0.3)<sup>2</sup>', 'E = 45000 / 0.09 = 5 &times; 10<sup>5</sup> N/C'],
-    answer: 'E = 5 &times; 10<sup>5</sup> N/C'
-  },
-  {
-    cat: 'em', branch: 'Electromagnetism', difficulty: 'easy',
-    question: 'A straight wire of length 0.5 m carries a current of 3 A in a magnetic field of 0.4 T. Find the force if the wire is perpendicular to B.',
-    given: '<strong>Given:</strong> L = 0.5 m, I = 3 A, B = 0.4 T, θ = 90°',
-    steps: ['Force on current-carrying wire: F = BIL sin θ', 'F = 0.4 × 3 × 0.5 × sin 90°', 'F = 0.4 × 3 × 0.5 × 1 = 0.6 N'],
-    answer: 'F = 0.6 N'
-  },
-  {
-    cat: 'em', branch: 'Electromagnetism', difficulty: 'medium',
-    question: 'A parallel plate capacitor has plate area 200 cm² and separation 2 mm. Find its capacitance in vacuum.',
-    given: '<strong>Given:</strong> A = 200 cm<sup>2</sup> = 0.02 m<sup>2</sup>, d = 2 mm = 0.002 m, &epsilon;<sub>0</sub> = 8.85 &times; 10<sup>&minus;12</sup> F/m',
-    steps: ['C = &epsilon;<sub>0</sub>A/d', 'C = (8.85 &times; 10<sup>&minus;12</sup> &times; 0.02) / 0.002', 'C = 1.77 &times; 10<sup>&minus;13</sup> / 0.002 = 8.85 &times; 10<sup>&minus;11</sup> F'],
-    answer: 'C = 88.5 pF'
-  },
-  // ── Waves & Optics ──
-  {
-    cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
-    question: 'In Young\'s double slit experiment, the slit separation is 0.5 mm and the screen is 1 m away. Find the fringe width for light of wavelength 600 nm.',
-    given: '<strong>Given:</strong> d = 0.5 mm = 5 &times; 10<sup>&minus;4</sup> m, D = 1 m, &lambda; = 600 nm = 6 &times; 10<sup>&minus;7</sup> m',
-    steps: ['Fringe width: &beta; = &lambda;D/d', '&beta; = (6 &times; 10<sup>&minus;7</sup> &times; 1) / (5 &times; 10<sup>&minus;4</sup>)', '&beta; = 6 &times; 10<sup>&minus;7</sup> / 5 &times; 10<sup>&minus;4</sup> = 1.2 &times; 10<sup>&minus;3</sup> m'],
-    answer: '&beta; = 1.2 mm'
-  },
-  {
-    cat: 'waves', branch: 'Waves & Optics', difficulty: 'easy',
-    question: 'Light passes from air into glass (n = 1.5). If the angle of incidence is 60°, find the angle of refraction.',
-    given: '<strong>Given:</strong> n₁ = 1 (air), n₂ = 1.5, θ₁ = 60°',
-    steps: ['Snell\'s law: n₁ sin θ₁ = n₂ sin θ₂', 'sin θ₂ = n₁ sin θ₁ / n₂ = sin 60° / 1.5', 'sin θ₂ = 0.866 / 1.5 = 0.577 → θ₂ = 35.3°'],
-    answer: 'θ₂ ≈ 35.3°'
-  },
-  {
-    cat: 'waves', branch: 'Waves & Optics', difficulty: 'medium',
-    question: 'A diffraction grating has 5000 lines/cm. Find the angular position of the first-order maximum for light of wavelength 500 nm.',
-    given: '<strong>Given:</strong> N = 5000 lines/cm, &lambda; = 500 nm = 5 &times; 10<sup>&minus;7</sup> m, m = 1',
-    steps: ['Grating spacing: d = 1/N = 1/(5 &times; 10<sup>5</sup>) = 2 &times; 10<sup>&minus;6</sup> m', 'd sin &theta; = m&lambda;', 'sin &theta; = m&lambda;/d = (1 &times; 5 &times; 10<sup>&minus;7</sup>) / (2 &times; 10<sup>&minus;6</sup>) = 0.25 &rarr; &theta; = 14.48&deg;'],
-    answer: '&theta; &asymp; 14.5&deg;'
-  },
-  // ── Quantum Mechanics ──
-  {
-    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
-    question: 'Find the de Broglie wavelength of an electron accelerated through a potential difference of 100 V.',
-    given: '<strong>Given:</strong> V = 100 V, m = 9.1 &times; 10<sup>&minus;31</sup> kg, e = 1.6 &times; 10<sup>&minus;19</sup> C, h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s',
-    steps: ['KE = eV = 1.6 &times; 10<sup>&minus;19</sup> &times; 100 = 1.6 &times; 10<sup>&minus;17</sup> J', 'p = &radic;(2mKE) = &radic;(2 &times; 9.1 &times; 10<sup>&minus;31</sup> &times; 1.6 &times; 10<sup>&minus;17</sup>)', 'p = 5.4 &times; 10<sup>&minus;24</sup> kg&middot;m/s &rarr; &lambda; = h/p = 1.23 &times; 10<sup>&minus;10</sup> m'],
-    answer: '&lambda; &asymp; 1.23 &Aring; (0.123 nm)'
-  },
-  {
-    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'easy',
-    question: 'Find the energy of a photon of wavelength 500 nm in electron volts.',
-    given: '<strong>Given:</strong> &lambda; = 500 nm = 5 &times; 10<sup>&minus;7</sup> m, h = 6.63 &times; 10<sup>&minus;34</sup> J&middot;s, c = 3 &times; 10<sup>8</sup> m/s',
-    steps: ['E = hc/&lambda; = (6.63 &times; 10<sup>&minus;34</sup> &times; 3 &times; 10<sup>8</sup>) / (5 &times; 10<sup>&minus;7</sup>)', 'E = 3.98 &times; 10<sup>&minus;19</sup> J', 'E = 3.98 &times; 10<sup>&minus;19</sup> / 1.6 &times; 10<sup>&minus;19</sup> = 2.49 eV'],
-    answer: 'E &asymp; 2.49 eV'
-  },
-  {
-    cat: 'quantum', branch: 'Quantum Mechanics', difficulty: 'medium',
-    question: 'An electron is confined in a 1D box of width 1 Å. Calculate the energy of the ground state.',
-    given: '<strong>Given:</strong> L = 1 &Aring; = 10<sup>&minus;10</sup> m, m = 9.1 &times; 10<sup>&minus;31</sup> kg, &hbar; = 1.055 &times; 10<sup>&minus;34</sup> J&middot;s, n = 1',
-    steps: ['E<sub>n</sub> = n<sup>2</sup>&pi;<sup>2</sup>&hbar;<sup>2</sup> / (2mL<sup>2</sup>)', 'E<sub>1</sub> = &pi;<sup>2</sup> &times; (1.055 &times; 10<sup>&minus;34</sup>)<sup>2</sup> / (2 &times; 9.1 &times; 10<sup>&minus;31</sup> &times; (10<sup>&minus;10</sup>)<sup>2</sup>)', 'E<sub>1</sub> = 6.03 &times; 10<sup>&minus;18</sup> J = 37.7 eV'],
-    answer: 'E<sub>1</sub> &asymp; 37.7 eV'
-  },
-  // ── Thermal Physics ──
-  {
-    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
-    question: 'A Carnot engine operates between reservoirs at 500 K and 300 K. Find its efficiency.',
-    given: '<strong>Given:</strong> T<sub>H</sub> = 500 K, T<sub>C</sub> = 300 K',
-    steps: ['Carnot efficiency: &eta; = 1 - T<sub>C</sub>/T<sub>H</sub>', '&eta; = 1 - 300/500 = 1 - 0.6', '&eta; = 0.4 = 40%'],
-    answer: 'η = 40%'
-  },
-  {
-    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'easy',
-    question: 'Find the rms speed of nitrogen molecules at 27°C. (M = 28 g/mol)',
-    given: '<strong>Given:</strong> T = 27°C = 300 K, M = 28 × 10⁻³ kg/mol, R = 8.314 J/(mol·K)',
-    steps: ['v<sub>rms</sub> = &radic;(3RT/M)', 'v<sub>rms</sub> = &radic;(3 &times; 8.314 &times; 300 / 0.028)', 'v<sub>rms</sub> = &radic;(267,214) = 517 m/s'],
-    answer: 'v<sub>rms</sub> &asymp; 517 m/s'
-  },
-  {
-    cat: 'thermal', branch: 'Thermal Physics', difficulty: 'medium',
-    question: 'Calculate the change in entropy when 2 kg of water at 100°C is converted to steam at the same temperature. (L = 2260 kJ/kg)',
-    given: '<strong>Given:</strong> m = 2 kg, T = 373 K, L = 2260 kJ/kg',
-    steps: ['ΔS = Q/T = mL/T', 'Q = 2 × 2260 × 10³ = 4.52 × 10⁶ J', 'ΔS = 4.52 × 10⁶ / 373 = 12,118 J/K'],
-    answer: 'ΔS ≈ 12,118 J/K ≈ 12.1 kJ/K'
-  },
-  // ── Nuclear Physics ──
-  {
-    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
-    question: 'The half-life of ⁶⁰Co is 5.27 years. Find the decay constant λ.',
-    given: '<strong>Given:</strong> t₁/₂ = 5.27 years',
-    steps: ['&lambda; = ln(2) / t<sub>1/2</sub>', '&lambda; = 0.693 / 5.27', '&lambda; = 0.1315 per year = 4.17 &times; 10<sup>&minus;9</sup> s<sup>&minus;1</sup>'],
-    answer: '&lambda; &asymp; 0.1315 year<sup>&minus;1</sup>'
-  },
-  {
-    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'easy',
-    question: 'Calculate the binding energy per nucleon of ⁴He. Given: mass of ⁴He = 4.0026 u, mp = 1.00783 u, mn = 1.00867 u.',
-    given: '<strong>Given:</strong> M(⁴He) = 4.0026 u, Z = 2, N = 2, 1 u = 931.5 MeV/c²',
-    steps: ['Mass defect Δm = (Zmp + Nmn) − M', 'Δm = (2 × 1.00783 + 2 × 1.00867) − 4.0026 = 0.0304 u', 'BE = Δm × 931.5 = 28.3 MeV → BE/A = 28.3/4 = 7.07 MeV'],
-    answer: 'BE/A ≈ 7.07 MeV/nucleon'
-  },
-  {
-    cat: 'nuclear', branch: 'Nuclear Physics', difficulty: 'medium',
-    question: 'A radioactive sample has an activity of 8000 Bq. What will the activity be after 3 half-lives?',
-    given: '<strong>Given:</strong> A₀ = 8000 Bq, n = 3 half-lives',
-    steps: ['After n half-lives: A = A₀ / 2ⁿ', 'A = 8000 / 2³ = 8000 / 8', 'A = 1000 Bq'],
-    answer: 'A = 1000 Bq'
-  },
-  // ── Solid State Physics ──
-  {
-    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
-    question: 'For a simple cubic lattice with lattice constant a = 3 Å, find the interplanar spacing for (100) planes.',
-    given: '<strong>Given:</strong> a = 3 Å, (hkl) = (100)',
-    steps: ['d<sub>hkl</sub> = a / &radic;(h<sup>2</sup> + k<sup>2</sup> + l<sup>2</sup>)', 'd<sub>100</sub> = 3 / &radic;(1 + 0 + 0)', 'd<sub>100</sub> = 3 &Aring;'],
-    answer: 'd<sub>100</sub> = 3 &Aring;'
-  },
-  {
-    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'medium',
-    question: 'X-rays of wavelength 1.54 Å are diffracted by (111) planes of an FCC crystal. First-order diffraction occurs at 2θ = 38.2°. Find the lattice constant.',
-    given: '<strong>Given:</strong> λ = 1.54 Å, 2θ = 38.2° → θ = 19.1°, n = 1, (111) planes',
-    steps: ['Bragg\'s law: 2d sinθ = nλ → d = λ/(2 sinθ)', 'd = 1.54 / (2 × sin 19.1°) = 1.54 / (2 × 0.327) = 2.35 Å', 'For (111): d = a/√3 → a = d√3 = 2.35 × 1.732 = 4.07 Å'],
-    answer: 'a ≈ 4.07 Å'
-  },
-  {
-    cat: 'solidstate', branch: 'Solid State Physics', difficulty: 'easy',
-    question: 'Calculate the Fermi energy of copper at 0 K. Given: n = 8.5 × 10²⁸ electrons/m³.',
-    given: '<strong>Given:</strong> n = 8.5 &times; 10<sup>28</sup> m<sup>&minus;3</sup>, m = 9.1 &times; 10<sup>&minus;31</sup> kg, &hbar; = 1.055 &times; 10<sup>&minus;34</sup> J&middot;s',
-    steps: ['E<sub>F</sub> = (&hbar;<sup>2</sup>/2m)(3&pi;<sup>2</sup>n)<sup>2/3</sup>', 'E<sub>F</sub> = (1.055 &times; 10<sup>&minus;34</sup>)<sup>2</sup> / (2 &times; 9.1 &times; 10<sup>&minus;31</sup>) &times; (3&pi;<sup>2</sup> &times; 8.5 &times; 10<sup>28</sup>)<sup>2/3</sup>', 'E<sub>F</sub> &asymp; 1.13 &times; 10<sup>&minus;18</sup> J = 7.04 eV'],
-    answer: 'E<sub>F</sub> &asymp; 7.04 eV'
-  },
-  // ── Electronics ──
-  {
-    cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
-    question: 'An inverting amplifier uses an op-amp with R<sub>in</sub> = 10 k&Omega; and R<sub>f</sub> = 100 k&Omega;. Find the voltage gain.',
-    given: '<strong>Given:</strong> R<sub>in</sub> = 10 k&Omega;, R<sub>f</sub> = 100 k&Omega;',
-    steps: ['Gain of inverting amplifier: A<sub>v</sub> = -R<sub>f</sub> / R<sub>in</sub>', 'A<sub>v</sub> = -100 / 10', 'A<sub>v</sub> = -10 (inverted output)'],
-    answer: 'A<sub>v</sub> = &minus;10'
-  },
-  {
-    cat: 'electronics', branch: 'Electronics', difficulty: 'easy',
-    question: 'A silicon diode has a forward voltage drop of 0.7 V. If a 5 V battery is connected in series with a 1 kΩ resistor and the diode, find the current.',
-    given: '<strong>Given:</strong> V = 5 V, V<sub>d</sub> = 0.7 V, R = 1 k&Omega;',
-    steps: ['Voltage across resistor: V<sub>R</sub> = V - V<sub>d</sub> = 5 - 0.7 = 4.3 V', 'I = V<sub>R</sub> / R = 4.3 / 1000', 'I = 4.3 mA'],
-    answer: 'I = 4.3 mA'
-  },
-  {
-    cat: 'electronics', branch: 'Electronics', difficulty: 'medium',
-    question: 'In a common-emitter transistor circuit, β = 100, I_B = 20 μA. Find I_C and I_E.',
-    given: '<strong>Given:</strong> &beta; = 100, I<sub>B</sub> = 20 &mu;A = 20 &times; 10<sup>&minus;6</sup> A',
-    steps: ['I<sub>C</sub> = &beta; &times; I<sub>B</sub> = 100 &times; 20 &times; 10<sup>&minus;6</sup> = 2 &times; 10<sup>&minus;3</sup> A = 2 mA', 'I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub> = 2 + 0.02 = 2.02 mA', 'Alternatively: I<sub>E</sub> = (&beta; + 1) &times; I<sub>B</sub> = 101 &times; 0.02 = 2.02 mA'],
-    answer: 'I<sub>C</sub> = 2 mA, I<sub>E</sub> = 2.02 mA'
-  }
-];
-
-/* ─────────────────────────────────────────
-   PHYSICS CHATBOT WITH GOOGLE GEMINI AI
-───────────────────────────────────────── */
-
-// API Configuration - See CHATBOT_API_SETUP.md for instructions
-const GEMINI_API_KEY = ''; // Set your API key here or in environment variable
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
-const USE_DEMO_MODE = true; // Set to false when API key is properly configured
-
-// Demo Physics Responses
-const DEMO_RESPONSES = {
-  'newton|law|motion': `Newton's Laws of Motion are fundamental principles of classical mechanics:\n\n**First Law (Law of Inertia):**\nAn object at rest stays at rest, and an object in motion stays in motion unless acted upon by a net external force. Mathematically: ΣF = 0 → a = 0\n\n**Second Law (Law of Acceleration):**\nThe net force on an object is equal to the mass times its acceleration: F = ma\n\n**Third Law (Action-Reaction):**\nFor every action, there's an equal and opposite reaction: F₁₂ = -F₂₁\n\nThese laws form the foundation of classical mechanics and are essential for understanding particle motion, orbital mechanics, and many engineering applications.`,
-  
-  'momentum': `**Momentum** is a fundamental quantity in physics that measures the quantity of motion of an object.\n\n**Definition:** p = mv\nWhere m is mass and v is velocity\n\n**Key Properties:**\n- Vector quantity (has direction)\n- SI Unit: kg⋅m/s\n- Conserved in isolated systems (Law of Conservation of Momentum)\n\n**Impulse-Momentum Theorem:**\nJ = FΔt = Δp = m(v_f - v_i)\n\n**Applications:**\n- Collisions and explosions\n- Rocket propulsion\n- Sports physics\n- Orbital mechanics\n\nMomentum conservation is crucial for analyzing collisions and understanding how forces change the motion of objects over time.`,
-  
-  'energy': `**Energy** is the capacity of a system to do work. It's one of the most fundamental concepts in physics.\n\n**Forms of Energy:**\n- Kinetic Energy: KE = ½mv²\n- Potential Energy: PE = mgh (gravitational)\n- Elastic Energy: PE = ½kx²\n- Thermal, Chemical, Nuclear, Electromagnetic energy\n\n**Law of Conservation of Energy:**\nTotal energy in an isolated system remains constant. Energy can transform from one form to another but is never created or destroyed.\n\nE_total = KE + PE = constant\n\n**Power:**\nRate of energy transfer: P = W/t = dE/dt (Watts)\n\n**Key Applications:**\n- Thermal dynamics\n- Oscillations and waves\n- Quantum mechanics\n- Astrophysics\n\nUnderstanding energy conservation and transformation is essential for all areas of physics.`,
-  
-  'ferromagnetism|magnetic': `**Ferromagnetism** is the phenomenon where certain materials become strongly attracted to magnets and can remain magnetized.\n\n**Characteristics:**\n- Permanent magnetic dipole moments\n- Unpaired electron spins aligned in the same direction\n- Magnetic susceptibility χ >> 1\n- Examples: Iron (Fe), Cobalt (Co), Nickel (Ni)\n\n**Physical Basis:**\n- Exchange interaction keeps spins aligned\n- Weiss domains: regions of aligned spins\n- Curie temperature: above this, ferromagnetic materials lose permanent magnetism\n\n**Applications:**\n- Electric motors and generators\n- Transformers\n- Magnetic recording media\n- MRI machines\n- Permanent magnets\n\n**Temperature Dependence:**\nAbove Curie temperature (T_c), ferromagnetic materials become paramagnetic due to thermal agitation overcoming exchange interaction.\n\nFerromagnetism is critical for modern technology and electromagnetic applications.`,
-  
-  'quantum|schrödinger': `**Quantum Mechanics** is the branch of physics dealing with particles at atomic and subatomic scales.\n\n**Schrödinger Equation:**\niℏ(∂Ψ/∂t) = ĤΨ (Time-dependent)\n\nĤΨ = EΨ (Time-independent)\n\nWhere Ψ is the wave function, Ĥ is the Hamiltonian, E is energy\n\n**Key Principles:**\n- **Wave-Particle Duality:** Particles exhibit both wave and particle properties\n- **Superposition:** Systems can exist in multiple states simultaneously\n- **Uncertainty Principle:** ΔxΔp ≥ ℏ/2\n- **Quantization:** Energy, angular momentum are quantized\n\n**Applications:**\n- Atomic structure\n- Molecular bonding\n- Semiconductors\n- Laser physics\n- Quantum computing\n\nThe Schrödinger equation is fundamental to understanding atomic and molecular phenomena.`
-};
-
-function getDemoResponse(question) {
-  const q = question.toLowerCase();
-  
-  for (const [keyword, response] of Object.entries(DEMO_RESPONSES)) {
-    const keywords = keyword.split('|');
-    if (keywords.some(kw => q.includes(kw))) {
-      return response;
-    }
-  }
-  
-  return `I'd be happy to help explain that topic! However, my AI connection seems to be having issues right now.\n\nYou can try asking about:\n- Newton's Laws of Motion\n- Momentum and Collisions\n- Energy and Conservation\n- Ferromagnetism\n- Quantum Mechanics and Schrödinger equation\n\nOr explore the website's Formulae Bank, Resources, or Study Tips for more information!\n\n*Note: The chatbot AI is currently in demo mode. For full AI responses, please ensure your API key is properly configured.`;
-}
-
-const PHYSICS_SYSTEM_PROMPT = `You are an expert Physics tutor and guide for the JeetPhysics website (https://jeetphysics.com). Your role is to:
-
-1. **Answer Physics Questions**: Explain all physics concepts, laws, formulae, interpretations, and terminologies comprehensively and accurately.
-2. **Provide Formulae**: When asked for formulae, provide clear mathematical expressions with their meanings.
-3. **Guide About Website**: Help students navigate the website, find resources, access study materials, and understand the curriculum structure.
-4. **Study Assistance**: Offer problem-solving strategies, study tips, and learning advice for BSc Physics Honours students.
-5. **Clear Explanations**: Break down complex concepts into understandable parts with analogies when helpful.
-
-Website Content Overview:
-- **12 Core Subjects**: Classical Mechanics, QM, EM, Waves & Optics, Thermal Physics, Statistical Mechanics, etc.
-- **Formulae Bank**: Over 200+ key formulae across all subjects with LaTeX support
-- **Resources**: NPTEL, MIT OCW, LibreTexts, WolframAlpha, PhET Simulations
-- **PYQ's**: Previous Year Questions from JEE, CSIR-NET, State Exams
-- **6-Semester Curriculum**: Structured learning path for BSc Physics Honours
-
-Always:
-- Be encouraging and supportive
-- Provide accurate, physics-based answers
-- Suggest relevant website resources when applicable
-- Use clear formatting and equations when necessary
-- Maintain professional but friendly tone`;
-
-let chatHistory = [];
-
-async function initPhysicsChatbot() {
-  const toggle = document.getElementById('chatbotToggle');
-  const container = document.getElementById('chatbotContainer');
-  const closeBtn = document.getElementById('chatbotClose');
-  const input = document.getElementById('chatbotInput');
-  const sendBtn = document.getElementById('chatbotSend');
-  const messagesDiv = document.getElementById('chatbotMessages');
-
-  // Toggle chatbot
-  toggle.addEventListener('click', () => {
-    container.classList.toggle('open');
-    if (container.classList.contains('open')) {
-      input.focus();
-    }
-  });
-
-  closeBtn.addEventListener('click', () => {
-    container.classList.remove('open');
-  });
-
-  // Send message
-  const sendMessage = async () => {
-    const message = input.value.trim();
-    if (!message) return;
-
-    // Add user message to UI
-    addMessage(message, 'user');
-    
-    // Add user message to history
-    chatHistory.push({
-      role: 'user',
-      parts: [{ text: message }]
-    });
-    
-    input.value = '';
-
-    // Show typing indicator
-    const typingId = showTypingIndicator();
-
-    try {
-      // Get AI response
-      const response = await getChatbotResponse(message);
-      
-      // Remove typing indicator
-      removeTypingIndicator(typingId);
-      
-      // Add bot response
-      addMessage(response, 'bot');
-    } catch (error) {
-      removeTypingIndicator(typingId);
-      addMessage('Sorry, I encountered an error. Please try again.', 'bot');
-      console.error('Chatbot error:', error);
-    }
-  };
-
-  sendBtn.addEventListener('click', sendMessage);
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
-  });
-
-  function addMessage(text, sender) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `chatbot-message ${sender}-message`;
-    
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content';
-    
-    // Parse and format content
-    if (sender === 'bot') {
-      contentDiv.innerHTML = parseMarkdown(text);
-    } else {
-      contentDiv.textContent = text;
-    }
-    
-    msgDiv.appendChild(contentDiv);
-    messagesDiv.appendChild(msgDiv);
-    
-    // Scroll to bottom
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-
-  function showTypingIndicator() {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'chatbot-message bot-message';
-    msgDiv.id = 'typing-indicator';
-    
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'message-content chatbot-typing';
-    contentDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    
-    msgDiv.appendChild(contentDiv);
-    messagesDiv.appendChild(msgDiv);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    
-    return msgDiv.id;
-  }
-
-  function removeTypingIndicator(id) {
-    const indicator = document.getElementById(id);
-    if (indicator) indicator.remove();
-  }
-}
-
-async function getChatbotResponse(userMessage) {
-  try {
-    // Use demo mode if enabled
-    if (USE_DEMO_MODE) {
-      const demoResponse = getDemoResponse(userMessage);
-      
-      // Add to chat history
-      chatHistory.push({
-        role: 'model',
-        parts: [{ text: demoResponse }]
-      });
-      
-      if (chatHistory.length > 20) {
-        chatHistory = chatHistory.slice(-20);
-      }
-      
-      return demoResponse;
-    }
-
-    // Try to use Gemini API
-    let requestContents = [];
-    
-    if (chatHistory.length === 1) {
-      // First message - include system prompt
-      requestContents.push({
-        role: 'user',
-        parts: [{ 
-          text: `You are an expert Physics tutor for JeetPhysics website. ${PHYSICS_SYSTEM_PROMPT}\n\nUser's question: ${userMessage}`
-        }]
-      });
-    } else {
-      // Subsequent messages - use history as is
-      requestContents = chatHistory;
-    }
-
-    const requestBody = {
-      contents: requestContents,
-      generationConfig: {
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 1024
-      }
-    };
-
-    console.log('Sending request to Gemini API...');
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    });
-
-    const data = await response.json();
-    console.log('API Response:', data);
-
-    if (!response.ok) {
-      console.error('API Error Details:', data);
-      if (data.error) {
-        throw new Error(`API error: ${data.error.message || data.error.code}`);
-      }
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-      throw new Error('Invalid API response structure');
-    }
-
-    const botMessage = data.candidates[0].content.parts[0].text;
-
-    // Add bot response to history
-    chatHistory.push({
-      role: 'model',
-      parts: [{ text: botMessage }]
-    });
-
-    // Keep chat history manageable (last 20 messages)
-    if (chatHistory.length > 20) {
-      chatHistory = chatHistory.slice(-20);
-    }
-
-    return botMessage;
-  } catch (error) {
-    console.error('Error calling Gemini API:', error);
-    throw error;
-  }
-}
-
-function parseMarkdown(text) {
-  // Convert markdown-like formatting to HTML
-  let html = text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\`(.*?)\`/g, '<code>$1</code>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>');
-  
-  // Handle lists
-  html = html.replace(/^• (.*?)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-  
-  return '<p>' + html + '</p>';
-}
 
 /* ─────────────────────────────────────────
    STARFIELD ANIMATION
@@ -1152,16 +707,25 @@ function parseMarkdown(text) {
 
 function initStarfield() {
   const canvas = document.getElementById('starfield');
+  if (!canvas || !canvas.getContext) return;
+
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
   let stars = [];
-  let animId;
+  let animId = null;
+  let isIntersecting = true;
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
 
-  function createStars(n = 200) {
+  function createStars() {
+    const isMobile = window.innerWidth < 768;
+    const n = prefersReducedMotion ? 40 : (isMobile ? 50 : 180);
     stars = [];
     for (let i = 0; i < n; i++) {
       stars.push({
@@ -1177,15 +741,9 @@ function initStarfield() {
     }
   }
 
-  function draw() {
+  function renderFrame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const t = Date.now() * 0.001;
     stars.forEach(s => {
-      s.alpha += s.twinkleSpeed * s.twinkleDir;
-      if (s.alpha > 0.9 || s.alpha < 0.05) s.twinkleDir *= -1;
-      s.y += s.speed;
-      if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
-
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       if (s.hue) {
@@ -1195,13 +753,80 @@ function initStarfield() {
       }
       ctx.fill();
     });
-    animId = requestAnimationFrame(draw);
+  }
+
+  function draw() {
+    stars.forEach(s => {
+      s.alpha += s.twinkleSpeed * s.twinkleDir;
+      if (s.alpha > 0.9 || s.alpha < 0.05) s.twinkleDir *= -1;
+      s.y += s.speed;
+      if (s.y > canvas.height) { s.y = 0; s.x = Math.random() * canvas.width; }
+    });
+    renderFrame();
+
+    if (!document.hidden && isIntersecting && !prefersReducedMotion) {
+      animId = requestAnimationFrame(draw);
+    } else {
+      animId = null;
+    }
+  }
+
+  function startAnimation() {
+    if (prefersReducedMotion) return;
+    if (!animId && !document.hidden && isIntersecting) {
+      animId = requestAnimationFrame(draw);
+    }
+  }
+
+  function stopAnimation() {
+    if (animId) {
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
   }
 
   resize();
   createStars();
-  draw();
-  window.addEventListener('resize', () => { resize(); createStars(); });
+  renderFrame();
+
+  if (!prefersReducedMotion) {
+    startAnimation();
+
+    // Pause when tab is backgrounded, resume when active
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        startAnimation();
+      }
+    });
+
+    // Pause when hero / canvas is scrolled out of viewport
+    if ('IntersectionObserver' in window) {
+      const heroSection = document.getElementById('home') || canvas;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isIntersecting = entry.isIntersecting;
+          if (isIntersecting) {
+            startAnimation();
+          } else {
+            stopAnimation();
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(heroSection);
+    }
+  }
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      resize();
+      createStars();
+      renderFrame();
+    }, 150);
+  });
 }
 
 /* ─────────────────────────────────────────
@@ -1214,31 +839,40 @@ function initNavbar() {
   const navLinks = document.getElementById('navLinks');
 
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 400);
   });
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    hamburger.querySelector('i').className = navLinks.classList.contains('open')
-      ? 'ph ph-x' : 'ph ph-list';
-  });
-
-  navLinks.querySelectorAll('a:not(.nav-dropdown-trigger)').forEach(a => {
-    a.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      hamburger.querySelector('i').className = 'ph ph-list';
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const icon = hamburger.querySelector('i');
+      if (icon) {
+        icon.className = navLinks.classList.contains('open') ? 'ph ph-x' : 'ph ph-list';
+      }
     });
-  });
 
-  document.getElementById('backToTop').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+    navLinks.querySelectorAll('a:not(.nav-dropdown-trigger)').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        const icon = hamburger.querySelector('i');
+        if (icon) icon.className = 'ph ph-list';
+      });
+    });
+  }
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // Banner close
   const bannerClose = document.getElementById('bannerClose');
   const banner = document.getElementById('banner');
-  if (bannerClose) {
+  if (bannerClose && banner) {
     bannerClose.addEventListener('click', () => {
       banner.style.display = 'none';
     });
@@ -1698,72 +1332,6 @@ function initCounters() {
 }
 
 /* ─────────────────────────────────────────
-   RENDER NUMERICALS
-───────────────────────────────────────── */
-
-let currentNumCat = 'all';
-
-function renderNumericals() {
-  const grid = document.getElementById('numericalsGrid');
-  const filtered = currentNumCat === 'all' ? NUMERICALS : NUMERICALS.filter(n => n.cat === currentNumCat);
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="numericals-empty">No numericals found for this category.</div>';
-    return;
-  }
-
-  grid.innerHTML = filtered.map((n, i) => `
-    <div class="numerical-card">
-      <div class="numerical-card-body">
-        <div class="numerical-card-header">
-          <span class="numerical-branch" data-branch="${n.cat}">${n.branch}</span>
-          <span class="numerical-difficulty ${n.difficulty}">${n.difficulty === 'easy' ? '⬤ Easy' : '⬤ Medium'}</span>
-        </div>
-        <div class="numerical-question">${n.question}</div>
-        <div class="numerical-given">${n.given}</div>
-        <button class="numerical-toggle" data-idx="${i}" aria-expanded="false">
-          <i class="ph ph-caret-down"></i> Show Solution
-        </button>
-      </div>
-      <div class="numerical-solution" id="numSol-${i}">
-        <div class="solution-label">Step-by-Step Solution</div>
-        <ul class="solution-steps">
-          ${n.steps.map(s => `<li><span>${s}</span></li>`).join('')}
-        </ul>
-        <div class="solution-answer">✅ ${n.answer}</div>
-      </div>
-    </div>
-  `).join('');
-
-  // Toggle solution visibility
-  grid.querySelectorAll('.numerical-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = btn.dataset.idx;
-      const sol = document.getElementById(`numSol-${idx}`);
-      const isOpen = sol.classList.contains('open');
-      sol.classList.toggle('open');
-      btn.classList.toggle('open');
-      btn.innerHTML = isOpen
-        ? '<i class="ph ph-caret-down"></i> Show Solution'
-        : '<i class="ph ph-caret-up"></i> Hide Solution';
-      btn.setAttribute('aria-expanded', !isOpen);
-    });
-  });
-}
-
-function initNumericals() {
-  const catBtns = document.getElementById('numCats');
-  catBtns.querySelectorAll('.num-cat-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      catBtns.querySelectorAll('.num-cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentNumCat = btn.dataset.cat;
-      renderNumericals();
-    });
-  });
-}
-
-/* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
 
@@ -1776,8 +1344,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFormulae();
   initFormulae();
   renderResources();
-  renderNumericals();
-  initNumericals();
   renderTimeline();
   renderTips();
   // PYQ section now links to Google Drive, so no rendering needed
@@ -1802,7 +1368,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
-        const cards = e.target.querySelectorAll('.subject-card, .formula-card, .resource-card, .numerical-card, .tip-card');
+        const cards = e.target.querySelectorAll('.subject-card, .formula-card, .resource-card, .tip-card');
         cards.forEach((card, idx) => {
           card.style.opacity = '0';
           card.style.transform = 'translateY(24px)';
@@ -1817,11 +1383,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.05 });
 
-  ['subjectsGrid', 'formulaeGrid', 'resourcesGrid', 'numericalsGrid', 'tipsGrid'].forEach(id => {
+  ['subjectsGrid', 'formulaeGrid', 'resourcesGrid', 'tipsGrid'].forEach(id => {
     const el = document.getElementById(id);
     if (el) revealObs.observe(el);
   });
 
-  // Initialize Physics Chatbot
-  initPhysicsChatbot();
 });

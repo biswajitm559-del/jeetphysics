@@ -765,6 +765,14 @@
           <i class="ph ph-tag"></i>
           <span>Resource Categories</span>
         </button>
+        <button class="tab-btn" data-tab="entrance-exams">
+          <i class="ph ph-target"></i>
+          <span>Entrance Exams</span>
+        </button>
+        <button class="tab-btn" data-tab="entrance-topics">
+          <i class="ph ph-tree-structure"></i>
+          <span>Entrance Topics</span>
+        </button>
       </div>
 
       <!-- TAB 1: OVERVIEW -->
@@ -795,6 +803,16 @@
             <div class="stat-label">Resource Types</div>
             <div class="stat-value" id="statCategories">—</div>
             <div class="stat-sub">Configured Resource Categories</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Entrance Exams</div>
+            <div class="stat-value" id="statEntranceExams">—</div>
+            <div class="stat-sub">National Exam Portals</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Entrance Topics</div>
+            <div class="stat-value" id="statEntranceTopics">—</div>
+            <div class="stat-sub">Exam Syllabus Modules</div>
           </div>
         </div>
 
@@ -1020,6 +1038,79 @@
         </div>
       </div>
 
+      <!-- TAB 7: ENTRANCE EXAMS -->
+      <div class="tab-pane" id="tab-entrance-exams">
+        <div class="section-toolbar">
+          <div>
+            <h2 style="font-family: var(--font-head); font-size: 1.3rem; color: var(--text-primary); margin: 0;">Entrance Examinations</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">National competitive exam portals (IIT JAM, CUET-PG, CSIR NET, GATE)</p>
+          </div>
+          <button class="btn-primary" id="btnNewEntranceExam">
+            <i class="ph ph-plus-circle"></i>
+            <span>Add Entrance Exam</span>
+          </button>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Order</th>
+                  <th style="width: 60px;">Icon</th>
+                  <th>Exam Name</th>
+                  <th>Short Name</th>
+                  <th>Slug</th>
+                  <th>Description</th>
+                  <th style="width: 100px;">Status</th>
+                  <th style="width: 120px; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="entranceExamsTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 8: ENTRANCE TOPICS -->
+      <div class="tab-pane" id="tab-entrance-topics">
+        <div class="section-toolbar">
+          <div class="filters-group">
+            <label class="form-label" for="filterTopicExam">Exam Filter:</label>
+            <select id="filterTopicExam" class="form-select" style="min-width: 220px;">
+              <option value="">All Entrance Exams</option>
+            </select>
+          </div>
+          <button class="btn-primary" id="btnNewEntranceTopic">
+            <i class="ph ph-plus-circle"></i>
+            <span>Add Entrance Topic</span>
+          </button>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">Order</th>
+                  <th>Topic Name</th>
+                  <th>Slug</th>
+                  <th>Exam</th>
+                  <th>Description</th>
+                  <th style="width: 100px;">Status</th>
+                  <th style="width: 120px; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="entranceTopicsTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1196,14 +1287,13 @@
               <select id="paperSemesterSelect" class="form-select" required></select>
             </div>
           </div>
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label class="form-label" for="paperType">Paper Type *</label>
-              <select id="paperType" class="form-select" required>
-                <option value="THEORY">THEORY</option>
-                <option value="LAB">LAB (Practical)</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label class="form-label" for="paperType">Paper Type *</label>
+            <select id="paperType" class="form-select" required>
+              <option value="THEORY">THEORY</option>
+              <option value="LAB">LAB (Practical)</option>
+            </select>
+          </div>
           <div class="form-grid-2">
             <div class="form-group">
               <label class="form-label" for="paperCode">Paper Code *</label>
@@ -1324,6 +1414,116 @@
     </div>
   </div>
 
+  <!-- Modal 7: Entrance Exam Modal -->
+  <div id="entranceExamModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="entranceExamModalTitle">Add Entrance Exam</h3>
+        <button class="btn-close-modal" data-close="entranceExamModal"><i class="ph ph-x"></i></button>
+      </div>
+      <form id="entranceExamForm">
+        <div class="modal-body">
+          <div class="modal-error-alert" id="entranceExamModalError"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="examName">Exam Full Name *</label>
+            <input type="text" id="examName" class="form-input" placeholder="e.g. IIT JAM Physics" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="examShortName">Short Name *</label>
+              <input type="text" id="examShortName" class="form-input" placeholder="e.g. IIT-JAM" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="examSlug">Slug *</label>
+              <input type="text" id="examSlug" class="form-input" placeholder="e.g. iit-jam-physics" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="examIcon">Icon Emoji</label>
+              <input type="text" id="examIcon" class="form-input" placeholder="e.g. 🎯" value="🎯" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="examDisplayOrder">Display Order</label>
+              <input type="number" id="examDisplayOrder" class="form-input" value="1" min="0" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="examDescription">Description</label>
+            <textarea id="examDescription" class="form-textarea" rows="2" placeholder="Brief overview of the entrance exam..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="examIsActive" checked />
+              <span>Active on Website</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close="entranceExamModal">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSaveEntranceExam">Save Entrance Exam</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 8: Entrance Topic Modal -->
+  <div id="entranceTopicModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="entranceTopicModalTitle">Add Entrance Topic</h3>
+        <button class="btn-close-modal" data-close="entranceTopicModal"><i class="ph ph-x"></i></button>
+      </div>
+      <form id="entranceTopicForm">
+        <div class="modal-body">
+          <div class="modal-error-alert" id="entranceTopicModalError"></div>
+
+          <div class="form-group">
+            <label class="form-label" for="topicExamSelect">Parent Entrance Exam *</label>
+            <select id="topicExamSelect" class="form-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="topicName">Topic Name *</label>
+            <input type="text" id="topicName" class="form-input" placeholder="e.g. Classical Mechanics" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="topicSlug">Slug *</label>
+              <input type="text" id="topicSlug" class="form-input" placeholder="e.g. mechanics" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="topicDisplayOrder">Display Order</label>
+              <input type="number" id="topicDisplayOrder" class="form-input" value="1" min="0" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="topicDescription">Description</label>
+            <textarea id="topicDescription" class="form-textarea" rows="2" placeholder="Syllabus coverage or focus areas..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="topicIsActive" checked />
+              <span>Active in System</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close="entranceTopicModal">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSaveEntranceTopic">Save Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal 6: Delete Confirmation Modal -->
   <div id="deleteModal" class="modal-overlay">
     <div class="modal-box" style="max-width: 460px;">
@@ -1377,6 +1577,8 @@
     const statSemesters = document.getElementById('statSemesters');
     const statPapers = document.getElementById('statPapers');
     const statCategories = document.getElementById('statCategories');
+    const statEntranceExams = document.getElementById('statEntranceExams');
+    const statEntranceTopics = document.getElementById('statEntranceTopics');
 
     // Tab buttons & panes
     const tabBtns = document.querySelectorAll('.tab-btn');
@@ -1388,6 +1590,8 @@
     const semestersTableBody = document.getElementById('semestersTableBody');
     const papersTableBody = document.getElementById('papersTableBody');
     const categoriesTableBody = document.getElementById('categoriesTableBody');
+    const entranceExamsTableBody = document.getElementById('entranceExamsTableBody');
+    const entranceTopicsTableBody = document.getElementById('entranceTopicsTableBody');
 
     // Filter Selectors
     const filterSubjectStream = document.getElementById('filterSubjectStream');
@@ -1396,6 +1600,7 @@
     const filterPaperStream = document.getElementById('filterPaperStream');
     const filterPaperSubject = document.getElementById('filterPaperSubject');
     const filterPaperSemester = document.getElementById('filterPaperSemester');
+    const filterTopicExam = document.getElementById('filterTopicExam');
 
     // Modals
     const streamModal = document.getElementById('streamModal');
@@ -1403,6 +1608,8 @@
     const semesterModal = document.getElementById('semesterModal');
     const paperModal = document.getElementById('paperModal');
     const categoryModal = document.getElementById('categoryModal');
+    const entranceExamModal = document.getElementById('entranceExamModal');
+    const entranceTopicModal = document.getElementById('entranceTopicModal');
     const deleteModal = document.getElementById('deleteModal');
 
     // Cascading Modal Selectors
@@ -1411,6 +1618,7 @@
     const paperStreamSelect = document.getElementById('paperStreamSelect');
     const paperSubjectSelect = document.getElementById('paperSubjectSelect');
     const paperSemesterSelect = document.getElementById('paperSemesterSelect');
+    const topicExamSelect = document.getElementById('topicExamSelect');
 
     // Toast
     const toast = document.getElementById('toast');
@@ -1423,12 +1631,16 @@
     let allSemesters = [];
     let allPapers = [];
     let allCategories = [];
+    let allEntranceExams = [];
+    let allEntranceTopics = [];
 
     let editingStreamId = null;
     let editingSubjectId = null;
     let editingSemesterId = null;
     let editingPaperId = null;
     let editingCategoryId = null;
+    let editingEntranceExamId = null;
+    let editingEntranceTopicId = null;
 
     let pendingDeleteAction = null;
 
@@ -1501,7 +1713,7 @@
       });
     });
 
-    [streamModal, subjectModal, semesterModal, paperModal, categoryModal, deleteModal].forEach(modal => {
+    [streamModal, subjectModal, semesterModal, paperModal, categoryModal, entranceExamModal, entranceTopicModal, deleteModal].forEach(modal => {
       if (modal) {
         modal.addEventListener('click', (e) => {
           if (e.target === modal) closeModal(modal);
@@ -1511,7 +1723,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        [streamModal, subjectModal, semesterModal, paperModal, categoryModal, deleteModal].forEach(m => {
+        [streamModal, subjectModal, semesterModal, paperModal, categoryModal, entranceExamModal, entranceTopicModal, deleteModal].forEach(m => {
           if (m && m.classList.contains('open')) closeModal(m);
         });
       }
@@ -1546,14 +1758,17 @@
       const prevPaperStream = filterPaperStream.value;
       const prevPaperSub = filterPaperSubject.value;
       const prevPaperSem = filterPaperSemester.value;
+      const prevTopicExam = filterTopicExam ? filterTopicExam.value : '';
 
       try {
-        const [streams, subjects, semesters, papers, categories] = await Promise.all([
+        const [streams, subjects, semesters, papers, categories, entranceExams, entranceTopics] = await Promise.all([
           AcademicService.getAllStreamsForAdmin(),
           AcademicService.getAllSubjectsForAdmin(),
           AcademicService.getAllSemestersForAdmin(),
           AcademicService.getAllPapersForAdmin(),
-          AcademicService.getAllResourceTypesForAdmin()
+          AcademicService.getAllResourceTypesForAdmin(),
+          AcademicService.getEntranceExamsAdmin(),
+          AcademicService.getEntranceTopicsAdmin()
         ]);
 
         allStreams = streams || [];
@@ -1561,6 +1776,8 @@
         allSemesters = semesters || [];
         allPapers = papers || [];
         allCategories = categories || [];
+        allEntranceExams = entranceExams || [];
+        allEntranceTopics = entranceTopics || [];
 
         // Update Overview Stats
         statStreams.textContent = allStreams.length;
@@ -1568,6 +1785,8 @@
         statSemesters.textContent = allSemesters.length;
         statPapers.textContent = allPapers.length;
         statCategories.textContent = allCategories.length;
+        if (statEntranceExams) statEntranceExams.textContent = allEntranceExams.length;
+        if (statEntranceTopics) statEntranceTopics.textContent = allEntranceTopics.length;
 
         // Populate Tables & Filter Dropdowns with preserved state
         renderStreamsTable();
@@ -1578,6 +1797,9 @@
         populatePaperFilterDropdowns(prevPaperSub, prevPaperSem);
         renderPapersTable();
         renderCategoriesTable();
+        renderEntranceExamsTable();
+        populateTopicExamDropdowns(prevTopicExam);
+        renderEntranceTopicsTable();
 
       } catch (err) {
         console.error('Error loading CMS data:', err);
@@ -2557,6 +2779,339 @@
         await AcademicService.deleteResourceType(id);
       };
       document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete category: <strong>${escapeHtml(c.display_name)} (${escapeHtml(c.type_key)})</strong>?`;
+      openModal(deleteModal);
+    };
+
+    // ------------------------------------------------------------------------
+    // 6. ENTRANCE EXAMS TAB
+    // ------------------------------------------------------------------------
+
+    function renderEntranceExamsTable() {
+      if (!entranceExamsTableBody) return;
+      if (allEntranceExams.length === 0) {
+        entranceExamsTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 32px;">No entrance exams registered yet.</td></tr>`;
+        return;
+      }
+
+      entranceExamsTableBody.innerHTML = allEntranceExams.map(e => `
+        <tr>
+          <td><span style="font-family: var(--font-mono); color: var(--text-muted);">${e.display_order}</span></td>
+          <td style="font-size: 1.3rem;">${escapeHtml(e.icon || '🎯')}</td>
+          <td><strong style="color: var(--text-primary);">${escapeHtml(e.name)}</strong></td>
+          <td><code style="color: var(--gold-400); font-weight: 700;">${escapeHtml(e.short_name || '—')}</code></td>
+          <td><code style="color: var(--blue-300);">${escapeHtml(e.slug)}</code></td>
+          <td style="max-width: 280px; font-size: 0.84rem;">${escapeHtml(e.description || '—')}</td>
+          <td>
+            <button class="status-toggle" data-action="toggle-entrance-exam" data-id="${e.id}" onclick="window.toggleEntranceExamActive('${e.id}')" title="Toggle active status">
+              <span class="badge ${e.is_active ? 'badge-active' : 'badge-inactive'}">${e.is_active ? 'Active' : 'Inactive'}</span>
+            </button>
+          </td>
+          <td style="text-align: right; white-space: nowrap;">
+            <button class="btn-sm btn-sm-edit" data-action="edit-entrance-exam" data-id="${e.id}" onclick="window.openEditEntranceExam('${e.id}')" title="Edit entrance exam">
+              <i class="ph ph-pencil"></i> Edit
+            </button>
+            <button class="btn-sm btn-sm-delete" data-action="delete-entrance-exam" data-id="${e.id}" onclick="window.confirmDeleteEntranceExam('${e.id}')" title="Delete entrance exam">
+              <i class="ph ph-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('btnNewEntranceExam')?.addEventListener('click', () => {
+      editingEntranceExamId = null;
+      document.getElementById('entranceExamModalTitle').textContent = 'Add Entrance Exam';
+      document.getElementById('entranceExamForm').reset();
+      document.getElementById('entranceExamModalError').style.display = 'none';
+      document.getElementById('examIcon').value = '🎯';
+      document.getElementById('examDisplayOrder').value = allEntranceExams.length + 1;
+      document.getElementById('examIsActive').checked = true;
+      openModal(entranceExamModal);
+    });
+
+    document.getElementById('examName')?.addEventListener('input', (e) => {
+      if (!editingEntranceExamId) {
+        document.getElementById('examSlug').value = slugify(e.target.value);
+      }
+    });
+
+    window.openEditEntranceExam = function(id) {
+      const e = allEntranceExams.find(item => item.id === id);
+      if (!e) return;
+      editingEntranceExamId = e.id;
+      document.getElementById('entranceExamModalTitle').textContent = 'Edit Entrance Exam';
+      document.getElementById('entranceExamModalError').style.display = 'none';
+      document.getElementById('examName').value = e.name;
+      document.getElementById('examShortName').value = e.short_name || '';
+      document.getElementById('examSlug').value = e.slug;
+      document.getElementById('examIcon').value = e.icon || '🎯';
+      document.getElementById('examDisplayOrder').value = e.display_order;
+      document.getElementById('examDescription').value = e.description || '';
+      document.getElementById('examIsActive').checked = Boolean(e.is_active);
+      openModal(entranceExamModal);
+    };
+
+    document.getElementById('entranceExamForm')?.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const saveBtn = document.getElementById('btnSaveEntranceExam');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('entranceExamModalError');
+      errEl.style.display = 'none';
+
+      const payload = {
+        name: document.getElementById('examName').value.trim(),
+        shortName: document.getElementById('examShortName').value.trim(),
+        slug: document.getElementById('examSlug').value.trim().toLowerCase(),
+        icon: document.getElementById('examIcon').value.trim() || '🎯',
+        displayOrder: parseInt(document.getElementById('examDisplayOrder').value, 10) || 0,
+        description: document.getElementById('examDescription').value.trim() || null,
+        isActive: document.getElementById('examIsActive').checked
+      };
+
+      if (!payload.name) {
+        errEl.textContent = 'Exam name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.shortName) {
+        errEl.textContent = 'Short name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
+
+      try {
+        if (editingEntranceExamId) {
+          await AcademicService.updateEntranceExam(editingEntranceExamId, payload);
+          showToast(`Entrance exam "${payload.name}" updated successfully.`);
+        } else {
+          await AcademicService.createEntranceExam(payload);
+          showToast(`Entrance exam "${payload.name}" created successfully.`);
+        }
+        closeModal(entranceExamModal);
+        await loadAllCMSData();
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
+      }
+    });
+
+    window.toggleEntranceExamActive = async function(id) {
+      const e = allEntranceExams.find(item => item.id === id);
+      if (!e) return;
+      const newStatus = !e.is_active;
+      try {
+        await AcademicService.updateEntranceExam(id, { isActive: newStatus });
+        showToast(`Entrance exam "${e.name}" is now ${newStatus ? 'active' : 'inactive'}.`);
+        await loadAllCMSData();
+      } catch (err) {
+        showToast(`Failed to update status: ${err.message}`, 'error');
+      }
+    };
+
+    window.confirmDeleteEntranceExam = function(id) {
+      const e = allEntranceExams.find(item => item.id === id);
+      if (!e) return;
+      pendingDeleteAction = async () => {
+        await AcademicService.deleteEntranceExam(id);
+      };
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete entrance exam: <strong>${escapeHtml(e.name)}</strong>?`;
+      openModal(deleteModal);
+    };
+
+    // ------------------------------------------------------------------------
+    // 7. ENTRANCE TOPICS TAB
+    // ------------------------------------------------------------------------
+
+    function populateTopicExamDropdowns(selectedExamId = null) {
+      if (filterTopicExam) {
+        let optHtml = '<option value="">All Entrance Exams</option>';
+        allEntranceExams.forEach(exam => {
+          optHtml += `<option value="${exam.id}">${escapeHtml(exam.name)}</option>`;
+        });
+        filterTopicExam.innerHTML = optHtml;
+        if (selectedExamId && allEntranceExams.some(e => e.id === selectedExamId)) {
+          filterTopicExam.value = selectedExamId;
+        }
+      }
+
+      if (topicExamSelect) {
+        let optHtml = '';
+        allEntranceExams.forEach(exam => {
+          optHtml += `<option value="${exam.id}">${escapeHtml(exam.name)}</option>`;
+        });
+        topicExamSelect.innerHTML = optHtml;
+        if (selectedExamId && allEntranceExams.some(e => e.id === selectedExamId)) {
+          topicExamSelect.value = selectedExamId;
+        }
+      }
+    }
+
+    function renderEntranceTopicsTable() {
+      if (!entranceTopicsTableBody) return;
+
+      const selectedExamId = filterTopicExam ? filterTopicExam.value : '';
+      const filtered = selectedExamId
+        ? allEntranceTopics.filter(t => t.entrance_exam_id === selectedExamId)
+        : allEntranceTopics;
+
+      if (filtered.length === 0) {
+        entranceTopicsTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">No entrance topics found for this selection.</td></tr>`;
+        return;
+      }
+
+      entranceTopicsTableBody.innerHTML = filtered.map(t => {
+        const exam = allEntranceExams.find(e => e.id === t.entrance_exam_id);
+        const examName = exam ? (exam.short_name || exam.name) : '—';
+
+        return `
+          <tr>
+            <td><span style="font-family: var(--font-mono); color: var(--text-muted);">${t.display_order}</span></td>
+            <td><strong style="color: var(--text-primary);">${escapeHtml(t.name)}</strong></td>
+            <td><code style="color: var(--blue-300);">${escapeHtml(t.slug)}</code></td>
+            <td><span class="badge badge-theory">${escapeHtml(examName)}</span></td>
+            <td style="max-width: 280px; font-size: 0.84rem;">${escapeHtml(t.description || '—')}</td>
+            <td>
+              <button class="status-toggle" data-action="toggle-entrance-topic" data-id="${t.id}" onclick="window.toggleEntranceTopicActive('${t.id}')" title="Toggle active status">
+                <span class="badge ${t.is_active ? 'badge-active' : 'badge-inactive'}">${t.is_active ? 'Active' : 'Inactive'}</span>
+              </button>
+            </td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn-sm btn-sm-edit" data-action="edit-entrance-topic" data-id="${t.id}" onclick="window.openEditEntranceTopic('${t.id}')" title="Edit topic">
+                <i class="ph ph-pencil"></i> Edit
+              </button>
+              <button class="btn-sm btn-sm-delete" data-action="delete-entrance-topic" data-id="${t.id}" onclick="window.confirmDeleteEntranceTopic('${t.id}')" title="Delete topic">
+                <i class="ph ph-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    filterTopicExam?.addEventListener('change', renderEntranceTopicsTable);
+
+    document.getElementById('btnNewEntranceTopic')?.addEventListener('click', () => {
+      editingEntranceTopicId = null;
+      document.getElementById('entranceTopicModalTitle').textContent = 'Add Entrance Topic';
+      document.getElementById('entranceTopicForm').reset();
+      document.getElementById('entranceTopicModalError').style.display = 'none';
+
+      if (filterTopicExam && filterTopicExam.value) {
+        topicExamSelect.value = filterTopicExam.value;
+      } else if (allEntranceExams.length > 0) {
+        topicExamSelect.value = allEntranceExams[0].id;
+      }
+      document.getElementById('topicDisplayOrder').value = allEntranceTopics.length + 1;
+      document.getElementById('topicIsActive').checked = true;
+      openModal(entranceTopicModal);
+    });
+
+    document.getElementById('topicName')?.addEventListener('input', (e) => {
+      if (!editingEntranceTopicId) {
+        document.getElementById('topicSlug').value = slugify(e.target.value);
+      }
+    });
+
+    window.openEditEntranceTopic = function(id) {
+      const t = allEntranceTopics.find(item => item.id === id);
+      if (!t) return;
+      editingEntranceTopicId = t.id;
+      document.getElementById('entranceTopicModalTitle').textContent = 'Edit Entrance Topic';
+      document.getElementById('entranceTopicModalError').style.display = 'none';
+      document.getElementById('topicExamSelect').value = t.entrance_exam_id;
+      document.getElementById('topicName').value = t.name;
+      document.getElementById('topicSlug').value = t.slug;
+      document.getElementById('topicDisplayOrder').value = t.display_order;
+      document.getElementById('topicDescription').value = t.description || '';
+      document.getElementById('topicIsActive').checked = Boolean(t.is_active);
+      openModal(entranceTopicModal);
+    };
+
+    document.getElementById('entranceTopicForm')?.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const saveBtn = document.getElementById('btnSaveEntranceTopic');
+      const origText = saveBtn.innerHTML;
+      const errEl = document.getElementById('entranceTopicModalError');
+      errEl.style.display = 'none';
+
+      const payload = {
+        entranceExamId: document.getElementById('topicExamSelect').value,
+        name: document.getElementById('topicName').value.trim(),
+        slug: document.getElementById('topicSlug').value.trim().toLowerCase(),
+        displayOrder: parseInt(document.getElementById('topicDisplayOrder').value, 10) || 0,
+        description: document.getElementById('topicDescription').value.trim() || null,
+        isActive: document.getElementById('topicIsActive').checked
+      };
+
+      if (!payload.entranceExamId) {
+        errEl.textContent = 'Parent entrance exam is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.name) {
+        errEl.textContent = 'Topic name is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+      if (!payload.slug) {
+        errEl.textContent = 'Topic slug is required.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Saving...';
+
+      try {
+        if (editingEntranceTopicId) {
+          await AcademicService.updateEntranceTopic(editingEntranceTopicId, payload);
+          showToast(`Topic "${payload.name}" updated successfully.`);
+        } else {
+          await AcademicService.createEntranceTopic(payload);
+          showToast(`Topic "${payload.name}" created successfully.`);
+        }
+        closeModal(entranceTopicModal);
+        await loadAllCMSData();
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'flex';
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
+      }
+    });
+
+    window.toggleEntranceTopicActive = async function(id) {
+      const t = allEntranceTopics.find(item => item.id === id);
+      if (!t) return;
+      const newStatus = !t.is_active;
+      try {
+        await AcademicService.updateEntranceTopic(id, { isActive: newStatus });
+        showToast(`Topic "${t.name}" is now ${newStatus ? 'active' : 'inactive'}.`);
+        await loadAllCMSData();
+      } catch (err) {
+        showToast(`Failed to update status: ${err.message}`, 'error');
+      }
+    };
+
+    window.confirmDeleteEntranceTopic = function(id) {
+      const t = allEntranceTopics.find(item => item.id === id);
+      if (!t) return;
+      pendingDeleteAction = async () => {
+        await AcademicService.deleteEntranceTopic(id);
+      };
+      document.getElementById('deleteModalMessage').innerHTML = `Are you sure you want to permanently delete entrance topic: <strong>${escapeHtml(t.name)}</strong>?`;
       openModal(deleteModal);
     };
 

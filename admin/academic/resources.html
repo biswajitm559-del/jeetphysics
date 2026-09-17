@@ -207,6 +207,43 @@
       color: #d8b4fe;
     }
 
+    /* Domain Context Switcher */
+    .domain-switcher-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .domain-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(8, 20, 50, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .domain-switch-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: var(--blue-300);
+    }
+
+    .domain-switch-btn.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--blue-500);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
+    }
+
     /* Cascading Selector Card */
     .selector-card {
       background: rgba(8, 20, 50, 0.75);
@@ -1065,8 +1102,20 @@
         </div>
       </div>
 
-      <!-- 4-Step Cascading Selection Bar -->
-      <section class="selector-card">
+      <!-- Domain Context Switcher (Phase 5E: Dual Domain Support) -->
+      <div class="domain-switcher-bar">
+        <button type="button" class="domain-switch-btn active" id="btnDomainUG" data-domain="UG">
+          <i class="ph ph-graduation-cap"></i>
+          <span>Undergraduate Academics</span>
+        </button>
+        <button type="button" class="domain-switch-btn" id="btnDomainEntrance" data-domain="ENTRANCE">
+          <i class="ph ph-target"></i>
+          <span>Competitive Entrance Exams</span>
+        </button>
+      </div>
+
+      <!-- 4-Step Cascading Selection Bar (UG Domain) -->
+      <section class="selector-card" id="selectorBarUG">
         <div class="selector-header">
           <i class="ph ph-tree-structure" style="color: var(--blue-400); font-size: 1.2rem;"></i>
           <span>Academic Lineage Selection</span>
@@ -1100,6 +1149,35 @@
           <div class="form-group">
             <label class="form-label" for="selResourceType">5. Resource Category</label>
             <select id="selResourceType" class="form-select"></select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Entrance Exam Selection Bar (Entrance Domain) -->
+      <section class="selector-card" id="selectorBarEntrance" style="display: none;">
+        <div class="selector-header">
+          <i class="ph ph-target" style="color: var(--blue-400); font-size: 1.2rem;"></i>
+          <span>Entrance Examination Lineage Selection</span>
+        </div>
+        <div class="selector-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <!-- Step 1: Entrance Exam -->
+          <div class="form-group">
+            <label class="form-label" for="selEntranceExam">1. Entrance Exam</label>
+            <select id="selEntranceExam" class="form-select"></select>
+          </div>
+
+          <!-- Step 2: Syllabus Topic (Optional) -->
+          <div class="form-group">
+            <label class="form-label" for="selEntranceTopic">2. Syllabus Topic</label>
+            <select id="selEntranceTopic" class="form-select">
+              <option value="">All Topics (General)</option>
+            </select>
+          </div>
+
+          <!-- Step 3: Resource Type Filter -->
+          <div class="form-group">
+            <label class="form-label" for="selEntranceResourceType">3. Resource Category</label>
+            <select id="selEntranceResourceType" class="form-select"></select>
           </div>
         </div>
       </section>
@@ -1403,12 +1481,21 @@
     const btnDeniedLogout = document.getElementById('btnDeniedLogout');
     const deniedMessage = document.getElementById('deniedMessage');
 
-    // Cascading Selectors
+    // Cascading Selectors (UG Domain)
+    const btnDomainUG = document.getElementById('btnDomainUG');
+    const btnDomainEntrance = document.getElementById('btnDomainEntrance');
+    const selectorBarUG = document.getElementById('selectorBarUG');
+    const selectorBarEntrance = document.getElementById('selectorBarEntrance');
     const selStream = document.getElementById('selStream');
     const selSubject = document.getElementById('selSubject');
     const selSemester = document.getElementById('selSemester');
     const selPaper = document.getElementById('selPaper');
     const selResourceType = document.getElementById('selResourceType');
+
+    // Selectors (Entrance Domain)
+    const selEntranceExam = document.getElementById('selEntranceExam');
+    const selEntranceTopic = document.getElementById('selEntranceTopic');
+    const selEntranceResourceType = document.getElementById('selEntranceResourceType');
 
     // Paper Info Labels
     const lblPaperCode = document.getElementById('lblPaperCode');
@@ -1490,12 +1577,16 @@
     const toastMsg = document.getElementById('toastMsg');
 
     // Memory State
+    let currentDomain = 'UG'; // 'UG' | 'ENTRANCE'
     let streams = [];
     let subjects = [];
     let semesters = [];
     let papers = [];
     let allResourceTypes = [];
     let currentPaper = null;
+    let entranceExams = [];
+    let entranceTopics = [];
+    let currentEntranceExam = null;
     let currentResources = [];
     let editingResourceId = null;
     let pendingDeleteResourceId = null;
@@ -1627,21 +1718,124 @@
     }
 
     function updateActivePaperHeader() {
-      if (!currentPaper) return;
-      lblPaperCode.textContent = currentPaper.paper_code;
-      lblPaperTitle.textContent = currentPaper.name;
-      lblPaperTypeBadge.textContent = currentPaper.paper_type;
-      lblPaperTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+      if (currentDomain === 'UG') {
+        if (!currentPaper) return;
+        lblPaperCode.textContent = currentPaper.paper_code;
+        lblPaperTitle.textContent = currentPaper.name;
+        lblPaperTypeBadge.textContent = currentPaper.paper_type;
+        lblPaperTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+      } else {
+        if (!currentEntranceExam) return;
+        const topicId = selEntranceTopic ? selEntranceTopic.value : '';
+        const topic = entranceTopics.find(t => t.id === topicId);
+
+        lblPaperCode.textContent = currentEntranceExam.short_name || 'ENTRANCE';
+        lblPaperTypeBadge.textContent = 'COMPETITIVE';
+        lblPaperTypeBadge.className = 'paper-type-theory';
+        lblPaperTitle.textContent = topic ? `${topic.name} — ${currentEntranceExam.name}` : currentEntranceExam.name;
+      }
     }
+
+    // ------------------------------------------------------------------------
+    // Domain Switcher & Entrance Loaders
+    // ------------------------------------------------------------------------
+
+    btnDomainUG.addEventListener('click', async () => {
+      if (currentDomain === 'UG') return;
+      currentDomain = 'UG';
+      btnDomainUG.classList.add('active');
+      btnDomainEntrance.classList.remove('active');
+      selectorBarUG.style.display = 'block';
+      selectorBarEntrance.style.display = 'none';
+
+      if (currentPaper) {
+        updateActivePaperHeader();
+        await updateCompatibleResourceTypes();
+        await loadResources();
+      } else {
+        await loadStreams();
+      }
+    });
+
+    btnDomainEntrance.addEventListener('click', async () => {
+      if (currentDomain === 'ENTRANCE') return;
+      currentDomain = 'ENTRANCE';
+      btnDomainEntrance.classList.add('active');
+      btnDomainUG.classList.remove('active');
+      selectorBarEntrance.style.display = 'block';
+      selectorBarUG.style.display = 'none';
+
+      await loadEntranceExams();
+    });
+
+    async function loadEntranceExams() {
+      entranceExams = await AcademicService.getEntranceExamsAdmin();
+      if (!entranceExams || entranceExams.length === 0) {
+        selEntranceExam.innerHTML = '<option value="">No entrance exams configured</option>';
+        selEntranceTopic.innerHTML = '<option value="">All Topics</option>';
+        selEntranceResourceType.innerHTML = '<option value="">All Categories</option>';
+        lblPaperCode.textContent = 'ENTRANCE';
+        lblPaperTypeBadge.textContent = 'COMPETITIVE';
+        lblPaperTitle.textContent = 'No Entrance Exams Found';
+        lblResourceCount.textContent = '(0 resources)';
+        resourceListContainer.innerHTML = '<div class="empty-state"><div class="empty-icon">🎯</div><h3 class="empty-title">No Entrance Exams</h3><p class="empty-desc">Create entrance exams in Curriculum CMS first.</p></div>';
+        return;
+      }
+
+      selEntranceExam.innerHTML = entranceExams.map(e => `<option value="${e.id}">${escapeHtml(e.name)} (${escapeHtml(e.short_name)})</option>`).join('');
+      currentEntranceExam = entranceExams[0];
+      await loadEntranceTopics();
+    }
+
+    async function loadEntranceTopics() {
+      if (!currentEntranceExam) return;
+      entranceTopics = await AcademicService.getEntranceTopicsAdmin(currentEntranceExam.id);
+      selEntranceTopic.innerHTML = '<option value="">All Topics (General)</option>' +
+        entranceTopics.map(t => `<option value="${t.id}">${escapeHtml(t.name)}</option>`).join('');
+
+      await updateEntranceResourceTypes();
+      updateActivePaperHeader();
+      await loadResources();
+    }
+
+    async function updateEntranceResourceTypes() {
+      if (allResourceTypes.length === 0) {
+        allResourceTypes = await AcademicService.getResourceTypes();
+      }
+      const activeTypes = allResourceTypes.filter(rt => rt.is_active);
+      selEntranceResourceType.innerHTML = `
+        <option value="">All Categories (${activeTypes.length})</option>
+        ${activeTypes.map(rt => `<option value="${rt.type_key}">${rt.icon || '📄'} ${rt.display_name}</option>`).join('')}
+      `;
+
+      formResourceType.innerHTML = activeTypes.map(rt => `
+        <option value="${rt.type_key}">${rt.icon || '📄'} ${rt.display_name}</option>
+      `).join('');
+    }
+
+    selEntranceExam.addEventListener('change', async () => {
+      currentEntranceExam = entranceExams.find(e => e.id === selEntranceExam.value);
+      await loadEntranceTopics();
+    });
+
+    selEntranceTopic.addEventListener('change', () => {
+      updateActivePaperHeader();
+      loadResources();
+    });
+
+    selEntranceResourceType.addEventListener('change', loadResources);
 
     // ------------------------------------------------------------------------
     // Resource List Query & Render
     // ------------------------------------------------------------------------
 
     async function loadResources() {
-      if (!currentPaper) return;
+      if (currentDomain === 'UG' && !currentPaper) return;
+      if (currentDomain === 'ENTRANCE' && !currentEntranceExam) return;
 
-      const selectedTypeKey = selResourceType.value || null;
+      const selectedTypeKey = currentDomain === 'UG'
+        ? (selResourceType.value || null)
+        : (selEntranceResourceType.value || null);
 
       try {
         resourceListContainer.innerHTML = `
@@ -1651,17 +1845,24 @@
           </div>
         `;
 
-        currentResources = await AcademicService.getAdminResourcesByPaper(currentPaper.id, selectedTypeKey);
+        if (currentDomain === 'UG') {
+          currentResources = await AcademicService.getAdminResourcesByPaper(currentPaper.id, selectedTypeKey);
+        } else {
+          const topicId = selEntranceTopic ? (selEntranceTopic.value || null) : null;
+          currentResources = await AcademicService.getEntranceResourcesAdmin(currentEntranceExam.id, selectedTypeKey, topicId);
+        }
+
         lblResourceCount.textContent = `(${currentResources.length} ${currentResources.length === 1 ? 'resource' : 'resources'})`;
 
         if (currentResources.length === 0) {
+          const contextName = currentDomain === 'UG' ? currentPaper.paper_code : (currentEntranceExam.short_name || currentEntranceExam.name);
           resourceListContainer.innerHTML = `
             <div class="empty-state">
               <div class="empty-icon">📁</div>
               <h3 class="empty-title">No Resources Found</h3>
               <p class="empty-desc">
-                There are no resource records registered under <strong>${currentPaper.paper_code}</strong>
-                ${selectedTypeKey ? `for category <em>${selectedTypeKey}</em>` : ''}.
+                There are no resource records registered under <strong>${escapeHtml(contextName)}</strong>
+                ${selectedTypeKey ? `for category <em>${escapeHtml(selectedTypeKey)}</em>` : ''}.
               </p>
               <button id="btnOpenCreateModalEmpty" onclick="window.openCreateResourceModal()" class="btn-create" style="margin: 0 auto;">
                 <i class="ph ph-plus-circle"></i>
@@ -1995,26 +2196,45 @@
     }
 
     function openCreateResourceModal() {
-      if (!currentPaper) {
+      if (currentDomain === 'UG' && !currentPaper) {
         alert('Please select a valid paper first.');
+        return;
+      }
+      if (currentDomain === 'ENTRANCE' && !currentEntranceExam) {
+        alert('Please select a valid entrance exam first.');
         return;
       }
 
       lastActiveElementBeforeModal = document.activeElement;
       editingResourceId = null;
-      modalTitle.textContent = 'Create Academic Resource';
+      modalTitle.textContent = currentDomain === 'UG' ? 'Create Academic Resource' : 'Create Entrance Resource';
 
-      const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
-      const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
-      const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
+      if (currentDomain === 'UG') {
+        const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
+        const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
+        const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
 
-      if (modalStreamLabel) modalStreamLabel.textContent = streamName;
-      if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
-      if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
-      if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
-      if (modalTypeBadge) {
-        modalTypeBadge.textContent = currentPaper.paper_type;
-        modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+        if (modalStreamLabel) modalStreamLabel.textContent = streamName;
+        if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
+        if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
+        if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
+        if (modalTypeBadge) {
+          modalTypeBadge.textContent = currentPaper.paper_type;
+          modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+        }
+      } else {
+        const topicText = selEntranceTopic && selEntranceTopic.value
+          ? selEntranceTopic.options[selEntranceTopic.selectedIndex]?.text
+          : 'All Topics (General)';
+
+        if (modalStreamLabel) modalStreamLabel.textContent = 'Competitive';
+        if (modalSubjectLabel) modalSubjectLabel.textContent = currentEntranceExam.short_name || 'Entrance';
+        if (modalSemesterLabel) modalSemesterLabel.textContent = 'National';
+        if (modalPaperLabel) modalPaperLabel.textContent = `${currentEntranceExam.name} [${topicText}]`;
+        if (modalTypeBadge) {
+          modalTypeBadge.textContent = 'ENTRANCE';
+          modalTypeBadge.className = 'paper-type-theory';
+        }
       }
 
       // Reset form & error
@@ -2025,8 +2245,9 @@
       formGroupResourceType.style.display = 'block';
 
       // Pre-select resource type if filter has one selected
-      if (selResourceType.value) {
-        formResourceType.value = selResourceType.value;
+      const activeFilterType = currentDomain === 'UG' ? selResourceType.value : selEntranceResourceType.value;
+      if (activeFilterType) {
+        formResourceType.value = activeFilterType;
       }
       syncFormTypeFields(formResourceType.value);
       updateModalCategoryContext();
@@ -2045,19 +2266,31 @@
 
       lastActiveElementBeforeModal = document.activeElement;
       editingResourceId = resourceId;
-      modalTitle.textContent = 'Edit Academic Resource';
+      modalTitle.textContent = currentDomain === 'UG' ? 'Edit Academic Resource' : 'Edit Entrance Resource';
 
-      const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
-      const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
-      const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
+      if (currentDomain === 'UG') {
+        const streamName = selStream.options[selStream.selectedIndex]?.text || 'Science';
+        const subjectName = selSubject.options[selSubject.selectedIndex]?.text || 'Physics';
+        const semesterName = selSemester.options[selSemester.selectedIndex]?.text || 'Semester I';
 
-      if (modalStreamLabel) modalStreamLabel.textContent = streamName;
-      if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
-      if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
-      if (modalPaperLabel) modalPaperLabel.textContent = `${currentPaper.paper_code}: ${currentPaper.name}`;
-      if (modalTypeBadge) {
-        modalTypeBadge.textContent = currentPaper.paper_type;
-        modalTypeBadge.className = currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+        if (modalStreamLabel) modalStreamLabel.textContent = streamName;
+        if (modalSubjectLabel) modalSubjectLabel.textContent = subjectName;
+        if (modalSemesterLabel) modalSemesterLabel.textContent = semesterName;
+        if (modalPaperLabel) modalPaperLabel.textContent = currentPaper ? `${currentPaper.paper_code}: ${currentPaper.name}` : 'Paper';
+        if (modalTypeBadge) {
+          modalTypeBadge.textContent = currentPaper ? currentPaper.paper_type : 'THEORY';
+          modalTypeBadge.className = currentPaper && currentPaper.paper_type === 'LAB' ? 'paper-type-lab' : 'paper-type-theory';
+        }
+      } else {
+        const topicName = res.entrance_topics ? res.entrance_topics.name : 'General';
+        if (modalStreamLabel) modalStreamLabel.textContent = 'Competitive';
+        if (modalSubjectLabel) modalSubjectLabel.textContent = currentEntranceExam?.short_name || 'Entrance';
+        if (modalSemesterLabel) modalSemesterLabel.textContent = 'National';
+        if (modalPaperLabel) modalPaperLabel.textContent = `${currentEntranceExam?.name || 'Exam'} [${topicName}]`;
+        if (modalTypeBadge) {
+          modalTypeBadge.textContent = 'ENTRANCE';
+          modalTypeBadge.className = 'paper-type-theory';
+        }
       }
 
       hideModalError();
@@ -2070,17 +2303,18 @@
 
       formTitle.value = res.title || '';
       formDescription.value = res.description || '';
-      formUnitNumber.value = res.unit_number || '';
+      formUnitNumber.value = res.unit_number !== null ? res.unit_number : '';
       formUnitName.value = res.unit_name || '';
-      formExamYear.value = res.exam_year || '';
-      formDisplayOrder.value = res.display_order || 0;
+      formExamYear.value = res.exam_year !== null ? res.exam_year : '';
+      formDisplayOrder.value = res.display_order !== null ? res.display_order : 0;
       formPublicationStatus.value = res.publication_status || 'DRAFT';
 
       openModal(resourceModal);
       setTimeout(() => formTitle.focus(), 50);
     };
 
-    function closeModal() {
+    // Close Modal Handler
+    function closeResourceModal() {
       closeModalEl(resourceModal);
       editingResourceId = null;
       hideModalError();
@@ -2090,18 +2324,18 @@
       }
     }
 
-    btnCloseModal.addEventListener('click', closeModal);
-    btnCancelModal.addEventListener('click', closeModal);
+    btnCloseModal.addEventListener('click', closeResourceModal);
+    btnCancelModal.addEventListener('click', closeResourceModal);
 
     resourceModal.addEventListener('click', (e) => {
-      if (e.target === resourceModal) closeModal();
+      if (e.target === resourceModal) closeResourceModal();
     });
 
     // Global keyboard listener for Escape key dismissal
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (resourceModal && resourceModal.classList.contains('open')) {
-          closeModal();
+          closeResourceModal();
         } else if (deleteModal && deleteModal.classList.contains('open')) {
           closeDeleteModal();
         } else if (uploadModal && uploadModal.classList.contains('open')) {
@@ -2178,8 +2412,7 @@
           showToast(`Updated "${title}" successfully.`);
         } else {
           // CREATE
-          await AcademicService.createResourceMetadata({
-            paperId: currentPaper.id,
+          const createPayload = {
             resourceType: typeKey,
             title,
             description,
@@ -2188,11 +2421,20 @@
             examYear,
             displayOrder,
             publicationStatus
-          });
+          };
+
+          if (currentDomain === 'UG') {
+            createPayload.paperId = currentPaper.id;
+          } else {
+            createPayload.entranceExamId = currentEntranceExam.id;
+            createPayload.entranceTopicId = selEntranceTopic ? (selEntranceTopic.value || null) : null;
+          }
+
+          await AcademicService.createResourceMetadata(createPayload);
           showToast(`Created "${title}" (${publicationStatus}) successfully.`);
         }
 
-        closeModal();
+        closeResourceModal();
         await loadResources();
 
       } catch (err) {
